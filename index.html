@@ -3698,7 +3698,7 @@ h2 {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 200;
+    z-index: 600;
     max-width: 100%;
     transform: none;
     transform-origin: top left;
@@ -3706,6 +3706,23 @@ h2 {
 
   .top-search-tools {
     display: none;
+  }
+
+  #topDeptPanel {
+    display: none !important;
+  }
+
+  .top-search-box {
+    width: 100%;
+  }
+
+  .top-filter-input {
+    font-size: 16px;
+  }
+
+  .top-search-box .dept-search-results {
+    max-height: min(70vh, 420px);
+    z-index: 6000;
   }
 
   .timeline-top-row {
