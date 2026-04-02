@@ -491,6 +491,122 @@ h2 {
   100% { box-shadow: inset 0 0 0 0 rgba(255, 59, 48, 0); }
 }
 
+.private-ward-info-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 4500;
+}
+
+.private-ward-info-modal.visible {
+  display: flex;
+}
+
+.private-ward-info-box {
+  background: white;
+  color: #222;
+  padding: 0;
+  border-radius: 16px;
+  max-width: min(92vw, 820px);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+  user-select: none;
+  overflow: hidden;
+}
+
+.private-ward-card-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.private-ward-card-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.private-ward-card-hint {
+  font-size: 11px;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.private-ward-card-body {
+  padding: 12px 14px 14px;
+}
+
+.private-ward-card-summary {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.private-ward-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.private-ward-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(102,126,234,0.08);
+  border: 1px solid rgba(102,126,234,0.18);
+}
+
+.private-ward-year {
+  flex: 0 0 auto;
+  background: rgba(102,126,234,0.95);
+  color: white;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 18px;
+  min-width: 54px;
+  text-align: center;
+}
+
+.private-ward-dest {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.private-ward-dest .label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #667eea;
+  margin-bottom: 2px;
+}
+
+.private-ward-dest .value {
+  font-size: 13px;
+  font-weight: 800;
+  color: #222;
+  word-break: break-word;
+}
+
+.private-ward-arrow {
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(102,126,234,0.9);
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
 .dept-search-item .meta {
   font-size: 9px;
   color: #667eea;
@@ -1003,8 +1119,6 @@ h2 {
   position: absolute;
   z-index: 60;
   flex: none;
-  height: var(--top-linked-h, var(--top-row-h));
-  max-height: var(--top-linked-h, var(--top-row-h));
   resize: both;
   overflow: hidden;
   min-width: 240px;
@@ -1031,6 +1145,19 @@ h2 {
   cursor: grab;
   user-select: none;
   touch-action: none;
+}
+
+.panel-resize-handle {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  cursor: nwse-resize;
+  touch-action: none;
+  background: linear-gradient(135deg, transparent 50%, rgba(102,126,234,0.7) 50%);
+  opacity: 0.85;
 }
 
 .top-linked-panel.ward-dragging .link-display h4 {
@@ -3542,6 +3669,70 @@ h2 {
     margin-left: 0 !important;
   }
 }
+
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+
+  .container {
+    gap: 0;
+    height: 100vh;
+  }
+
+  .control-panel {
+    display: none;
+  }
+
+  .main-view {
+    padding: 8px;
+    height: 100%;
+  }
+
+  .building-container {
+    display: none !important;
+  }
+
+  .top-search-floating {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    max-width: 100%;
+    transform: none;
+    transform-origin: top left;
+  }
+
+  .top-search-tools {
+    display: none;
+  }
+
+  .timeline-top-row {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 8px;
+  }
+
+  .top-left-group {
+    display: none;
+  }
+
+  .top-calendar-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .top-below-row {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 8px;
+  }
+
+  .top-below-row .top-linked-panel {
+    height: 100%;
+  }
+}
 /* Building Themes & Borders */
 /* .theme-ipeb .space { background-color: var(--color-ipeb); border-color: #ddd; } */
 /* .theme-mcbtc .space { background-color: var(--color-mcbtc); border-color: #ddd; } */
@@ -3821,6 +4012,10 @@ h2 {
       <div class="building" id="building"></div>
     </div>
   </div>
+</div>
+
+<div class="private-ward-info-modal" id="privateWardInfoModal">
+  <div class="private-ward-info-box" id="privateWardInfoBox"></div>
 </div>
 
 <script>
@@ -6368,6 +6563,63 @@ let isDeptContentCollapsed = false;
 let wardConnectionResizeObserver = null;
 let calendarResizeObserver = null;
 let deptSearchForceHidden = false;
+let privateWardInfoModal = null;
+let privateWardInfoBox = null;
+const privateWardMigration = {
+  title: 'PRIVATE WARD 搬遷記錄',
+  from: 'MCBTC 6/F PRIVATE WARD',
+  moves: [
+    { year: '2027', to: 'DTB 9/F 9L' },
+    { year: '2030', to: 'MCBTC 6/F PRIVATE WARD' }
+  ]
+};
+
+function showPrivateWardInfo() {
+  if (!privateWardInfoModal || !privateWardInfoBox) return;
+  const title = privateWardMigration.title;
+  const from = privateWardMigration.from;
+  const first = privateWardMigration.moves[0];
+  const second = privateWardMigration.moves[1];
+  privateWardInfoBox.innerHTML = `
+    <div class="private-ward-card-header">
+      <div class="private-ward-card-title">${title}</div>
+      <div class="private-ward-card-hint">按一下關閉</div>
+    </div>
+    <div class="private-ward-card-body">
+      <div class="private-ward-card-summary">${from}</div>
+      <div class="private-ward-flow">
+        <div class="private-ward-step">
+          <div class="private-ward-year">${first.year}</div>
+          <div class="private-ward-dest">
+            <div class="label">搬到</div>
+            <div class="value">${first.to}</div>
+          </div>
+        </div>
+        <div class="private-ward-arrow">↓</div>
+        <div class="private-ward-step">
+          <div class="private-ward-year">${second.year}</div>
+          <div class="private-ward-dest">
+            <div class="label">搬回</div>
+            <div class="value">${second.to}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  privateWardInfoModal.classList.add('visible');
+}
+
+function hidePrivateWardInfo() {
+  if (!privateWardInfoModal) return;
+  privateWardInfoModal.classList.remove('visible');
+}
+
+function initPrivateWardInfoModal() {
+  privateWardInfoModal = document.getElementById('privateWardInfoModal');
+  privateWardInfoBox = document.getElementById('privateWardInfoBox');
+  if (!privateWardInfoModal) return;
+  privateWardInfoModal.addEventListener('click', hidePrivateWardInfo);
+}
 
 const calendarLeftTowerByDate = {
   '2027-06-01': [
@@ -8060,6 +8312,8 @@ function initWardConnectionFloating() {
   panel.classList.add('ward-floating');
   panel.style.left = `${Math.max(0, Math.round(left))}px`;
   panel.style.top = `${Math.max(0, Math.round(top))}px`;
+  panel.style.width = `${Math.max(240, Math.round(panelRect.width))}px`;
+  panel.style.height = `${Math.max(72, Math.round(panelRect.height))}px`;
   mainView.appendChild(panel);
   clampWardConnectionToBounds();
 }
@@ -8089,6 +8343,7 @@ function enableWardConnectionDrag() {
     });
     wardConnectionResizeObserver.observe(panel);
   }
+  enablePanelResize(panel, { minW: 240, minH: 72, clamp: clampWardConnectionToBounds });
   const handle = panel.querySelector('.link-display h4');
   if (!handle) return;
   if (panel.dataset.dragInit === '1') return;
@@ -8181,6 +8436,58 @@ function clampCalendarToBounds() {
   panel.style.top = `${Math.round(Math.max(0, Math.min(currentTop, maxTop)))}px`;
 }
 
+function enablePanelResize(panel, opts) {
+  if (!panel) return;
+  if (panel.dataset.resizeInit === '1') return;
+  panel.dataset.resizeInit = '1';
+  const handle = document.createElement('div');
+  handle.className = 'panel-resize-handle';
+  panel.appendChild(handle);
+
+  const minW = (opts && opts.minW) || 240;
+  const minH = (opts && opts.minH) || 72;
+  const clamp = (opts && opts.clamp) || (() => {});
+
+  let resizing = false;
+  let startX = 0;
+  let startY = 0;
+  let startW = 0;
+  let startH = 0;
+
+  const onMove = (e) => {
+    if (!resizing) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    const nextW = Math.max(minW, startW + dx);
+    const nextH = Math.max(minH, startH + dy);
+    panel.style.width = `${Math.round(nextW)}px`;
+    panel.style.height = `${Math.round(nextH)}px`;
+    clamp();
+  };
+
+  const onEnd = () => {
+    if (!resizing) return;
+    resizing = false;
+    clamp();
+  };
+
+  handle.addEventListener('pointerdown', (e) => {
+    if (e.button != null && e.button !== 0) return;
+    resizing = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startW = panel.offsetWidth;
+    startH = panel.offsetHeight;
+    try {
+      handle.setPointerCapture(e.pointerId);
+    } catch (err) {}
+    e.preventDefault();
+  });
+  handle.addEventListener('pointermove', onMove);
+  handle.addEventListener('pointerup', onEnd);
+  handle.addEventListener('pointercancel', onEnd);
+}
+
 function enableCalendarDrag() {
   initCalendarFloating();
   const mainView = document.querySelector('.main-view');
@@ -8246,6 +8553,7 @@ function enableCalendarResize() {
     });
     calendarResizeObserver.observe(panel);
   }
+  enablePanelResize(panel, { minW: 360, minH: 120, clamp: clampCalendarToBounds });
   enableCalendarDrag();
   window.addEventListener('resize', () => clampCalendarToBounds());
 }
@@ -8528,6 +8836,9 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
   });
   selectedTimePeriod = null;
   
+  if (clickedSpace.tower === 'left' && clickedSpace.buildingIndex === 0 && clickedSpace.floor === '6' && clickedSpace.index === 0) {
+    showPrivateWardInfo();
+  }
   updateDisplay();
   updateLinkDisplay();
 }
@@ -8952,6 +9263,7 @@ function handleTouchEnd(e) {
 document.addEventListener('DOMContentLoaded', function() {
   buildingContainer = document.getElementById('buildingContainer');
   
+  initPrivateWardInfoModal();
   updateTopPanelSizing();
   renderBuilding(null, currentLeftBuilding);
   renderDepartments();
