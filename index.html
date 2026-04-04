@@ -11,6 +11,8 @@
   --color-ipeb-border: #9370DB; /* MediumPurple */
   --color-mcbtc: #FFC0CB; /* Pink */
   --color-mcbtc-border: #FF69B4; /* HotPink */
+  --color-mcbtc2030: #FFE0B2; /* Orange (Light) */
+  --color-mcbtc2030-border: #FF8C00; /* Orange (Dark) */
   --color-csb: #FFFACD; /* LemonChiffon */
   --color-csb-border: #F0E68C; /* Khaki */
   --color-dtb: #E0FFFF; /* LightCyan */
@@ -891,7 +893,7 @@ h2 {
 
 .calendar-toggle-btn {
   width: 32px;
-  height: 24px;
+  height: 32px;
   border: 2px solid #667eea;
   border-radius: 6px;
   background: white;
@@ -980,6 +982,42 @@ h2 {
 .top-building-panel .building-btn:hover {
   transform: none;
   box-shadow: none;
+}
+
+.right-view {
+  display: none;
+}
+
+#building[data-right-building="0"] .right-view-ipeb,
+#building[data-right-building="1"] .right-view-mcbtc2030 {
+  display: block;
+}
+
+.right-view-mcbtc2030 {
+  width: var(--ipeb-right-view-w, 400px);
+}
+
+.right-view-mcbtc2030 .empty-floor {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.tower.right.theme-mcbtc2030 .space-row {
+  gap: 0;
+}
+
+.tower.right.theme-mcbtc2030 {
+  min-width: 450px;
+}
+
+.right-row-wrapper {
+  width: 450px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right-row-wrapper.center {
+  justify-content: center;
 }
 
 .top-calendar-panel .calendar-panel {
@@ -1264,9 +1302,78 @@ h2 {
   line-height: 1;
 }
 
+.calendar-view-toggle {
+  border: 2px solid #667eea;
+  background: white;
+  color: #667eea;
+  border-radius: 6px;
+  height: 18px;
+  padding: 0 6px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.calendar-view-toggle:hover {
+  background: #f3f6ff;
+}
+
 .calendar-nav:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.calendar-agenda.hidden {
+  display: none;
+}
+
+.calendar-agenda {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.calendar-agenda-day {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(102,126,234,0.25);
+}
+
+.calendar-agenda-day.active {
+  background: #f3f6ff;
+}
+
+.calendar-agenda-date {
+  flex: 0 0 66px;
+  width: 66px;
+  min-width: 66px;
+  font-weight: 700;
+  font-size: 10px;
+  color: #333;
+  text-align: left;
+  padding-left: 2px;
+}
+
+.calendar-agenda-items {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 2px;
+}
+
+.calendar-agenda-sep {
+  height: 1px;
+  width: 100%;
+  background: rgba(102,126,234,0.25);
 }
 
 .calendar-month-label {
@@ -1305,6 +1412,10 @@ h2 {
   gap: 6px;
   flex: 1;
   min-height: 0;
+}
+
+.calendar-split.hidden {
+  display: none;
 }
 
 .calendar-left {
@@ -1654,6 +1765,16 @@ h2 {
   gap: 0;
 }
 
+.left-row-wrapper {
+  width: 450px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.left-row-wrapper.center {
+  justify-content: center;
+}
+
 .tower.right .space-row {
   align-items: flex-start;
 }
@@ -1738,6 +1859,54 @@ h2 {
   width: 75px !important;
   min-width: 75px !important;
   max-width: 75px !important;
+}
+
+.space[data-tower="left"][data-building="0"].ward-a:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+}
+
+.space[data-tower="left"][data-building="0"].ward-b:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+}
+
+.space[data-tower="left"][data-building="0"].ward-c:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 105px !important;
+  min-width: 105px !important;
+  max-width: 105px !important;
+}
+
+.space[data-tower="left"][data-building="0"].shared-facilities-width:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 65px !important;
+  min-width: 65px !important;
+  max-width: 65px !important;
+}
+
+.space[data-tower="right"][data-wing="mcbtc2030"].ward-a:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+}
+
+.space[data-tower="right"][data-wing="mcbtc2030"].ward-b:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+}
+
+.space[data-tower="right"][data-wing="mcbtc2030"].ward-c:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 105px !important;
+  min-width: 105px !important;
+  max-width: 105px !important;
+}
+
+.space[data-tower="right"][data-wing="mcbtc2030"].shared-facilities-width:is([data-floor="7"], [data-floor="8"], [data-floor="9"], [data-floor="10"], [data-floor="11"], [data-floor="12"]) {
+  width: 65px !important;
+  min-width: 65px !important;
+  max-width: 65px !important;
 }
 
 /* L06 專用寬度 - PRIVATE WARD 增加1px */
@@ -2627,6 +2796,12 @@ h2 {
 .tower.theme-mcbtc .space.selected {
   background-color: var(--color-mcbtc) !important;
   border-color: var(--color-mcbtc-border) !important;
+  color: #333 !important;
+}
+
+.tower.theme-mcbtc2030 .space.selected {
+  background-color: var(--color-mcbtc2030) !important;
+  border-color: var(--color-mcbtc2030-border) !important;
   color: #333 !important;
 }
 
@@ -3829,6 +4004,17 @@ h2 {
 .tower.theme-mcbtc .csb-3f-row .space:last-child,
 .tower.theme-mcbtc .csb-3f-lower .space:last-child { border-right-color: var(--color-mcbtc-border) !important; }
 
+.tower.theme-mcbtc2030.top-edge .space-row .space,
+.tower.theme-mcbtc2030.top-edge .csb-3f-upper .space { border-top-color: var(--color-mcbtc2030-border) !important; }
+.tower.theme-mcbtc2030.bottom-edge .space-row .space,
+.tower.theme-mcbtc2030.bottom-edge .csb-3f-lower .space { border-bottom-color: var(--color-mcbtc2030-border) !important; }
+.tower.theme-mcbtc2030 .space-row .space:first-child,
+.tower.theme-mcbtc2030 .csb-3f-row .space:first-child,
+.tower.theme-mcbtc2030 .csb-3f-lower .space:first-child { border-left-color: var(--color-mcbtc2030-border) !important; }
+.tower.theme-mcbtc2030 .space-row .space:last-child,
+.tower.theme-mcbtc2030 .csb-3f-row .space:last-child,
+.tower.theme-mcbtc2030 .csb-3f-lower .space:last-child { border-right-color: var(--color-mcbtc2030-border) !important; }
+
 .tower.theme-csb.top-edge .space-row .space,
 .tower.theme-csb.top-edge .csb-3f-upper .space { border-top-color: var(--color-csb-border) !important; }
 .tower.theme-csb.bottom-edge .space-row .space,
@@ -3863,12 +4049,14 @@ h2 {
 /* Control Panel Buttons */
 .building-btn.theme-ipeb { background-color: var(--color-ipeb); border-color: var(--color-ipeb-border); color: #333; }
 .building-btn.theme-mcbtc { background-color: transparent; border-color: var(--color-mcbtc-border); color: #333; }
+.building-btn.theme-mcbtc2030 { background-color: transparent; border-color: var(--color-mcbtc2030-border); color: #333; }
 .building-btn.theme-csb { background-color: transparent; border-color: var(--color-csb-border); color: #333; }
 .building-btn.theme-dtb { background-color: transparent; border-color: var(--color-dtb-border); color: #333; }
 .building-btn.theme-sb { background-color: transparent; border-color: var(--color-sb-border); color: #333; }
 
 .building-btn.theme-ipeb.active { background-color: var(--color-ipeb-border); color: white; }
 .building-btn.theme-mcbtc.active { background-color: var(--color-mcbtc-border); color: white; }
+.building-btn.theme-mcbtc2030.active { background-color: var(--color-mcbtc2030-border); color: white; }
 .building-btn.theme-csb.active { background-color: var(--color-csb-border); color: #333; }
 .building-btn.theme-dtb.active { background-color: var(--color-dtb-border); color: white; }
 .building-btn.theme-sb.active { background-color: var(--color-sb-border); color: white; }
@@ -3947,7 +4135,6 @@ h2 {
   <div class="main-view">
     <div class="top-search-floating">
       <div class="top-search-tools">
-        <button class="calendar-toggle-btn active" id="deptToggleBtn" type="button" onclick="toggleDeptPanel()" title="部門選擇">🏥</button>
         <button class="calendar-toggle-btn active" id="calendarToggleBtn" type="button" onclick="toggleCalendarPanel()" title="Calendar">📅</button>
       </div>
       <div class="top-panel top-dept-panel" id="topDeptPanel">
@@ -3973,7 +4160,7 @@ h2 {
       <div class="top-left-group">
         <div class="top-panel top-building-panel">
           <div class="top-panel-header">左塔建築</div>
-          <div class="top-building-selector">
+          <div class="top-building-selector" id="leftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-building-index="0" onclick="switchLeftBuilding(0)">MCBTC</button>
             <button class="building-btn theme-dtb" data-building-index="2" onclick="switchLeftBuilding(2)">DAY TREATMENT BLOCK</button>
             <button class="building-btn theme-sb" data-building-index="3" onclick="switchLeftBuilding(3)">SPECIAL BLOCK</button>
@@ -3981,6 +4168,14 @@ h2 {
           </div>
         </div>
 
+        <div class="top-panel top-building-panel">
+          <div class="top-panel-header">右塔建築</div>
+          <div class="top-building-selector" id="rightBuildingSelector">
+            <button class="building-btn theme-ipeb active" data-right-building="0" onclick="switchRightBuilding(0)">IPEB</button>
+            <button class="building-btn theme-mcbtc2030" data-right-building="1" onclick="switchRightBuilding(1)">MCBTC (2030)</button>
+          </div>
+        </div>
+        
         
       </div>
       
@@ -3992,8 +4187,9 @@ h2 {
             <button class="calendar-nav" id="calendarPrev" type="button">&lt;</button>
             <div class="calendar-month-label" id="calendarMonthLabel"></div>
             <button class="calendar-nav" id="calendarNext" type="button">&gt;</button>
+            <button class="calendar-view-toggle" id="calendarViewToggle" type="button">List</button>
           </div>
-          <div class="calendar-split">
+          <div class="calendar-split" id="calendarSplit">
             <div class="calendar-left">
               <div class="calendar-weekdays">
                 <div class="calendar-weekday">Mon</div>
@@ -4012,6 +4208,7 @@ h2 {
               <div class="calendar-lefttower-list" id="calendarLeftTowerList"></div>
             </div>
           </div>
+          <div class="calendar-agenda hidden" id="calendarAgenda"></div>
         </div>
       </div>
     </div>
@@ -6557,23 +6754,31 @@ const timelineLinks = {
 
 // 全局變量
 let currentLeftBuilding = 0;
+let currentRightBuilding = 0;
+let mcbtc2030Floors = null;
+let mcbtc2030FloorsMode = null;
 let selectedSpaces = new Set();
 let currentDept = null;
 let selectedTimePeriod = null;
 let currentClickedSpace = null;
 let currentLinkedGroup = null;
 let scaleMax = 1.5;
-let userScale = 1.0;
+let userScale = 0.91;
 let minUserScale = 0.5;
+let basePanX = 32;
+let basePanY = 15;
 let buildingContainer = null;
 let centerBaselineRatio = null;
 let effectiveScale = 1;
+let baselineContentW = null;
+let baselineContentH = null;
 let lastZoomTs = 0;
 let rafFitId = 0;
 let isPinching = false;
 let calendarMonths = [];
 let calendarMonthIndex = 0;
 let selectedCalendarDate = null;
+let calendarViewMode = 'month';
 let isCalendarPanelVisible = true;
 let isDeptPanelVisible = true;
 let isDeptContentCollapsed = false;
@@ -6642,6 +6847,10 @@ const calendarLeftTowerByDate = {
   '2027-06-01': [
     { building: 0, floor: '10', index: 0 },
     { building: 0, floor: '9', index: 2 }
+  ],
+  '2027-06-02': [
+    { building: 0, floor: '12', index: 0 },
+    { building: 0, floor: '12', index: 2 }
   ]
 };
 
@@ -6723,6 +6932,7 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
   const shouldSetModeIndicatorId = opts.setModeIndicatorId !== false;
   const currentLeftBuilding = Number.isFinite(leftBuildingIndex) ? leftBuildingIndex : 0;
   building.innerHTML = '';
+  building.dataset.rightBuilding = String(currentRightBuilding);
   
   // Define themes
   const leftThemes = ['theme-mcbtc', 'theme-csb', 'theme-dtb', 'theme-sb'];
@@ -6754,14 +6964,14 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
   const indicator = document.createElement('div');
   indicator.className = 'mode-indicator';
   if (shouldSetModeIndicatorId) indicator.id = 'modeIndicator';
-  indicator.textContent = `左塔：${leftBuildingsData[currentLeftBuilding].name} | 右塔：IPEB`;
+  indicator.textContent = `左塔：${leftBuildingsData[currentLeftBuilding].name} | 右塔：${currentRightBuilding === 1 ? 'MCBTC (2030)' : 'IPEB'}`;
   indicator.style.whiteSpace = 'nowrap';
   
   centerContainer.appendChild(indicator);
   
   // Right Spacer (invisible, matches tower right width)
   const rightSpacer = document.createElement('div');
-  rightSpacer.className = 'tower right';
+  rightSpacer.className = 'tower right ' + (currentRightBuilding === 1 ? 'theme-mcbtc2030' : 'theme-ipeb');
   rightSpacer.style.visibility = 'hidden';
   
   indicatorRow.appendChild(leftSpacer);
@@ -6770,9 +6980,26 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
   
   building.appendChild(indicatorRow);
 
+  const floorOrder = ['19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0', 'B01', 'B02'];
+  if (!mcbtc2030Floors || mcbtc2030FloorsMode !== 'mcbtcMirror12') {
+    const source = (leftBuildingsData[0] && leftBuildingsData[0].floors) || {};
+    const floors = {};
+    let n = 1;
+    const buildOrder = ['12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0', 'B01', 'B02'];
+    buildOrder.forEach((key) => {
+      const row = source[key];
+      if (!Array.isArray(row) || row.length === 0) return;
+      floors[key] = row.map((s) => {
+        const widthClass = s && typeof s === 'object' && s.widthClass ? s.widthClass : 'normal';
+        const specialClass = s && typeof s === 'object' && s.specialClass ? s.specialClass : '';
+        return { name: String(n++), widthClass, specialClass };
+      });
+    });
+    mcbtc2030Floors = floors;
+    mcbtc2030FloorsMode = 'mcbtcMirror12';
+  }
   const leftData = leftBuildingsData[currentLeftBuilding].floors;
   const allFloors = new Set([...Object.keys(leftData), ...Object.keys(rightTowerData)]);
-  const floorOrder = ['19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0', 'B01', 'B02'];
   const sortedFloors = floorOrder.filter(f => allFloors.has(f));
 
   // Calculate actual top/bottom floors for each tower
@@ -6856,8 +7083,16 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
           const spaceDiv = createSpaceElement(space, 'left', floor, idx, currentLeftBuilding);
           spaceRow.appendChild(spaceDiv);
         });
-        
-        leftTower.appendChild(spaceRow);
+        if (currentLeftBuilding === 0) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'left-row-wrapper';
+          const f = parseInt(floor, 10);
+          if (!Number.isNaN(f) && f >= 7 && f <= 12) wrapper.classList.add('center');
+          wrapper.appendChild(spaceRow);
+          leftTower.appendChild(wrapper);
+        } else {
+          leftTower.appendChild(spaceRow);
+        }
       }
     } else if (floor == 3 && currentLeftBuilding == 1 && leftData[floor] && leftData[floor].upper && leftData[floor].lower) {
       // 處理 CSB 3/F 的特殊數據結構 - 改進版
@@ -6905,11 +7140,18 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
     floorNumber.className = 'floor-number';
     floorNumber.textContent = floor;
 
-    // 右塔（IPEB）
+    // 右塔（IPEB / MCBTC2030）
     const rightTower = document.createElement('div');
-    rightTower.className = 'tower right theme-ipeb';
+    rightTower.className = 'tower right ' + (currentRightBuilding === 1 ? 'theme-mcbtc2030' : 'theme-ipeb');
     if (floor === rightBounds.top) rightTower.classList.add('top-edge');
     if (floor === rightBounds.bottom) rightTower.classList.add('bottom-edge');
+
+    const rightIpebView = document.createElement('div');
+    rightIpebView.className = 'right-view right-view-ipeb';
+    rightTower.appendChild(rightIpebView);
+    const rightMcbtc2030View = document.createElement('div');
+    rightMcbtc2030View.className = 'right-view right-view-mcbtc2030';
+    rightTower.appendChild(rightMcbtc2030View);
     
     // 判斷是否為 8-19F，為這些樓層添加特殊類別
     const floorNum = parseInt(floor);
@@ -7007,7 +7249,7 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
       container.appendChild(upperRow);
       container.appendChild(lowerRow);
       spaceRow.appendChild(container);
-      rightTower.appendChild(spaceRow);
+      rightIpebView.appendChild(spaceRow);
       
     } else if (rightTowerData[floor]) {
       const floorData = rightTowerData[floor];
@@ -7192,13 +7434,52 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
       }
 
       if (spaceRow.children.length > 0) {
-        rightTower.appendChild(spaceRow);
+        rightIpebView.appendChild(spaceRow);
       } else {
         const emptyDiv = document.createElement('div');
         emptyDiv.className = 'empty-floor';
         emptyDiv.textContent = '無空間';
-        rightTower.appendChild(emptyDiv);
+        rightIpebView.appendChild(emptyDiv);
       }
+    }
+
+    const rowData = mcbtc2030Floors && mcbtc2030Floors[String(floor)] ? mcbtc2030Floors[String(floor)] : null;
+    if (rowData && rowData.length > 0) {
+      const spaceRow = document.createElement('div');
+      spaceRow.className = 'space-row';
+      rowData.forEach((s, idx) => {
+        const spaceDiv = document.createElement('div');
+        spaceDiv.className = 'space';
+        if (s && s.specialClass) spaceDiv.classList.add(s.specialClass);
+        if (s && s.widthClass) spaceDiv.classList.add(s.widthClass);
+        else spaceDiv.classList.add('normal');
+        spaceDiv.textContent = s && s.name ? s.name : '';
+        spaceDiv.dataset.tower = 'right';
+        spaceDiv.dataset.floor = floor;
+        spaceDiv.dataset.wing = 'mcbtc2030';
+        spaceDiv.dataset.index = String(idx);
+        spaceDiv.onclick = () => {
+          if (suppressSpaceClickOnce) {
+            suppressSpaceClickOnce = false;
+            return;
+          }
+          toggleSpace('right', floor, idx, null, 'mcbtc2030');
+        };
+        spaceRow.appendChild(spaceDiv);
+      });
+      const wrapper = document.createElement('div');
+      wrapper.className = 'right-row-wrapper';
+      const fn = parseInt(floor, 10);
+      if (!Number.isNaN(fn) && fn >= 7 && fn <= 12) {
+        if (floor === '7') wrapper.classList.add('center');
+      }
+      wrapper.appendChild(spaceRow);
+      rightMcbtc2030View.appendChild(wrapper);
+    } else {
+      const emptyDiv = document.createElement('div');
+      emptyDiv.className = 'empty-floor';
+      emptyDiv.textContent = '無空間';
+      rightMcbtc2030View.appendChild(emptyDiv);
     }
 
     floorRow.appendChild(leftTower);
@@ -7206,6 +7487,51 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
     floorRow.appendChild(rightTower);
     building.appendChild(floorRow);
   });
+
+  const ipebViews = building.querySelectorAll('.right-view-ipeb');
+  let maxIpebW = 0;
+  ipebViews.forEach(view => {
+    const prev = view.style.display;
+    view.style.display = 'block';
+    const w = view.scrollWidth || 0;
+    if (w > maxIpebW) maxIpebW = w;
+    view.style.display = prev;
+  });
+  if (maxIpebW > 0) building.style.setProperty('--ipeb-right-view-w', `${maxIpebW}px`);
+  if (shouldUpdate && currentRightBuilding === 1) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const wrapper7 = building.querySelector('.floor-row[data-floor="7"] .right-view-mcbtc2030 .right-row-wrapper');
+        if (!wrapper7) return;
+        wrapper7.classList.add('center');
+        for (let f = 8; f <= 12; f += 1) {
+          const w = building.querySelector(`.floor-row[data-floor="${f}"] .right-view-mcbtc2030 .right-row-wrapper`);
+          if (!w) continue;
+          w.classList.remove('center');
+          w.style.paddingLeft = '0px';
+          w.style.justifyContent = 'flex-start';
+        }
+        requestAnimationFrame(() => {
+          const row7 = wrapper7.querySelector('.space-row');
+          const first7 = row7 ? row7.querySelector('.space') : null;
+          if (!first7) return;
+          const target = first7.getBoundingClientRect().left - wrapper7.getBoundingClientRect().left;
+          if (!Number.isFinite(target) || target < 0) return;
+          for (let f = 8; f <= 12; f += 1) {
+            const w = building.querySelector(`.floor-row[data-floor="${f}"] .right-view-mcbtc2030 .right-row-wrapper`);
+            if (!w) continue;
+            const row = w.querySelector('.space-row');
+            const first = row ? row.querySelector('.space') : null;
+            if (!first) continue;
+            const cur = first.getBoundingClientRect().left - w.getBoundingClientRect().left;
+            if (!Number.isFinite(cur)) continue;
+            const pad = Math.max(0, Math.round(target - cur));
+            w.style.paddingLeft = `${pad}px`;
+          }
+        });
+      });
+    });
+  }
 
   if (shouldUpdate) {
     updateDisplay();
@@ -7217,6 +7543,7 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
 function renderDepartments() {
   const deptButtons = document.getElementById('deptButtons');
   const deptSection = document.getElementById('deptSection');
+  if (!deptButtons || !deptSection) return;
   deptSection.style.display = 'block';
   deptButtons.innerHTML = '';
   setDeptFooterVisible(false);
@@ -8131,6 +8458,97 @@ function formatCalendarDate(year, month, day) {
   return `${year}-${mm}-${dd}`;
 }
 
+function formatAgendaDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return '';
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  const yyyy = parts[0];
+  const mm = parts[1];
+  const dd = parts[2];
+  return `${dd}/${mm}/${yyyy}`;
+}
+
+function renderCalendarAgenda() {
+  const agenda = document.getElementById('calendarAgenda');
+  if (!agenda) return;
+  agenda.innerHTML = '';
+  const dates = Object.keys(calendarLeftTowerByDate || {}).slice().sort();
+  if (dates.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'calendar-lefttower-empty';
+    empty.textContent = '無資料';
+    agenda.appendChild(empty);
+    return;
+  }
+  dates.forEach((dateStr) => {
+    const row = document.createElement('div');
+    row.className = 'calendar-agenda-day';
+    if (selectedCalendarDate === dateStr) row.classList.add('active');
+    const dateCol = document.createElement('div');
+    dateCol.className = 'calendar-agenda-date';
+    dateCol.textContent = formatAgendaDate(dateStr);
+    dateCol.addEventListener('click', function() {
+      selectedCalendarDate = dateStr;
+      updateCalendarLeftTowerBox(dateStr);
+      renderCalendarAgenda();
+    });
+    const itemsCol = document.createElement('div');
+    itemsCol.className = 'calendar-agenda-items';
+    const items = calendarLeftTowerByDate[dateStr] || [];
+    if (items.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'calendar-lefttower-empty';
+      empty.textContent = '無左塔';
+      itemsCol.appendChild(empty);
+    } else {
+      items.forEach((item) => {
+        const spaceInfo = getSpaceInfo('left', item.floor, item.index, item.building);
+        const name = spaceInfo ? spaceInfo.name : `${item.floor}F`;
+        const buildingName = (leftBuildingsData[item.building] && leftBuildingsData[item.building].name) ? leftBuildingsData[item.building].name : 'LEFT';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'calendar-lefttower-item';
+        btn.textContent = `${buildingName} ${item.floor}F ${name}`;
+        btn.addEventListener('click', function() {
+          toggleSpace('left', item.floor, item.index, item.building);
+          scrollToSpace('left', item.floor, item.index, item.building);
+        });
+        itemsCol.appendChild(btn);
+      });
+    }
+    row.appendChild(dateCol);
+    row.appendChild(itemsCol);
+    agenda.appendChild(row);
+  });
+}
+
+function setCalendarViewMode(mode) {
+  calendarViewMode = mode === 'list' ? 'list' : 'month';
+  const split = document.getElementById('calendarSplit');
+  const agenda = document.getElementById('calendarAgenda');
+  const toggleBtn = document.getElementById('calendarViewToggle');
+  const monthLabel = document.getElementById('calendarMonthLabel');
+  const prevBtn = document.getElementById('calendarPrev');
+  const nextBtn = document.getElementById('calendarNext');
+  if (split) split.classList.toggle('hidden', calendarViewMode !== 'month');
+  if (agenda) agenda.classList.toggle('hidden', calendarViewMode !== 'list');
+  if (toggleBtn) toggleBtn.textContent = calendarViewMode === 'month' ? 'List' : 'Month';
+  if (calendarViewMode === 'month') {
+    if (prevBtn) prevBtn.disabled = calendarMonthIndex <= 0;
+    if (nextBtn) nextBtn.disabled = calendarMonthIndex >= calendarMonths.length - 1;
+    renderCalendarMonth();
+    return;
+  }
+  if (monthLabel) monthLabel.textContent = 'Agenda';
+  if (prevBtn) prevBtn.disabled = true;
+  if (nextBtn) nextBtn.disabled = true;
+  renderCalendarAgenda();
+}
+
+function toggleCalendarViewMode() {
+  setCalendarViewMode(calendarViewMode === 'month' ? 'list' : 'month');
+}
+
 function updateCalendarLeftTowerBox(dateStr) {
   const empty = document.getElementById('calendarLeftTowerEmpty');
   const list = document.getElementById('calendarLeftTowerList');
@@ -8173,7 +8591,8 @@ function updateCalendarLeftTowerBox(dateStr) {
 
 function selectCalendarDate(dateStr) {
   selectedCalendarDate = dateStr;
-  renderCalendarMonth();
+  if (calendarViewMode === 'month') renderCalendarMonth();
+  else renderCalendarAgenda();
   updateCalendarLeftTowerBox(dateStr);
 }
 
@@ -8229,9 +8648,11 @@ function initCalendar() {
   calendarMonths = buildCalendarMonths();
   calendarMonthIndex = 0;
   selectedCalendarDate = null;
+  calendarViewMode = 'month';
   
   const prevBtn = document.getElementById('calendarPrev');
   const nextBtn = document.getElementById('calendarNext');
+  const viewToggle = document.getElementById('calendarViewToggle');
   
   if (prevBtn) {
     prevBtn.addEventListener('click', function() {
@@ -8246,10 +8667,14 @@ function initCalendar() {
       renderCalendarMonth();
     });
   }
+
+  if (viewToggle) {
+    viewToggle.addEventListener('click', toggleCalendarViewMode);
+  }
   
   renderCalendarMonth();
   updateCalendarLeftTowerBox(null);
-  setCalendarPanelVisible(true);
+  setCalendarPanelVisible(false);
 }
 
 function setCalendarPanelVisible(visible) {
@@ -8260,6 +8685,22 @@ function setCalendarPanelVisible(visible) {
   if (wrap) wrap.classList.toggle('hidden', !isCalendarPanelVisible);
   if (panel) panel.classList.toggle('hidden', !isCalendarPanelVisible);
   if (btn) btn.classList.toggle('active', isCalendarPanelVisible);
+  if (isCalendarPanelVisible) {
+    initCalendarFloating();
+    if (wrap && wrap.classList.contains('calendar-floating') && wrap.dataset.manualPosition !== '1') {
+      requestAnimationFrame(() => {
+        const mainView = document.querySelector('.main-view');
+        const selector = document.getElementById('rightBuildingSelector');
+        const target = selector ? (selector.closest('.top-panel') || selector) : null;
+        if (!mainView || !target) return;
+        const mainRect = mainView.getBoundingClientRect();
+        const r = target.getBoundingClientRect();
+        wrap.style.left = `${Math.round(r.right - mainRect.left + 6)}px`;
+        wrap.style.top = `${Math.round(r.top - mainRect.top)}px`;
+        clampCalendarToBounds();
+      });
+    }
+  }
   updateTopPanelSizing();
   requestAnimationFrame(fitBuildingToViewport);
 }
@@ -8421,8 +8862,12 @@ function initCalendarFloating() {
   if (!parent) return;
   const rect = panel.getBoundingClientRect();
   const mainRect = mainView.getBoundingClientRect();
-  const left = Math.max(0, Math.round(rect.left - mainRect.left));
-  const top = Math.max(0, Math.round(rect.top - mainRect.top));
+  const selector = document.getElementById('rightBuildingSelector');
+  const target = selector ? (selector.closest('.top-panel') || selector) : null;
+  const anchorLeft = target ? Math.max(0, Math.round(target.getBoundingClientRect().right - mainRect.left + 6)) : 0;
+  const anchorTop = target ? Math.max(0, Math.round(target.getBoundingClientRect().top - mainRect.top)) : 0;
+  const left = (rect.width < 40 || rect.height < 40) ? anchorLeft : Math.max(0, Math.round(rect.left - mainRect.left));
+  const top = (rect.width < 40 || rect.height < 40) ? anchorTop : Math.max(0, Math.round(rect.top - mainRect.top));
 
   let placeholder = document.getElementById('calendarPlaceholder');
   if (!placeholder) {
@@ -8542,6 +8987,7 @@ function enableCalendarDrag() {
 
   handle.addEventListener('pointerdown', (e) => {
     if (e.button != null && e.button !== 0) return;
+    panel.dataset.manualPosition = '1';
     dragging = true;
     startX = e.clientX;
     startY = e.clientY;
@@ -8674,9 +9120,15 @@ function selectWard(wardName) {
 
 // 切換建築
 function switchLeftBuilding(index) {
+  panX = basePanX;
+  panY = basePanY;
+  if (buildingContainer) {
+    buildingContainer.scrollLeft = 0;
+    buildingContainer.scrollTop = 0;
+  }
   currentLeftBuilding = index;
   
-  document.querySelectorAll('.top-building-selector .building-btn').forEach((btn, i) => {
+  document.querySelectorAll('#leftBuildingSelector .building-btn').forEach((btn, i) => {
     const parsed = parseInt(btn.dataset.buildingIndex, 10);
     const btnIndex = Number.isFinite(parsed) ? parsed : i;
     if (btnIndex === index) {
@@ -8687,7 +9139,7 @@ function switchLeftBuilding(index) {
   });
   
   const buildingName = leftBuildingsData[index].name;
-  document.getElementById('modeIndicator').textContent = '左塔：' + buildingName + ' | 右塔：IPEB';
+  document.getElementById('modeIndicator').textContent = '左塔：' + buildingName + ' | 右塔：' + (currentRightBuilding === 1 ? 'MCBTC (2030)' : 'IPEB');
   
   renderBuilding(null, currentLeftBuilding);
   fitBuildingToViewport();
@@ -9017,6 +9469,16 @@ function updateLinkDisplay() {
       const wardItem = document.createElement('div');
       wardItem.className = 'linked-ward-item';
       wardItem.onclick = () => {
+        if (item.tower === 'right' && currentRightBuilding !== 0) {
+          switchRightBuilding(0);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              toggleSpace(item.tower, item.floor, item.index, item.buildingIndex, item.wing);
+              scrollToSpace(item.tower, item.floor, item.index, item.buildingIndex, item.wing);
+            });
+          });
+          return;
+        }
         toggleSpace(item.tower, item.floor, item.index, item.buildingIndex, item.wing);
         scrollToSpace(item.tower, item.floor, item.index, item.buildingIndex, item.wing);
       };
@@ -9099,6 +9561,19 @@ function scrollToSpace(tower, floor, index, buildingIndex = null, wing = '', fla
     });
   }
   
+  if (tower === 'right') {
+    const desiredRight = wing === 'mcbtc2030' ? 1 : 0;
+    if (currentRightBuilding !== desiredRight) {
+      switchRightBuilding(desiredRight);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          highlightSpace(tower, floor, index, buildingIndex, wing, flash);
+        });
+      });
+      return;
+    }
+  }
+
   if (tower === 'left' && buildingIndex !== null && buildingIndex !== currentLeftBuilding) {
     switchLeftBuilding(buildingIndex);
     setTimeout(() => {
@@ -9167,7 +9642,8 @@ function clearAll() {
   document.querySelectorAll('.ward-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('#clinicalList .dept-item, #nonList .dept-item').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.timeline-period').forEach(period => period.classList.remove('active'));
-  document.getElementById('wardSection').style.display = 'none';
+  const wardSection = document.getElementById('wardSection');
+  if (wardSection) wardSection.style.display = 'none';
   updateDisplay();
   updateLinkDisplay();
 }
@@ -9276,15 +9752,41 @@ function handleTouchEnd(e) {
   forceCrispText();
 }
 
+function switchRightBuilding(index) {
+  currentRightBuilding = index;
+  const building = document.getElementById('building');
+  if (building) building.dataset.rightBuilding = String(index);
+  document.querySelectorAll('#rightBuildingSelector .building-btn').forEach(btn => {
+    const i = parseInt(btn.dataset.rightBuilding, 10);
+    btn.classList.toggle('active', i === index);
+  });
+  document.querySelectorAll('#building .tower.right').forEach(t => {
+    t.classList.remove('theme-ipeb', 'theme-mcbtc', 'theme-mcbtc2030');
+    t.classList.add(index === 1 ? 'theme-mcbtc2030' : 'theme-ipeb');
+  });
+  const mode = document.getElementById('modeIndicator');
+  if (mode) {
+    const leftName = leftBuildingsData[currentLeftBuilding] ? leftBuildingsData[currentLeftBuilding].name : '';
+    mode.textContent = '左塔：' + leftName + ' | 右塔：' + (index === 1 ? 'MCBTC (2030)' : 'IPEB');
+  }
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
   buildingContainer = document.getElementById('buildingContainer');
+  panX = basePanX;
+  panY = basePanY;
+  if (buildingContainer) {
+    buildingContainer.scrollLeft = 0;
+    buildingContainer.scrollTop = 0;
+  }
   
   initPrivateWardInfoModal();
   updateTopPanelSizing();
   renderBuilding(null, currentLeftBuilding);
   renderDepartments();
   fitBuildingToViewport();
+  switchRightBuilding(currentRightBuilding);
   initCalendar();
   enableWardConnectionDrag();
   enableCalendarResize();
@@ -9298,6 +9800,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const scaleValue = document.getElementById('scaleValue');
   const scaleMaxSelect = document.getElementById('scaleMaxSelect');
   if (scaleSlider && scaleValue) {
+    scaleSlider.value = String(userScale);
     scaleSlider.addEventListener('input', function(e) {
       userScale = parseFloat(e.target.value);
       scaleValue.textContent = userScale.toFixed(2) + '×';
@@ -9449,6 +9952,8 @@ function getLeftTowerMaxRowWidth(buildingIndex) {
   const floors = (leftBuildingsData[buildingIndex] && leftBuildingsData[buildingIndex].floors) || {};
   let maxW = 0;
   Object.entries(floors).forEach(([floorKey, data]) => {
+    const floorNum = parseInt(floorKey, 10);
+    const isMcbtc712 = buildingIndex === 0 && !Number.isNaN(floorNum) && floorNum >= 7 && floorNum <= 12;
     if (floorKey === '3' && buildingIndex === 1 && data && data.upper && data.lower) {
       const upperW = (data.upper || []).reduce((sum, s) => sum + measureWidthForSpaceWidthClass(s && s.widthClass ? s.widthClass : 'normal'), 0);
       const lowerW = (data.lower || []).reduce((sum, s) => sum + measureWidthForSpaceWidthClass(s && s.widthClass ? s.widthClass : 'normal'), 0);
@@ -9457,7 +9962,14 @@ function getLeftTowerMaxRowWidth(buildingIndex) {
     }
     if (!Array.isArray(data)) return;
     if (data.length === 0) return;
-    const rowW = data.reduce((sum, s) => sum + measureWidthForSpaceWidthClass(s && s.widthClass ? s.widthClass : 'normal'), 0);
+    const rowW = data.reduce((sum, s) => {
+      const widthClass = s && s.widthClass ? s.widthClass : 'normal';
+      let w = measureWidthForSpaceWidthClass(widthClass);
+      if (isMcbtc712 && (widthClass === 'ward-a' || widthClass === 'ward-b' || widthClass === 'ward-c' || widthClass === 'shared-facilities-width')) {
+        w = Math.max(0, w - 10);
+      }
+      return sum + w;
+    }, 0);
     if (rowW > maxW) maxW = rowW;
   });
   return maxW;
@@ -9513,6 +10025,37 @@ function ensureCsbBaselineMeasured() {
   return !!(csbBaselineContentW && csbBaselineContentH);
 }
 
+function ensureBaselineMeasured() {
+  if (baselineContentW && baselineContentH) return true;
+  const root = getSizingMeasureRoot();
+  if (!root) return false;
+  const wrapper = document.createElement('div');
+  const buildingEl = document.createElement('div');
+  buildingEl.className = 'building';
+  wrapper.appendChild(buildingEl);
+  root.appendChild(wrapper);
+  const savedRight = currentRightBuilding;
+  const combos = [
+    { leftIdx: 2, rightIdx: 0 },
+    { leftIdx: 2, rightIdx: 1 },
+    { leftIdx: 3, rightIdx: 0 },
+    { leftIdx: 3, rightIdx: 1 }
+  ];
+  let maxW = 0;
+  let maxH = 0;
+  combos.forEach(({ leftIdx, rightIdx }) => {
+    currentRightBuilding = rightIdx;
+    renderBuilding(buildingEl, leftIdx, { update: false, setModeIndicatorId: false });
+    maxW = Math.max(maxW, buildingEl.scrollWidth || 0);
+    maxH = Math.max(maxH, buildingEl.scrollHeight || 0);
+  });
+  currentRightBuilding = savedRight;
+  baselineContentW = maxW || baselineContentW;
+  baselineContentH = maxH || baselineContentH;
+  root.removeChild(wrapper);
+  return !!(baselineContentW && baselineContentH);
+}
+
 function fitBuildingToViewport() {
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
@@ -9524,24 +10067,9 @@ function fitBuildingToViewport() {
   const contentW = building.scrollWidth;
   const contentH = building.scrollHeight;
   if (contentW === 0 || contentH === 0) return;
-  const isMcbtc = currentLeftBuilding === 0;
-  const isCsb = currentLeftBuilding === 1;
-  if (isCsb) {
-    csbBaselineContentW = contentW;
-    csbBaselineContentH = contentH;
-  }
-
-  let refW = contentW;
-  let refH = contentH;
-  if (isMcbtc) {
-    if (!csbBaselineContentW || !csbBaselineContentH) ensureCsbBaselineMeasured();
-    if (csbBaselineContentW && csbBaselineContentH) {
-      refW = csbBaselineContentW;
-      refH = csbBaselineContentH;
-    } else {
-      refW = ensureMcbtcRefContentWidth();
-    }
-  }
+  ensureBaselineMeasured();
+  const refW = baselineContentW || contentW;
+  const refH = baselineContentH || contentH;
 
   const autoScaleW = availW / refW;
   const autoScaleH = availH / refH;
@@ -9549,22 +10077,57 @@ function fitBuildingToViewport() {
   const effective = Math.min(autoScale * userScale, scaleMax);
   effectiveScale = effective;
   updateTopPanelSizing();
+  if (!isDragging && !zooming) {
+    panX = basePanX;
+    panY = basePanY;
+  }
   applyPanScale();
   forceCrispText();
   const scaledActualW = building.getBoundingClientRect().width;
   const fits = scaledActualW <= container.clientWidth + 0.5;
-  container.style.justifyContent = isMcbtc ? 'flex-start' : (fits ? 'flex-start' : 'center');
+  container.style.justifyContent = fits ? 'flex-start' : 'center';
   if (fits) {
     if (!zooming) container.scrollLeft = 0;
     if (!isDragging && !zooming) {
-      requestAnimationFrame(isMcbtc ? alignMcbtcToReference : alignBuildingToReference);
+      requestAnimationFrame(alignToReference);
     }
     return;
   }
   if (!isDragging && !zooming) {
-    if (!isMcbtc) requestAnimationFrame(centerUsingBaseline);
-    requestAnimationFrame(isMcbtc ? alignMcbtcToReference : alignBuildingToReference);
+    requestAnimationFrame(centerUsingBaseline);
+    requestAnimationFrame(alignToReference);
   }
+}
+
+function alignToReference() {
+  const container = document.getElementById('buildingContainer');
+  const building = document.getElementById('building');
+  const topBelowRow = document.querySelector('.top-below-row');
+  if (!container || !building || !topBelowRow) return;
+  const preferredFloors = ['16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3'];
+  const nums = building.querySelectorAll('.floor-number');
+  let row = null;
+  for (let i = 0; i < preferredFloors.length; i += 1) {
+    const floor = preferredFloors[i];
+    for (let j = 0; j < nums.length; j += 1) {
+      const el = nums[j];
+      if ((el.textContent || '').trim() === floor) {
+        row = el.closest('.floor-row');
+        break;
+      }
+    }
+    if (row) break;
+  }
+  if (!row) return;
+  const refRect = topBelowRow.getBoundingClientRect();
+  const rowRect = row.getBoundingClientRect();
+  const delta = rowRect.top - (refRect.bottom + 20);
+  if (!Number.isFinite(delta) || Math.abs(delta) < 1) return;
+  const scale = effectiveScale || 1;
+  const deltaScroll = delta / scale;
+  const maxScroll = Math.max(0, container.scrollHeight - container.clientHeight);
+  const next = Math.max(0, Math.min(container.scrollTop + deltaScroll, maxScroll));
+  container.scrollTop = next;
 }
 
 function alignMcbtcToReference() {
