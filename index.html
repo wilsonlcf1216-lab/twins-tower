@@ -919,7 +919,7 @@ h2 {
 }
 
 .main-view.phone-layout {
-  padding: 0;
+  padding: max(20px, env(safe-area-inset-top, 0px)) 0 0;
   overflow-x: hidden;
   overflow-y: auto;
   background: #fff;
@@ -927,7 +927,7 @@ h2 {
 
 .main-view.phone-layout .top-search-floating {
   position: sticky;
-  top: env(safe-area-inset-top, 0px);
+  top: 0;
   left: 0;
   right: 0;
   z-index: 600;
@@ -936,7 +936,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: 0;
   transform: none;
   background: #fff;
 }
@@ -5095,7 +5095,7 @@ h2 {
 
 @media (max-width: 960px) {
   .main-view.phone-layout {
-    padding: 0 !important;
+    padding: max(20px, env(safe-area-inset-top, 0px)) 0 0 !important;
     background: #fff !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
@@ -5103,7 +5103,7 @@ h2 {
 
   .main-view.phone-layout .top-search-floating {
     position: sticky !important;
-    top: env(safe-area-inset-top, 0px) !important;
+    top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
@@ -5111,7 +5111,7 @@ h2 {
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
-    padding-top: env(safe-area-inset-top, 0px) !important;
+    padding-top: 0 !important;
     background: #fff !important;
     transform: none !important;
     overflow: visible !important;
@@ -17480,6 +17480,13 @@ function isPhoneLayoutMode() {
   return minSide > 0 && minSide <= 600 && maxSide <= 960;
 }
 
+function getDefaultPanOffsets() {
+  if (isPhoneLayoutMode()) {
+    return { x: 0, y: basePanY + 12 };
+  }
+  return { x: basePanX, y: basePanY };
+}
+
 function ensurePanelPlaceholder(placeholderId, panel) {
   if (!panel) return null;
   let placeholder = document.getElementById(placeholderId);
@@ -18413,13 +18420,14 @@ function selectWard(wardName) {
 // 切換建築
 function switchLeftBuilding(index, options = {}) {
   const preservePan = !!options.preservePan || shouldPreserveCurrentView();
+  const defaultPan = getDefaultPanOffsets();
   const savedPanX = panX;
   const savedPanY = panY;
   const savedScrollLeft = buildingContainer ? (buildingContainer.scrollLeft || 0) : 0;
   const savedScrollTop = buildingContainer ? (buildingContainer.scrollTop || 0) : 0;
   if (!preservePan) {
-    panX = basePanX;
-    panY = basePanY;
+    panX = defaultPan.x;
+    panY = defaultPan.y;
     if (buildingContainer) {
       buildingContainer.scrollLeft = 0;
       buildingContainer.scrollTop = 0;
@@ -19113,8 +19121,9 @@ function switchRightBuilding(index, options = {}) {
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
   buildingContainer = document.getElementById('buildingContainer');
-  panX = basePanX;
-  panY = basePanY;
+  const defaultPan = getDefaultPanOffsets();
+  panX = defaultPan.x;
+  panY = defaultPan.y;
   if (buildingContainer) {
     buildingContainer.scrollLeft = 0;
     buildingContainer.scrollTop = 0;
@@ -19490,8 +19499,9 @@ function fitBuildingToViewport(options = {}) {
   effectiveScale = effective;
   updateTopPanelSizing();
   if (!preserveView && !isDragging && !zooming) {
-    panX = basePanX;
-    panY = basePanY;
+    const defaultPan = getDefaultPanOffsets();
+    panX = defaultPan.x;
+    panY = defaultPan.y;
   }
   applyPanScale();
   forceCrispText();
@@ -19660,7 +19670,7 @@ function alignPhoneBuildingToExceptionalTab() {
   if (!container || !building || !exceptionalTab) return;
   const floorEl = Array.from(building.querySelectorAll('.floor-number')).find((el) => !!(el && el.offsetParent));
   if (!floorEl) return;
-  const targetX = getCenteredTextStartX(exceptionalTab);
+  const targetX = getCenteredTextStartX(exceptionalTab) - 12;
   if (!Number.isFinite(targetX)) return;
   const floorRect = floorEl.getBoundingClientRect();
   const delta = floorRect.left - targetX;
@@ -19668,6 +19678,12 @@ function alignPhoneBuildingToExceptionalTab() {
   const scale = effectiveScale || 1;
   const viewportInContentUnits = container.clientWidth / scale;
   const maxScroll = Math.max(0, building.scrollWidth - viewportInContentUnits);
+  if (maxScroll <= 1) {
+    panX -= (delta / scale);
+    applyPanScale();
+    forceCrispText();
+    return;
+  }
   const next = Math.max(0, Math.min(container.scrollLeft + (delta / scale), maxScroll));
   container.scrollLeft = Math.round(next);
 }
