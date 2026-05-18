@@ -5169,9 +5169,48 @@ h2 {
     pointer-events: auto !important;
   }
 
+  .main-view.phone-layout .top-dept-footer.show {
+    display: flex !important;
+    justify-content: center;
+    padding: 3px 0 5px;
+  }
+
+  .main-view.phone-layout .dept-collapse-btn {
+    width: auto;
+    min-width: 42px;
+    height: 18px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    line-height: 1;
+  }
+
   .main-view.phone-layout .building-container {
-    display: none !important;
+    display: flex !important;
     margin-top: 0 !important;
+    padding: 26px 5px 10px !important;
+  }
+
+  .main-view.phone-layout .tower.left {
+    min-width: 450px !important;
+  }
+
+  .main-view.phone-layout .left-row-wrapper {
+    width: 450px !important;
+  }
+
+  .main-view.phone-layout .space {
+    min-height: 26px !important;
+  }
+
+  .main-view.phone-layout .floor-number {
+    width: 25px !important;
+    font-size: 9px !important;
+  }
+
+  .main-view.phone-layout .floor-13-19 .right-view-ipeb .space-row,
+  .main-view.phone-layout .space-row.floor-13-19 {
+    padding-left: 40px !important;
   }
 }
 /* Building Themes & Borders */
@@ -15927,6 +15966,7 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
     rightSpacer.style.width = `${maxIpebW}px`;
     rightSpacer.style.minWidth = `${maxIpebW}px`;
   }
+  syncPhoneBuildingSizing();
   if (shouldUpdate) {
     updateDisplay();
     updateLinkDisplay();
@@ -17253,6 +17293,7 @@ function clearMobileDeptSelection() {
   if (wardSection) wardSection.style.display = 'none';
   if (wardButtons) wardButtons.innerHTML = '';
   document.querySelectorAll('#clinicalList .dept-item, #nonList .dept-item').forEach(el => el.classList.remove('active'));
+  setDeptFooterVisible(false);
   populateDeptList(currentDeptSide);
   updateDeptListVisibility(currentDeptSide);
   syncMobileDeptSummary();
@@ -17402,6 +17443,108 @@ function syncPhoneLayoutPanels() {
   if (isCalendarPanelVisible) {
     enableCalendarResize();
   }
+}
+
+function getPhoneDesktopSpaceWidth(space) {
+  if (!space) return null;
+  const specialWidthMap = {
+    'ward-a': 130,
+    'ward-b': 130,
+    'ward-c': 115,
+    'shared-facilities-width': 75,
+    'l06-private-ward': 260,
+    'l06-ssu': 115,
+    'l06-shared': 75,
+    'l01-auditorium': 260,
+    'l01-shroff': 115,
+    'l01-pharmacy': 75,
+    'l00-25': 25,
+    'l00-30': 29,
+    'l00-35': 33,
+    'l00-36': 36,
+    'l00-37': 37,
+    'l00-38': 38,
+    'l00-39': 39,
+    'l00-39a': 39,
+    'l00-40': 40,
+    'l00-40a': 40,
+    'l00-42': 42,
+    'l00-43': 43,
+    'l00-45': 45,
+    'l00-50': 49,
+    'b01-plant': 260,
+    'b01-tunnel': 190
+  };
+  const upperWardMap = {
+    'ward-a': 104,
+    'ward-b': 120,
+    'ward-c': 131,
+    'shared-facilities-width': 65
+  };
+  const building = String(space.dataset.building || '');
+  const floor = String(space.dataset.floor || '');
+  const isMcbtcUpperWard = space.dataset.tower === 'left'
+    && building === '0'
+    && ['7', '8', '9', '10', '11', '12'].includes(floor);
+  for (let i = 0; i < space.classList.length; i += 1) {
+    const cls = space.classList[i];
+    if (isMcbtcUpperWard && Object.prototype.hasOwnProperty.call(upperWardMap, cls)) {
+      return upperWardMap[cls];
+    }
+    if (Object.prototype.hasOwnProperty.call(specialWidthMap, cls)) {
+      return specialWidthMap[cls];
+    }
+    const numericMatch = cls.match(/^(?:w|csb|dtb|sb)-(\d+)$/);
+    if (numericMatch) {
+      return Number(numericMatch[1]);
+    }
+  }
+  return null;
+}
+
+function syncPhoneBuildingSizing() {
+  const mainView = document.querySelector('.main-view');
+  const isPhoneLayout = !!(mainView && mainView.classList.contains('phone-layout'));
+  const buildingContainer = document.getElementById('buildingContainer');
+  if (buildingContainer) {
+    buildingContainer.style.display = isPhoneLayout ? 'flex' : '';
+    buildingContainer.style.padding = isPhoneLayout ? '26px 5px 10px' : '';
+  }
+  const building = document.getElementById('building');
+  if (!building) return;
+  building.querySelectorAll('.tower.left').forEach((tower) => {
+    tower.style.minWidth = isPhoneLayout ? '450px' : '';
+  });
+  building.querySelectorAll('.left-row-wrapper').forEach((wrapper) => {
+    wrapper.style.width = isPhoneLayout ? '450px' : '';
+  });
+  building.querySelectorAll('.floor-number').forEach((floorNumber) => {
+    floorNumber.style.width = isPhoneLayout ? '25px' : '';
+    floorNumber.style.fontSize = isPhoneLayout ? '9px' : '';
+  });
+  building.querySelectorAll('.floor-13-19 .right-view-ipeb .space-row, .space-row.floor-13-19').forEach((row) => {
+    row.style.paddingLeft = isPhoneLayout ? '40px' : '';
+  });
+  building.querySelectorAll('.space').forEach((space) => {
+    space.style.minHeight = isPhoneLayout ? '26px' : '';
+    if (!isPhoneLayout) {
+      space.style.width = '';
+      space.style.minWidth = '';
+      space.style.maxWidth = '';
+      return;
+    }
+    const width = getPhoneDesktopSpaceWidth(space);
+    if (Number.isFinite(width) && width > 0) {
+      const widthPx = `${width}px`;
+      space.style.width = widthPx;
+      space.style.minWidth = widthPx;
+      space.style.maxWidth = widthPx;
+    } else {
+      space.style.width = '';
+      space.style.minWidth = '';
+      space.style.maxWidth = '';
+    }
+  });
 }
 
 function initWardConnectionFloating() {
@@ -18688,6 +18831,7 @@ function updateEmbeddedLayout() {
   const phoneLayout = isPhoneLayoutMode();
   mainView.classList.toggle('compact-layout', compact && !phoneLayout);
   mainView.classList.toggle('phone-layout', phoneLayout);
+  syncPhoneBuildingSizing();
 }
 
 function refreshEmbeddedLayout() {
