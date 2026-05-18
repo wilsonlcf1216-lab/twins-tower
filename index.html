@@ -4982,7 +4982,6 @@ h2 {
   }
 
   .main-view.phone-layout .top-search-tools,
-  .main-view.phone-layout .top-left-group,
   .main-view.phone-layout .timeline-top-row,
   .main-view.phone-layout .top-below-row,
   .main-view.phone-layout .calendar-placeholder {
@@ -5020,8 +5019,49 @@ h2 {
     flex-direction: column !important;
   }
 
-  .main-view.phone-layout .mobile-top-tabs {
+  .main-view.phone-layout .top-left-group {
     order: 3 !important;
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 0 !important;
+    width: 100% !important;
+  }
+
+  .main-view.phone-layout .top-left-group .top-building-panel {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .main-view.phone-layout .top-left-group .top-panel-header {
+    display: none !important;
+  }
+
+  .main-view.phone-layout .top-building-selector {
+    display: grid !important;
+    gap: 0 !important;
+  }
+
+  .main-view.phone-layout #leftBuildingSelector {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .main-view.phone-layout #rightBuildingSelector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .main-view.phone-layout .top-building-panel .building-btn {
+    min-height: 28px;
+    padding: 0 2px;
+    font-size: 9px;
+    border-radius: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .main-view.phone-layout .mobile-top-tabs {
+    order: 4 !important;
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0 !important;
@@ -5038,7 +5078,7 @@ h2 {
     color: #4b5563;
     font-size: 11px;
     font-weight: 700;
-    min-height: 34px;
+    min-height: 30px;
     padding: 0 4px;
   }
 
@@ -5052,18 +5092,18 @@ h2 {
   }
 
   .main-view.phone-layout #topDeptPanel {
-    order: 4 !important;
+    order: 5 !important;
     display: flex !important;
     overflow: visible !important;
   }
 
   .main-view.phone-layout #topExceptionalPanel {
-    order: 4 !important;
+    order: 5 !important;
     display: flex !important;
   }
 
   .main-view.phone-layout #topCalendarPanel {
-    order: 4 !important;
+    order: 5 !important;
   }
 
   .main-view.phone-layout #topDeptPanel.hidden,
@@ -5076,6 +5116,11 @@ h2 {
   .main-view.phone-layout #topDeptPanel #deptButtons {
     display: block !important;
     overflow: visible !important;
+  }
+
+  .main-view.phone-layout #topDeptPanel .top-dept-body {
+    max-height: min(24vh, 180px);
+    overflow-y: auto !important;
   }
 
   .main-view.phone-layout #topDeptPanel [data-role="side-group"] {
@@ -5141,7 +5186,7 @@ h2 {
 
   .main-view.phone-layout #topExceptionalPanel .exceptional-list {
     display: flex !important;
-    max-height: min(34vh, 240px);
+    max-height: min(22vh, 160px);
     margin-top: 0;
   }
 
@@ -5152,7 +5197,8 @@ h2 {
 
   .main-view.phone-layout #topCalendarPanel .calendar-panel {
     display: flex !important;
-    min-height: 260px;
+    min-height: 220px;
+    max-height: min(28vh, 220px);
   }
 
   .main-view.phone-layout .top-linked-panel .link-display {
@@ -5169,20 +5215,9 @@ h2 {
     pointer-events: auto !important;
   }
 
+  .main-view.phone-layout .top-dept-footer,
   .main-view.phone-layout .top-dept-footer.show {
-    display: flex !important;
-    justify-content: center;
-    padding: 3px 0 5px;
-  }
-
-  .main-view.phone-layout .dept-collapse-btn {
-    width: auto;
-    min-width: 42px;
-    height: 18px;
-    padding: 0 8px;
-    border-radius: 999px;
-    font-size: 10px;
-    line-height: 1;
+    display: none !important;
   }
 
   .main-view.phone-layout .building-container {
@@ -5211,6 +5246,11 @@ h2 {
   .main-view.phone-layout .floor-13-19 .right-view-ipeb .space-row,
   .main-view.phone-layout .space-row.floor-13-19 {
     padding-left: 40px !important;
+  }
+
+  .main-view.phone-layout .floor-8-12 .right-view-ipeb .space-row,
+  .main-view.phone-layout .space-row.floor-8-12 {
+    padding-left: 20px !important;
   }
 }
 /* Building Themes & Borders */
@@ -17333,12 +17373,6 @@ function positionMobileDeptSearchResults() {
 function switchMobileTopPanel(panel) {
   if (!isPhoneLayoutMode()) return;
   const next = String(panel || '');
-  if (next === 'dept') {
-    currentMobileTopPanel = 'dept';
-    clearMobileDeptSelection();
-    syncPhoneLayoutPanels();
-    return;
-  }
   currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
   syncPhoneLayoutPanels();
 }
@@ -17373,6 +17407,32 @@ function dockCalendarPanel() {
   delete panel.dataset.manualPosition;
 }
 
+function syncMobileBuildingSelectorLabels() {
+  const isPhoneLayout = isPhoneLayoutMode();
+  const leftLabels = [
+    ['0', 'MCBTC', 'MCBTC'],
+    ['1', 'CLINICAL SCIENCES BUILDING', 'CSB'],
+    ['2', 'DAY TREATMENT BLOCK', 'DTB'],
+    ['3', 'SPECIAL BLOCK', 'SB']
+  ];
+  leftLabels.forEach(([idx, full, short]) => {
+    const btn = document.querySelector(`#leftBuildingSelector .building-btn[data-building-index="${idx}"]`);
+    if (!btn) return;
+    btn.textContent = isPhoneLayout ? short : full;
+    btn.title = full;
+  });
+  const rightLabels = [
+    ['0', 'IPEB', 'IPEB'],
+    ['1', 'MCBTC (2030)', 'MCBTC2030']
+  ];
+  rightLabels.forEach(([idx, full, short]) => {
+    const btn = document.querySelector(`#rightBuildingSelector .building-btn[data-right-building="${idx}"]`);
+    if (!btn) return;
+    btn.textContent = isPhoneLayout ? short : full;
+    btn.title = full;
+  });
+}
+
 function syncPhoneLayoutPanels() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
@@ -17383,6 +17443,7 @@ function syncPhoneLayoutPanels() {
     const stack = document.querySelector('.top-search-floating');
     const searchBox = document.querySelector('.top-search-box');
     const tabs = document.getElementById('mobileTopTabs');
+    const topLeftGroup = document.querySelector('.top-left-group');
     const deptPanel = document.getElementById('topDeptPanel');
     const exceptionalPanel = document.getElementById('topExceptionalPanel');
     const wrap = document.getElementById('topCalendarPanel');
@@ -17391,13 +17452,16 @@ function syncPhoneLayoutPanels() {
     if (stack) {
       ensurePanelPlaceholder('calendarMobileRestore', wrap);
       ensurePanelPlaceholder('linkedMobileRestore', linked);
+      ensurePanelPlaceholder('buildingSelectorsMobileRestore', topLeftGroup);
       if (searchBox) stack.appendChild(searchBox);
       if (linked) stack.appendChild(linked);
+      if (topLeftGroup) stack.appendChild(topLeftGroup);
       if (tabs) stack.appendChild(tabs);
       if (deptPanel) stack.appendChild(deptPanel);
       if (exceptionalPanel) stack.appendChild(exceptionalPanel);
       if (wrap) stack.appendChild(wrap);
     }
+    syncMobileBuildingSelectorLabels();
     if (tabs) {
       tabs.querySelectorAll('.mobile-top-tab').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset && btn.dataset.panel === currentMobileTopPanel);
@@ -17429,7 +17493,9 @@ function syncPhoneLayoutPanels() {
   }
   restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
   restorePanelFromPlaceholder('linkedMobileRestore', document.querySelector('.top-linked-panel'));
+  restorePanelFromPlaceholder('buildingSelectorsMobileRestore', document.querySelector('.top-left-group'));
   currentMobileTopPanel = 'none';
+  syncMobileBuildingSelectorLabels();
   const deptPanel = document.getElementById('topDeptPanel');
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
   if (deptPanel) {
@@ -17447,6 +17513,15 @@ function syncPhoneLayoutPanels() {
 
 function getPhoneDesktopSpaceWidth(space) {
   if (!space) return null;
+  const widthClassList = Array.from(space.classList || []);
+  return getDesktopWidthForWidthClassList(widthClassList, {
+    tower: String(space.dataset.tower || ''),
+    building: String(space.dataset.building || ''),
+    floor: String(space.dataset.floor || '')
+  });
+}
+
+function getDesktopWidthForWidthClassList(widthClassList, context = {}) {
   const specialWidthMap = {
     'ward-a': 130,
     'ward-b': 130,
@@ -17481,13 +17556,14 @@ function getPhoneDesktopSpaceWidth(space) {
     'ward-c': 131,
     'shared-facilities-width': 65
   };
-  const building = String(space.dataset.building || '');
-  const floor = String(space.dataset.floor || '');
-  const isMcbtcUpperWard = space.dataset.tower === 'left'
+  const building = String(context.building || '');
+  const floor = String(context.floor || '');
+  const tower = String(context.tower || '');
+  const isMcbtcUpperWard = tower === 'left'
     && building === '0'
     && ['7', '8', '9', '10', '11', '12'].includes(floor);
-  for (let i = 0; i < space.classList.length; i += 1) {
-    const cls = space.classList[i];
+  for (let i = 0; i < widthClassList.length; i += 1) {
+    const cls = widthClassList[i];
     if (isMcbtcUpperWard && Object.prototype.hasOwnProperty.call(upperWardMap, cls)) {
       return upperWardMap[cls];
     }
@@ -17524,6 +17600,9 @@ function syncPhoneBuildingSizing() {
   });
   building.querySelectorAll('.floor-13-19 .right-view-ipeb .space-row, .space-row.floor-13-19').forEach((row) => {
     row.style.paddingLeft = isPhoneLayout ? '40px' : '';
+  });
+  building.querySelectorAll('.floor-8-12 .right-view-ipeb .space-row, .space-row.floor-8-12').forEach((row) => {
+    row.style.paddingLeft = isPhoneLayout ? '20px' : '';
   });
   building.querySelectorAll('.space').forEach((space) => {
     space.style.minHeight = isPhoneLayout ? '26px' : '';
@@ -18874,6 +18953,8 @@ function getSizingMeasureRoot() {
 }
 
 function measureWidthForSpaceWidthClass(widthClass) {
+  const fixedWidth = getDesktopWidthForWidthClassList([String(widthClass || '')]);
+  if (Number.isFinite(fixedWidth) && fixedWidth > 0) return fixedWidth;
   const root = getSizingMeasureRoot();
   const el = document.createElement('div');
   el.className = `space ${widthClass || ''}`.trim();
@@ -18902,14 +18983,7 @@ function applyPanScale() {
 }
 
 function measureFloorNumberWidth() {
-  const root = getSizingMeasureRoot();
-  const el = document.createElement('div');
-  el.className = 'floor-number';
-  el.textContent = '19';
-  root.appendChild(el);
-  const w = Math.ceil(el.getBoundingClientRect().width || 0);
-  root.removeChild(el);
-  return w;
+  return 25;
 }
 
 function getLeftTowerMaxRowWidth(buildingIndex) {
