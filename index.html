@@ -927,7 +927,7 @@ h2 {
 
 .main-view.phone-layout .top-search-floating {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   left: 0;
   right: 0;
   z-index: 600;
@@ -5103,7 +5103,7 @@ h2 {
 
   .main-view.phone-layout .top-search-floating {
     position: sticky !important;
-    top: 0 !important;
+    top: env(safe-area-inset-top, 0px) !important;
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
@@ -19471,6 +19471,7 @@ function fitBuildingToViewport(options = {}) {
   const building = document.getElementById('building');
   if (!container || !building) return;
   const preserveView = !!options.preserveView;
+  const phoneLayout = isPhoneLayoutMode();
   const now = performance.now();
   const zooming = isPinching || (now - lastZoomTs < 160);
   const availW = container.clientWidth - 8;
@@ -19496,17 +19497,25 @@ function fitBuildingToViewport(options = {}) {
   forceCrispText();
   const scaledActualW = building.getBoundingClientRect().width;
   const fits = scaledActualW <= container.clientWidth + 0.5;
-  container.style.justifyContent = fits ? 'flex-start' : 'center';
+  container.style.justifyContent = (phoneLayout || fits) ? 'flex-start' : 'center';
   if (fits) {
-    if (!preserveView && !zooming) container.scrollLeft = 0;
-    if (!preserveView && !isDragging && !zooming) {
-      requestAnimationFrame(alignToReference);
+    if (phoneLayout) {
+      requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
+    } else {
+      if (!preserveView && !zooming) container.scrollLeft = 0;
+      if (!preserveView && !isDragging && !zooming) {
+        requestAnimationFrame(alignToReference);
+      }
     }
+    return;
+  }
+  if (phoneLayout) {
+    requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
     return;
   }
   if (!preserveView && !isDragging && !zooming) {
     requestAnimationFrame(centerUsingBaseline);
-    requestAnimationFrame(alignToReference);
+      requestAnimationFrame(alignToReference);
   }
 }
 
