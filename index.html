@@ -1086,64 +1086,77 @@ h2 {
   display: flex;
 }
 
+.mobile-building-selectors {
+  display: none;
+}
+
 .main-view.phone-layout .top-left-group {
+  display: none !important;
+}
+
+.main-view.phone-layout .mobile-building-selectors {
   display: grid !important;
   grid-template-columns: 1fr;
   gap: 0 !important;
   width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  align-self: stretch !important;
+  background: #fff !important;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.main-view.phone-layout .top-left-group,
-.main-view.phone-layout .top-left-group .top-panel,
-.main-view.phone-layout .top-left-group .top-building-panel {
-  height: auto !important;
-  min-height: 0 !important;
-  overflow: visible !important;
+.main-view.phone-layout .mobile-building-row {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 30px;
+  border-top: 1px solid #e5e7eb;
 }
 
-.main-view.phone-layout .top-left-group .top-building-panel {
-  display: contents !important;
-  width: 100% !important;
-  flex: 0 0 auto !important;
-  height: auto !important;
-  min-height: 0 !important;
-  padding: 0 !important;
+.main-view.phone-layout .mobile-building-row:first-child {
+  border-top: 0;
+}
+
+.main-view.phone-layout .mobile-building-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #4338ca;
+  background: #eef2ff;
+  border-right: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.main-view.phone-layout .mobile-building-options {
+  display: grid;
   gap: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
 }
 
-.main-view.phone-layout .top-left-group .top-panel-header {
-  display: none !important;
-}
-
-.main-view.phone-layout .top-building-selector {
-  display: grid !important;
-  width: 100% !important;
-  gap: 0 !important;
-  grid-auto-rows: minmax(28px, auto);
-  align-content: start !important;
-  justify-items: stretch !important;
-}
-
-.main-view.phone-layout #leftBuildingSelector {
+.main-view.phone-layout #mobileLeftBuildingSelector {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.main-view.phone-layout #rightBuildingSelector {
+.main-view.phone-layout #mobileRightBuildingSelector {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.main-view.phone-layout .top-building-panel .building-btn {
-  min-height: 28px;
+.main-view.phone-layout .mobile-building-options .building-btn {
+  min-height: 30px;
+  height: 30px;
   padding: 0 2px;
   font-size: 9px;
+  line-height: 1;
   border-radius: 0;
+  border-width: 0 1px 0 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.main-view.phone-layout .mobile-building-options .building-btn:last-child {
+  border-right-width: 0;
 }
 
 .main-view.phone-layout .mobile-top-tabs {
@@ -1170,21 +1183,12 @@ h2 {
 }
 
 #twintower-app .main-view.phone-layout .top-left-group {
-  display: grid !important;
-  height: auto !important;
-  min-height: 0 !important;
+  display: none !important;
 }
 
-#twintower-app .main-view.phone-layout .top-left-group .top-panel,
-#twintower-app .main-view.phone-layout .top-left-group .top-building-panel {
-  display: contents !important;
-  height: auto !important;
-  min-height: 0 !important;
-  overflow: visible !important;
-}
-
-#twintower-app .main-view.phone-layout #leftBuildingSelector,
-#twintower-app .main-view.phone-layout #rightBuildingSelector {
+#twintower-app .main-view.phone-layout .mobile-building-selectors,
+#twintower-app .main-view.phone-layout #mobileLeftBuildingSelector,
+#twintower-app .main-view.phone-layout #mobileRightBuildingSelector {
   display: grid !important;
   width: 100% !important;
   height: auto !important;
@@ -5647,6 +5651,24 @@ body.phone-layout-active .private-ward-card-body {
       <div class="top-search-box">
         <input class="top-filter-input" id="deptFilter" type="text" placeholder="Searching for Ward/Area">
         <div id="deptSearchResults" class="dept-search-results"></div>
+      </div>
+      <div class="mobile-building-selectors" id="mobileBuildingSelectors">
+        <div class="mobile-building-row">
+          <div class="mobile-building-label">Left Tower</div>
+          <div class="mobile-building-options" id="mobileLeftBuildingSelector">
+            <button class="building-btn theme-mcbtc active" data-mobile-left-building="0" type="button" onclick="switchLeftBuilding(0)">MCBTC</button>
+            <button class="building-btn theme-csb" data-mobile-left-building="1" type="button" onclick="switchLeftBuilding(1)" title="CLINICAL SCIENCES BUILDING">CSB</button>
+            <button class="building-btn theme-dtb" data-mobile-left-building="2" type="button" onclick="switchLeftBuilding(2)" title="DAY TREATMENT BLOCK">DTB</button>
+            <button class="building-btn theme-sb" data-mobile-left-building="3" type="button" onclick="switchLeftBuilding(3)" title="SPECIAL BLOCK">SB</button>
+          </div>
+        </div>
+        <div class="mobile-building-row">
+          <div class="mobile-building-label">Right Tower</div>
+          <div class="mobile-building-options" id="mobileRightBuildingSelector">
+            <button class="building-btn theme-ipeb active" data-mobile-right-building="0" type="button" onclick="switchRightBuilding(0)">IPEB</button>
+            <button class="building-btn theme-mcbtc2030" data-mobile-right-building="1" type="button" onclick="switchRightBuilding(1)" title="MCBTC (2030)">MCBTC2030</button>
+          </div>
+        </div>
       </div>
       <div class="mobile-top-tabs" id="mobileTopTabs">
         <button class="mobile-top-tab" id="mobileTabDept" data-panel="dept" type="button" onclick="switchMobileTopPanel('dept')">Department List</button>
@@ -17584,6 +17606,11 @@ function syncMobileBuildingSelectorLabels() {
     if (!btn) return;
     btn.textContent = isPhoneLayout ? short : full;
     btn.title = full;
+    const mobileBtn = document.querySelector(`#mobileLeftBuildingSelector .building-btn[data-mobile-left-building="${idx}"]`);
+    if (mobileBtn) {
+      mobileBtn.textContent = short;
+      mobileBtn.title = full;
+    }
   });
   const rightLabels = [
     ['0', 'IPEB', 'IPEB'],
@@ -17594,6 +17621,28 @@ function syncMobileBuildingSelectorLabels() {
     if (!btn) return;
     btn.textContent = isPhoneLayout ? short : full;
     btn.title = full;
+    const mobileBtn = document.querySelector(`#mobileRightBuildingSelector .building-btn[data-mobile-right-building="${idx}"]`);
+    if (mobileBtn) {
+      mobileBtn.textContent = short;
+      mobileBtn.title = full;
+    }
+  });
+}
+
+function syncAllBuildingSelectorStates() {
+  document.querySelectorAll('#leftBuildingSelector .building-btn, #mobileLeftBuildingSelector .building-btn').forEach((btn, i) => {
+    const parsedDesktop = parseInt(btn.dataset.buildingIndex, 10);
+    const parsedMobile = parseInt(btn.dataset.mobileLeftBuilding, 10);
+    const btnIndex = Number.isFinite(parsedDesktop) ? parsedDesktop : (Number.isFinite(parsedMobile) ? parsedMobile : i);
+    btn.classList.toggle('active', btnIndex === currentLeftBuilding);
+  });
+  document.querySelectorAll('#rightBuildingSelector .building-btn, #mobileRightBuildingSelector .building-btn').forEach((btn) => {
+    const parsedDesktop = parseInt(btn.dataset.rightBuilding, 10);
+    const parsedMobile = parseInt(btn.dataset.mobileRightBuilding, 10);
+    const btnIndex = Number.isFinite(parsedDesktop) ? parsedDesktop : parsedMobile;
+    const disable2030 = btnIndex === 1 && currentLeftBuilding === 0;
+    btn.disabled = !!disable2030;
+    btn.classList.toggle('active', btnIndex === currentRightBuilding);
   });
 }
 
@@ -17621,7 +17670,7 @@ function refreshPhoneLayoutDebugPanel() {
   const phoneLayout = !!(mainView && mainView.classList.contains('phone-layout'));
   const compactLayout = !!(mainView && mainView.classList.contains('compact-layout'));
   const tabs = document.getElementById('mobileTopTabs');
-  const topLeftGroup = document.querySelector('.top-left-group');
+  const selectors = phoneLayout ? document.getElementById('mobileBuildingSelectors') : document.querySelector('.top-left-group');
   const deptPanel = document.getElementById('topDeptPanel');
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
   const calendarWrap = document.getElementById('topCalendarPanel');
@@ -17636,7 +17685,7 @@ function refreshPhoneLayoutDebugPanel() {
     `search: ${getElementRuntimeState(searchBox)}`,
     `linked: ${getElementRuntimeState(linked)}`,
     `tabs: ${getElementRuntimeState(tabs)}`,
-    `selectors: ${getElementRuntimeState(topLeftGroup)}`,
+    `selectors: ${getElementRuntimeState(selectors)}`,
     `dept: ${getElementRuntimeState(deptPanel)}`,
     `exception: ${getElementRuntimeState(exceptionalPanel)}`,
     `calendarWrap: ${getElementRuntimeState(calendarWrap)}`,
@@ -17649,6 +17698,7 @@ function stabilizePhoneLayoutVisibility() {
   const mainView = document.querySelector('.main-view');
   const isPhoneLayout = !!(mainView && mainView.classList.contains('phone-layout'));
   const tabs = document.getElementById('mobileTopTabs');
+  const mobileSelectors = document.getElementById('mobileBuildingSelectors');
   const topLeftGroup = document.querySelector('.top-left-group');
   const buildingContainer = document.getElementById('buildingContainer');
   const deptPanel = document.getElementById('topDeptPanel');
@@ -17659,7 +17709,7 @@ function stabilizePhoneLayoutVisibility() {
   if (isPhoneLayout && !validPanel) currentMobileTopPanel = 'dept';
 
   if (!isPhoneLayout) {
-    [tabs, topLeftGroup, buildingContainer, deptPanel, exceptionalPanel, calendarWrap].forEach((el) => {
+    [tabs, mobileSelectors, topLeftGroup, buildingContainer, deptPanel, exceptionalPanel, calendarWrap].forEach((el) => {
       if (el) el.style.display = '';
     });
     if (calendarPanel) calendarPanel.style.display = '';
@@ -17667,35 +17717,9 @@ function stabilizePhoneLayoutVisibility() {
   }
 
   if (tabs) tabs.style.setProperty('display', 'grid', 'important');
+  if (mobileSelectors) mobileSelectors.style.setProperty('display', 'grid', 'important');
   if (topLeftGroup) {
-    topLeftGroup.style.setProperty('display', 'grid', 'important');
-    topLeftGroup.style.setProperty('height', 'auto', 'important');
-    topLeftGroup.style.setProperty('min-height', '0', 'important');
-    topLeftGroup.style.setProperty('align-self', 'stretch', 'important');
-    topLeftGroup.querySelectorAll('.top-panel, .top-building-panel').forEach((panelEl) => {
-      panelEl.style.setProperty('display', 'contents', 'important');
-      panelEl.style.setProperty('height', 'auto', 'important');
-      panelEl.style.setProperty('min-height', '0', 'important');
-      panelEl.style.setProperty('padding', '0', 'important');
-      panelEl.style.setProperty('overflow', 'visible', 'important');
-    });
-    topLeftGroup.querySelectorAll('.top-building-selector').forEach((selectorEl) => {
-      selectorEl.style.setProperty('display', 'grid', 'important');
-      selectorEl.style.setProperty('height', 'auto', 'important');
-      selectorEl.style.setProperty('min-height', '0', 'important');
-      selectorEl.style.setProperty('gap', '0', 'important');
-      selectorEl.style.setProperty('align-content', 'start', 'important');
-    });
-    const leftSelector = document.getElementById('leftBuildingSelector');
-    const rightSelector = document.getElementById('rightBuildingSelector');
-    if (leftSelector) leftSelector.style.setProperty('grid-template-columns', 'repeat(4, minmax(0, 1fr))', 'important');
-    if (rightSelector) rightSelector.style.setProperty('grid-template-columns', 'repeat(2, minmax(0, 1fr))', 'important');
-    topLeftGroup.querySelectorAll('.building-btn').forEach((btn) => {
-      btn.style.setProperty('min-height', '28px', 'important');
-      btn.style.setProperty('height', '28px', 'important');
-      btn.style.setProperty('padding', '0 2px', 'important');
-      btn.style.setProperty('line-height', '1', 'important');
-    });
+    topLeftGroup.style.setProperty('display', 'none', 'important');
   }
   if (buildingContainer) {
     buildingContainer.style.setProperty('display', 'flex', 'important');
@@ -17740,8 +17764,8 @@ function syncPhoneLayoutPanels() {
     dockCalendarPanel();
     const stack = document.querySelector('.top-search-floating');
     const searchBox = document.querySelector('.top-search-box');
+    const mobileSelectors = document.getElementById('mobileBuildingSelectors');
     const tabs = document.getElementById('mobileTopTabs');
-    const topLeftGroup = document.querySelector('.top-left-group');
     const deptPanel = document.getElementById('topDeptPanel');
     const exceptionalPanel = document.getElementById('topExceptionalPanel');
     const wrap = document.getElementById('topCalendarPanel');
@@ -17750,16 +17774,16 @@ function syncPhoneLayoutPanels() {
     if (stack) {
       ensurePanelPlaceholder('calendarMobileRestore', wrap);
       ensurePanelPlaceholder('linkedMobileRestore', linked);
-      ensurePanelPlaceholder('buildingSelectorsMobileRestore', topLeftGroup);
       if (searchBox) stack.appendChild(searchBox);
       if (linked) stack.appendChild(linked);
-      if (topLeftGroup) stack.appendChild(topLeftGroup);
+      if (mobileSelectors) stack.appendChild(mobileSelectors);
       if (tabs) stack.appendChild(tabs);
       if (deptPanel) stack.appendChild(deptPanel);
       if (exceptionalPanel) stack.appendChild(exceptionalPanel);
       if (wrap) stack.appendChild(wrap);
     }
     syncMobileBuildingSelectorLabels();
+    syncAllBuildingSelectorStates();
     stabilizePhoneLayoutVisibility();
     if (tabs) {
       tabs.querySelectorAll('.mobile-top-tab').forEach((btn) => {
@@ -17793,9 +17817,9 @@ function syncPhoneLayoutPanels() {
   }
   restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
   restorePanelFromPlaceholder('linkedMobileRestore', document.querySelector('.top-linked-panel'));
-  restorePanelFromPlaceholder('buildingSelectorsMobileRestore', document.querySelector('.top-left-group'));
   currentMobileTopPanel = 'dept';
   syncMobileBuildingSelectorLabels();
+  syncAllBuildingSelectorStates();
   stabilizePhoneLayoutVisibility();
   const deptPanel = document.getElementById('topDeptPanel');
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
@@ -18407,20 +18431,11 @@ function switchLeftBuilding(index, options = {}) {
     }
   }
   currentLeftBuilding = index;
-  
-  document.querySelectorAll('#leftBuildingSelector .building-btn').forEach((btn, i) => {
-    const parsed = parseInt(btn.dataset.buildingIndex, 10);
-    const btnIndex = Number.isFinite(parsed) ? parsed : i;
-    if (btnIndex === index) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
+
   if (index === 0 && currentRightBuilding === 1) {
     currentRightBuilding = 0;
   }
-  updateRightBuildingSelectorState();
+  syncAllBuildingSelectorStates();
   
   const buildingName = leftBuildingsData[index].name;
   document.getElementById('modeIndicator').textContent = '左塔：' + buildingName + ' | 右塔：' + (currentRightBuilding === 1 ? 'MCBTC (2030)' : 'IPEB');
@@ -18457,11 +18472,7 @@ function switchLeftBuilding(index, options = {}) {
 }
 
 function updateRightBuildingSelectorState() {
-  document.querySelectorAll('#rightBuildingSelector .building-btn').forEach(btn => {
-    const i = parseInt(btn.dataset.rightBuilding, 10);
-    btn.disabled = false;
-    btn.classList.toggle('active', i === currentRightBuilding);
-  });
+  syncAllBuildingSelectorStates();
 }
 
 // 切換空間選擇
@@ -19089,7 +19100,7 @@ function switchRightBuilding(index, options = {}) {
   const savedScrollLeft = buildingContainer ? (buildingContainer.scrollLeft || 0) : 0;
   const savedScrollTop = buildingContainer ? (buildingContainer.scrollTop || 0) : 0;
   currentRightBuilding = index;
-  updateRightBuildingSelectorState();
+  syncAllBuildingSelectorStates();
   renderBuilding(null, currentLeftBuilding);
   if (preservePan) {
     panX = savedPanX;
@@ -19394,9 +19405,13 @@ function getRightTowerMaxRowWidth() {
 
 function getMcbtc2030MaxRowWidth() {
   let maxW = 0;
-  Object.values(mcbtc2030Floors || {}).forEach((spaces) => {
+  Object.entries(mcbtc2030Floors || {}).forEach(([floor, spaces]) => {
     if (!Array.isArray(spaces) || spaces.length === 0) return;
-    const rowW = spaces.reduce((sum, s) => sum + Math.max(0, Math.round(Number((s && s.px) || 0))), 0);
+    let rowW = spaces.reduce((sum, s) => sum + Math.max(0, Math.round(Number((s && s.px) || 0))), 0);
+    const floorNum = parseInt(String(floor), 10);
+    if (!Number.isNaN(floorNum) && floorNum >= 7 && floorNum <= 12) {
+      rowW += 20;
+    }
     if (rowW > maxW) maxW = rowW;
   });
   return maxW;
