@@ -17849,6 +17849,10 @@ function syncPhoneLayoutPanels() {
 
 function getPhoneDesktopSpaceWidth(space) {
   if (!space) return null;
+  if (String(space.dataset.wing || '') === 'mcbtc2030') {
+    const desktopPx = Math.max(0, parseInt(space.dataset.desktopPx || '0', 10));
+    if (desktopPx > 0) return desktopPx;
+  }
   const widthClassList = Array.from(space.classList || []);
   return getDesktopWidthForWidthClassList(widthClassList, {
     tower: String(space.dataset.tower || ''),
