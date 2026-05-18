@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <title>雙塔建築視覺化系統 4.0 - CSB 3/F 分層版本</title>
 <style>
 :root {
@@ -936,6 +936,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0;
+  padding-top: env(safe-area-inset-top, 0px);
   transform: none;
   background: #fff;
 }
@@ -5110,6 +5111,7 @@ h2 {
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
+    padding-top: env(safe-area-inset-top, 0px) !important;
     background: #fff !important;
     transform: none !important;
     overflow: visible !important;
@@ -6070,6 +6072,19 @@ if (!window.ipebMenuSourceRows) {
     "department": "CUHK",
     "subDepartment": "",
     "replaceLeftSource": true
+  },
+  {
+    "building": "CSB",
+    "floor": "8",
+    "order": 1,
+    "display": "Dept of M&T",
+    "sourceName": "Dept of M&T",
+    "side": "Neutral",
+    "type": "",
+    "department": "M&T",
+    "subDepartment": "",
+    "replaceLeftSource": true,
+    "remove": true
   },
   {
     "building": "MCBTC",
@@ -14988,6 +15003,7 @@ function rebuildDeptCatalog() {
   });
 
   ipebSourceRows.forEach((row) => {
+    if (row && row.remove) return;
     insertMenuRow(out.ipeb, row);
   });
 
@@ -17966,6 +17982,9 @@ function syncPhoneBuildingSizing() {
       space.style.maxWidth = '';
     }
   });
+  if (isPhoneLayout) {
+    requestAnimationFrame(alignPhoneBuildingToExceptionalTab);
+  }
 }
 
 function initWardConnectionFloating() {
@@ -19599,6 +19618,49 @@ function getFloorColumnAvgX() {
   });
   if (count === 0) return null;
   return { avgX: sum / count, width };
+}
+
+function getCenteredTextStartX(el) {
+  if (!el) return null;
+  const rect = el.getBoundingClientRect();
+  const text = String(el.textContent || '').trim();
+  if (!text) return rect.left;
+  const probe = document.createElement('span');
+  probe.textContent = text;
+  const style = window.getComputedStyle(el);
+  probe.style.position = 'fixed';
+  probe.style.left = '-99999px';
+  probe.style.top = '0';
+  probe.style.visibility = 'hidden';
+  probe.style.whiteSpace = 'nowrap';
+  probe.style.fontFamily = style.fontFamily;
+  probe.style.fontSize = style.fontSize;
+  probe.style.fontWeight = style.fontWeight;
+  probe.style.letterSpacing = style.letterSpacing;
+  document.body.appendChild(probe);
+  const width = probe.getBoundingClientRect().width || 0;
+  document.body.removeChild(probe);
+  return rect.left + Math.max(0, (rect.width - width) / 2);
+}
+
+function alignPhoneBuildingToExceptionalTab() {
+  if (!isPhoneLayoutMode()) return;
+  const container = document.getElementById('buildingContainer');
+  const building = document.getElementById('building');
+  const exceptionalTab = document.getElementById('mobileTabExceptional');
+  if (!container || !building || !exceptionalTab) return;
+  const floorEl = Array.from(building.querySelectorAll('.floor-number')).find((el) => !!(el && el.offsetParent));
+  if (!floorEl) return;
+  const targetX = getCenteredTextStartX(exceptionalTab);
+  if (!Number.isFinite(targetX)) return;
+  const floorRect = floorEl.getBoundingClientRect();
+  const delta = floorRect.left - targetX;
+  if (!Number.isFinite(delta) || Math.abs(delta) < 1) return;
+  const scale = effectiveScale || 1;
+  const viewportInContentUnits = container.clientWidth / scale;
+  const maxScroll = Math.max(0, building.scrollWidth - viewportInContentUnits);
+  const next = Math.max(0, Math.min(container.scrollLeft + (delta / scale), maxScroll));
+  container.scrollLeft = Math.round(next);
 }
 
 function centerUsingBaseline() {
