@@ -17047,9 +17047,32 @@ function toggleCalendarPanelHeader() {
 }
 
 function isPhoneLayoutMode() {
-  const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  const w = window.innerWidth || 0;
+  const h = window.innerHeight || 0;
+  const minSide = Math.min(w, h);
   const maxSide = Math.max(window.innerWidth || 0, window.innerHeight || 0);
-  return coarse && maxSide > 0 && maxSide <= 960;
+  return minSide > 0 && minSide <= 600 && maxSide <= 960;
+}
+
+function ensurePanelPlaceholder(placeholderId, panel) {
+  if (!panel) return null;
+  let placeholder = document.getElementById(placeholderId);
+  if (!placeholder) {
+    placeholder = document.createElement('div');
+    placeholder.id = placeholderId;
+    placeholder.style.display = 'none';
+  }
+  if (panel.parentElement && placeholder.parentElement !== panel.parentElement) {
+    panel.parentElement.insertBefore(placeholder, panel);
+  }
+  return placeholder;
+}
+
+function restorePanelFromPlaceholder(placeholderId, panel) {
+  const placeholder = document.getElementById(placeholderId);
+  if (!panel || !placeholder || !placeholder.parentElement) return;
+  placeholder.parentElement.insertBefore(panel, placeholder);
+  placeholder.remove();
 }
 
 function dockWardConnectionPanel() {
@@ -17089,9 +17112,25 @@ function syncPhoneLayoutPanels() {
   if (phoneLayout) {
     dockWardConnectionPanel();
     dockCalendarPanel();
+    const stack = document.querySelector('.top-search-floating');
+    const searchBox = document.querySelector('.top-search-box');
+    const deptPanel = document.getElementById('topDeptPanel');
+    const exceptionalPanel = document.getElementById('topExceptionalPanel');
     const wrap = document.getElementById('topCalendarPanel');
     const panel = document.getElementById('calendarPanel');
+    const linked = document.querySelector('.top-linked-panel');
+    if (stack) {
+      ensurePanelPlaceholder('calendarMobileRestore', wrap);
+      ensurePanelPlaceholder('linkedMobileRestore', linked);
+      if (searchBox) stack.appendChild(searchBox);
+      if (deptPanel) stack.appendChild(deptPanel);
+      if (exceptionalPanel) stack.appendChild(exceptionalPanel);
+      if (wrap) stack.appendChild(wrap);
+      if (linked) stack.appendChild(linked);
+    }
     if (wrap) wrap.classList.remove('hidden');
+    if (deptPanel) deptPanel.classList.remove('hidden');
+    if (exceptionalPanel) exceptionalPanel.classList.remove('hidden');
     if (!isCalendarPanelVisible) {
       if (panel) panel.classList.add('hidden');
       if (wrap) wrap.classList.remove('expanded');
@@ -17101,10 +17140,13 @@ function syncPhoneLayoutPanels() {
     }
     isDeptContentCollapsed = false;
     syncDeptPanelCollapsedState();
+    syncExceptionalPanelState();
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     return;
   }
+  restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
+  restorePanelFromPlaceholder('linkedMobileRestore', document.querySelector('.top-linked-panel'));
   enableWardConnectionDrag();
   if (isCalendarPanelVisible) {
     enableCalendarResize();
@@ -18369,7 +18411,7 @@ function updateEmbeddedLayout() {
   if (!mainView) return;
   const compact = mainView.clientWidth > 0 && mainView.clientWidth <= 720;
   const phoneLayout = isPhoneLayoutMode();
-  mainView.classList.toggle('compact-layout', compact || phoneLayout);
+  mainView.classList.toggle('compact-layout', compact && !phoneLayout);
   mainView.classList.toggle('phone-layout', phoneLayout);
 }
 
