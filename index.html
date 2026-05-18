@@ -1091,6 +1091,9 @@ h2 {
   grid-template-columns: 1fr;
   gap: 0 !important;
   width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
 }
 
 .main-view.phone-layout .top-left-group .top-building-panel {
@@ -17608,7 +17611,11 @@ function stabilizePhoneLayoutVisibility() {
   }
 
   if (tabs) tabs.style.setProperty('display', 'grid', 'important');
-  if (topLeftGroup) topLeftGroup.style.setProperty('display', 'grid', 'important');
+  if (topLeftGroup) {
+    topLeftGroup.style.setProperty('display', 'grid', 'important');
+    topLeftGroup.style.setProperty('height', 'auto', 'important');
+    topLeftGroup.style.setProperty('min-height', '0', 'important');
+  }
   if (buildingContainer) {
     buildingContainer.style.setProperty('display', 'flex', 'important');
     buildingContainer.style.setProperty('position', 'relative', 'important');
@@ -17797,29 +17804,63 @@ function syncPhoneBuildingSizing() {
   const isPhoneLayout = !!(mainView && mainView.classList.contains('phone-layout'));
   const buildingContainer = document.getElementById('buildingContainer');
   if (buildingContainer) {
-    buildingContainer.style.display = isPhoneLayout ? 'flex' : '';
-    buildingContainer.style.padding = isPhoneLayout ? '26px 5px 10px' : '';
+    if (isPhoneLayout) {
+      buildingContainer.style.setProperty('display', 'flex', 'important');
+      buildingContainer.style.setProperty('padding', '26px 5px 10px', 'important');
+      buildingContainer.style.setProperty('position', 'relative', 'important');
+      buildingContainer.style.setProperty('inset', 'auto', 'important');
+    } else {
+      buildingContainer.style.display = '';
+      buildingContainer.style.padding = '';
+      buildingContainer.style.position = '';
+      buildingContainer.style.inset = '';
+    }
   }
   const building = document.getElementById('building');
   if (!building) return;
   building.querySelectorAll('.tower.left').forEach((tower) => {
-    tower.style.minWidth = isPhoneLayout ? '450px' : '';
+    if (isPhoneLayout) {
+      tower.style.setProperty('min-width', '450px', 'important');
+    } else {
+      tower.style.minWidth = '';
+    }
   });
   building.querySelectorAll('.left-row-wrapper').forEach((wrapper) => {
-    wrapper.style.width = isPhoneLayout ? '450px' : '';
+    if (isPhoneLayout) {
+      wrapper.style.setProperty('width', '450px', 'important');
+    } else {
+      wrapper.style.width = '';
+    }
   });
   building.querySelectorAll('.floor-number').forEach((floorNumber) => {
-    floorNumber.style.width = isPhoneLayout ? '25px' : '';
-    floorNumber.style.fontSize = isPhoneLayout ? '9px' : '';
+    if (isPhoneLayout) {
+      floorNumber.style.setProperty('width', '25px', 'important');
+      floorNumber.style.setProperty('font-size', '9px', 'important');
+    } else {
+      floorNumber.style.width = '';
+      floorNumber.style.fontSize = '';
+    }
   });
   building.querySelectorAll('.floor-13-19 .right-view-ipeb .space-row, .space-row.floor-13-19').forEach((row) => {
-    row.style.paddingLeft = isPhoneLayout ? '40px' : '';
+    if (isPhoneLayout) {
+      row.style.setProperty('padding-left', '40px', 'important');
+    } else {
+      row.style.paddingLeft = '';
+    }
   });
   building.querySelectorAll('.floor-8-12 .right-view-ipeb .space-row, .space-row.floor-8-12').forEach((row) => {
-    row.style.paddingLeft = isPhoneLayout ? '20px' : '';
+    if (isPhoneLayout) {
+      row.style.setProperty('padding-left', '20px', 'important');
+    } else {
+      row.style.paddingLeft = '';
+    }
   });
   building.querySelectorAll('.space').forEach((space) => {
-    space.style.minHeight = isPhoneLayout ? '26px' : '';
+    if (isPhoneLayout) {
+      space.style.setProperty('min-height', '26px', 'important');
+    } else {
+      space.style.minHeight = '';
+    }
     if (!isPhoneLayout) {
       space.style.width = '';
       space.style.minWidth = '';
@@ -17829,9 +17870,9 @@ function syncPhoneBuildingSizing() {
     const width = getPhoneDesktopSpaceWidth(space);
     if (Number.isFinite(width) && width > 0) {
       const widthPx = `${width}px`;
-      space.style.width = widthPx;
-      space.style.minWidth = widthPx;
-      space.style.maxWidth = widthPx;
+      space.style.setProperty('width', widthPx, 'important');
+      space.style.setProperty('min-width', widthPx, 'important');
+      space.style.setProperty('max-width', widthPx, 'important');
     } else {
       space.style.width = '';
       space.style.minWidth = '';
@@ -19376,6 +19417,7 @@ function fitBuildingToViewport(options = {}) {
 }
 
 function alignToReference() {
+  if (isPhoneLayoutMode()) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
   const topBelowRow = document.querySelector('.top-below-row');
@@ -19407,6 +19449,7 @@ function alignToReference() {
 }
 
 function alignMcbtcToReference() {
+  if (isPhoneLayoutMode()) return;
   if (currentLeftBuilding !== 0) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
@@ -19441,6 +19484,7 @@ function alignMcbtcToReference() {
 }
 
 function alignBuildingToReference() {
+  if (isPhoneLayoutMode()) return;
   if (currentLeftBuilding !== 1) return;
   const container = document.getElementById('buildingContainer');
   const topBelowRow = document.querySelector('.top-below-row');
