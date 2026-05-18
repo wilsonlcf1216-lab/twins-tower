@@ -1138,6 +1138,24 @@ h2 {
   padding: 26px 5px 10px !important;
 }
 
+.phone-layout-debug {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+  z-index: 99999;
+  max-width: min(92vw, 320px);
+  padding: 8px 10px;
+  border: 1px solid rgba(220, 38, 38, 0.55);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #991b1b;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  pointer-events: none;
+}
+
 .timeline-top-row,
 .top-below-row {
   position: relative;
@@ -17485,6 +17503,54 @@ function syncMobileBuildingSelectorLabels() {
   });
 }
 
+function ensurePhoneLayoutDebugPanel() {
+  let panel = document.getElementById('phoneLayoutDebug');
+  if (panel) return panel;
+  panel = document.createElement('div');
+  panel.id = 'phoneLayoutDebug';
+  panel.className = 'phone-layout-debug';
+  document.body.appendChild(panel);
+  return panel;
+}
+
+function getElementRuntimeState(el) {
+  if (!el) return 'missing';
+  const style = window.getComputedStyle(el);
+  const rect = el.getBoundingClientRect();
+  const hiddenClass = el.classList.contains('hidden') ? ' hidden' : '';
+  return `${style.display}${hiddenClass} ${Math.round(rect.width)}x${Math.round(rect.height)}`;
+}
+
+function refreshPhoneLayoutDebugPanel() {
+  const panel = ensurePhoneLayoutDebugPanel();
+  const mainView = document.querySelector('.main-view');
+  const phoneLayout = !!(mainView && mainView.classList.contains('phone-layout'));
+  const compactLayout = !!(mainView && mainView.classList.contains('compact-layout'));
+  const tabs = document.getElementById('mobileTopTabs');
+  const topLeftGroup = document.querySelector('.top-left-group');
+  const deptPanel = document.getElementById('topDeptPanel');
+  const exceptionalPanel = document.getElementById('topExceptionalPanel');
+  const calendarWrap = document.getElementById('topCalendarPanel');
+  const calendarPanel = document.getElementById('calendarPanel');
+  const buildingContainer = document.getElementById('buildingContainer');
+  const linked = document.querySelector('.top-linked-panel');
+  const searchBox = document.querySelector('.top-search-box');
+  panel.textContent = [
+    `size: ${window.innerWidth || 0}x${window.innerHeight || 0}`,
+    `phoneLayout: ${phoneLayout} compact: ${compactLayout}`,
+    `panel: ${currentMobileTopPanel}`,
+    `search: ${getElementRuntimeState(searchBox)}`,
+    `linked: ${getElementRuntimeState(linked)}`,
+    `tabs: ${getElementRuntimeState(tabs)}`,
+    `selectors: ${getElementRuntimeState(topLeftGroup)}`,
+    `dept: ${getElementRuntimeState(deptPanel)}`,
+    `exception: ${getElementRuntimeState(exceptionalPanel)}`,
+    `calendarWrap: ${getElementRuntimeState(calendarWrap)}`,
+    `calendarPanel: ${getElementRuntimeState(calendarPanel)}`,
+    `building: ${getElementRuntimeState(buildingContainer)}`
+  ].join('\n');
+}
+
 function stabilizePhoneLayoutVisibility() {
   const mainView = document.querySelector('.main-view');
   const isPhoneLayout = !!(mainView && mainView.classList.contains('phone-layout'));
@@ -17531,6 +17597,7 @@ function stabilizePhoneLayoutVisibility() {
     calendarPanel.classList.toggle('hidden', !show);
     calendarPanel.style.display = show ? 'flex' : 'none';
   }
+  refreshPhoneLayoutDebugPanel();
 }
 
 function syncPhoneLayoutPanels() {
@@ -17590,6 +17657,7 @@ function syncPhoneLayoutPanels() {
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
+    refreshPhoneLayoutDebugPanel();
     return;
   }
   restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
@@ -17611,6 +17679,7 @@ function syncPhoneLayoutPanels() {
   if (isCalendarPanelVisible) {
     enableCalendarResize();
   }
+  refreshPhoneLayoutDebugPanel();
 }
 
 function getPhoneDesktopSpaceWidth(space) {
@@ -18957,11 +19026,13 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', function() {
     refreshEmbeddedLayout();
     positionMobileDeptSearchResults();
+    refreshPhoneLayoutDebugPanel();
   });
   window.addEventListener('scroll', positionMobileDeptSearchResults, true);
 
   window.addEventListener('load', function() {
     refreshEmbeddedLayout();
+    refreshPhoneLayoutDebugPanel();
   });
 
   setTimeout(refreshEmbeddedLayout, 120);
@@ -18970,6 +19041,7 @@ document.addEventListener('DOMContentLoaded', function() {
     stabilizePhoneLayoutVisibility();
     syncPhoneLayoutPanels();
     syncPhoneBuildingSizing();
+    refreshPhoneLayoutDebugPanel();
   }, 0);
 });
 
