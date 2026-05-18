@@ -1086,6 +1086,58 @@ h2 {
   display: flex;
 }
 
+.main-view.phone-layout .top-left-group {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 0 !important;
+  width: 100% !important;
+}
+
+.main-view.phone-layout .top-left-group .top-building-panel {
+  width: 100% !important;
+  flex: 0 0 auto !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.main-view.phone-layout .top-left-group .top-panel-header {
+  display: none !important;
+}
+
+.main-view.phone-layout .top-building-selector {
+  display: grid !important;
+  gap: 0 !important;
+}
+
+.main-view.phone-layout #leftBuildingSelector {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.main-view.phone-layout #rightBuildingSelector {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.main-view.phone-layout .top-building-panel .building-btn {
+  min-height: 28px;
+  padding: 0 2px;
+  font-size: 9px;
+  border-radius: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main-view.phone-layout .mobile-top-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 !important;
+}
+
+.main-view.phone-layout .building-container {
+  display: flex !important;
+  margin-top: 0 !important;
+  padding: 26px 5px 10px !important;
+}
+
 .timeline-top-row,
 .top-below-row {
   position: relative;
@@ -17255,7 +17307,7 @@ function toggleCalendarPanelHeader() {
   }
 }
 
-let currentMobileTopPanel = 'none';
+let currentMobileTopPanel = 'dept';
 
 function isPhoneLayoutMode() {
   const w = window.innerWidth || 0;
@@ -17494,7 +17546,7 @@ function syncPhoneLayoutPanels() {
   restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
   restorePanelFromPlaceholder('linkedMobileRestore', document.querySelector('.top-linked-panel'));
   restorePanelFromPlaceholder('buildingSelectorsMobileRestore', document.querySelector('.top-left-group'));
-  currentMobileTopPanel = 'none';
+  currentMobileTopPanel = 'dept';
   syncMobileBuildingSelectorLabels();
   const deptPanel = document.getElementById('topDeptPanel');
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
