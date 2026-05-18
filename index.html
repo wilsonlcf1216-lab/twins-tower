@@ -499,7 +499,7 @@ h2 {
   border-radius: 8px;
   padding: 6px;
   background: #fff;
-  max-height: 95px;
+  max-height: 140px;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-gutter: stable;
@@ -522,6 +522,22 @@ h2 {
   cursor: pointer;
   border: 1px solid transparent;
   font-size: 10px;
+}
+
+.dept-search-item .label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dept-search-item .meta {
+  flex: 0 0 auto;
+  max-width: 46%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dept-search-item:hover {
@@ -1195,7 +1211,7 @@ h2 {
   min-height: 0 !important;
 }
 
-.main-view.phone-layout .right-view-mcbtc2030 .right-row-wrapper {
+.right-view-mcbtc2030 .right-row-wrapper {
   width: var(--mcbtc2030-right-view-w, 600px) !important;
 }
 
@@ -1428,7 +1444,7 @@ h2 {
   top: calc(100% + 4px);
   right: 0;
   left: 0;
-  max-height: min(220px, 45vh);
+  max-height: min(180px, 40vh);
   box-shadow: 0 8px 18px rgba(0,0,0,0.12);
   z-index: 51;
 }
@@ -15576,12 +15592,12 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
   const currentLeftBuilding = Number.isFinite(leftBuildingIndex) ? leftBuildingIndex : 0;
   const phoneLayout = isPhoneLayoutMode();
   const rightReferenceWidth = currentRightBuilding === 1
-    ? (phoneLayout ? Math.max(0, getMcbtc2030MaxRowWidth()) : 600)
+    ? Math.max(0, getMcbtc2030MaxRowWidth())
     : Math.max(0, getRightTowerMaxRowWidth());
   building.innerHTML = '';
   building.dataset.leftBuilding = String(currentLeftBuilding);
   building.dataset.rightBuilding = String(currentRightBuilding);
-  if (phoneLayout && currentRightBuilding === 1 && rightReferenceWidth > 0) {
+  if (currentRightBuilding === 1 && rightReferenceWidth > 0) {
     building.style.setProperty('--mcbtc2030-right-view-w', `${rightReferenceWidth}px`);
   } else {
     building.style.removeProperty('--mcbtc2030-right-view-w');
@@ -16633,7 +16649,7 @@ function updateDeptSearchResults(tokensNorm) {
   const addRow = (e, meta) => {
     const row = document.createElement('div');
     row.className = 'dept-search-item';
-    row.innerHTML = `<span>${e.name}</span><span class="meta">${meta}</span>`;
+    row.innerHTML = `<span class="label">${e.name}</span><span class="meta">${meta}</span>`;
     row.onclick = () => selectSpaceFromSearch(e);
     resultsEl.appendChild(row);
   };
@@ -17441,7 +17457,7 @@ function toggleCalendarPanelHeader() {
   }
 }
 
-let currentMobileTopPanel = 'dept';
+let currentMobileTopPanel = 'none';
 
 function isPhoneLayoutMode() {
   const w = window.innerWidth || 0;
@@ -17548,7 +17564,8 @@ function positionMobileDeptSearchResults() {
   if (!searchBox || resultsEl.style.display === 'none') return;
   const rect = searchBox.getBoundingClientRect();
   const viewportPad = 6;
-  const maxHeight = Math.max(120, Math.floor((window.innerHeight || 640) - rect.bottom - viewportPad));
+  const available = Math.floor((window.innerHeight || 640) - rect.bottom - viewportPad);
+  const maxHeight = Math.max(96, Math.min(180, available));
   resultsEl.style.position = 'fixed';
   resultsEl.style.top = `${Math.round(rect.bottom + 2)}px`;
   resultsEl.style.left = `${Math.round(rect.left)}px`;
@@ -17705,8 +17722,8 @@ function stabilizePhoneLayoutVisibility() {
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
   const calendarWrap = document.getElementById('topCalendarPanel');
   const calendarPanel = document.getElementById('calendarPanel');
-  const validPanel = currentMobileTopPanel === 'dept' || currentMobileTopPanel === 'exceptional' || currentMobileTopPanel === 'calendar';
-  if (isPhoneLayout && !validPanel) currentMobileTopPanel = 'dept';
+  const validPanel = currentMobileTopPanel === 'dept' || currentMobileTopPanel === 'exceptional' || currentMobileTopPanel === 'calendar' || currentMobileTopPanel === 'none';
+  if (isPhoneLayout && !validPanel) currentMobileTopPanel = 'none';
 
   if (!isPhoneLayout) {
     [tabs, mobileSelectors, topLeftGroup, buildingContainer, deptPanel, exceptionalPanel, calendarWrap].forEach((el) => {
@@ -17817,7 +17834,7 @@ function syncPhoneLayoutPanels() {
   }
   restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
   restorePanelFromPlaceholder('linkedMobileRestore', document.querySelector('.top-linked-panel'));
-  currentMobileTopPanel = 'dept';
+  currentMobileTopPanel = 'none';
   syncMobileBuildingSelectorLabels();
   syncAllBuildingSelectorStates();
   stabilizePhoneLayoutVisibility();
