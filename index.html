@@ -17485,6 +17485,54 @@ function syncMobileBuildingSelectorLabels() {
   });
 }
 
+function stabilizePhoneLayoutVisibility() {
+  const mainView = document.querySelector('.main-view');
+  const isPhoneLayout = !!(mainView && mainView.classList.contains('phone-layout'));
+  const tabs = document.getElementById('mobileTopTabs');
+  const topLeftGroup = document.querySelector('.top-left-group');
+  const buildingContainer = document.getElementById('buildingContainer');
+  const deptPanel = document.getElementById('topDeptPanel');
+  const exceptionalPanel = document.getElementById('topExceptionalPanel');
+  const calendarWrap = document.getElementById('topCalendarPanel');
+  const calendarPanel = document.getElementById('calendarPanel');
+  const validPanel = currentMobileTopPanel === 'dept' || currentMobileTopPanel === 'exceptional' || currentMobileTopPanel === 'calendar';
+  if (isPhoneLayout && !validPanel) currentMobileTopPanel = 'dept';
+
+  if (!isPhoneLayout) {
+    [tabs, topLeftGroup, buildingContainer, deptPanel, exceptionalPanel, calendarWrap].forEach((el) => {
+      if (el) el.style.display = '';
+    });
+    if (calendarPanel) calendarPanel.style.display = '';
+    return;
+  }
+
+  if (tabs) tabs.style.display = 'grid';
+  if (topLeftGroup) topLeftGroup.style.display = 'grid';
+  if (buildingContainer) buildingContainer.style.display = 'flex';
+
+  if (deptPanel) {
+    const show = currentMobileTopPanel === 'dept';
+    deptPanel.classList.toggle('hidden', !show);
+    deptPanel.style.display = show ? 'flex' : 'none';
+  }
+  if (exceptionalPanel) {
+    const show = currentMobileTopPanel === 'exceptional';
+    exceptionalPanel.classList.toggle('hidden', !show);
+    exceptionalPanel.style.display = show ? 'flex' : 'none';
+  }
+  if (calendarWrap) {
+    const show = currentMobileTopPanel === 'calendar';
+    calendarWrap.classList.toggle('hidden', !show);
+    calendarWrap.classList.toggle('expanded', !!show);
+    calendarWrap.style.display = show ? 'flex' : 'none';
+  }
+  if (calendarPanel) {
+    const show = currentMobileTopPanel === 'calendar';
+    calendarPanel.classList.toggle('hidden', !show);
+    calendarPanel.style.display = show ? 'flex' : 'none';
+  }
+}
+
 function syncPhoneLayoutPanels() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
@@ -17514,6 +17562,7 @@ function syncPhoneLayoutPanels() {
       if (wrap) stack.appendChild(wrap);
     }
     syncMobileBuildingSelectorLabels();
+    stabilizePhoneLayoutVisibility();
     if (tabs) {
       tabs.querySelectorAll('.mobile-top-tab').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset && btn.dataset.panel === currentMobileTopPanel);
@@ -17548,6 +17597,7 @@ function syncPhoneLayoutPanels() {
   restorePanelFromPlaceholder('buildingSelectorsMobileRestore', document.querySelector('.top-left-group'));
   currentMobileTopPanel = 'dept';
   syncMobileBuildingSelectorLabels();
+  stabilizePhoneLayoutVisibility();
   const deptPanel = document.getElementById('topDeptPanel');
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
   if (deptPanel) {
@@ -18916,6 +18966,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   setTimeout(refreshEmbeddedLayout, 120);
   setTimeout(refreshEmbeddedLayout, 500);
+  setTimeout(function() {
+    stabilizePhoneLayoutVisibility();
+    syncPhoneLayoutPanels();
+    syncPhoneBuildingSizing();
+  }, 0);
 });
 
 function updateTopPanelSizing() {
@@ -18967,6 +19022,7 @@ function updateEmbeddedLayout() {
 
 function refreshEmbeddedLayout() {
   updateEmbeddedLayout();
+  stabilizePhoneLayoutVisibility();
   syncPhoneLayoutPanels();
   updateTopPanelSizing();
   scheduleWardButtonNormalization();
