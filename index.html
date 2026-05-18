@@ -1096,6 +1096,14 @@ h2 {
   align-self: stretch !important;
 }
 
+.main-view.phone-layout .top-left-group,
+.main-view.phone-layout .top-left-group .top-panel,
+.main-view.phone-layout .top-left-group .top-building-panel {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
 .main-view.phone-layout .top-left-group .top-building-panel {
   width: 100% !important;
   flex: 0 0 auto !important;
@@ -1155,6 +1163,37 @@ h2 {
   padding: 26px 5px 10px !important;
   border-radius: 0 !important;
   z-index: 0 !important;
+}
+
+#twintower-app .main-view.phone-layout .top-left-group {
+  display: grid !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+#twintower-app .main-view.phone-layout .top-left-group .top-panel,
+#twintower-app .main-view.phone-layout .top-left-group .top-building-panel {
+  display: block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+#twintower-app .main-view.phone-layout #leftBuildingSelector,
+#twintower-app .main-view.phone-layout #rightBuildingSelector {
+  display: grid !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+#twintower-app .main-view.phone-layout #buildingContainer.building-container {
+  display: flex !important;
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  min-height: 72vh !important;
+  height: auto !important;
+  overflow: auto !important;
 }
 
 .phone-layout-debug {
