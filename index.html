@@ -903,9 +903,10 @@ h2 {
 }
 
 .main-view.phone-layout {
-  padding: 8px;
+  padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  background: #fff;
 }
 
 .main-view.phone-layout .top-search-floating {
@@ -918,8 +919,9 @@ h2 {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
   transform: none;
+  background: #fff;
 }
 
 .main-view.phone-layout .top-search-tools,
@@ -935,8 +937,8 @@ h2 {
   width: 100%;
   min-height: 0;
   height: auto;
-  margin-top: 8px;
-  gap: 8px;
+  margin-top: 0;
+  gap: 0;
 }
 
 .main-view.phone-layout .top-panel,
@@ -954,6 +956,8 @@ h2 {
 .main-view.phone-layout .top-panel,
 .main-view.phone-layout .top-linked-panel {
   height: auto;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .main-view.phone-layout #topDeptPanel.top-panel,
@@ -964,12 +968,7 @@ h2 {
 
 .main-view.phone-layout #topCalendarPanel {
   display: flex !important;
-  min-height: 280px;
-}
-
-.main-view.phone-layout #topCalendarPanel.hidden,
-.main-view.phone-layout #topCalendarPanel .calendar-panel.hidden {
-  display: flex !important;
+  min-height: var(--top-control-h);
 }
 
 .main-view.phone-layout #topCalendarPanel .calendar-panel {
@@ -978,12 +977,13 @@ h2 {
 }
 
 .main-view.phone-layout .top-search-box .dept-search-results {
-  position: static;
-  top: auto;
-  left: auto;
-  right: auto;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
   margin-top: 4px;
   max-height: min(50vh, 320px);
+  z-index: 1200;
 }
 
 .main-view.phone-layout .top-linked-panel,
@@ -999,11 +999,71 @@ h2 {
 }
 
 .main-view.phone-layout .building-container {
-  margin-top: 8px;
+  margin-top: 0;
+  background: #fff;
 }
 
 .main-view.phone-layout .top-below-row .top-linked-panel {
   pointer-events: auto;
+}
+
+.main-view.phone-layout .top-search-box,
+.main-view.phone-layout #topDeptPanel,
+.main-view.phone-layout #topExceptionalPanel,
+.main-view.phone-layout #topCalendarPanel,
+.main-view.phone-layout .top-linked-panel {
+  margin: 0;
+}
+
+.main-view.phone-layout #topDeptPanel {
+  overflow: visible;
+}
+
+.main-view.phone-layout #topDeptPanel.top-panel {
+  padding: 2px 4px;
+}
+
+.main-view.phone-layout #topDeptPanel .top-dept-body {
+  overflow: visible;
+}
+
+.main-view.phone-layout #topDeptPanel #deptButtons {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2px;
+}
+
+.main-view.phone-layout #topDeptPanel .dept-group {
+  min-height: calc(var(--top-control-h) - 8px);
+}
+
+.main-view.phone-layout #topDeptPanel .dept-list {
+  display: none;
+}
+
+.main-view.phone-layout #topDeptPanel.expanded .dept-list {
+  display: grid;
+}
+
+.main-view.phone-layout #topCalendarPanel > .top-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(var(--top-control-h) - 8px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.main-view.phone-layout #topCalendarPanel .calendar-panel {
+  display: none;
+}
+
+.main-view.phone-layout #topCalendarPanel.expanded {
+  min-height: 280px;
+}
+
+.main-view.phone-layout #topCalendarPanel.expanded .calendar-panel {
+  display: flex;
 }
 
 .timeline-top-row,
@@ -5147,7 +5207,7 @@ h2 {
       </div>
       
       <div class="top-panel top-calendar-panel" id="topCalendarPanel">
-        <div class="top-panel-header">Calendar</div>
+        <div class="top-panel-header" onclick="toggleCalendarPanelHeader()">Calendar</div>
         <div class="calendar-panel" id="calendarPanel">
           <div class="calendar-header">Calendar</div>
           <div class="calendar-controls">
@@ -16768,13 +16828,13 @@ function initCalendar() {
 }
 
 function setCalendarPanelVisible(visible) {
-  if (isPhoneLayoutMode()) visible = true;
   isCalendarPanelVisible = !!visible;
   const wrap = document.getElementById('topCalendarPanel');
   const panel = document.getElementById('calendarPanel');
   const btn = document.getElementById('calendarToggleBtn');
   if (wrap) wrap.classList.toggle('hidden', !isCalendarPanelVisible);
   if (panel) panel.classList.toggle('hidden', !isCalendarPanelVisible);
+  if (wrap) wrap.classList.toggle('expanded', isCalendarPanelVisible);
   if (btn) btn.classList.toggle('active', isCalendarPanelVisible);
   if (isCalendarPanelVisible) {
     initCalendarFloating();
@@ -16848,6 +16908,13 @@ function syncDeptPanelCollapsedState() {
   panel.classList.toggle('expanded', !isDeptContentCollapsed);
 }
 
+function toggleCalendarPanelHeader() {
+  if (isPhoneLayoutMode()) {
+    setCalendarPanelVisible(!isCalendarPanelVisible);
+    return;
+  }
+}
+
 function isPhoneLayoutMode() {
   const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   const maxSide = Math.max(window.innerWidth || 0, window.innerHeight || 0);
@@ -16894,8 +16961,17 @@ function syncPhoneLayoutPanels() {
     const wrap = document.getElementById('topCalendarPanel');
     const panel = document.getElementById('calendarPanel');
     if (wrap) wrap.classList.remove('hidden');
-    if (panel) panel.classList.remove('hidden');
-    isCalendarPanelVisible = true;
+    if (!isCalendarPanelVisible) {
+      if (panel) panel.classList.add('hidden');
+      if (wrap) wrap.classList.remove('expanded');
+    } else {
+      if (panel) panel.classList.remove('hidden');
+      if (wrap) wrap.classList.add('expanded');
+    }
+    isDeptContentCollapsed = false;
+    syncDeptPanelCollapsedState();
+    updateDeptListVisibility(currentDeptSide);
+    populateDeptList(currentDeptSide);
     return;
   }
   enableWardConnectionDrag();
@@ -16962,7 +17038,7 @@ function autoSizeWardConnectionPanel() {
   const titleHeight = title ? title.offsetHeight : 0;
   const titleMarginBottom = titleStyles ? (parseFloat(titleStyles.marginBottom || '0') || 0) : 0;
   const listHeight = linkedWardsList ? linkedWardsList.scrollHeight : 0;
-  const contentHeight = padTop + titleHeight + titleMarginBottom + listHeight + padBottom + 10;
+  const contentHeight = padTop + titleHeight + titleMarginBottom + listHeight + padBottom + 15;
   const desiredHeight = Math.max(72, Math.min(maxHeight, Math.ceil(contentHeight)));
   if (Math.abs(panel.offsetHeight - desiredHeight) > 1) {
     panel.style.height = `${desiredHeight}px`;
