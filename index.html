@@ -1492,7 +1492,7 @@ h2 {
 }
 
 .right-row-wrapper {
-  width: 600px;
+  width: var(--mcbtc2030-right-view-w, 600px);
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
@@ -15543,10 +15543,15 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
   const shouldUpdate = opts.update !== false;
   const shouldSetModeIndicatorId = opts.setModeIndicatorId !== false;
   const currentLeftBuilding = Number.isFinite(leftBuildingIndex) ? leftBuildingIndex : 0;
-  const rightReferenceWidth = currentRightBuilding === 1 ? 600 : Math.max(0, getRightTowerMaxRowWidth());
+  const rightReferenceWidth = currentRightBuilding === 1 ? Math.max(0, getMcbtc2030MaxRowWidth()) : Math.max(0, getRightTowerMaxRowWidth());
   building.innerHTML = '';
   building.dataset.leftBuilding = String(currentLeftBuilding);
   building.dataset.rightBuilding = String(currentRightBuilding);
+  if (currentRightBuilding === 1 && rightReferenceWidth > 0) {
+    building.style.setProperty('--mcbtc2030-right-view-w', `${rightReferenceWidth}px`);
+  } else {
+    building.style.removeProperty('--mcbtc2030-right-view-w');
+  }
   
   // Define themes
   const leftThemes = ['theme-mcbtc', 'theme-csb', 'theme-dtb', 'theme-sb'];
@@ -17654,6 +17659,31 @@ function stabilizePhoneLayoutVisibility() {
     topLeftGroup.style.setProperty('display', 'grid', 'important');
     topLeftGroup.style.setProperty('height', 'auto', 'important');
     topLeftGroup.style.setProperty('min-height', '0', 'important');
+    topLeftGroup.style.setProperty('align-self', 'stretch', 'important');
+    topLeftGroup.querySelectorAll('.top-panel, .top-building-panel').forEach((panelEl) => {
+      panelEl.style.setProperty('display', 'block', 'important');
+      panelEl.style.setProperty('height', 'auto', 'important');
+      panelEl.style.setProperty('min-height', '0', 'important');
+      panelEl.style.setProperty('padding', '0', 'important');
+      panelEl.style.setProperty('overflow', 'visible', 'important');
+    });
+    topLeftGroup.querySelectorAll('.top-building-selector').forEach((selectorEl) => {
+      selectorEl.style.setProperty('display', 'grid', 'important');
+      selectorEl.style.setProperty('height', 'auto', 'important');
+      selectorEl.style.setProperty('min-height', '0', 'important');
+      selectorEl.style.setProperty('gap', '0', 'important');
+      selectorEl.style.setProperty('align-content', 'start', 'important');
+    });
+    const leftSelector = document.getElementById('leftBuildingSelector');
+    const rightSelector = document.getElementById('rightBuildingSelector');
+    if (leftSelector) leftSelector.style.setProperty('grid-template-columns', 'repeat(4, minmax(0, 1fr))', 'important');
+    if (rightSelector) rightSelector.style.setProperty('grid-template-columns', 'repeat(2, minmax(0, 1fr))', 'important');
+    topLeftGroup.querySelectorAll('.building-btn').forEach((btn) => {
+      btn.style.setProperty('min-height', '28px', 'important');
+      btn.style.setProperty('height', '28px', 'important');
+      btn.style.setProperty('padding', '0 2px', 'important');
+      btn.style.setProperty('line-height', '1', 'important');
+    });
   }
   if (buildingContainer) {
     buildingContainer.style.setProperty('display', 'flex', 'important');
