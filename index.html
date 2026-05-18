@@ -5160,21 +5160,17 @@ h2 {
     overflow-y: auto !important;
   }
 
-  .main-view.phone-layout .top-linked-panel #linkedWardsList {
-    grid-template-columns: 1fr !important;
-  }
-
   .main-view.phone-layout .top-search-box .dept-search-results {
-    position: absolute !important;
-    top: calc(100% + 2px) !important;
+    position: fixed !important;
+    top: 0 !important;
     left: 0 !important;
-    right: 0 !important;
+    right: auto !important;
     z-index: 6000 !important;
     pointer-events: auto !important;
   }
 
   .main-view.phone-layout .building-container {
-    display: block !important;
+    display: none !important;
     margin-top: 0 !important;
   }
 }
@@ -5418,7 +5414,7 @@ h2 {
         <div id="deptSearchResults" class="dept-search-results"></div>
       </div>
       <div class="mobile-top-tabs" id="mobileTopTabs">
-        <button class="mobile-top-tab" id="mobileTabDept" data-panel="dept" type="button" onclick="switchMobileTopPanel('dept')">List of Department</button>
+        <button class="mobile-top-tab" id="mobileTabDept" data-panel="dept" type="button" onclick="switchMobileTopPanel('dept')">Department List</button>
         <button class="mobile-top-tab" id="mobileTabExceptional" data-panel="exceptional" type="button" onclick="switchMobileTopPanel('exceptional')">Exception</button>
         <button class="mobile-top-tab" id="mobileTabCalendar" data-panel="calendar" type="button" onclick="switchMobileTopPanel('calendar')">Calendar</button>
       </div>
@@ -16301,13 +16297,11 @@ function updateDeptSearchResults(tokensNorm) {
   const resultsEl = document.getElementById('deptSearchResults');
   if (!resultsEl) return;
   if (deptSearchForceHidden) {
-    resultsEl.style.display = 'none';
-    resultsEl.innerHTML = '';
+    hideDeptSearchResults();
     return;
   }
   if (!tokensNorm || tokensNorm.length === 0) {
-    resultsEl.style.display = 'none';
-    resultsEl.innerHTML = '';
+    hideDeptSearchResults();
     return;
   }
 
@@ -16404,15 +16398,12 @@ function updateDeptSearchResults(tokensNorm) {
     empty.textContent = '沒有結果';
     resultsEl.appendChild(empty);
   }
+  positionMobileDeptSearchResults();
 }
 
 function selectSpaceFromSearch(entry) {
   const input = document.getElementById('deptFilter');
-  const resultsEl = document.getElementById('deptSearchResults');
-  if (resultsEl) {
-    resultsEl.style.display = 'none';
-    resultsEl.innerHTML = '';
-  }
+  hideDeptSearchResults();
   deptSearchForceHidden = true;
   if (input) {
     input.value = '';
@@ -16741,11 +16732,7 @@ function resolveDeptItem(buildingKey, item) {
   return null;
 }
 function handleAllSelection(buildingKey, items) {
-  const resultsEl = document.getElementById('deptSearchResults');
-  if (resultsEl) {
-    resultsEl.style.display = 'none';
-    resultsEl.innerHTML = '';
-  }
+  hideDeptSearchResults();
   deptSearchForceHidden = true;
   selectedSpaces.clear();
   currentLinkedGroup = null;
@@ -16770,11 +16757,7 @@ function handleAllSelection(buildingKey, items) {
   updateLinkDisplay();
 }
 function handleDeptItemClick(buildingKey, item) {
-  const resultsEl = document.getElementById('deptSearchResults');
-  if (resultsEl) {
-    resultsEl.style.display = 'none';
-    resultsEl.innerHTML = '';
-  }
+  hideDeptSearchResults();
   deptSearchForceHidden = true;
   selectedSpaces.clear();
   currentLinkedGroup = null;
@@ -17276,9 +17259,45 @@ function clearMobileDeptSelection() {
   applyDeptFilter();
 }
 
+function hideDeptSearchResults() {
+  const resultsEl = document.getElementById('deptSearchResults');
+  if (!resultsEl) return;
+  resultsEl.style.display = 'none';
+  resultsEl.innerHTML = '';
+}
+
+function positionMobileDeptSearchResults() {
+  const resultsEl = document.getElementById('deptSearchResults');
+  const searchBox = document.querySelector('.top-search-box');
+  if (!resultsEl) return;
+  if (!isPhoneLayoutMode()) {
+    resultsEl.style.position = '';
+    resultsEl.style.top = '';
+    resultsEl.style.left = '';
+    resultsEl.style.width = '';
+    resultsEl.style.maxHeight = '';
+    return;
+  }
+  if (!searchBox || resultsEl.style.display === 'none') return;
+  const rect = searchBox.getBoundingClientRect();
+  const viewportPad = 6;
+  const maxHeight = Math.max(120, Math.floor((window.innerHeight || 640) - rect.bottom - viewportPad));
+  resultsEl.style.position = 'fixed';
+  resultsEl.style.top = `${Math.round(rect.bottom + 2)}px`;
+  resultsEl.style.left = `${Math.round(rect.left)}px`;
+  resultsEl.style.width = `${Math.round(rect.width)}px`;
+  resultsEl.style.maxHeight = `${maxHeight}px`;
+}
+
 function switchMobileTopPanel(panel) {
   if (!isPhoneLayoutMode()) return;
   const next = String(panel || '');
+  if (next === 'dept') {
+    currentMobileTopPanel = 'dept';
+    clearMobileDeptSelection();
+    syncPhoneLayoutPanels();
+    return;
+  }
   currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
   syncPhoneLayoutPanels();
 }
@@ -17440,7 +17459,6 @@ function autoSizeWardConnectionPanel() {
     mainView.style.setProperty('--mobile-link-panel-h', `${fixedHeight}px`);
     linkDisplay.style.height = '100%';
     linkDisplay.style.overflowY = 'auto';
-    if (linkedWardsList) linkedWardsList.style.gridTemplateColumns = '1fr';
     return;
   }
   const panel = document.querySelector('.top-linked-panel.ward-floating');
@@ -18546,7 +18564,17 @@ document.addEventListener('DOMContentLoaded', function() {
   const deptFilter = document.getElementById('deptFilter');
   if (deptFilter) {
     deptFilter.addEventListener('input', applyDeptFilter);
+    deptFilter.addEventListener('focus', positionMobileDeptSearchResults);
   }
+  document.addEventListener('pointerdown', function(e) {
+    const searchBox = document.querySelector('.top-search-box');
+    const resultsEl = document.getElementById('deptSearchResults');
+    const target = e.target;
+    if (!searchBox || !resultsEl) return;
+    if (searchBox.contains(target) || resultsEl.contains(target)) return;
+    deptSearchForceHidden = true;
+    hideDeptSearchResults();
+  });
   
   const scaleSlider = document.getElementById('scaleSlider');
   const scaleValue = document.getElementById('scaleValue');
@@ -18604,7 +18632,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('resize', function() {
     refreshEmbeddedLayout();
+    positionMobileDeptSearchResults();
   });
+  window.addEventListener('scroll', positionMobileDeptSearchResults, true);
 
   window.addEventListener('load', function() {
     refreshEmbeddedLayout();
