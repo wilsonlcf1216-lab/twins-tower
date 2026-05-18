@@ -15531,7 +15531,8 @@ let panStartY = 0;
 
 function shouldPreserveCurrentView() {
   if (!buildingContainer) return false;
-  const movedPan = Math.abs(panX - basePanX) > 2 || Math.abs(panY - basePanY) > 2;
+  const defaultPan = getDefaultPanOffsets();
+  const movedPan = Math.abs(panX - defaultPan.x) > 2 || Math.abs(panY - defaultPan.y) > 2;
   const movedScroll = Math.abs(buildingContainer.scrollLeft || 0) > 2 || Math.abs(buildingContainer.scrollTop || 0) > 2;
   return movedPan || movedScroll;
 }
@@ -17989,7 +17990,7 @@ function syncPhoneBuildingSizing() {
       space.style.maxWidth = '';
     }
   });
-  if (isPhoneLayout) {
+  if (isPhoneLayout && !isZoomInteractionActive()) {
     requestAnimationFrame(alignPhoneBuildingToExceptionalTab);
   }
 }
@@ -19036,6 +19037,77 @@ function endDrag() {
 // 觸摸設備處理
 let initialDist = 0;
 let initialScaleRef = 1;
+let pinchAnchorContentX = 0;
+let pinchAnchorContentY = 0;
+
+function getTouchDistance(touches) {
+  if (!touches || touches.length < 2) return 0;
+  const dx = touches[0].clientX - touches[1].clientX;
+  const dy = touches[0].clientY - touches[1].clientY;
+  return Math.hypot(dx, dy);
+}
+
+function getTouchMidpoint(touches) {
+  if (!touches || touches.length < 2) return null;
+  return {
+    x: (touches[0].clientX + touches[1].clientX) / 2,
+    y: (touches[0].clientY + touches[1].clientY) / 2
+  };
+}
+
+function syncScaleControls() {
+  const slider = document.getElementById('scaleSlider');
+  const valueEl = document.getElementById('scaleValue');
+  if (slider) slider.value = String(userScale);
+  if (valueEl) valueEl.textContent = userScale.toFixed(2) + '×';
+}
+
+function clampUserScale(nextUserScale) {
+  return Math.min(Math.max(nextUserScale, minUserScale), scaleMax);
+}
+
+function getEffectiveScaleForUserScale(nextUserScale) {
+  const container = document.getElementById('buildingContainer');
+  const building = document.getElementById('building');
+  if (!container || !building) return effectiveScale || 1;
+  ensureBaselineMeasured();
+  const contentW = building.scrollWidth || 0;
+  const contentH = building.scrollHeight || 0;
+  const refW = baselineContentW || contentW || 1;
+  const refH = baselineContentH || contentH || 1;
+  const availW = Math.max(1, container.clientWidth - 8);
+  const availH = Math.max(1, container.clientHeight - 8);
+  const autoScale = Math.min(availW / refW, availH / refH);
+  return Math.min(autoScale * nextUserScale, scaleMax);
+}
+
+function isZoomInteractionActive() {
+  return isPinching || (performance.now() - lastZoomTs < 220);
+}
+
+function zoomToClientPoint(nextUserScale, clientX, clientY) {
+  const container = document.getElementById('buildingContainer');
+  const building = document.getElementById('building');
+  if (!container || !building) return;
+  const rect = container.getBoundingClientRect();
+  const fallbackClientX = rect.left + (container.clientWidth / 2);
+  const fallbackClientY = rect.top + (container.clientHeight / 2);
+  const anchorClientX = Number.isFinite(clientX) ? clientX : fallbackClientX;
+  const anchorClientY = Number.isFinite(clientY) ? clientY : fallbackClientY;
+  const prevScale = effectiveScale || getEffectiveScaleForUserScale(userScale) || 1;
+  if (!(prevScale > 0)) return;
+  const anchorContentX = (anchorClientX - rect.left + (container.scrollLeft || 0) - panX) / prevScale;
+  const anchorContentY = (anchorClientY - rect.top + (container.scrollTop || 0) - panY) / prevScale;
+  const clamped = clampUserScale(nextUserScale);
+  const nextEffectiveScale = getEffectiveScaleForUserScale(clamped);
+  userScale = clamped;
+  effectiveScale = nextEffectiveScale;
+  panX = (anchorClientX - rect.left + (container.scrollLeft || 0)) - (anchorContentX * nextEffectiveScale);
+  panY = (anchorClientY - rect.top + (container.scrollTop || 0)) - (anchorContentY * nextEffectiveScale);
+  syncScaleControls();
+  applyPanScale();
+  lastZoomTs = performance.now();
+}
 
 function handleTouchStart(e) {
   if (e.touches.length === 1) {
@@ -19050,11 +19122,15 @@ function handleTouchStart(e) {
   } else if (e.touches.length === 2) {
     isDragging = false;
     isPinching = true;
-    initialDist = Math.hypot(
-      e.touches[0].pageX - e.touches[1].pageX,
-      e.touches[0].pageY - e.touches[1].pageY
-    );
+    initialDist = getTouchDistance(e.touches);
     initialScaleRef = userScale;
+    const midpoint = getTouchMidpoint(e.touches);
+    const rect = buildingContainer.getBoundingClientRect();
+    const scale = effectiveScale || getEffectiveScaleForUserScale(userScale) || 1;
+    if (midpoint && scale > 0) {
+      pinchAnchorContentX = (midpoint.x - rect.left + (buildingContainer.scrollLeft || 0) - panX) / scale;
+      pinchAnchorContentY = (midpoint.y - rect.top + (buildingContainer.scrollTop || 0) - panY) / scale;
+    }
     e.preventDefault();
   }
 }
@@ -19070,26 +19146,42 @@ function handleTouchMove(e) {
     applyPanScale();
     e.preventDefault();
   } else if (e.touches.length === 2) {
-    const dist = Math.hypot(
-      e.touches[0].pageX - e.touches[1].pageX,
-      e.touches[0].pageY - e.touches[1].pageY
-    );
+    const dist = getTouchDistance(e.touches);
     if (initialDist > 0) {
       e.preventDefault();
       const ratio = dist / initialDist;
-      const newScale = initialScaleRef * ratio;
-      const clamped = Math.min(Math.max(newScale, minUserScale), scaleMax);
+      const nextUserScale = initialScaleRef * ratio;
+      const clamped = Math.min(Math.max(nextUserScale, minUserScale), scaleMax);
+      const midpoint = getTouchMidpoint(e.touches);
+      const rect = buildingContainer.getBoundingClientRect();
+      const nextEffectiveScale = getEffectiveScaleForUserScale(clamped);
       userScale = clamped;
+      effectiveScale = nextEffectiveScale;
+      if (midpoint && nextEffectiveScale > 0) {
+        panX = (midpoint.x - rect.left + (buildingContainer.scrollLeft || 0)) - (pinchAnchorContentX * nextEffectiveScale);
+        panY = (midpoint.y - rect.top + (buildingContainer.scrollTop || 0)) - (pinchAnchorContentY * nextEffectiveScale);
+      }
+      syncScaleControls();
+      applyPanScale();
       lastZoomTs = performance.now();
-      scheduleFitBuildingToViewport();
     }
   }
 }
 
 function handleTouchEnd(e) {
-  isDragging = false;
+  if (e && e.touches && e.touches.length === 1) {
+    isDragging = true;
+    isPinching = false;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    panStartX = panX;
+    panStartY = panY;
+  } else {
+    isDragging = false;
+    isPinching = false;
+  }
+  initialDist = 0;
   buildingContainer.style.cursor = 'grab';
-  if (!e || !e.touches || e.touches.length < 2) isPinching = false;
   forceCrispText();
 }
 
@@ -19161,9 +19253,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (scaleSlider && scaleValue) {
     scaleSlider.value = String(userScale);
     scaleSlider.addEventListener('input', function(e) {
-      userScale = parseFloat(e.target.value);
+      userScale = clampUserScale(parseFloat(e.target.value));
       scaleValue.textContent = userScale.toFixed(2) + '×';
-      fitBuildingToViewport();
+      fitBuildingToViewport({ preserveView: true });
     });
     scaleValue.textContent = userScale.toFixed(2) + '×';
   }
@@ -19178,7 +19270,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (scaleValue) scaleValue.textContent = userScale.toFixed(2) + '×';
         }
       }
-      fitBuildingToViewport();
+      fitBuildingToViewport({ preserveView: true });
     });
   }
   
@@ -19196,9 +19288,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Trackpad / Mouse Wheel Zoom
   buildingContainer.addEventListener('wheel', function(e) {
     e.preventDefault();
-    const raw = -e.deltaY * 0.001;
-    const delta = Math.max(-0.12, Math.min(0.12, raw));
-    if (delta !== 0) nudgeScale(delta);
+    const deltaUnit = e.deltaMode === 1 ? 16 : (e.deltaMode === 2 ? Math.max(1, buildingContainer.clientHeight || window.innerHeight || 800) : 1);
+    const normalizedDeltaY = e.deltaY * deltaUnit;
+    const strength = e.ctrlKey ? 0.0065 : 0.0045;
+    const factor = Math.max(0.75, Math.min(1.35, Math.exp(-normalizedDeltaY * strength)));
+    const delta = (userScale * factor) - userScale;
+    if (delta !== 0) nudgeScale(delta, e.clientX, e.clientY);
   }, { passive: false });
   
   const mainView = document.querySelector('.main-view');
@@ -19481,8 +19576,7 @@ function fitBuildingToViewport(options = {}) {
   if (!container || !building) return;
   const preserveView = !!options.preserveView;
   const phoneLayout = isPhoneLayoutMode();
-  const now = performance.now();
-  const zooming = isPinching || (now - lastZoomTs < 160);
+  const zooming = isZoomInteractionActive();
   const availW = container.clientWidth - 8;
   const availH = container.clientHeight - 8;
   const contentW = building.scrollWidth;
@@ -19510,7 +19604,9 @@ function fitBuildingToViewport(options = {}) {
   container.style.justifyContent = (phoneLayout || fits) ? 'flex-start' : 'center';
   if (fits) {
     if (phoneLayout) {
-      requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
+      if (!preserveView && !zooming) {
+        requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
+      }
     } else {
       if (!preserveView && !zooming) container.scrollLeft = 0;
       if (!preserveView && !isDragging && !zooming) {
@@ -19520,7 +19616,9 @@ function fitBuildingToViewport(options = {}) {
     return;
   }
   if (phoneLayout) {
-    requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
+    if (!preserveView && !zooming) {
+      requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
+    }
     return;
   }
   if (!preserveView && !isDragging && !zooming) {
@@ -19664,6 +19762,7 @@ function getCenteredTextStartX(el) {
 
 function alignPhoneBuildingToExceptionalTab() {
   if (!isPhoneLayoutMode()) return;
+  if (isZoomInteractionActive()) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
   const exceptionalTab = document.getElementById('mobileTabExceptional');
@@ -19704,14 +19803,14 @@ function centerUsingBaseline() {
   container.scrollLeft = Math.floor(desired);
 }
 
-function nudgeScale(delta) {
-  userScale = Math.min(Math.max(userScale + delta, minUserScale), scaleMax);
-  lastZoomTs = performance.now();
-  const slider = document.getElementById('scaleSlider');
-  const valueEl = document.getElementById('scaleValue');
-  if (slider) slider.value = String(userScale);
-  if (valueEl) valueEl.textContent = userScale.toFixed(2) + '×';
-  scheduleFitBuildingToViewport();
+function nudgeScale(delta, clientX, clientY) {
+  const container = document.getElementById('buildingContainer');
+  const rect = container ? container.getBoundingClientRect() : null;
+  const centerX = rect ? (rect.left + (container.clientWidth / 2)) : undefined;
+  const centerY = rect ? (rect.top + (container.clientHeight / 2)) : undefined;
+  const pointerX = Number.isFinite(clientX) ? clientX : centerX;
+  const pointerY = Number.isFinite(clientY) ? clientY : centerY;
+  zoomToClientPoint(userScale + delta, pointerX, pointerY);
 }
 </script>
 
