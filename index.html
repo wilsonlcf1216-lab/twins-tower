@@ -1096,6 +1096,10 @@ h2 {
 .main-view.phone-layout .top-left-group .top-building-panel {
   width: 100% !important;
   flex: 0 0 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
 }
@@ -1107,6 +1111,7 @@ h2 {
 .main-view.phone-layout .top-building-selector {
   display: grid !important;
   gap: 0 !important;
+  grid-auto-rows: minmax(28px, auto);
 }
 
 .main-view.phone-layout #leftBuildingSelector {
@@ -1133,9 +1138,20 @@ h2 {
 }
 
 .main-view.phone-layout .building-container {
+  position: relative !important;
+  inset: auto !important;
+  order: 6 !important;
   display: flex !important;
+  width: 100% !important;
+  min-height: 72vh !important;
+  height: auto !important;
+  flex: 1 1 auto !important;
+  align-self: stretch !important;
+  overflow: auto !important;
   margin-top: 0 !important;
   padding: 26px 5px 10px !important;
+  border-radius: 0 !important;
+  z-index: 0 !important;
 }
 
 .phone-layout-debug {
@@ -5322,6 +5338,25 @@ h2 {
   .main-view.phone-layout .space-row.floor-8-12 {
     padding-left: 20px !important;
   }
+
+body.phone-layout-active .private-ward-info-modal {
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+body.phone-layout-active .private-ward-info-box {
+  width: min(100vw, 520px);
+  max-width: 100vw;
+  max-height: min(58vh, 460px);
+  border-radius: 16px 16px 0 0;
+  margin: 0;
+}
+
+body.phone-layout-active .private-ward-card-body {
+  max-height: min(46vh, 360px);
+  overflow-y: auto;
+}
 }
 /* Building Themes & Borders */
 /* .theme-ipeb .space { background-color: var(--color-ipeb); border-color: #ddd; } */
@@ -17572,30 +17607,38 @@ function stabilizePhoneLayoutVisibility() {
     return;
   }
 
-  if (tabs) tabs.style.display = 'grid';
-  if (topLeftGroup) topLeftGroup.style.display = 'grid';
-  if (buildingContainer) buildingContainer.style.display = 'flex';
+  if (tabs) tabs.style.setProperty('display', 'grid', 'important');
+  if (topLeftGroup) topLeftGroup.style.setProperty('display', 'grid', 'important');
+  if (buildingContainer) {
+    buildingContainer.style.setProperty('display', 'flex', 'important');
+    buildingContainer.style.setProperty('position', 'relative', 'important');
+    buildingContainer.style.setProperty('inset', 'auto', 'important');
+    buildingContainer.style.setProperty('width', '100%', 'important');
+    buildingContainer.style.setProperty('min-height', '72vh', 'important');
+    buildingContainer.style.setProperty('height', 'auto', 'important');
+    buildingContainer.style.setProperty('overflow', 'auto', 'important');
+  }
 
   if (deptPanel) {
     const show = currentMobileTopPanel === 'dept';
     deptPanel.classList.toggle('hidden', !show);
-    deptPanel.style.display = show ? 'flex' : 'none';
+    deptPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
   }
   if (exceptionalPanel) {
     const show = currentMobileTopPanel === 'exceptional';
     exceptionalPanel.classList.toggle('hidden', !show);
-    exceptionalPanel.style.display = show ? 'flex' : 'none';
+    exceptionalPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
   }
   if (calendarWrap) {
     const show = currentMobileTopPanel === 'calendar';
     calendarWrap.classList.toggle('hidden', !show);
     calendarWrap.classList.toggle('expanded', !!show);
-    calendarWrap.style.display = show ? 'flex' : 'none';
+    calendarWrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
   }
   if (calendarPanel) {
     const show = currentMobileTopPanel === 'calendar';
     calendarPanel.classList.toggle('hidden', !show);
-    calendarPanel.style.display = show ? 'flex' : 'none';
+    calendarPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
   }
   refreshPhoneLayoutDebugPanel();
 }
@@ -19089,6 +19132,7 @@ function updateEmbeddedLayout() {
   const phoneLayout = isPhoneLayoutMode();
   mainView.classList.toggle('compact-layout', compact && !phoneLayout);
   mainView.classList.toggle('phone-layout', phoneLayout);
+  document.body.classList.toggle('phone-layout-active', phoneLayout);
   syncPhoneBuildingSizing();
 }
 
