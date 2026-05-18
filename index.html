@@ -17482,7 +17482,7 @@ function isPhoneLayoutMode() {
 
 function getDefaultPanOffsets() {
   if (isPhoneLayoutMode()) {
-    return { x: 0, y: basePanY + 12 };
+    return { x: 8, y: basePanY + 12 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -19678,12 +19678,7 @@ function alignPhoneBuildingToExceptionalTab() {
   const scale = effectiveScale || 1;
   const viewportInContentUnits = container.clientWidth / scale;
   const maxScroll = Math.max(0, building.scrollWidth - viewportInContentUnits);
-  if (maxScroll <= 1) {
-    panX -= (delta / scale);
-    applyPanScale();
-    forceCrispText();
-    return;
-  }
+  if (maxScroll <= 1) return;
   const next = Math.max(0, Math.min(container.scrollLeft + (delta / scale), maxScroll));
   container.scrollLeft = Math.round(next);
 }
