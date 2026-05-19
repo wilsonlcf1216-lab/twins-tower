@@ -1940,6 +1940,52 @@ h2 {
   color: #3157c8;
 }
 
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb {
+  background: var(--color-ipeb);
+  border: 1px solid var(--color-ipeb-border);
+  color: #475569;
+}
+
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active {
+  background: var(--color-ipeb-border);
+  border-color: var(--color-ipeb-border);
+  color: #ffffff;
+}
+
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb:hover {
+  background: color-mix(in srgb, var(--color-ipeb-border) 14%, #ffffff);
+  color: var(--color-ipeb-border);
+  transform: none;
+}
+
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:hover {
+  background: var(--color-ipeb-border);
+  color: #ffffff;
+}
+
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030 {
+  background: var(--color-mcbtc2030);
+  border: 1px solid var(--color-mcbtc2030-border);
+  color: #5b4a3d;
+}
+
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active {
+  background: var(--color-mcbtc2030-border);
+  border-color: var(--color-mcbtc2030-border);
+  color: #ffffff;
+}
+
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030:hover {
+  background: color-mix(in srgb, var(--color-mcbtc2030-border) 14%, #ffffff);
+  color: var(--color-mcbtc2030-border);
+  transform: none;
+}
+
+.top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:hover {
+  background: var(--color-mcbtc2030-border);
+  color: #ffffff;
+}
+
 .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.active {
   background: #2563eb;
   color: #ffffff;
@@ -17097,7 +17143,7 @@ function renderDepartments() {
   targetGroup.className = 'dept-group';
   targetGroup.dataset.role = 'target-group';
   const targetBtn = document.createElement('button');
-  targetBtn.className = 'dept-btn active';
+  targetBtn.className = `dept-btn active ${currentDeptTarget === 'mcbtc2030' ? 'theme-mcbtc2030' : 'theme-ipeb'}`;
   targetBtn.textContent = currentDeptTarget === 'mcbtc2030' ? 'MCBTC2030' : 'IPEB/Old Block';
   targetBtn.onclick = () => setDeptTarget(currentDeptTarget === 'ipeb' ? 'mcbtc2030' : 'ipeb');
   targetGroup.appendChild(targetBtn);
@@ -17560,12 +17606,14 @@ function updateDeptSearchResults(tokensNorm) {
 
 function selectSpaceFromSearch(entry) {
   const input = document.getElementById('deptFilter');
+  const isPhoneSearchSelection = isPhoneLayoutMode();
+  const viewportScrollY = isPhoneSearchSelection ? (window.scrollY || window.pageYOffset || 0) : 0;
   hideDeptSearchResults();
   deptSearchForceHidden = true;
   if (input) {
     input.value = '';
-    if (isPhoneLayoutMode()) {
-      input.blur();
+    if (isPhoneSearchSelection) {
+      dismissDeptFilterKeyboard(input);
     } else {
       input.focus();
       try { input.setSelectionRange(0, 0); } catch (e) {}
@@ -17573,21 +17621,42 @@ function selectSpaceFromSearch(entry) {
   }
 
   if (!entry) return;
+  const preserveView = isPhoneSearchSelection ? true : shouldPreserveCurrentView();
+  const restoreViewport = () => {
+    if (!isPhoneSearchSelection) return;
+    const resetScroll = () => {
+      try {
+        window.scrollTo({ top: viewportScrollY, left: 0, behavior: 'auto' });
+      } catch (e) {
+        window.scrollTo(0, viewportScrollY);
+      }
+    };
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resetScroll);
+      });
+    } else {
+      setTimeout(resetScroll, 0);
+    }
+    setTimeout(resetScroll, 180);
+  };
   if (entry.tower === 'left') {
     const bIndex = entry.buildingIndex;
     const run = () => {
       toggleSpace('left', entry.floor, entry.index, bIndex);
-      scrollToSpace('left', entry.floor, entry.index, bIndex);
+      scrollToSpace('left', entry.floor, entry.index, bIndex, '', true, preserveView);
+      restoreViewport();
     };
     if (typeof bIndex === 'number' && bIndex !== currentLeftBuilding) {
-      switchLeftBuilding(bIndex);
+      switchLeftBuilding(bIndex, { preservePan: preserveView });
       setTimeout(run, 350);
     } else {
       run();
     }
   } else {
     toggleSpace('right', entry.floor, entry.index, null, entry.wing);
-    scrollToSpace('right', entry.floor, entry.index, null, entry.wing);
+    scrollToSpace('right', entry.floor, entry.index, null, entry.wing, true, preserveView);
+    restoreViewport();
   }
 }
 
@@ -18459,6 +18528,28 @@ function positionMobileDeptSearchResults() {
   resultsEl.style.width = `${Math.round(rect.width)}px`;
   resultsEl.style.marginTop = '0';
   resultsEl.style.maxHeight = `${maxHeight}px`;
+}
+
+function dismissDeptFilterKeyboard(input) {
+  if (!input) return;
+  const blurActiveElement = () => {
+    const activeEl = document.activeElement;
+    if (activeEl && typeof activeEl.blur === 'function') {
+      try {
+        activeEl.blur();
+      } catch (e) {}
+    }
+    try {
+      input.blur();
+    } catch (e) {}
+  };
+  blurActiveElement();
+  // Keep the field temporarily readonly so the mobile viewport can settle without reopening the keyboard.
+  input.setAttribute('readonly', 'readonly');
+  setTimeout(() => {
+    blurActiveElement();
+    input.removeAttribute('readonly');
+  }, 160);
 }
 
 function focusDeptFilterFromUserGesture() {
