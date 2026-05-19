@@ -1023,13 +1023,13 @@ h2 {
 }
 
 .main-view.phone-layout .top-search-box .dept-search-results {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 0;
   left: 0;
-  right: 0;
+  right: auto;
   margin-top: 0;
   max-height: min(50vh, 320px);
-  z-index: 1200;
+  z-index: 9200;
 }
 
 .main-view.phone-layout .top-linked-panel,
@@ -18452,11 +18452,11 @@ function positionMobileDeptSearchResults() {
   const viewportPad = 6;
   const available = Math.floor((window.innerHeight || 640) - rect.bottom - viewportPad);
   const maxHeight = Math.max(96, Math.min(180, available));
-  resultsEl.style.position = 'absolute';
-  resultsEl.style.top = '100%';
-  resultsEl.style.left = '0';
-  resultsEl.style.right = '0';
-  resultsEl.style.width = '';
+  resultsEl.style.position = 'fixed';
+  resultsEl.style.top = `${Math.round(rect.bottom)}px`;
+  resultsEl.style.left = `${Math.round(rect.left)}px`;
+  resultsEl.style.right = 'auto';
+  resultsEl.style.width = `${Math.round(rect.width)}px`;
   resultsEl.style.marginTop = '0';
   resultsEl.style.maxHeight = `${maxHeight}px`;
 }
