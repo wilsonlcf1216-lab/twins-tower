@@ -15133,6 +15133,7 @@ let currentClickedSpace = null;
 let currentLinkedGroup = null;
 let currentExceptionalLinkGroup = null;
 let scaleMax = 2.0;
+let phoneScaleMax = 3.4;
 let userScale = 0.90;
 let minUserScale = 0.5;
 let basePanX = 150;
@@ -20178,12 +20179,23 @@ function getTouchMidpoint(touches) {
 function syncScaleControls() {
   const slider = document.getElementById('scaleSlider');
   const valueEl = document.getElementById('scaleValue');
-  if (slider) slider.value = String(userScale);
+  const activeScaleMax = getActiveScaleMax();
+  if (userScale > activeScaleMax) {
+    userScale = activeScaleMax;
+  }
+  if (slider) {
+    slider.max = String(activeScaleMax);
+    slider.value = String(userScale);
+  }
   if (valueEl) valueEl.textContent = userScale.toFixed(2) + '×';
 }
 
+function getActiveScaleMax() {
+  return isPhoneLayoutMode() ? Math.max(scaleMax, phoneScaleMax) : scaleMax;
+}
+
 function clampUserScale(nextUserScale) {
-  return Math.min(Math.max(nextUserScale, minUserScale), scaleMax);
+  return Math.min(Math.max(nextUserScale, minUserScale), getActiveScaleMax());
 }
 
 function getEffectiveScaleForUserScale(nextUserScale) {
@@ -20198,7 +20210,7 @@ function getEffectiveScaleForUserScale(nextUserScale) {
   const availW = Math.max(1, container.clientWidth - 8);
   const availH = Math.max(1, container.clientHeight - 8);
   const autoScale = Math.min(availW / refW, availH / refH);
-  return Math.min(autoScale * nextUserScale, scaleMax);
+  return Math.min(autoScale * nextUserScale, getActiveScaleMax());
 }
 
 function isZoomInteractionActive() {
@@ -20271,7 +20283,7 @@ function handleTouchMove(e) {
       e.preventDefault();
       const ratio = dist / initialDist;
       const nextUserScale = initialScaleRef * ratio;
-      const clamped = Math.min(Math.max(nextUserScale, minUserScale), scaleMax);
+      const clamped = clampUserScale(nextUserScale);
       const midpoint = getTouchMidpoint(e.touches);
       const rect = buildingContainer.getBoundingClientRect();
       const nextEffectiveScale = getEffectiveScaleForUserScale(clamped);
@@ -20383,6 +20395,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const scaleMaxSelect = document.getElementById('scaleMaxSelect');
   if (scaleSlider && scaleValue) {
     scaleSlider.value = String(userScale);
+    scaleSlider.max = String(getActiveScaleMax());
     scaleSlider.addEventListener('input', function(e) {
       userScale = clampUserScale(parseFloat(e.target.value));
       scaleValue.textContent = userScale.toFixed(2) + '×';
@@ -20393,11 +20406,12 @@ document.addEventListener('DOMContentLoaded', function() {
   if (scaleMaxSelect) {
     scaleMaxSelect.addEventListener('change', function(e) {
       scaleMax = parseFloat(e.target.value);
+      const activeScaleMax = getActiveScaleMax();
       if (scaleSlider) {
-        scaleSlider.max = String(scaleMax);
-        if (parseFloat(scaleSlider.value) > scaleMax) {
-          scaleSlider.value = String(scaleMax);
-          userScale = scaleMax;
+        scaleSlider.max = String(activeScaleMax);
+        if (parseFloat(scaleSlider.value) > activeScaleMax) {
+          scaleSlider.value = String(activeScaleMax);
+          userScale = activeScaleMax;
           if (scaleValue) scaleValue.textContent = userScale.toFixed(2) + '×';
         }
       }
@@ -20720,7 +20734,11 @@ function fitBuildingToViewport(options = {}) {
   const autoScaleW = availW / refW;
   const autoScaleH = availH / refH;
   const autoScale = Math.min(autoScaleW, autoScaleH);
-  const effective = Math.min(autoScale * userScale, scaleMax);
+  const activeScaleMax = getActiveScaleMax();
+  if (userScale > activeScaleMax) {
+    userScale = activeScaleMax;
+  }
+  const effective = Math.min(autoScale * userScale, activeScaleMax);
   effectiveScale = effective;
   updateTopPanelSizing();
   if (!preserveView && !isDragging && !zooming) {
