@@ -1024,10 +1024,10 @@ h2 {
 
 .main-view.phone-layout .top-search-box .dept-search-results {
   position: absolute;
-  top: calc(100% + 2px);
+  top: 100%;
   left: 0;
   right: 0;
-  margin-top: 4px;
+  margin-top: 0;
   max-height: min(50vh, 320px);
   z-index: 1200;
 }
@@ -1191,7 +1191,8 @@ h2 {
   color: #3730a3;
   background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
   border-right: 1px solid #c7d2fe;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.05;
 }
 
 .main-view.phone-layout .mobile-building-label::before {
@@ -1202,6 +1203,11 @@ h2 {
   border-radius: 999px;
   background: #4f46e5;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.main-view.phone-layout .mobile-building-label-text {
+  display: inline-block;
+  white-space: normal;
 }
 
 .main-view.phone-layout .mobile-building-options {
@@ -1509,7 +1515,7 @@ h2 {
 
 .top-search-box .dept-search-results {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 100%;
   right: 0;
   left: 0;
   max-height: min(180px, 40vh);
@@ -5785,7 +5791,7 @@ body.phone-layout-active .private-ward-card-body {
       </div>
       <div class="mobile-building-selectors" id="mobileBuildingSelectors">
         <div class="mobile-building-row">
-          <div class="mobile-building-label">Existing Tower</div>
+          <div class="mobile-building-label"><span class="mobile-building-label-text">Existing<br>Tower</span></div>
           <div class="mobile-building-options" id="mobileLeftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-mobile-left-building="0" type="button" onclick="switchLeftBuilding(0)">MCBTC</button>
             <button class="building-btn theme-csb" data-mobile-left-building="1" type="button" onclick="switchLeftBuilding(1)" title="CLINICAL SCIENCES BUILDING">CSB</button>
@@ -5794,7 +5800,7 @@ body.phone-layout-active .private-ward-card-body {
           </div>
         </div>
         <div class="mobile-building-row">
-          <div class="mobile-building-label">Future Tower</div>
+          <div class="mobile-building-label"><span class="mobile-building-label-text">Future<br>Tower</span></div>
           <div class="mobile-building-options" id="mobileRightBuildingSelector">
             <button class="building-btn theme-ipeb active" data-mobile-right-building="0" type="button" onclick="switchRightBuilding(0)">IPEB</button>
             <button class="building-btn theme-mcbtc2030" data-mobile-right-building="1" type="button" onclick="switchRightBuilding(1)" title="MCBTC (2030)">MCBTC2030</button>
@@ -18447,9 +18453,11 @@ function positionMobileDeptSearchResults() {
   const available = Math.floor((window.innerHeight || 640) - rect.bottom - viewportPad);
   const maxHeight = Math.max(96, Math.min(180, available));
   resultsEl.style.position = 'absolute';
-  resultsEl.style.top = 'calc(100% + 2px)';
+  resultsEl.style.top = '100%';
   resultsEl.style.left = '0';
+  resultsEl.style.right = '0';
   resultsEl.style.width = '';
+  resultsEl.style.marginTop = '0';
   resultsEl.style.maxHeight = `${maxHeight}px`;
 }
 
