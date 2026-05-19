@@ -1114,41 +1114,49 @@ h2 {
 .main-view.phone-layout .mobile-building-selectors {
   display: grid !important;
   grid-template-columns: 1fr;
-  gap: 0 !important;
+  gap: 8px !important;
   width: 100% !important;
-  background: #fff !important;
-  border-top: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 8px 10px 10px;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%) !important;
+  border-top: 1px solid #dbeafe;
+  border-bottom: 1px solid #dbeafe;
 }
 
 .main-view.phone-layout .mobile-building-row {
   display: grid;
-  grid-template-columns: 74px minmax(0, 1fr);
+  grid-template-columns: 84px minmax(0, 1fr);
   align-items: stretch;
-  min-height: 30px;
-  border-top: 1px solid #e5e7eb;
+  min-height: 42px;
+  border: 1px solid #dbeafe;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.08);
 }
 
 .main-view.phone-layout .mobile-building-row:first-child {
-  border-top: 0;
+  border-top: 1px solid #dbeafe;
 }
 
 .main-view.phone-layout .mobile-building-label {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 4px;
-  font-size: 10px;
-  font-weight: 700;
-  color: #4338ca;
-  background: #eef2ff;
-  border-right: 1px solid #e5e7eb;
+  justify-content: flex-start;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #3730a3;
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  border-right: 1px solid #c7d2fe;
   white-space: nowrap;
 }
 
 .main-view.phone-layout .mobile-building-options {
   display: grid;
-  gap: 0 !important;
+  gap: 4px !important;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.94);
 }
 
 .main-view.phone-layout #mobileLeftBuildingSelector {
@@ -1160,20 +1168,27 @@ h2 {
 }
 
 .main-view.phone-layout .mobile-building-options .building-btn {
-  min-height: 30px;
-  height: 30px;
-  padding: 0 2px;
-  font-size: 9px;
-  line-height: 1;
-  border-radius: 0;
-  border-width: 0 1px 0 0;
+  min-height: 34px;
+  height: 34px;
+  padding: 0 4px;
+  font-size: 10px;
+  line-height: 1.1;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .main-view.phone-layout .mobile-building-options .building-btn:last-child {
-  border-right-width: 0;
+  border-right-width: 1px;
+}
+
+.main-view.phone-layout .mobile-building-options .building-btn.active {
+  box-shadow: 0 4px 10px rgba(67, 56, 202, 0.18);
+  transform: translateY(-1px);
 }
 
 .main-view.phone-layout .mobile-top-tabs {
@@ -5693,7 +5708,7 @@ body.phone-layout-active .private-ward-card-body {
     <div class="timeline-top-row">
       <div class="top-left-group">
         <div class="top-panel top-building-panel">
-          <div class="top-panel-header">Left Tower Selection</div>
+          <div class="top-panel-header">Current Tower Selection</div>
           <div class="top-building-selector" id="leftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-building-index="0" onclick="switchLeftBuilding(0)">MCBTC</button>
             <button class="building-btn theme-dtb" data-building-index="2" onclick="switchLeftBuilding(2)">DAY TREATMENT BLOCK</button>
@@ -5703,7 +5718,7 @@ body.phone-layout-active .private-ward-card-body {
         </div>
 
         <div class="top-panel top-building-panel">
-          <div class="top-panel-header">Right Tower Selection</div>
+          <div class="top-panel-header">Future Tower Selection</div>
           <div class="top-building-selector" id="rightBuildingSelector">
             <button class="building-btn theme-ipeb active" data-right-building="0" onclick="switchRightBuilding(0)">IPEB</button>
             <button class="building-btn theme-mcbtc2030" data-right-building="1" onclick="switchRightBuilding(1)">MCBTC (2030)</button>
@@ -5836,7 +5851,7 @@ MCBTC|0|10|MRI|MRI|Clinical|Day/Special Area|DIIR|
 MCBTC|0|11|DG Store|DG Store|Neutral||Pharmacy|
 MCBTC|0|11|DG Store|DG Store|Neutral||Admin|HPFM
 MCBTC|0|12|Refuse|Refuse|Neutral||Admin|Housekeeping
-MCBTC|0|13|NEATs|NEATs|Neutral||NEATs|
+MCBTC|0|13|NEATs|NEATs|Neutral||Admin|NEATs
 MCBTC|0|14|L/UL Bays|L/UL Bays||||
 MCBTC|B01|1|Plant Rooms|Plant Rooms||||
 MCBTC|B01|2|Tunnel|Tunnel||||
@@ -5865,7 +5880,7 @@ CSB|3|7|STAT|STAT|Neutral||STAT|
 CSB|3|8|PFPE|PFPE|Neutral||PFPE|
 CSB|3|9|ICWM|ICWM|Neutral||ICWM|
 CSB|3|10|MSSU|MSSU|Neutral||MSSU|
-CSB|3|11|BESS|BESS|Neutral||P&MM|
+CSB|3|11|BESS|BESS|Neutral||Admin|P&MM
 CSB|3|12|C&CR|C&CR|Neutral||Admin|C&CR
 CSB|3|13|AP|AP|Neutral||AP|
 CSB|3|14|Genome Project|Genome|Neutral||Genome|
@@ -5955,7 +5970,7 @@ DTB|0|9|SPEECH|SPEECH|Neutral||Allied Health|
 DTB|0|10|Enquiry|Enquiry|Neutral||Admin|Enquiry
 DTB|0|11|Admission|Admission|Neutral||Admin|HI&R
 DTB|0|12|Catering|Catering|Neutral||Admin|Catering
-DTB|B01|1|STAFF CHG (SS)|STAFF CHG (SS)|Neutral||Staff Changing|
+DTB|B01|1|STAFF CHG (SS)|STAFF CHG (SS)|Neutral||Admin|Staff Changing
 DTB|B01|2|Bulk Store|Bulk Store|Neutral||Admin|Hospital Supplies
 DTB|B01|3|Plant Rooms|Plant Rooms||||
 DTB|B01|4|Central Medical Records|CENTRAL MEDICAL RECORDS|Neutral||Admin|HI&R
@@ -5974,7 +5989,7 @@ SB|5|1|5E O&G Day Ward|5E|Clinical|Day/Special Area|O&G|
 SB|5|2|5F O&G Gynaecology Ward|5F|Clinical|Ward|O&G|
 SB|4|1|4E Clinical Oncology|4E|Clinical|Ward|Oncology|
 SB|4|2|4F Clinical Oncology|4F|Clinical|Ward|Oncology|
-SB|3|1|3E Staff Changing (N)|3E Staff Changing|Neutral||Staff Changing|
+SB|3|1|3E Staff Changing (N)|3E Staff Changing|Neutral||Admin|Staff Changing
 SB|3|2|3F Clinical Oncology|3F|Clinical|Ward|Oncology|
 SB|2|1|2E Dean Office|Dean Office|Neutral||CUHK|
 SB|2|2|2E Faculty and Planning Office|Faculty and Planning Office|Neutral||CUHK|
@@ -5983,8 +5998,8 @@ SB|1|1|1E CUHK O&G|O&G, CUHK|Neutral||CUHK|
 SB|1|2|1F ART Lab|1F ART|Clinical|Day/Special Area|O&G|
 SB|0|1|Endoscopy Centre|Endoscopy Centre|Clinical|Day/Special Area|SUR|
 SB|B01|1|Plant Rooms|Plant Rooms||||
-SB|B01|2|Staff Changing (SS)|Staff Changing (SS)|Neutral||Staff Changing|
-SB|B01|3|Various Stores|Various Stores|Neutral||P&MM|
+SB|B01|2|Staff Changing (SS)|Staff Changing (SS)|Neutral||Admin|Staff Changing
+SB|B01|3|Various Stores|Various Stores|Neutral||Admin|P&MM
 `;
 
   const rows = raw
@@ -15376,6 +15391,27 @@ const exceptionalCaseMigrations = [
     ]
   },
   {
+    "title": "SPIRITUAL 搬遷記錄",
+    "from": "IPEB 8/F Spiritual",
+    "triggers": [
+      {
+        "tower": "right",
+        "wing": "nwing",
+        "floor": "8",
+        "index": 4
+      }
+    ],
+    "moves": [
+      {
+        "year": "2027",
+        "label": "來源",
+        "destinations": [
+          "From 4/F Block B,SQ, North Entrance."
+        ]
+      }
+    ]
+  },
+  {
     "title": "EYE CENTRE 搬遷記錄",
     "from": "Eye Centre",
     "triggers": [
@@ -15645,7 +15681,7 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
   const indicator = document.createElement('div');
   indicator.className = 'mode-indicator';
   if (shouldSetModeIndicatorId) indicator.id = 'modeIndicator';
-  indicator.textContent = `Left Tower：${leftBuildingsData[currentLeftBuilding].name} | Right Tower：${currentRightBuilding === 1 ? 'MCBTC (2030)' : 'IPEB'}`;
+  indicator.textContent = `Current Tower：${leftBuildingsData[currentLeftBuilding].name} | Future Tower：${currentRightBuilding === 1 ? 'MCBTC (2030)' : 'IPEB'}`;
   indicator.style.whiteSpace = 'nowrap';
   
   centerContainer.appendChild(indicator);
