@@ -951,14 +951,23 @@ h2 {
 
 .main-view.phone-layout .top-search-box {
   order: 1;
+  z-index: 3;
 }
 
-.main-view.phone-layout #topDeptPanel {
+.main-view.phone-layout .mobile-building-selectors {
   order: 2;
 }
 
-.main-view.phone-layout #topExceptionalPanel {
+.main-view.phone-layout .mobile-top-tabs {
   order: 3;
+}
+
+.main-view.phone-layout #topDeptPanel {
+  order: 4;
+}
+
+.main-view.phone-layout #topExceptionalPanel {
+  order: 5;
 }
 
 .main-view.phone-layout .top-search-tools,
@@ -1051,6 +1060,31 @@ h2 {
   margin: 0;
 }
 
+.main-view.phone-layout .top-search-floating {
+  gap: 8px;
+  padding: 8px 8px 0;
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+
+.main-view.phone-layout .top-search-box {
+  border: 1px solid #c7d2fe;
+  border-radius: 16px;
+  min-height: 46px;
+  padding: 0 12px;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.10);
+}
+
+.main-view.phone-layout .top-filter-input {
+  min-height: 42px;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.main-view.phone-layout .top-search-box .dept-search-results {
+  border-radius: 14px;
+  box-shadow: 0 16px 32px rgba(37, 99, 235, 0.18);
+}
+
 .main-view.phone-layout #topDeptPanel {
   overflow: visible;
 }
@@ -1122,12 +1156,12 @@ h2 {
 .main-view.phone-layout .mobile-building-selectors {
   display: grid !important;
   grid-template-columns: 1fr;
-  gap: 8px !important;
+  gap: 10px !important;
   width: 100% !important;
-  padding: 8px 10px 10px;
-  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%) !important;
-  border-top: 1px solid #dbeafe;
-  border-bottom: 1px solid #dbeafe;
+  padding: 0;
+  background: transparent !important;
+  border-top: 0;
+  border-bottom: 0;
 }
 
 .main-view.phone-layout .mobile-building-row {
@@ -1158,6 +1192,16 @@ h2 {
   background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
   border-right: 1px solid #c7d2fe;
   white-space: nowrap;
+}
+
+.main-view.phone-layout .mobile-building-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 999px;
+  background: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
 .main-view.phone-layout .mobile-building-options {
@@ -1202,7 +1246,8 @@ h2 {
 .main-view.phone-layout .mobile-top-tabs {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0 !important;
+  gap: 6px !important;
+  padding: 0;
 }
 
 .main-view.phone-layout .building-container {
@@ -1435,10 +1480,31 @@ h2 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .top-search-floating .top-filter-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
   padding: 3px 6px;
+}
+
+.top-search-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  color: #4f46e5;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .top-search-box .dept-search-results {
@@ -5181,9 +5247,9 @@ h2 {
     max-width: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 0 !important;
-    padding-top: 0 !important;
-    background: #fff !important;
+    gap: 8px !important;
+    padding: 8px 8px 0 !important;
+    background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%) !important;
     transform: none !important;
     overflow: visible !important;
     z-index: 7000 !important;
@@ -5206,8 +5272,8 @@ h2 {
     max-width: 100% !important;
     min-width: 0 !important;
     margin: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.10) !important;
     position: static !important;
     left: auto !important;
     top: auto !important;
@@ -5217,6 +5283,9 @@ h2 {
   .main-view.phone-layout .top-search-box {
     order: 1 !important;
     z-index: 7001 !important;
+    border: 1px solid #c7d2fe !important;
+    min-height: 46px !important;
+    padding: 0 12px !important;
   }
 
   .main-view.phone-layout .top-linked-panel {
@@ -5269,38 +5338,41 @@ h2 {
   }
 
   .main-view.phone-layout .mobile-top-tabs {
-    order: 4 !important;
+    order: 3 !important;
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0 !important;
-    background: #fff !important;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+    gap: 6px !important;
+    background: transparent !important;
+    border-top: 0;
+    border-bottom: 0;
   }
 
   .main-view.phone-layout .mobile-top-tab {
     appearance: none;
-    border: 0;
-    border-right: 1px solid #e5e7eb;
-    background: #fff;
+    border: 1px solid #dbeafe;
+    border-right: 1px solid #dbeafe;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
     color: #4b5563;
     font-size: 11px;
     font-weight: 700;
-    min-height: 30px;
+    min-height: 34px;
     padding: 0 4px;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.08);
   }
 
   .main-view.phone-layout .mobile-top-tab:last-child {
-    border-right: 0;
+    border-right: 1px solid #dbeafe;
   }
 
   .main-view.phone-layout .mobile-top-tab.active {
-    background: #eef2ff;
+    background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
     color: #4338ca;
+    border-color: #a5b4fc;
   }
 
   .main-view.phone-layout #topDeptPanel {
-    order: 5 !important;
+    order: 4 !important;
     display: flex !important;
     overflow: visible !important;
   }
@@ -5412,15 +5484,6 @@ h2 {
   .main-view.phone-layout .top-linked-panel .link-display {
     height: 100% !important;
     overflow-y: auto !important;
-  }
-
-  .main-view.phone-layout .top-search-box .dept-search-results {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: auto !important;
-    z-index: 6000 !important;
-    pointer-events: auto !important;
   }
 
   .main-view.phone-layout .top-dept-footer,
@@ -5716,12 +5779,13 @@ body.phone-layout-active .private-ward-card-body {
         <div class="exceptional-list" id="exceptionalAreaList"></div>
       </div>
       <div class="top-search-box">
-        <input class="top-filter-input" id="deptFilter" type="text" placeholder="Searching for Ward/Area">
+        <span class="top-search-icon" aria-hidden="true">⌕</span>
+        <input class="top-filter-input" id="deptFilter" type="text" placeholder="Searching for Ward/Area" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="search" enterkeyhint="search">
         <div id="deptSearchResults" class="dept-search-results"></div>
       </div>
       <div class="mobile-building-selectors" id="mobileBuildingSelectors">
         <div class="mobile-building-row">
-          <div class="mobile-building-label">Left Tower</div>
+          <div class="mobile-building-label">Existing Tower</div>
           <div class="mobile-building-options" id="mobileLeftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-mobile-left-building="0" type="button" onclick="switchLeftBuilding(0)">MCBTC</button>
             <button class="building-btn theme-csb" data-mobile-left-building="1" type="button" onclick="switchLeftBuilding(1)" title="CLINICAL SCIENCES BUILDING">CSB</button>
@@ -5730,7 +5794,7 @@ body.phone-layout-active .private-ward-card-body {
           </div>
         </div>
         <div class="mobile-building-row">
-          <div class="mobile-building-label">Right Tower</div>
+          <div class="mobile-building-label">Future Tower</div>
           <div class="mobile-building-options" id="mobileRightBuildingSelector">
             <button class="building-btn theme-ipeb active" data-mobile-right-building="0" type="button" onclick="switchRightBuilding(0)">IPEB</button>
             <button class="building-btn theme-mcbtc2030" data-mobile-right-building="1" type="button" onclick="switchRightBuilding(1)" title="MCBTC (2030)">MCBTC2030</button>
@@ -6406,20 +6470,6 @@ if (!window.mcbtc2030MenuSourceRows) {
   },
   {
     "building": "MCBTC2030",
-    "floor": "4",
-    "order": 1,
-    "display": "The Nethersole School of Nursing",
-    "sourceName": "The Nethersole School of Nursing",
-    "side": "Neutral",
-    "type": "",
-    "department": "The Nethersole School of Nursing",
-    "subDepartment": "",
-    "tower": "right",
-    "wing": "mcbtc2030",
-    "index": 0
-  },
-  {
-    "building": "MCBTC2030",
     "floor": "3",
     "order": 3,
     "display": "MSSU (Gen)",
@@ -6459,6 +6509,20 @@ if (!window.mcbtc2030MenuSourceRows) {
     "tower": "right",
     "wing": "mcbtc2030",
     "index": 7
+  },
+  {
+    "building": "MCBTC2030",
+    "floor": "4",
+    "order": 1,
+    "display": "The Nethersole School of Nursing",
+    "sourceName": "The Nethersole School of Nursing",
+    "side": "Neutral",
+    "type": "",
+    "department": "The Nethersole School of Nursing",
+    "subDepartment": "",
+    "tower": "right",
+    "wing": "mcbtc2030",
+    "index": 0
   }
 ];
 }
@@ -17087,6 +17151,14 @@ function updateDeptListVisibility(activeSide) {
 
 function sortDeptKeys(keys) {
   return (keys || []).slice().sort((a, b) => {
+    const getTailPriority = (value) => {
+      const key = String(value || '').trim().toUpperCase();
+      if (key === 'THE NETHERSOLE SCHOOL OF NURSING') return 2;
+      if (key === 'CUHK') return 1;
+      return 0;
+    };
+    const priorityDiff = getTailPriority(a) - getTailPriority(b);
+    if (priorityDiff !== 0) return priorityDiff;
     const aIsCuhk = String(a || '').trim().toUpperCase() === 'CUHK';
     const bIsCuhk = String(b || '').trim().toUpperCase() === 'CUHK';
     if (aIsCuhk !== bIsCuhk) return aIsCuhk ? 1 : -1;
@@ -17486,8 +17558,12 @@ function selectSpaceFromSearch(entry) {
   deptSearchForceHidden = true;
   if (input) {
     input.value = '';
-    input.focus();
-    try { input.setSelectionRange(0, 0); } catch (e) {}
+    if (isPhoneLayoutMode()) {
+      input.blur();
+    } else {
+      input.focus();
+      try { input.setSelectionRange(0, 0); } catch (e) {}
+    }
   }
 
   if (!entry) return;
@@ -18370,11 +18446,30 @@ function positionMobileDeptSearchResults() {
   const viewportPad = 6;
   const available = Math.floor((window.innerHeight || 640) - rect.bottom - viewportPad);
   const maxHeight = Math.max(96, Math.min(180, available));
-  resultsEl.style.position = 'fixed';
-  resultsEl.style.top = `${Math.round(rect.bottom + 2)}px`;
-  resultsEl.style.left = `${Math.round(rect.left)}px`;
-  resultsEl.style.width = `${Math.round(rect.width)}px`;
+  resultsEl.style.position = 'absolute';
+  resultsEl.style.top = 'calc(100% + 2px)';
+  resultsEl.style.left = '0';
+  resultsEl.style.width = '';
   resultsEl.style.maxHeight = `${maxHeight}px`;
+}
+
+function focusDeptFilterFromUserGesture() {
+  if (!isPhoneLayoutMode()) return;
+  const input = document.getElementById('deptFilter');
+  if (!input) return;
+  const focusInput = () => {
+    try {
+      input.focus({ preventScroll: true });
+    } catch (e) {
+      input.focus();
+    }
+    positionMobileDeptSearchResults();
+  };
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(focusInput);
+  } else {
+    setTimeout(focusInput, 0);
+  }
 }
 
 function switchMobileTopPanel(panel) {
@@ -20162,6 +20257,17 @@ document.addEventListener('DOMContentLoaded', function() {
   if (deptFilter) {
     deptFilter.addEventListener('input', applyDeptFilter);
     deptFilter.addEventListener('focus', positionMobileDeptSearchResults);
+    deptFilter.addEventListener('click', positionMobileDeptSearchResults);
+  }
+  const searchBox = document.querySelector('.top-search-box');
+  if (searchBox && deptFilter) {
+    const focusFromTap = (e) => {
+      if (!isPhoneLayoutMode()) return;
+      if (e && e.target && e.target.closest && e.target.closest('.dept-search-results')) return;
+      focusDeptFilterFromUserGesture();
+    };
+    searchBox.addEventListener('click', focusFromTap);
+    searchBox.addEventListener('touchend', focusFromTap, { passive: true });
   }
   document.addEventListener('pointerdown', function(e) {
     const searchBox = document.querySelector('.top-search-box');
