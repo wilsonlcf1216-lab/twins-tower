@@ -5708,7 +5708,7 @@ body.phone-layout-active .private-ward-card-body {
     <div class="timeline-top-row">
       <div class="top-left-group">
         <div class="top-panel top-building-panel">
-          <div class="top-panel-header">Current Tower Selection</div>
+          <div class="top-panel-header">Existing Tower Selection</div>
           <div class="top-building-selector" id="leftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-building-index="0" onclick="switchLeftBuilding(0)">MCBTC</button>
             <button class="building-btn theme-dtb" data-building-index="2" onclick="switchLeftBuilding(2)">DAY TREATMENT BLOCK</button>
@@ -15681,7 +15681,7 @@ function renderBuilding(targetBuildingEl, leftBuildingIndex, options) {
   const indicator = document.createElement('div');
   indicator.className = 'mode-indicator';
   if (shouldSetModeIndicatorId) indicator.id = 'modeIndicator';
-  indicator.textContent = `Current Tower：${leftBuildingsData[currentLeftBuilding].name} | Future Tower：${currentRightBuilding === 1 ? 'MCBTC (2030)' : 'IPEB'}`;
+  indicator.textContent = `Existing Tower：${leftBuildingsData[currentLeftBuilding].name} | Future Tower：${currentRightBuilding === 1 ? 'MCBTC (2030)' : 'IPEB'}`;
   indicator.style.whiteSpace = 'nowrap';
   
   centerContainer.appendChild(indicator);
