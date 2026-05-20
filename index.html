@@ -74,15 +74,6 @@ body {
   font-family: inherit !important;
 }
 
-#twintower-app button,
-#twintower-app input,
-#twintower-app select,
-#twintower-app textarea {
-  font: inherit !important;
-  letter-spacing: inherit !important;
-  text-transform: none !important;
-}
-
 #twintower-app .building {
   display: flex !important;
   flex-direction: column !important;
@@ -17320,9 +17311,7 @@ const typographyProtectedProperties = [
   'font-size',
   'font-weight',
   'font-style',
-  'line-height',
-  'letter-spacing',
-  'text-transform'
+  'line-height'
 ];
 
 function protectTypographyForElement(el) {
@@ -17335,10 +17324,6 @@ function protectTypographyForElement(el) {
       el.style.setProperty(prop, value, 'important');
     }
   });
-  if (el.matches && el.matches('button, input, select, textarea')) {
-    el.style.setProperty('appearance', 'none', 'important');
-    el.style.setProperty('-webkit-appearance', 'none', 'important');
-  }
 }
 
 function protectTypographyTree(root = null) {
