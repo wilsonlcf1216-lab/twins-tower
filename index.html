@@ -7001,6 +7001,193 @@ body.phone-layout-active .private-ward-card-body {
 .tower.right.theme-ipeb .ipeb-3f-double-height .csb-3f-lower {
   display: none;
 }
+
+/* Final iPad overrides */
+#twintower-app .main-view.tablet-layout.tablet-landscape {
+  --top-control-h: 28px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating {
+  position: absolute !important;
+  top: 6px !important;
+  right: 6px !important;
+  left: auto !important;
+  width: auto !important;
+  max-width: calc(100% - 12px) !important;
+  gap: 2px !important;
+  padding: 0 !important;
+  flex-wrap: nowrap !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  z-index: 500 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-tools {
+  display: flex !important;
+  height: var(--top-control-h) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .calendar-toggle-btn {
+  width: 26px !important;
+  height: var(--top-control-h) !important;
+  font-size: 14px !important;
+  border-radius: 5px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box {
+  flex: 0 0 118px !important;
+  width: 118px !important;
+  min-width: 118px !important;
+  height: var(--top-control-h) !important;
+  min-height: var(--top-control-h) !important;
+  padding: 1px 4px !important;
+  border-radius: 7px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-filter-input {
+  min-height: 24px !important;
+  font-size: 8px !important;
+  padding: 2px 4px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel {
+  flex: 0 0 104px !important;
+  width: 104px !important;
+  min-width: 104px !important;
+  height: var(--top-control-h) !important;
+  min-height: var(--top-control-h) !important;
+  padding: 1px 3px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel {
+  flex: 0 0 142px !important;
+  width: 142px !important;
+  min-width: 142px !important;
+  max-width: 142px !important;
+  height: var(--top-control-h) !important;
+  min-height: var(--top-control-h) !important;
+  padding: 1px 3px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel.expanded {
+  width: 188px !important;
+  max-height: min(40vh, 260px) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel.expanded {
+  width: 206px !important;
+  max-width: min(206px, calc(100vw - 18px)) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-panel-header {
+  min-height: 22px !important;
+  padding: 1px 4px !important;
+  font-size: 9px !important;
+  line-height: 1.1 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .timeline-top-row {
+  padding-right: min(248px, 28vw) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .top-search-floating {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 650 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: max(6px, env(safe-area-inset-top, 0px)) 6px 4px !important;
+  gap: 6px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  background: linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.96) 100%) !important;
+  border-bottom: 1px solid rgba(191, 219, 254, 0.9) !important;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.08) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .top-search-box {
+  order: 1 !important;
+  flex: 1 1 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-selectors {
+  order: 2 !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  width: 100% !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .top-linked-panel {
+  order: 3 !important;
+  width: 100% !important;
+  height: var(--tablet-link-panel-h, 112px) !important;
+  min-height: var(--tablet-link-panel-h, 112px) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-top-tabs {
+  order: 4 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  width: 100% !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel,
+#twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel,
+#twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  order: 5 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.12) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel.hidden,
+#twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel.hidden,
+#twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel.hidden {
+  display: none !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel .top-dept-body {
+  max-height: min(34vh, 300px) !important;
+  overflow-y: auto !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel .exceptional-list {
+  max-height: min(30vh, 250px) !important;
+  overflow-y: auto !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel .calendar-panel {
+  min-height: 220px !important;
+  max-height: min(38vh, 320px) !important;
+  overflow: auto !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .timeline-top-row,
+#twintower-app .main-view.tablet-layout.tablet-portrait .top-left-group,
+#twintower-app .main-view.tablet-layout.tablet-portrait .top-below-row {
+  display: none !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .building-container {
+  width: calc(100% - 12px) !important;
+  min-height: 68vh !important;
+  padding: 10px 6px 8px !important;
+}
 </style>
 </head>
 <body>
