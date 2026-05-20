@@ -20824,6 +20824,53 @@ function switchMobileTopPanel(panel) {
     isExceptionalPanelExpanded = currentMobileTopPanel === 'exceptional';
   }
   syncPhoneLayoutPanels();
+  syncTabletLandscapeTopPanelState();
+}
+
+function syncTabletLandscapeTopPanelState() {
+  if (!isTabletLayoutMode() || !isLandscapeViewport()) return;
+  const tabs = document.getElementById('mobileTopTabs');
+  const deptPanel = document.getElementById('topDeptPanel');
+  const exceptionalPanel = document.getElementById('topExceptionalPanel');
+  const wrap = document.getElementById('topCalendarPanel');
+  const panel = document.getElementById('calendarPanel');
+  const showDept = currentMobileTopPanel === 'dept';
+  const showExceptional = currentMobileTopPanel === 'exceptional';
+  const showCalendar = currentMobileTopPanel === 'calendar';
+  if (tabs) {
+    tabs.style.setProperty('display', 'grid', 'important');
+    tabs.querySelectorAll('.mobile-top-tab').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset && btn.dataset.panel === currentMobileTopPanel);
+    });
+  }
+  if (deptPanel) {
+    deptPanel.classList.toggle('hidden', !showDept);
+    deptPanel.classList.toggle('expanded', showDept);
+    deptPanel.style.setProperty('display', showDept ? 'flex' : 'none', 'important');
+  }
+  if (exceptionalPanel) {
+    exceptionalPanel.classList.toggle('hidden', !showExceptional);
+    exceptionalPanel.classList.toggle('expanded', showExceptional);
+    exceptionalPanel.style.setProperty('display', showExceptional ? 'flex' : 'none', 'important');
+  }
+  if (wrap) {
+    wrap.classList.toggle('hidden', !showCalendar);
+    wrap.classList.toggle('expanded', showCalendar);
+    wrap.style.setProperty('display', showCalendar ? 'flex' : 'none', 'important');
+  }
+  if (panel) {
+    panel.classList.toggle('hidden', !showCalendar);
+    panel.style.setProperty('display', showCalendar ? 'flex' : 'none', 'important');
+  }
+  isCalendarPanelVisible = showCalendar;
+  isExceptionalPanelExpanded = showExceptional;
+  isDeptContentCollapsed = !showDept;
+  syncExceptionalPanelState();
+  syncDeptPanelCollapsedState();
+  updateDeptListVisibility(currentDeptSide);
+  populateDeptList(currentDeptSide);
+  syncMobileDeptSummary();
+  syncTabletPanelToggleButtons();
 }
 
 function dockWardConnectionPanel() {
@@ -21117,6 +21164,7 @@ function syncPhoneLayoutPanels() {
       populateDeptList(currentDeptSide);
       syncMobileDeptSummary();
       syncTabletPanelToggleButtons();
+      syncTabletLandscapeTopPanelState();
       return;
     }
     if (stack) {
