@@ -1719,7 +1719,7 @@ h2 {
   right: 0;
   z-index: 650;
   width: 100%;
-  max-width: 980px;
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -1804,18 +1804,19 @@ h2 {
 
 .main-view.tablet-layout #topDeptPanel.top-panel {
   order: 3;
-  flex: 0 1 320px;
+  flex: 0 1 300px;
   width: auto;
-  min-width: 260px;
-  max-width: 360px;
+  min-width: 240px;
+  max-width: 340px;
   min-height: 42px;
   height: 42px;
   padding: 3px 5px;
+  overflow: visible;
 }
 
 .main-view.tablet-layout #topDeptPanel.top-panel.expanded {
   height: auto;
-  max-height: min(24vh, 220px);
+  max-height: min(31vh, 300px);
 }
 
 .main-view.tablet-layout #topDeptPanel .top-dept-body {
@@ -1825,15 +1826,27 @@ h2 {
 
 .main-view.tablet-layout #topDeptPanel.top-panel.expanded .top-dept-body {
   overflow-y: auto;
+  max-height: min(28vh, 258px);
+  padding-bottom: 4px;
+}
+
+.main-view.tablet-layout #topDeptPanel #wardSection {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.main-view.tablet-layout #topDeptPanel #wardButtons {
+  max-height: min(19vh, 170px);
+  overflow-y: auto;
 }
 
 .main-view.tablet-layout .timeline-top-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.82fr);
-  gap: 10px;
+  grid-template-columns: minmax(0, 0.92fr) minmax(240px, 0.68fr);
+  gap: 8px;
   height: auto;
   min-height: 0;
-  width: min(960px, calc(100% - 24px));
+  width: min(760px, calc(100% - 24px));
   margin: 0 auto;
   padding: 0;
 }
@@ -1850,45 +1863,45 @@ h2 {
 .main-view.tablet-layout .top-calendar-panel {
   width: auto;
   min-width: 0;
-  min-height: 108px;
+  min-height: 88px;
   height: auto;
-  padding: 6px 8px;
+  padding: 5px 7px;
 }
 
 .main-view.tablet-layout .top-building-selector {
-  gap: 4px;
+  gap: 3px;
 }
 
 .main-view.tablet-layout .top-building-panel .building-btn {
-  min-height: 28px;
-  padding: 4px 6px;
-  font-size: 10px;
+  min-height: 24px;
+  padding: 3px 5px;
+  font-size: 9px;
   line-height: 1.15;
   white-space: normal;
 }
 
 .main-view.tablet-layout .top-calendar-panel .calendar-panel {
-  min-height: 128px;
+  min-height: 108px;
   height: auto;
 }
 
 .main-view.tablet-layout .top-below-row {
   height: auto;
   min-height: 0;
-  width: min(1120px, calc(100% - 24px));
-  margin: 10px auto 0;
+  width: calc(100% - 16px);
+  margin: 8px auto 0;
   padding: 0 0 10px;
 }
 
 .main-view.tablet-layout .top-linked-panel {
   width: 100%;
-  min-height: 220px;
-  height: auto;
+  min-height: var(--tablet-link-panel-h, 168px);
+  height: var(--tablet-link-panel-h, 168px);
 }
 
 .main-view.tablet-layout .top-linked-panel .link-display {
-  min-height: 200px;
-  max-height: 280px;
+  min-height: 0;
+  max-height: none;
 }
 
 .main-view.tablet-layout .calendar-placeholder,
@@ -1900,7 +1913,7 @@ h2 {
   position: relative !important;
   inset: auto !important;
   display: flex !important;
-  width: min(1180px, calc(100% - 24px)) !important;
+  width: calc(100% - 16px) !important;
   min-height: 60vh !important;
   height: auto !important;
   flex: 1 1 auto !important;
@@ -1924,7 +1937,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel {
-  flex-basis: 300px;
+  flex-basis: 280px;
 }
 
 .main-view.tablet-layout.tablet-landscape .building-container {
@@ -1954,14 +1967,14 @@ h2 {
 
 .main-view.tablet-layout.tablet-portrait #topDeptPanel.top-panel {
   order: 4;
-  flex: 1 1 280px;
+  flex: 1 1 260px;
   width: auto;
-  min-width: 220px;
+  min-width: 200px;
   max-width: none;
 }
 
 .main-view.tablet-layout.tablet-portrait .timeline-top-row {
-  width: min(820px, calc(100% - 24px));
+  width: min(720px, calc(100% - 24px));
   grid-template-columns: 1fr;
 }
 
@@ -1974,7 +1987,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-portrait .building-container {
-  width: min(920px, calc(100% - 24px)) !important;
+  width: calc(100% - 16px) !important;
   min-height: 62vh !important;
 }
 
@@ -19318,6 +19331,33 @@ function getMobileConnectionPanelFixedHeight() {
   return Math.max(150, Math.min(raw || 220, viewportCap || 260));
 }
 
+function getTabletConnectionPanelFixedHeight() {
+  const groups = [];
+  (linkedSpaces || []).forEach(group => groups.push(group));
+  (mcbtc2030Links || []).forEach(group => {
+    if (Array.isArray(group && group.left) && group.left.length > 0) groups.push(group);
+  });
+  let maxSideItems = 0;
+  let maxSideSections = 0;
+  groups.forEach((group) => {
+    const left = Array.isArray(group && group.left) ? group.left : [];
+    const right = Array.isArray(group && group.right) ? group.right : [];
+    const leftSections = new Set(left.map((space) => {
+      const idx = Number(space && space.building);
+      return Number.isFinite(idx) && leftBuildingsData[idx] ? leftBuildingsData[idx].name : '';
+    }).filter(Boolean));
+    const rightSections = new Set(right.map((space) => String(space && space.wing || '') === 'mcbtc2030' ? 'MCBTC2030' : 'IPEB').filter(Boolean));
+    maxSideItems = Math.max(maxSideItems, left.length, right.length);
+    maxSideSections = Math.max(maxSideSections, leftSections.size, rightSections.size);
+  });
+  const baseHeight = 42;
+  const sectionHeight = 20;
+  const itemHeight = 24;
+  const raw = baseHeight + (maxSideSections * sectionHeight) + (maxSideItems * itemHeight);
+  const viewportCap = Math.round((window.innerHeight || 900) * 0.26);
+  return Math.max(152, Math.min(raw || 176, viewportCap || 240));
+}
+
 function syncMobileDeptSummary() {
   const panel = document.getElementById('topDeptPanel');
   const summary = document.getElementById('mobileDeptSummary');
@@ -19907,13 +19947,16 @@ function autoSizeWardConnectionPanel() {
   if (mainView.classList.contains('tablet-layout')) {
     const panel = document.querySelector('.top-linked-panel');
     const linkDisplay = panel ? panel.querySelector('.link-display') : null;
-    if (panel) panel.style.height = '';
+    const fixedHeight = getTabletConnectionPanelFixedHeight();
+    mainView.style.setProperty('--tablet-link-panel-h', `${fixedHeight}px`);
+    if (panel) panel.style.height = `${fixedHeight}px`;
     if (linkDisplay) {
-      linkDisplay.style.height = '';
+      linkDisplay.style.height = '100%';
       linkDisplay.style.overflowY = 'auto';
     }
     return;
   }
+  mainView.style.removeProperty('--tablet-link-panel-h');
   const panel = document.querySelector('.top-linked-panel.ward-floating');
   const linkDisplay = panel ? panel.querySelector('.link-display') : null;
   const title = linkDisplay ? linkDisplay.querySelector('h4') : null;
