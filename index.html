@@ -2094,6 +2094,31 @@ h2 {
   display: none !important;
 }
 
+@media (orientation: landscape) {
+  .main-view.tablet-layout .mobile-top-tabs {
+    display: none !important;
+  }
+
+  .main-view.tablet-layout #topDeptPanel > .top-panel-header,
+  .main-view.tablet-layout #topExceptionalPanel > .top-panel-header,
+  .main-view.tablet-layout #topCalendarPanel > .top-panel-header {
+    display: flex !important;
+  }
+
+  .main-view.tablet-layout #topDeptPanel,
+  .main-view.tablet-layout #topExceptionalPanel,
+  .main-view.tablet-layout #topCalendarPanel {
+    display: flex !important;
+  }
+
+  .main-view.tablet-layout #topDeptPanel:not(.expanded) .top-dept-body,
+  .main-view.tablet-layout #topExceptionalPanel:not(.expanded) .exceptional-list,
+  .main-view.tablet-layout #topCalendarPanel:not(.expanded) .calendar-panel,
+  .main-view.tablet-layout #topDeptPanel:not(.expanded) .top-dept-footer {
+    display: none !important;
+  }
+}
+
 .main-view.tablet-layout.tablet-portrait #topDeptPanel.mobile-subdept-mode #deptButtons {
   display: none !important;
 }
@@ -7109,6 +7134,31 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel:not(.expanded) .top-dept-footer {
   display: none !important;
+}
+
+@media (orientation: landscape) {
+  #twintower-app .main-view.tablet-layout .mobile-top-tabs {
+    display: none !important;
+  }
+
+  #twintower-app .main-view.tablet-layout #topDeptPanel > .top-panel-header,
+  #twintower-app .main-view.tablet-layout #topExceptionalPanel > .top-panel-header,
+  #twintower-app .main-view.tablet-layout #topCalendarPanel > .top-panel-header {
+    display: flex !important;
+  }
+
+  #twintower-app .main-view.tablet-layout #topDeptPanel,
+  #twintower-app .main-view.tablet-layout #topExceptionalPanel,
+  #twintower-app .main-view.tablet-layout #topCalendarPanel {
+    display: flex !important;
+  }
+
+  #twintower-app .main-view.tablet-layout #topDeptPanel:not(.expanded) .top-dept-body,
+  #twintower-app .main-view.tablet-layout #topExceptionalPanel:not(.expanded) .exceptional-list,
+  #twintower-app .main-view.tablet-layout #topCalendarPanel:not(.expanded) .calendar-panel,
+  #twintower-app .main-view.tablet-layout #topDeptPanel:not(.expanded) .top-dept-footer {
+    display: none !important;
+  }
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel.mobile-subdept-mode #deptButtons {
@@ -20602,7 +20652,7 @@ function syncPhoneLayoutPanels() {
   if (!mainView) return;
   const phoneLayout = mainView.classList.contains('phone-layout');
   const tabletLayout = mainView.classList.contains('tablet-layout');
-  const tabletLandscape = tabletLayout && mainView.classList.contains('tablet-landscape');
+  const tabletLandscape = tabletLayout && isLandscapeViewport();
   const searchBox = document.querySelector('.top-search-box');
   const tabs = document.getElementById('mobileTopTabs');
   const mobileSelectors = document.getElementById('mobileBuildingSelectors');
@@ -22488,8 +22538,8 @@ function updateTopPanelSizing() {
   if (!mainView) return;
   const vw = mainView.clientWidth;
   const tabletLayout = mainView.classList.contains('tablet-layout');
-  const tabletLandscape = tabletLayout && mainView.classList.contains('tablet-landscape');
-  const tabletPortrait = tabletLayout && mainView.classList.contains('tablet-portrait');
+  const tabletLandscape = tabletLayout && isLandscapeViewport();
+  const tabletPortrait = tabletLayout && !tabletLandscape;
   const baseGap = tabletLandscape ? 2 : (tabletLayout ? 12 : 2);
   const baseRowH = tabletLandscape ? 124 : (tabletLayout ? (tabletPortrait ? 148 : 138) : 124);
   const baseBuildingW = tabletLandscape ? 170 : (tabletLayout ? (tabletPortrait ? 250 : 230) : 200);
@@ -23017,7 +23067,7 @@ function centerUsingBaseline() {
   const halfViewportInContentUnits = container.clientWidth / (2 * scale);
   let biasPx = 0;
   if (mainView && mainView.classList.contains('tablet-layout')) {
-    biasPx = mainView.classList.contains('tablet-landscape') ? -220 : 42;
+    biasPx = isLandscapeViewport() ? -220 : 42;
   }
   const biasContentUnits = biasPx / scale;
   const desired = Math.max(0, Math.min(targetX - halfViewportInContentUnits + (info.width || 0) / 2 + biasContentUnits, maxScroll));
