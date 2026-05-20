@@ -1997,19 +1997,19 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape {
-  --tablet-panel-gap: 8px;
-  --tablet-panel-max-h: min(26vh, 220px);
-  --tablet-link-panel-h: 104px;
-  padding: 0 0 10px;
+  --tablet-panel-gap: 6px;
+  --tablet-panel-max-h: min(24vh, 208px);
+  --tablet-link-panel-h: 118px;
+  padding: 0 0 8px;
 }
 
 .main-view.tablet-layout.tablet-landscape .top-search-floating {
   position: absolute;
-  top: 6px;
+  top: 4px;
   right: 6px;
   left: auto;
   z-index: 120;
-  width: min(46vw, 620px);
+  width: min(38vw, 390px);
   max-width: calc(100% - 12px);
   margin: 0;
   display: flex;
@@ -2024,49 +2024,40 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .top-search-box {
-  order: 1;
+  order: 2;
   flex: 1 1 100%;
   width: 100%;
-  min-height: 34px;
-  padding: 0 9px;
+  min-height: 30px;
+  padding: 0 8px;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
-  display: none !important;
+  display: grid !important;
+  order: 1;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px !important;
+  width: 100% !important;
 }
 
 .main-view.tablet-layout.tablet-landscape .timeline-top-row,
-.main-view.tablet-layout.tablet-landscape .top-left-group,
-.main-view.tablet-layout.tablet-landscape .top-below-row {
-  display: flex !important;
+.main-view.tablet-layout.tablet-landscape .top-left-group {
+  display: none !important;
 }
 
-.main-view.tablet-layout.tablet-landscape .top-left-group {
-  flex: 0 0 auto;
+.main-view.tablet-layout.tablet-landscape .top-below-row {
+  display: flex !important;
+  width: calc(100% - 12px);
+  margin: 4px auto 8px;
+  height: var(--top-linked-h);
 }
 
 .main-view.tablet-layout.tablet-landscape .top-search-floating .top-panel {
-  width: auto;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-building-panel {
-  flex: 0 0 var(--top-building-w);
-  width: var(--top-building-w);
-}
-
-.main-view.tablet-layout.tablet-landscape .top-calendar-panel {
-  flex: 0 0 var(--top-calendar-w);
-  width: var(--top-calendar-w);
+  width: 100%;
 }
 
 .main-view.tablet-layout.tablet-landscape .top-linked-panel {
-  flex: 0 0 var(--top-linked-w);
-  width: var(--top-linked-w);
-}
-
-.main-view.tablet-layout.tablet-landscape #topDeptPanel,
-.main-view.tablet-layout.tablet-landscape #topExceptionalPanel {
-  flex: 1 1 0;
+  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
 }
 
@@ -2074,17 +2065,29 @@ h2 {
 .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  width: auto;
+  width: 100%;
+  flex: 1 1 100%;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-row {
-  min-height: 46px;
-  padding: 7px 8px;
+  min-height: 34px;
+  padding: 4px 6px;
+  gap: 6px;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.07);
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-options .building-btn {
-  min-height: 26px;
+  min-height: 24px;
+  font-size: 8px;
+  padding: 0 4px;
+}
+
+.main-view.tablet-layout.tablet-landscape .mobile-building-label {
   font-size: 9px;
+}
+
+.main-view.tablet-layout.tablet-landscape .mobile-building-options {
+  gap: 4px;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
@@ -2092,19 +2095,46 @@ h2 {
   gap: 6px !important;
 }
 
+.main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel > .top-panel-header,
+.main-view.tablet-layout.tablet-landscape #topCalendarPanel > .top-panel-header {
+  min-height: 30px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
+  max-height: calc(var(--tablet-panel-max-h) + 6px);
+  padding: 4px 6px 6px;
+}
+
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
+  max-height: calc(var(--tablet-panel-max-h) - 30px);
+  padding: 4px 6px 6px;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
+  max-height: min(14vh, 116px);
+}
+
 .main-view.tablet-layout.tablet-landscape .mobile-top-tab {
   min-height: 28px;
   font-size: 9px;
 }
 
+.main-view.tablet-layout.tablet-landscape .top-search-box .dept-search-results {
+  max-height: min(30vh, 240px);
+}
+
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
-  min-height: 200px;
-  max-height: min(34vh, 280px);
+  min-height: 172px;
+  max-height: min(26vh, 220px);
 }
 
 .main-view.tablet-layout.tablet-landscape .building-container {
-  min-height: 66vh !important;
-  padding: 12px 10px 10px !important;
+  width: calc(100% - 12px) !important;
+  min-height: 69vh !important;
+  padding: 8px 8px 10px !important;
 }
 
 .main-view.tablet-layout.tablet-portrait {
@@ -7066,11 +7096,11 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating {
   position: absolute !important;
-  top: 6px !important;
+  top: 4px !important;
   right: 6px !important;
   left: auto !important;
   z-index: 120 !important;
-  width: min(46vw, 620px) !important;
+  width: min(38vw, 390px) !important;
   max-width: calc(100% - 12px) !important;
   margin: 0 !important;
   display: flex !important;
@@ -7085,30 +7115,37 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape {
-  --tablet-panel-max-h: min(26vh, 220px) !important;
-  --tablet-link-panel-h: 104px !important;
+  --tablet-panel-gap: 6px !important;
+  --tablet-panel-max-h: min(24vh, 208px) !important;
+  --tablet-link-panel-h: 118px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box {
-  order: 1 !important;
+  order: 2 !important;
   flex: 1 1 100% !important;
   width: 100% !important;
-  min-height: 34px !important;
-  padding: 0 9px !important;
+  min-height: 30px !important;
+  padding: 0 8px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
+  display: grid !important;
+  order: 1 !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 4px !important;
+  width: 100% !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .timeline-top-row,
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-left-group {
   display: none !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-row {
-  min-height: 46px !important;
-  padding: 7px 8px !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-options .building-btn {
-  min-height: 26px !important;
-  font-size: 9px !important;
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-below-row {
+  display: flex !important;
+  width: calc(100% - 12px) !important;
+  margin: 4px auto 8px !important;
+  height: var(--top-linked-h) !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
@@ -7120,38 +7157,13 @@ body.phone-layout-active .private-ward-card-body {
   font-size: 9px !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-landscape .timeline-top-row,
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-left-group,
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-below-row {
-  display: flex !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-left-group {
-  flex: 0 0 auto !important;
-}
-
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating .top-panel {
-  width: auto !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-building-panel {
-  flex: 0 0 var(--top-building-w) !important;
-  width: var(--top-building-w) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-calendar-panel {
-  flex: 0 0 var(--top-calendar-w) !important;
-  width: var(--top-calendar-w) !important;
+  width: 100% !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-linked-panel {
-  flex: 0 0 var(--top-linked-w) !important;
-  width: var(--top-linked-w) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
-#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel {
-  flex: 1 1 0 !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
   min-width: 0 !important;
 }
 
@@ -7159,7 +7171,55 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  width: auto !important;
+  width: 100% !important;
+  flex: 1 1 100% !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-row {
+  min-height: 34px !important;
+  padding: 4px 6px !important;
+  gap: 6px !important;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.07) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-options .building-btn {
+  min-height: 24px !important;
+  font-size: 8px !important;
+  padding: 0 4px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-label {
+  font-size: 9px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-options {
+  gap: 4px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel > .top-panel-header,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel > .top-panel-header {
+  min-height: 30px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
+  max-height: calc(var(--tablet-panel-max-h) + 6px) !important;
+  padding: 4px 6px 6px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
+  max-height: calc(var(--tablet-panel-max-h) - 30px) !important;
+  padding: 4px 6px 6px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
+  max-height: min(14vh, 116px) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box .dept-search-results {
+  max-height: min(30vh, 240px) !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait .top-search-floating {
@@ -20493,8 +20553,9 @@ function getTabletConnectionPanelFixedHeight() {
   const itemHeight = 24;
   const raw = baseHeight + (maxSideSections * sectionHeight) + (maxSideItems * itemHeight);
   const tabletPortrait = isTabletLayoutMode() && !isLandscapeViewport();
-  const viewportCap = Math.round((window.innerHeight || 900) * (tabletPortrait ? 0.22 : 0.26));
-  return Math.max(tabletPortrait ? 136 : 152, Math.min(raw || 188, viewportCap || (tabletPortrait ? 210 : 240)));
+  const tabletLandscape = isTabletLayoutMode() && isLandscapeViewport();
+  const viewportCap = Math.round((window.innerHeight || 900) * (tabletPortrait ? 0.22 : (tabletLandscape ? 0.18 : 0.26)));
+  return Math.max(tabletPortrait ? 136 : (tabletLandscape ? 108 : 152), Math.min(raw || (tabletLandscape ? 152 : 188), viewportCap || (tabletPortrait ? 210 : (tabletLandscape ? 138 : 240))));
 }
 
 function syncMobileDeptSummary() {
@@ -20830,13 +20891,25 @@ function syncPhoneLayoutPanels() {
   if (tabletLayout) {
     if (tabletLandscape) {
       dockWardConnectionPanel();
-      dockCalendarPanel();
       if (stack) {
+        ensurePanelPlaceholder('deptTabletDeckRestore', deptPanel);
+        ensurePanelPlaceholder('exceptionTabletDeckRestore', exceptionalPanel);
+        ensurePanelPlaceholder('calendarTabletDeckRestore', wrap);
+        if (mobileSelectors && mobileSelectors.parentElement !== stack) stack.appendChild(mobileSelectors);
         if (searchBox && searchBox.parentElement !== stack) stack.appendChild(searchBox);
         if (deptPanel && deptPanel.parentElement !== stack) stack.appendChild(deptPanel);
         if (exceptionalPanel && exceptionalPanel.parentElement !== stack) stack.appendChild(exceptionalPanel);
+        if (wrap) {
+          wrap.classList.remove('calendar-floating', 'calendar-dragging');
+          wrap.style.left = '';
+          wrap.style.top = '';
+          wrap.style.width = '';
+          wrap.style.height = '';
+          delete wrap.dataset.manualPosition;
+          if (wrap.parentElement !== stack) stack.appendChild(wrap);
+        }
       }
-      if (mobileSelectors) mobileSelectors.style.setProperty('display', 'none', 'important');
+      if (mobileSelectors) mobileSelectors.style.setProperty('display', 'grid', 'important');
       if (tabs) tabs.style.setProperty('display', 'none', 'important');
       if (currentMobileTopPanel !== 'dept' && currentMobileTopPanel !== 'exceptional' && currentMobileTopPanel !== 'calendar' && currentMobileTopPanel !== 'none') {
         currentMobileTopPanel = 'none';
@@ -22694,21 +22767,21 @@ function updateTopPanelSizing() {
   const tabletLayout = mainView.classList.contains('tablet-layout');
   const tabletLandscape = tabletLayout && isLandscapeViewport();
   const tabletPortrait = tabletLayout && !tabletLandscape;
-  const baseGap = tabletLandscape ? 2 : (tabletLayout ? 12 : 2);
-  const baseRowH = tabletLandscape ? 124 : (tabletLayout ? (tabletPortrait ? 148 : 138) : 124);
+  const baseGap = tabletLandscape ? 4 : (tabletLayout ? 12 : 2);
+  const baseRowH = tabletLandscape ? 88 : (tabletLayout ? (tabletPortrait ? 148 : 138) : 124);
   const baseBuildingW = tabletLandscape ? 170 : (tabletLayout ? (tabletPortrait ? 250 : 230) : 200);
-  const baseDeptW = tabletLandscape ? 250 : (tabletLayout ? (tabletPortrait ? 520 : 390) : 320);
-  const baseCalendarW = tabletLandscape ? 190 : (tabletLayout ? (tabletPortrait ? 320 : 300) : 210);
+  const baseDeptW = tabletLandscape ? 230 : (tabletLayout ? (tabletPortrait ? 520 : 390) : 320);
+  const baseCalendarW = tabletLandscape ? 180 : (tabletLayout ? (tabletPortrait ? 320 : 300) : 210);
   const baseTotal = baseBuildingW + baseDeptW + baseCalendarW + baseGap * 2;
 
   const desiredWard = tabletLandscape
-    ? Math.min(560, Math.max(320, Math.floor(vw * 0.48)))
+    ? Math.min(Math.max(0, vw - 12), Math.max(620, Math.floor(vw * 0.94)))
     : tabletLayout
     ? Math.min(tabletPortrait ? 920 : 860, Math.max(520, Math.floor(vw * (tabletPortrait ? 0.9 : 0.82))))
     : Math.min(640, Math.max(360, Math.floor(vw * 0.62)));
   const wardW = Math.min(vw, desiredWard);
   const scale = tabletLandscape
-    ? Math.max(0.78, Math.min(1.02, wardW / baseTotal))
+    ? Math.max(0.78, Math.min(1.04, wardW / Math.max(1, baseTotal)))
     : tabletLayout
     ? Math.max(0.92, Math.min(1.18, wardW / baseTotal))
     : Math.max(0.7, Math.min(1.15, wardW / baseTotal));
@@ -22721,7 +22794,7 @@ function updateTopPanelSizing() {
   let calendarW = Math.max(tabletLandscape ? 170 : (tabletLayout ? 240 : 160), Math.round(baseCalendarW * scale));
   calendarW = Math.min(calendarW, maxCalendarW);
   const rowH = tabletLandscape
-    ? Math.max(118, Math.min(138, Math.round(baseRowH * scale)))
+    ? Math.max(82, Math.min(96, Math.round(baseRowH * scale)))
     : tabletLayout
     ? Math.max(baseRowH, Math.min(tabletPortrait ? 200 : 180, Math.round(baseRowH * scale)))
     : Math.max(124, Math.min(160, Math.round(baseRowH * scale)));
@@ -22732,7 +22805,7 @@ function updateTopPanelSizing() {
   mainView.style.setProperty('--top-dept-w', `${deptW}px`);
   mainView.style.setProperty('--top-calendar-w', `${calendarW}px`);
   mainView.style.setProperty('--top-linked-w', `${wardW}px`);
-  mainView.style.setProperty('--top-linked-h', `${rowH + 35}px`);
+  mainView.style.setProperty('--top-linked-h', `${tabletLandscape ? rowH + 28 : rowH + 35}px`);
   mainView.style.setProperty('--ui-scale', String(shrink));
   autoSizeWardConnectionPanel();
   clampWardConnectionToBounds();
