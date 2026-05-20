@@ -2039,6 +2039,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
+  display: none !important;
   gap: 6px !important;
 }
 
@@ -2067,6 +2068,28 @@ h2 {
   width: calc(100% - 14px);
   max-width: 100%;
   padding: max(5px, env(safe-area-inset-top, 0px)) 6px 6px;
+}
+
+.main-view.tablet-layout.tablet-portrait #topDeptPanel > .top-panel-header,
+.main-view.tablet-layout.tablet-portrait #topExceptionalPanel > .top-panel-header,
+.main-view.tablet-layout.tablet-portrait #topCalendarPanel > .top-panel-header {
+  display: none !important;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
+.main-view.tablet-layout.tablet-landscape #topCalendarPanel {
+  display: flex !important;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel:not(.expanded) .top-dept-body,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel:not(.expanded) .exceptional-list,
+.main-view.tablet-layout.tablet-landscape #topCalendarPanel:not(.expanded) .calendar-panel {
+  display: none !important;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel:not(.expanded) .top-dept-footer {
+  display: none !important;
 }
 
 .main-view.tablet-layout.tablet-portrait #topDeptPanel.mobile-subdept-mode #deptButtons {
@@ -2415,14 +2438,14 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 54px;
+  min-width: 28px;
   height: 26px;
-  padding: 0 10px;
+  padding: 0 7px;
   border: 1px solid rgba(165, 180, 252, 0.95);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.96);
   color: #4338ca;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -6903,9 +6926,9 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout .panel-toggle-btn {
   flex: 0 0 auto !important;
-  min-width: 54px !important;
-  padding: 0 10px !important;
-  font-size: 11px !important;
+  min-width: 28px !important;
+  padding: 0 7px !important;
+  font-size: 13px !important;
   white-space: nowrap !important;
 }
 
@@ -6966,6 +6989,10 @@ body.phone-layout-active .private-ward-card-body {
   font-size: 9px !important;
 }
 
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
+  display: none !important;
+}
+
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tab {
   min-height: 28px !important;
   font-size: 9px !important;
@@ -6992,6 +7019,28 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-portrait {
   --tablet-panel-max-h: min(33vh, 300px) !important;
   --tablet-link-panel-h: 110px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel > .top-panel-header,
+#twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel > .top-panel-header,
+#twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel > .top-panel-header {
+  display: none !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
+  display: flex !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel:not(.expanded) .top-dept-body,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel:not(.expanded) .exceptional-list,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel:not(.expanded) .calendar-panel {
+  display: none !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel:not(.expanded) .top-dept-footer {
+  display: none !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel.mobile-subdept-mode #deptButtons {
@@ -7045,7 +7094,7 @@ body.phone-layout-active .private-ward-card-body {
           <span class="exceptional-header-icon">!</span>
           <span class="top-panel-title">Exceptional Areas</span>
           <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('exceptional')" aria-label="Toggle Exceptional Areas">
-            <span class="exceptional-toggle-icon" id="exceptionalHeaderToggleIcon">展開</span>
+            <span class="exceptional-toggle-icon" id="exceptionalHeaderToggleIcon">▾</span>
           </button>
         </div>
         <div class="exceptional-list" id="exceptionalAreaList"></div>
@@ -7082,7 +7131,7 @@ body.phone-layout-active .private-ward-card-body {
         <div class="top-panel-header">
           <span class="top-panel-title">Department List</span>
           <button class="panel-toggle-btn" type="button" onclick="toggleTabletHeaderPanel('dept')" aria-label="Toggle Department List">
-            <span id="deptHeaderToggleIcon">展開</span>
+            <span id="deptHeaderToggleIcon">▾</span>
           </button>
         </div>
         <div class="top-dept-body" id="deptSection">
@@ -7129,7 +7178,7 @@ body.phone-layout-active .private-ward-card-body {
         <div class="top-panel-header" onclick="toggleCalendarPanelHeader()">
           <span class="top-panel-title">Calendar (Prototype Testing)</span>
           <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('calendar')" aria-label="Toggle Calendar">
-            <span id="calendarHeaderToggleIcon">展開</span>
+            <span id="calendarHeaderToggleIcon">▾</span>
           </button>
         </div>
         <div class="calendar-panel" id="calendarPanel">
@@ -17943,7 +17992,7 @@ function syncExceptionalPanelState() {
   if (!panel) return;
   panel.classList.toggle('expanded', !!isExceptionalPanelExpanded);
   if (icon) {
-    icon.textContent = isExceptionalPanelExpanded ? '▲' : '▼';
+    icon.textContent = isExceptionalPanelExpanded ? '▴' : '▾';
   }
   syncTabletPanelToggleButtons();
 }
@@ -20018,9 +20067,9 @@ function syncTabletPanelToggleButtons() {
   const deptOpen = currentMobileTopPanel === 'dept';
   const exceptionalOpen = currentMobileTopPanel === 'exceptional';
   const calendarOpen = currentMobileTopPanel === 'calendar';
-  if (deptIcon) deptIcon.textContent = deptOpen ? '收起' : '展開';
-  if (exceptionalIcon) exceptionalIcon.textContent = exceptionalOpen ? '收起' : '展開';
-  if (calendarIcon) calendarIcon.textContent = calendarOpen ? '收起' : '展開';
+  if (deptIcon) deptIcon.textContent = deptOpen ? '▴' : '▾';
+  if (exceptionalIcon) exceptionalIcon.textContent = exceptionalOpen ? '▴' : '▾';
+  if (calendarIcon) calendarIcon.textContent = calendarOpen ? '▴' : '▾';
 }
 
 function toggleTabletHeaderPanel(panelName) {
@@ -20108,7 +20157,7 @@ function getDefaultPanOffsets() {
   }
   if (isTabletLayoutMode()) {
     const landscape = (window.innerWidth || 0) >= (window.innerHeight || 0);
-    return { x: landscape ? basePanX - 112 : basePanX + 28, y: basePanY + 8 };
+    return { x: landscape ? basePanX - 220 : basePanX + 28, y: basePanY + 8 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -20294,6 +20343,10 @@ function switchMobileTopPanel(panel) {
   if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
   const next = String(panel || '');
   currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
+  if (isTabletLayoutMode()) {
+    isCalendarPanelVisible = currentMobileTopPanel === 'calendar';
+    isExceptionalPanelExpanded = currentMobileTopPanel === 'exceptional';
+  }
   syncPhoneLayoutPanels();
 }
 
@@ -20548,7 +20601,7 @@ function syncPhoneLayoutPanels() {
       currentMobileTopPanel = 'none';
     }
     if (tabs) {
-      tabs.style.setProperty('display', 'grid', 'important');
+      tabs.style.setProperty('display', tabletLandscape ? 'none' : 'grid', 'important');
       tabs.querySelectorAll('.mobile-top-tab').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset && btn.dataset.panel === currentMobileTopPanel);
       });
@@ -20562,20 +20615,21 @@ function syncPhoneLayoutPanels() {
     }
     if (deptPanel) {
       const show = currentMobileTopPanel === 'dept';
-      deptPanel.classList.toggle('hidden', !show);
+      deptPanel.classList.toggle('hidden', tabletLandscape ? false : !show);
       deptPanel.classList.toggle('expanded', !!show);
-      deptPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
+      deptPanel.style.setProperty('display', (tabletLandscape || show) ? 'flex' : 'none', 'important');
     }
     if (exceptionalPanel) {
       const show = currentMobileTopPanel === 'exceptional';
-      exceptionalPanel.classList.toggle('hidden', !show);
-      exceptionalPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
+      exceptionalPanel.classList.toggle('hidden', tabletLandscape ? false : !show);
+      exceptionalPanel.classList.toggle('expanded', !!show);
+      exceptionalPanel.style.setProperty('display', (tabletLandscape || show) ? 'flex' : 'none', 'important');
     }
     if (wrap) {
       const show = currentMobileTopPanel === 'calendar';
-      wrap.classList.toggle('hidden', !show);
+      wrap.classList.toggle('hidden', tabletLandscape ? false : !show);
       wrap.classList.toggle('expanded', !!show);
-      wrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
+      wrap.style.setProperty('display', (tabletLandscape || show) ? 'flex' : 'none', 'important');
     }
     isCalendarPanelVisible = currentMobileTopPanel === 'calendar';
     if (panel) {
@@ -22373,6 +22427,9 @@ function updateEmbeddedLayout() {
   const layoutKey = phoneLayout ? 'phone' : (tabletLayout ? (tabletLandscape ? 'tablet-landscape' : 'tablet-portrait') : (compact ? 'compact' : 'desktop'));
   if (layoutKey !== lastEmbeddedLayoutKey && layoutKey === 'tablet-landscape') {
     pendingTabletLandscapePanReset = true;
+    currentMobileTopPanel = 'none';
+    isCalendarPanelVisible = false;
+    isExceptionalPanelExpanded = false;
   }
   lastEmbeddedLayoutKey = layoutKey;
   mainView.classList.toggle('compact-layout', compact && !phoneLayout && !tabletLayout);
@@ -22842,7 +22899,7 @@ function centerUsingBaseline() {
   const halfViewportInContentUnits = container.clientWidth / (2 * scale);
   let biasPx = 0;
   if (mainView && mainView.classList.contains('tablet-layout')) {
-    biasPx = mainView.classList.contains('tablet-landscape') ? -96 : 42;
+    biasPx = mainView.classList.contains('tablet-landscape') ? -220 : 42;
   }
   const biasContentUnits = biasPx / scale;
   const desired = Math.max(0, Math.min(targetX - halfViewportInContentUnits + (info.width || 0) / 2 + biasContentUnits, maxScroll));
