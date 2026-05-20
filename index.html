@@ -67,11 +67,11 @@ body {
   -webkit-text-size-adjust: none !important;
 }
 
-#twintower-app,
-#twintower-app * ,
-#twintower-app *::before,
-#twintower-app *::after {
-  font-family: inherit !important;
+#twintower-app button,
+#twintower-app input,
+#twintower-app select,
+#twintower-app textarea {
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
 }
 
 #twintower-app .building {
@@ -17304,93 +17304,6 @@ function updateDeptSideButtons() {
   if (targetBtn) applyDeptTargetButtonTheme(targetBtn);
 }
 
-let typographyProtectionObserver = null;
-let typographyProtectionQueued = false;
-const typographyProtectedProperties = [
-  'font-family',
-  'font-size',
-  'font-weight',
-  'font-style',
-  'line-height'
-];
-
-function protectTypographyForElement(el) {
-  if (!el || el.nodeType !== 1) return;
-  if (!(el.id === 'twintower-app' || (el.closest && el.closest('#twintower-app')))) return;
-  const computed = window.getComputedStyle(el);
-  typographyProtectedProperties.forEach((prop) => {
-    const value = computed.getPropertyValue(prop);
-    if (value) {
-      el.style.setProperty(prop, value, 'important');
-    }
-  });
-}
-
-function protectTypographyTree(root = null) {
-  const app = root && root.nodeType === 1 ? root : document.getElementById('twintower-app');
-  if (!app) return;
-  protectTypographyForElement(app);
-  app.querySelectorAll('*').forEach((el) => protectTypographyForElement(el));
-}
-
-function scheduleTypographyProtection(root = null) {
-  if (typographyProtectionQueued) return;
-  typographyProtectionQueued = true;
-  const run = () => {
-    typographyProtectionQueued = false;
-    protectTypographyTree(root);
-  };
-  if (typeof requestAnimationFrame === 'function') {
-    requestAnimationFrame(run);
-  } else {
-    setTimeout(run, 0);
-  }
-}
-
-function initTypographyProtection() {
-  const app = document.getElementById('twintower-app');
-  if (!app) return;
-  protectTypographyTree(app);
-  setTimeout(() => protectTypographyTree(app), 80);
-  setTimeout(() => protectTypographyTree(app), 300);
-  setTimeout(() => protectTypographyTree(app), 1000);
-  if (typographyProtectionObserver) return;
-  typographyProtectionObserver = new MutationObserver((mutations) => {
-    let shouldProtect = false;
-    for (const mutation of mutations) {
-      if (mutation.type === 'childList') {
-        shouldProtect = true;
-        break;
-      }
-      if (mutation.type === 'attributes') {
-        shouldProtect = true;
-        break;
-      }
-    }
-    if (shouldProtect) scheduleTypographyProtection(app);
-  });
-  typographyProtectionObserver.observe(app, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['class', 'style']
-  });
-  typographyProtectionObserver.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['class', 'style']
-  });
-  typographyProtectionObserver.observe(document.body, {
-    attributes: true,
-    attributeFilter: ['class', 'style']
-  });
-  if (document.head) {
-    typographyProtectionObserver.observe(document.head, {
-      childList: true,
-      subtree: true
-    });
-  }
-}
-
 function updateDeptListVisibility(activeSide) {
   const clinicalList = document.getElementById('clinicalList');
   const nonList = document.getElementById('nonList');
@@ -20541,7 +20454,6 @@ function switchRightBuilding(index, options = {}) {
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
   buildingContainer = document.getElementById('buildingContainer');
-  initTypographyProtection();
   const defaultPan = getDefaultPanOffsets();
   panX = defaultPan.x;
   panY = defaultPan.y;
@@ -20654,13 +20566,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('load', function() {
     refreshEmbeddedLayout();
-    scheduleTypographyProtection();
   });
 
   setTimeout(refreshEmbeddedLayout, 120);
   setTimeout(refreshEmbeddedLayout, 500);
-  setTimeout(scheduleTypographyProtection, 150);
-  setTimeout(scheduleTypographyProtection, 600);
   setTimeout(function() {
     stabilizePhoneLayoutVisibility();
     syncPhoneLayoutPanels();
