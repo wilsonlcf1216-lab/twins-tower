@@ -1903,13 +1903,24 @@ h2 {
 .main-view.tablet-layout #topCalendarPanel > .top-panel-header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   min-height: 34px;
   padding: 0 10px;
   border-bottom: 1px solid rgba(191, 219, 254, 0.9);
   background: linear-gradient(180deg, rgba(239,246,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
   color: #4338ca;
   font-size: 12px;
+  gap: 8px;
+}
+
+.main-view.tablet-layout .top-panel-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
+.main-view.tablet-layout .panel-toggle-btn {
+  flex: 0 0 auto;
 }
 
 .main-view.tablet-layout #topDeptPanel.top-panel.expanded,
@@ -2056,6 +2067,43 @@ h2 {
   width: calc(100% - 14px);
   max-width: 100%;
   padding: max(5px, env(safe-area-inset-top, 0px)) 6px 6px;
+}
+
+.main-view.tablet-layout.tablet-portrait #topDeptPanel.mobile-subdept-mode #deptButtons {
+  display: none !important;
+}
+
+.main-view.tablet-layout.tablet-portrait .mobile-dept-summary.show {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0 6px;
+}
+
+.main-view.tablet-layout.tablet-portrait .mobile-dept-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main-view.tablet-layout.tablet-portrait .mobile-dept-reset {
+  flex: 0 0 auto;
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+  background: #fff;
+  color: #4338ca;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
 }
 
 .main-view.tablet-layout.tablet-portrait .mobile-building-row {
@@ -2359,6 +2407,29 @@ h2 {
   text-align: center;
   border-bottom: 1px solid #667eea;
   padding-bottom: 1px;
+}
+
+.panel-toggle-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid rgba(165, 180, 252, 0.95);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #4338ca;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.panel-toggle-btn:hover {
+  background: #eef2ff;
 }
 
 
@@ -6813,13 +6884,24 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout #topCalendarPanel > .top-panel-header {
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: space-between !important;
   min-height: 34px !important;
   padding: 0 10px !important;
   border-bottom: 1px solid rgba(191, 219, 254, 0.9) !important;
   background: linear-gradient(180deg, rgba(239,246,255,0.95) 0%, rgba(255,255,255,0.98) 100%) !important;
   color: #4338ca !important;
   font-size: 12px !important;
+  gap: 8px !important;
+}
+
+#twintower-app .main-view.tablet-layout .top-panel-title {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  text-align: center !important;
+}
+
+#twintower-app .main-view.tablet-layout .panel-toggle-btn {
+  flex: 0 0 auto !important;
 }
 
 #twintower-app .main-view.tablet-layout #topDeptPanel .top-dept-body {
@@ -6906,6 +6988,43 @@ body.phone-layout-active .private-ward-card-body {
   --tablet-panel-max-h: min(33vh, 300px) !important;
   --tablet-link-panel-h: 110px !important;
 }
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel.mobile-subdept-mode #deptButtons {
+  display: none !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-dept-summary.show {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 4px 0 6px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-dept-name {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  border: 1px solid #c7d2fe !important;
+  border-radius: 999px !important;
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 5px 10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-dept-reset {
+  flex: 0 0 auto !important;
+  border: 1px solid #c7d2fe !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  color: #4338ca !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 5px 10px !important;
+}
 </style>
 </head>
 <body>
@@ -6919,8 +7038,10 @@ body.phone-layout-active .private-ward-card-body {
       <div class="top-panel top-exceptional-panel" id="topExceptionalPanel">
         <div class="top-panel-header" onclick="toggleExceptionalPanel()">
           <span class="exceptional-header-icon">!</span>
-          <span>Exceptional Areas</span>
-          <span class="exceptional-toggle-icon" id="exceptionalToggleIcon">▼</span>
+          <span class="top-panel-title">Exceptional Areas</span>
+          <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('exceptional')" aria-label="Toggle Exceptional Areas">
+            <span class="exceptional-toggle-icon" id="exceptionalHeaderToggleIcon">▼</span>
+          </button>
         </div>
         <div class="exceptional-list" id="exceptionalAreaList"></div>
       </div>
@@ -6953,7 +7074,12 @@ body.phone-layout-active .private-ward-card-body {
         <button class="mobile-top-tab" id="mobileTabCalendar" data-panel="calendar" type="button" onclick="switchMobileTopPanel('calendar')">Calendar (Prototype Testing)</button>
       </div>
       <div class="top-panel top-dept-panel" id="topDeptPanel">
-        <div class="top-panel-header">部門選擇</div>
+        <div class="top-panel-header">
+          <span class="top-panel-title">Department List</span>
+          <button class="panel-toggle-btn" type="button" onclick="toggleTabletHeaderPanel('dept')" aria-label="Toggle Department List">
+            <span id="deptHeaderToggleIcon">▼</span>
+          </button>
+        </div>
         <div class="top-dept-body" id="deptSection">
           <div class="mobile-dept-summary" id="mobileDeptSummary">
             <div class="mobile-dept-name" id="mobileDeptName"></div>
@@ -6995,7 +7121,12 @@ body.phone-layout-active .private-ward-card-body {
       </div>
       
       <div class="top-panel top-calendar-panel" id="topCalendarPanel">
-        <div class="top-panel-header" onclick="toggleCalendarPanelHeader()">Calendar (Prototype Testing)</div>
+        <div class="top-panel-header" onclick="toggleCalendarPanelHeader()">
+          <span class="top-panel-title">Calendar (Prototype Testing)</span>
+          <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('calendar')" aria-label="Toggle Calendar">
+            <span id="calendarHeaderToggleIcon">▼</span>
+          </button>
+        </div>
         <div class="calendar-panel" id="calendarPanel">
           <div class="calendar-header">Calendar (Prototype Testing)</div>
           <div class="calendar-controls">
@@ -17803,15 +17934,20 @@ let isExceptionalPanelExpanded = false;
 
 function syncExceptionalPanelState() {
   const panel = document.getElementById('topExceptionalPanel');
-  const icon = document.getElementById('exceptionalToggleIcon');
+  const icon = document.getElementById('exceptionalHeaderToggleIcon');
   if (!panel) return;
   panel.classList.toggle('expanded', !!isExceptionalPanelExpanded);
   if (icon) {
     icon.textContent = isExceptionalPanelExpanded ? '▲' : '▼';
   }
+  syncTabletPanelToggleButtons();
 }
 
 function toggleExceptionalPanel() {
+  if (isTabletLayoutMode()) {
+    toggleTabletHeaderPanel('exceptional');
+    return;
+  }
   isExceptionalPanelExpanded = !isExceptionalPanelExpanded;
   syncExceptionalPanelState();
 }
@@ -19870,6 +20006,23 @@ function toggleDeptPanel() {
   setDeptPanelVisible(!isDeptPanelVisible);
 }
 
+function syncTabletPanelToggleButtons() {
+  const deptIcon = document.getElementById('deptHeaderToggleIcon');
+  const exceptionalIcon = document.getElementById('exceptionalHeaderToggleIcon');
+  const calendarIcon = document.getElementById('calendarHeaderToggleIcon');
+  const deptOpen = currentMobileTopPanel === 'dept';
+  const exceptionalOpen = currentMobileTopPanel === 'exceptional';
+  const calendarOpen = currentMobileTopPanel === 'calendar';
+  if (deptIcon) deptIcon.textContent = deptOpen ? '▲' : '▼';
+  if (exceptionalIcon) exceptionalIcon.textContent = exceptionalOpen ? '▲' : '▼';
+  if (calendarIcon) calendarIcon.textContent = calendarOpen ? '▲' : '▼';
+}
+
+function toggleTabletHeaderPanel(panelName) {
+  if (!isTabletLayoutMode()) return;
+  switchMobileTopPanel(panelName);
+}
+
 function collapseDeptContent() {
   isDeptContentCollapsed = true;
   setDeptFooterVisible(false);
@@ -19950,7 +20103,7 @@ function getDefaultPanOffsets() {
   }
   if (isTabletLayoutMode()) {
     const landscape = (window.innerWidth || 0) >= (window.innerHeight || 0);
-    return { x: landscape ? basePanX - 40 : basePanX + 8, y: basePanY + 8 };
+    return { x: landscape ? basePanX - 56 : basePanX + 14, y: basePanY + 8 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -20342,6 +20495,7 @@ function syncPhoneLayoutPanels() {
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
+    syncTabletPanelToggleButtons();
     return;
   }
   restorePanelFromPlaceholder('calendarMobileRestore', wrap);
@@ -20430,6 +20584,7 @@ function syncPhoneLayoutPanels() {
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
+    syncTabletPanelToggleButtons();
     return;
   }
   currentMobileTopPanel = 'none';
@@ -20462,6 +20617,7 @@ function syncPhoneLayoutPanels() {
   updateDeptListVisibility(currentDeptSide);
   populateDeptList(currentDeptSide);
   syncMobileDeptSummary();
+  syncTabletPanelToggleButtons();
   enableWardConnectionDrag();
   if (isCalendarPanelVisible) {
     enableCalendarResize();
