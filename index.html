@@ -2056,10 +2056,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .top-below-row {
-  display: flex !important;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 6px;
+  display: block !important;
   width: calc(100% - 12px);
   min-width: 0;
   margin: 0 6px 6px;
@@ -2085,8 +2082,8 @@ h2 {
 .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  width: calc((100% - 12px) / 3);
-  flex: 1 1 calc((100% - 12px) / 3);
+  width: 100%;
+  flex: 1 1 100%;
   min-width: 0;
   align-self: flex-start;
   height: auto;
@@ -2120,18 +2117,18 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
-  display: none !important;
-  gap: 6px !important;
+  display: grid !important;
+  width: 100% !important;
+  margin-bottom: 4px;
+  gap: 4px !important;
+  padding: 2px !important;
+  border-radius: 12px;
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel > .top-panel-header,
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel > .top-panel-header {
-  min-height: 24px;
-  padding: 0 6px;
-  font-size: 10px;
-  border-bottom-color: rgba(191, 219, 254, 0.72);
-  background: linear-gradient(180deg, rgba(239,246,255,0.82) 0%, rgba(255,255,255,0.96) 100%);
+  display: none !important;
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel,
@@ -2142,16 +2139,8 @@ h2 {
   box-shadow: 0 8px 18px rgba(99, 102, 241, 0.07);
 }
 
-.main-view.tablet-layout.tablet-landscape .panel-toggle-btn {
-  min-width: 22px;
-  min-height: 22px;
-  padding: 0 5px;
-  font-size: 11px;
-  border-radius: 10px;
-}
-
 .main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
-  max-height: min(20vh, 170px);
+  max-height: min(26vh, 220px);
   overflow-y: auto;
   padding: 4px 5px 5px;
   width: 100%;
@@ -2159,7 +2148,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
-  max-height: min(20vh, 170px);
+  max-height: min(26vh, 220px);
   overflow-y: auto;
   padding: 4px 5px 5px;
   width: 100%;
@@ -2181,7 +2170,7 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
   min-height: 172px;
-  max-height: min(20vh, 170px);
+  max-height: min(26vh, 220px);
   padding: 4px 5px 5px;
   width: 100%;
   box-sizing: border-box;
@@ -7235,10 +7224,7 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-below-row {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  align-items: flex-start !important;
-  gap: 6px !important;
+  display: block !important;
   width: calc(100% - 12px) !important;
   min-width: 0 !important;
   margin: 0 6px 6px !important;
@@ -7246,7 +7232,12 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
-  display: none !important;
+  display: grid !important;
+  width: 100% !important;
+  margin-bottom: 4px !important;
+  gap: 4px !important;
+  padding: 2px !important;
+  border-radius: 12px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tab {
@@ -7273,8 +7264,8 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  width: calc((100% - 12px) / 3) !important;
-  flex: 1 1 calc((100% - 12px) / 3) !important;
+  width: 100% !important;
+  flex: 1 1 100% !important;
   min-width: 0 !important;
   align-self: flex-start !important;
   height: auto !important;
@@ -7310,11 +7301,7 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel > .top-panel-header {
-  min-height: 24px !important;
-  padding: 0 6px !important;
-  font-size: 10px !important;
-  border-bottom-color: rgba(191, 219, 254, 0.72) !important;
-  background: linear-gradient(180deg, rgba(239,246,255,0.82) 0%, rgba(255,255,255,0.96) 100%) !important;
+  display: none !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
@@ -7325,16 +7312,8 @@ body.phone-layout-active .private-ward-card-body {
   box-shadow: 0 8px 18px rgba(99, 102, 241, 0.07) !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-landscape .panel-toggle-btn {
-  min-width: 22px !important;
-  min-height: 22px !important;
-  padding: 0 5px !important;
-  font-size: 11px !important;
-  border-radius: 10px !important;
-}
-
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
-  max-height: min(20vh, 170px) !important;
+  max-height: min(26vh, 220px) !important;
   overflow-y: auto !important;
   padding: 4px 5px 5px !important;
   width: 100% !important;
@@ -7342,7 +7321,7 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
-  max-height: min(20vh, 170px) !important;
+  max-height: min(26vh, 220px) !important;
   overflow-y: auto !important;
   padding: 4px 5px 5px !important;
   width: 100% !important;
@@ -7359,7 +7338,7 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
   min-height: 172px !important;
-  max-height: min(20vh, 170px) !important;
+  max-height: min(26vh, 220px) !important;
   padding: 4px 5px 5px !important;
   width: 100% !important;
   box-sizing: border-box !important;
@@ -21078,6 +21057,7 @@ function syncPhoneLayoutPanels() {
         if (searchBox && searchBox.parentElement !== stack) stack.appendChild(searchBox);
       }
       if (anchorRow) {
+        if (tabs && tabs.parentElement !== anchorRow) anchorRow.insertBefore(tabs, anchorRow.firstChild);
         if (deptPanel && deptPanel.parentElement !== anchorRow) anchorRow.appendChild(deptPanel);
         if (exceptionalPanel && exceptionalPanel.parentElement !== anchorRow) anchorRow.appendChild(exceptionalPanel);
         if (wrap) {
@@ -21091,7 +21071,12 @@ function syncPhoneLayoutPanels() {
         }
       }
       if (mobileSelectors) mobileSelectors.style.setProperty('display', 'grid', 'important');
-      if (tabs) tabs.style.setProperty('display', 'none', 'important');
+      if (tabs) {
+        tabs.style.setProperty('display', 'grid', 'important');
+        tabs.querySelectorAll('.mobile-top-tab').forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset && btn.dataset.panel === currentMobileTopPanel);
+        });
+      }
       if (currentMobileTopPanel !== 'dept' && currentMobileTopPanel !== 'exceptional' && currentMobileTopPanel !== 'calendar' && currentMobileTopPanel !== 'none') {
         currentMobileTopPanel = 'none';
       }
@@ -21102,19 +21087,22 @@ function syncPhoneLayoutPanels() {
         linked.style.removeProperty('display');
       }
       if (deptPanel) {
-        deptPanel.classList.remove('hidden');
-        deptPanel.classList.toggle('expanded', currentMobileTopPanel === 'dept');
-        deptPanel.style.setProperty('display', 'flex', 'important');
+        const show = currentMobileTopPanel === 'dept';
+        deptPanel.classList.toggle('hidden', !show);
+        deptPanel.classList.toggle('expanded', show);
+        deptPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
       }
       if (exceptionalPanel) {
-        exceptionalPanel.classList.remove('hidden');
-        exceptionalPanel.classList.toggle('expanded', currentMobileTopPanel === 'exceptional');
-        exceptionalPanel.style.setProperty('display', 'flex', 'important');
+        const show = currentMobileTopPanel === 'exceptional';
+        exceptionalPanel.classList.toggle('hidden', !show);
+        exceptionalPanel.classList.toggle('expanded', show);
+        exceptionalPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
       }
       if (wrap) {
-        wrap.classList.remove('hidden');
-        wrap.classList.toggle('expanded', currentMobileTopPanel === 'calendar');
-        wrap.style.setProperty('display', 'flex', 'important');
+        const show = currentMobileTopPanel === 'calendar';
+        wrap.classList.toggle('hidden', !show);
+        wrap.classList.toggle('expanded', show);
+        wrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
       }
       isCalendarPanelVisible = currentMobileTopPanel === 'calendar';
       if (panel) {
