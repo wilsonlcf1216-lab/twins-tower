@@ -21038,11 +21038,12 @@ function syncPhoneLayoutPanels() {
   mainView.style.removeProperty('--mobile-link-panel-h');
   if (tabletLayout) {
     if (tabletLandscape) {
-      dockWardConnectionPanel();
       if (stack) {
+        ensurePanelPlaceholder('linkedTabletDeckRestore', linked);
         ensurePanelPlaceholder('deptTabletDeckRestore', deptPanel);
         ensurePanelPlaceholder('exceptionTabletDeckRestore', exceptionalPanel);
         ensurePanelPlaceholder('calendarTabletDeckRestore', wrap);
+        if (linked && linked.parentElement !== stack) stack.appendChild(linked);
         if (mobileSelectors && mobileSelectors.parentElement !== stack) stack.appendChild(mobileSelectors);
         if (searchBox && searchBox.parentElement !== stack) stack.appendChild(searchBox);
       }
