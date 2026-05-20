@@ -2130,7 +2130,37 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-portrait .mobile-building-row {
-  min-height: 48px;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 4px;
+  min-height: 0;
+  padding: 6px 8px;
+}
+
+.main-view.tablet-layout.tablet-portrait .mobile-building-label {
+  white-space: normal;
+  line-height: 1.1;
+}
+
+.main-view.tablet-layout.tablet-portrait .mobile-building-label-text br {
+  display: inline;
+}
+
+.main-view.tablet-layout.tablet-portrait #mobileLeftBuildingSelector {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.main-view.tablet-layout.tablet-portrait #mobileRightBuildingSelector {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.main-view.tablet-layout.tablet-portrait .mobile-building-options {
+  width: 100%;
+}
+
+.main-view.tablet-layout.tablet-portrait .top-linked-panel {
+  min-height: 126px;
+  height: 126px;
 }
 
 .main-view.tablet-layout.tablet-portrait #topCalendarPanel .calendar-panel {
@@ -7021,6 +7051,40 @@ body.phone-layout-active .private-ward-card-body {
   --tablet-link-panel-h: 110px !important;
 }
 
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-row {
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+  min-height: 0 !important;
+  padding: 6px 8px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-label {
+  white-space: normal !important;
+  line-height: 1.1 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-label-text br {
+  display: inline !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #mobileLeftBuildingSelector {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait #mobileRightBuildingSelector {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-options {
+  width: 100% !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .top-linked-panel {
+  min-height: 126px !important;
+  height: 126px !important;
+}
+
 #twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel > .top-panel-header {
@@ -7090,7 +7154,7 @@ body.phone-layout-active .private-ward-card-body {
         <button class="calendar-toggle-btn active" id="calendarToggleBtn" type="button" onclick="toggleCalendarPanel()" title="Calendar">📅</button>
       </div>
       <div class="top-panel top-exceptional-panel" id="topExceptionalPanel">
-        <div class="top-panel-header" onclick="toggleExceptionalPanel()">
+        <div class="top-panel-header" onclick="toggleTabletHeaderPanel('exceptional')">
           <span class="exceptional-header-icon">!</span>
           <span class="top-panel-title">Exceptional Areas</span>
           <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('exceptional')" aria-label="Toggle Exceptional Areas">
@@ -7128,9 +7192,9 @@ body.phone-layout-active .private-ward-card-body {
         <button class="mobile-top-tab" id="mobileTabCalendar" data-panel="calendar" type="button" onclick="switchMobileTopPanel('calendar')">Calendar (Prototype Testing)</button>
       </div>
       <div class="top-panel top-dept-panel" id="topDeptPanel">
-        <div class="top-panel-header">
+        <div class="top-panel-header" onclick="toggleTabletHeaderPanel('dept')">
           <span class="top-panel-title">Department List</span>
-          <button class="panel-toggle-btn" type="button" onclick="toggleTabletHeaderPanel('dept')" aria-label="Toggle Department List">
+          <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('dept')" aria-label="Toggle Department List">
             <span id="deptHeaderToggleIcon">▾</span>
           </button>
         </div>
@@ -7175,7 +7239,7 @@ body.phone-layout-active .private-ward-card-body {
       </div>
       
       <div class="top-panel top-calendar-panel" id="topCalendarPanel">
-        <div class="top-panel-header" onclick="toggleCalendarPanelHeader()">
+        <div class="top-panel-header" onclick="toggleTabletHeaderPanel('calendar')">
           <span class="top-panel-title">Calendar (Prototype Testing)</span>
           <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('calendar')" aria-label="Toggle Calendar">
             <span id="calendarHeaderToggleIcon">▾</span>
@@ -20638,8 +20702,12 @@ function syncPhoneLayoutPanels() {
     }
     isExceptionalPanelExpanded = currentMobileTopPanel === 'exceptional';
     syncExceptionalPanelState();
-    isDeptContentCollapsed = false;
-    syncDeptPanelCollapsedState();
+    if (tabletLandscape) {
+      if (deptPanel) deptPanel.classList.toggle('expanded', currentMobileTopPanel === 'dept');
+    } else {
+      isDeptContentCollapsed = false;
+      syncDeptPanelCollapsedState();
+    }
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
