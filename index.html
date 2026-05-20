@@ -2032,6 +2032,7 @@ h2 {
   min-height: 30px;
   padding: 0 8px;
   grid-column: 1;
+  grid-row: 2;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
@@ -2041,6 +2042,7 @@ h2 {
   gap: 4px !important;
   width: 100% !important;
   grid-column: 1;
+  grid-row: 1;
 }
 
 .main-view.tablet-layout.tablet-landscape .timeline-top-row,
@@ -2050,7 +2052,7 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape .top-below-row {
   display: flex !important;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 6px;
   width: calc(100% - 12px);
@@ -2066,6 +2068,7 @@ h2 {
 .main-view.tablet-layout.tablet-landscape .top-linked-panel {
   order: 1;
   grid-column: 2;
+  grid-row: 1 / span 2;
   flex: 1 1 auto;
   width: auto;
   min-width: 0;
@@ -2111,6 +2114,14 @@ h2 {
   order: 2;
 }
 
+.main-view.tablet-layout.tablet-landscape #topDeptPanel.expanded,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel.expanded,
+.main-view.tablet-layout.tablet-landscape #topCalendarPanel.expanded {
+  order: 3;
+  width: 100%;
+  flex: 1 1 100%;
+}
+
 .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
   display: none !important;
   gap: 6px !important;
@@ -2138,12 +2149,16 @@ h2 {
   max-height: min(20vh, 170px);
   overflow-y: auto;
   padding: 4px 6px 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
   max-height: min(20vh, 170px);
   overflow-y: auto;
   padding: 4px 6px 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
@@ -2163,6 +2178,24 @@ h2 {
   min-height: 172px;
   max-height: min(20vh, 170px);
   padding: 4px 6px 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel #deptButtons,
+.main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons,
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-group,
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-list,
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-btn,
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .ward-btn,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-area-item {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-group {
+  justify-content: stretch;
 }
 
 .main-view.tablet-layout.tablet-landscape .building-container {
@@ -7163,6 +7196,7 @@ body.phone-layout-active .private-ward-card-body {
   min-height: 30px !important;
   padding: 0 8px !important;
   grid-column: 1 !important;
+  grid-row: 2 !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
@@ -7172,6 +7206,7 @@ body.phone-layout-active .private-ward-card-body {
   gap: 4px !important;
   width: 100% !important;
   grid-column: 1 !important;
+  grid-row: 1 !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .timeline-top-row,
@@ -7181,7 +7216,7 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-below-row {
   display: flex !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: wrap !important;
   align-items: flex-start !important;
   gap: 6px !important;
   width: calc(100% - 12px) !important;
@@ -7206,6 +7241,7 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-linked-panel {
   order: 1 !important;
   grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
   flex: 1 1 auto !important;
   width: auto !important;
   min-width: 0 !important;
@@ -7251,6 +7287,14 @@ body.phone-layout-active .private-ward-card-body {
   order: 2 !important;
 }
 
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.expanded,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel.expanded,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel.expanded {
+  order: 3 !important;
+  width: 100% !important;
+  flex: 1 1 100% !important;
+}
+
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel > .top-panel-header {
@@ -7273,12 +7317,16 @@ body.phone-layout-active .private-ward-card-body {
   max-height: min(20vh, 170px) !important;
   overflow-y: auto !important;
   padding: 4px 6px 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
   max-height: min(20vh, 170px) !important;
   overflow-y: auto !important;
   padding: 4px 6px 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
@@ -7293,6 +7341,24 @@ body.phone-layout-active .private-ward-card-body {
   min-height: 172px !important;
   max-height: min(20vh, 170px) !important;
   padding: 4px 6px 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #deptButtons,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-group,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-list,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-btn,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .ward-btn,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-area-item {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-group {
+  justify-content: stretch !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .building-container {
