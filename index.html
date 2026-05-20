@@ -1705,6 +1705,270 @@ h2 {
   transform: translateY(-1px);
 }
 
+.main-view.tablet-layout {
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 22%, #ffffff 100%);
+}
+
+.main-view.tablet-layout .top-search-floating {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 650;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+  padding: max(12px, env(safe-area-inset-top, 0px)) 12px 10px;
+  background: linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.94) 100%);
+  border-bottom: 1px solid rgba(199, 210, 254, 0.8);
+  box-shadow: 0 10px 28px rgba(59, 130, 246, 0.10);
+  backdrop-filter: blur(12px);
+  transform: none;
+}
+
+.main-view.tablet-layout .top-search-tools {
+  order: 4;
+  margin-left: auto;
+  height: auto;
+}
+
+.main-view.tablet-layout .calendar-toggle-btn {
+  width: 40px;
+  height: 52px;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.14);
+}
+
+.main-view.tablet-layout .top-search-box {
+  order: 1;
+  flex: 1 1 340px;
+  width: auto;
+  min-width: 320px;
+  min-height: 52px;
+  height: auto;
+  padding: 0 14px;
+  border: 1px solid #c7d2fe;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.10);
+}
+
+.main-view.tablet-layout .top-filter-input {
+  min-height: 46px;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.main-view.tablet-layout .top-search-box .dept-search-results {
+  max-height: min(38vh, 360px);
+  border-radius: 16px;
+  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.18);
+  z-index: 9200;
+}
+
+.main-view.tablet-layout .mobile-building-selectors,
+.main-view.tablet-layout .mobile-top-tabs,
+.main-view.tablet-layout .mobile-dept-summary {
+  display: none !important;
+}
+
+.main-view.tablet-layout .top-panel,
+.main-view.tablet-layout .top-linked-panel {
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.10);
+}
+
+.main-view.tablet-layout #topExceptionalPanel.top-panel {
+  order: 2;
+  flex: 0 1 270px;
+  width: 270px;
+  min-height: 52px;
+  height: 52px;
+  padding: 6px 10px;
+}
+
+.main-view.tablet-layout #topExceptionalPanel.top-panel.expanded {
+  height: auto;
+  max-height: min(30vh, 280px);
+}
+
+.main-view.tablet-layout #topExceptionalPanel .exceptional-list {
+  margin-top: 8px;
+}
+
+.main-view.tablet-layout #topDeptPanel.top-panel {
+  order: 3;
+  flex: 1 1 400px;
+  width: auto;
+  min-width: 340px;
+  min-height: 52px;
+  height: 52px;
+  padding: 4px 6px;
+}
+
+.main-view.tablet-layout #topDeptPanel.top-panel.expanded {
+  height: auto;
+  max-height: min(36vh, 360px);
+}
+
+.main-view.tablet-layout #topDeptPanel .top-dept-body {
+  min-height: 0;
+  overflow: visible;
+}
+
+.main-view.tablet-layout #topDeptPanel.top-panel.expanded .top-dept-body {
+  overflow-y: auto;
+}
+
+.main-view.tablet-layout .timeline-top-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.95fr);
+  gap: 12px;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0 12px;
+}
+
+.main-view.tablet-layout .top-left-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+  height: auto;
+}
+
+.main-view.tablet-layout .top-building-panel,
+.main-view.tablet-layout .top-calendar-panel {
+  width: auto;
+  min-width: 0;
+  min-height: 136px;
+  height: auto;
+  padding: 8px 10px;
+}
+
+.main-view.tablet-layout .top-building-selector {
+  gap: 6px;
+}
+
+.main-view.tablet-layout .top-building-panel .building-btn {
+  min-height: 36px;
+  padding: 6px 8px;
+  font-size: 11px;
+  line-height: 1.15;
+  white-space: normal;
+}
+
+.main-view.tablet-layout .top-calendar-panel .calendar-panel {
+  min-height: 160px;
+  height: auto;
+}
+
+.main-view.tablet-layout .top-below-row {
+  height: auto;
+  min-height: 0;
+  margin: 12px 0 0;
+  padding: 0 12px 12px;
+}
+
+.main-view.tablet-layout .top-linked-panel {
+  width: 100%;
+  min-height: 170px;
+  height: auto;
+}
+
+.main-view.tablet-layout .top-linked-panel .link-display {
+  max-height: 230px;
+}
+
+.main-view.tablet-layout .calendar-placeholder,
+.main-view.tablet-layout .panel-resize-handle {
+  display: none !important;
+}
+
+.main-view.tablet-layout .building-container {
+  position: relative !important;
+  inset: auto !important;
+  display: flex !important;
+  width: calc(100% - 24px) !important;
+  min-height: 52vh !important;
+  height: auto !important;
+  flex: 1 1 auto !important;
+  align-self: stretch !important;
+  overflow: auto !important;
+  margin: 0 12px 12px !important;
+  padding: 24px 14px 16px !important;
+  border-radius: 22px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 32px rgba(59, 130, 246, 0.12) !important;
+  z-index: 0 !important;
+}
+
+.main-view.tablet-layout.tablet-landscape .top-search-box {
+  flex-basis: 360px;
+}
+
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel {
+  flex-basis: 280px;
+  width: 280px;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel {
+  flex-basis: 390px;
+}
+
+.main-view.tablet-layout.tablet-landscape .building-container {
+  min-height: 46vh !important;
+}
+
+.main-view.tablet-layout.tablet-portrait .top-search-floating {
+  gap: 10px;
+}
+
+.main-view.tablet-layout.tablet-portrait .top-search-box {
+  flex: 1 1 calc(100% - 52px);
+  min-width: 0;
+}
+
+.main-view.tablet-layout.tablet-portrait .top-search-tools {
+  order: 2;
+  margin-left: 0;
+}
+
+.main-view.tablet-layout.tablet-portrait #topExceptionalPanel.top-panel {
+  order: 3;
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+.main-view.tablet-layout.tablet-portrait #topDeptPanel.top-panel {
+  order: 4;
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+.main-view.tablet-layout.tablet-portrait .timeline-top-row {
+  grid-template-columns: 1fr;
+}
+
+.main-view.tablet-layout.tablet-portrait .top-left-group {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.main-view.tablet-layout.tablet-portrait .top-calendar-panel {
+  min-height: 180px;
+}
+
+.main-view.tablet-layout.tablet-portrait .building-container {
+  min-height: 58vh !important;
+}
+
 .main-view.phone-layout .mobile-top-tabs {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -18878,7 +19142,11 @@ function setCalendarPanelVisible(visible) {
   if (wrap) wrap.classList.toggle('expanded', isCalendarPanelVisible);
   if (btn) btn.classList.toggle('active', isCalendarPanelVisible);
   if (isCalendarPanelVisible) {
-    initCalendarFloating();
+    if (isTabletLayoutMode()) {
+      dockCalendarPanel();
+    } else {
+      initCalendarFloating();
+    }
     if (wrap && wrap.classList.contains('calendar-floating') && wrap.dataset.manualPosition !== '1') {
       requestAnimationFrame(() => {
         const mainView = document.querySelector('.main-view');
@@ -18951,7 +19219,7 @@ function syncDeptPanelCollapsedState() {
 }
 
 function toggleCalendarPanelHeader() {
-  if (isPhoneLayoutMode()) {
+  if (isPhoneLayoutMode() || isTabletLayoutMode()) {
     setCalendarPanelVisible(!isCalendarPanelVisible);
     return;
   }
@@ -18967,9 +19235,28 @@ function isPhoneLayoutMode() {
   return minSide > 0 && minSide <= 600 && maxSide <= 960;
 }
 
+function isLikelyIpadDevice() {
+  const ua = navigator.userAgent || '';
+  const platform = navigator.platform || '';
+  const maxTouchPoints = navigator.maxTouchPoints || 0;
+  return /iPad/i.test(ua) || (platform === 'MacIntel' && maxTouchPoints > 1);
+}
+
+function isTabletLayoutMode() {
+  if (isPhoneLayoutMode()) return false;
+  const w = window.innerWidth || 0;
+  const h = window.innerHeight || 0;
+  const minSide = Math.min(w, h);
+  const maxSide = Math.max(w, h);
+  return isLikelyIpadDevice() && minSide >= 744 && maxSide <= 1400;
+}
+
 function getDefaultPanOffsets() {
   if (isPhoneLayoutMode()) {
     return { x: 5, y: basePanY + 12 };
+  }
+  if (isTabletLayoutMode()) {
+    return { x: basePanX, y: basePanY + 6 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -19277,6 +19564,7 @@ function syncPhoneLayoutPanels() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
   const phoneLayout = mainView.classList.contains('phone-layout');
+  const tabletLayout = mainView.classList.contains('tablet-layout');
   if (phoneLayout) {
     dockWardConnectionPanel();
     dockCalendarPanel();
@@ -19340,6 +19628,29 @@ function syncPhoneLayoutPanels() {
   stabilizePhoneLayoutVisibility();
   const deptPanel = document.getElementById('topDeptPanel');
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
+  const wrap = document.getElementById('topCalendarPanel');
+  const panel = document.getElementById('calendarPanel');
+  const linked = document.querySelector('.top-linked-panel');
+  if (linked) linked.style.height = '';
+  mainView.style.removeProperty('--mobile-link-panel-h');
+  if (tabletLayout) {
+    dockWardConnectionPanel();
+    dockCalendarPanel();
+    if (deptPanel) deptPanel.classList.remove('hidden', 'mobile-subdept-mode');
+    if (exceptionalPanel) {
+      exceptionalPanel.classList.remove('hidden');
+      syncExceptionalPanelState();
+    }
+    if (wrap) {
+      wrap.classList.toggle('hidden', !isCalendarPanelVisible);
+      wrap.classList.toggle('expanded', !!isCalendarPanelVisible);
+    }
+    if (panel) panel.classList.toggle('hidden', !isCalendarPanelVisible);
+    updateDeptListVisibility(currentDeptSide);
+    populateDeptList(currentDeptSide);
+    syncMobileDeptSummary();
+    return;
+  }
   if (deptPanel) {
     deptPanel.classList.remove('hidden', 'mobile-subdept-mode');
   }
@@ -19347,6 +19658,9 @@ function syncPhoneLayoutPanels() {
     exceptionalPanel.classList.remove('hidden');
     syncExceptionalPanelState();
   }
+  updateDeptListVisibility(currentDeptSide);
+  populateDeptList(currentDeptSide);
+  syncMobileDeptSummary();
   enableWardConnectionDrag();
   if (isCalendarPanelVisible) {
     enableCalendarResize();
@@ -19529,7 +19843,7 @@ function initWardConnectionFloating() {
   const panel = document.querySelector('.top-linked-panel');
   const anchorRow = document.querySelector('.top-below-row');
   if (!mainView || !panel || !anchorRow) return;
-  if (isPhoneLayoutMode()) return;
+  if (isPhoneLayoutMode() || isTabletLayoutMode()) return;
   if (panel.dataset.floatingInit === '1' && panel.classList.contains('ward-floating')) return;
   panel.dataset.floatingInit = '1';
 
@@ -19581,6 +19895,16 @@ function autoSizeWardConnectionPanel() {
     linkDisplay.style.overflowY = 'auto';
     return;
   }
+  if (mainView.classList.contains('tablet-layout')) {
+    const panel = document.querySelector('.top-linked-panel');
+    const linkDisplay = panel ? panel.querySelector('.link-display') : null;
+    if (panel) panel.style.height = '';
+    if (linkDisplay) {
+      linkDisplay.style.height = '';
+      linkDisplay.style.overflowY = 'auto';
+    }
+    return;
+  }
   const panel = document.querySelector('.top-linked-panel.ward-floating');
   const linkDisplay = panel ? panel.querySelector('.link-display') : null;
   const title = linkDisplay ? linkDisplay.querySelector('h4') : null;
@@ -19604,7 +19928,7 @@ function autoSizeWardConnectionPanel() {
 }
 
 function enableWardConnectionDrag() {
-  if (isPhoneLayoutMode()) {
+  if (isPhoneLayoutMode() || isTabletLayoutMode()) {
     dockWardConnectionPanel();
     return;
   }
@@ -19674,7 +19998,7 @@ function initCalendarFloating() {
   const mainView = document.querySelector('.main-view');
   const panel = document.getElementById('topCalendarPanel');
   if (!mainView || !panel) return;
-  if (isPhoneLayoutMode()) return;
+  if (isPhoneLayoutMode() || isTabletLayoutMode()) return;
   if (panel.dataset.floatingInit === '1' && panel.classList.contains('calendar-floating')) return;
   panel.dataset.floatingInit = '1';
   const parent = panel.parentElement;
@@ -19771,7 +20095,7 @@ function enablePanelResize(panel, opts) {
 }
 
 function enableCalendarDrag() {
-  if (isPhoneLayoutMode()) {
+  if (isPhoneLayoutMode() || isTabletLayoutMode()) {
     dockCalendarPanel();
     return;
   }
@@ -19832,7 +20156,7 @@ function enableCalendarDrag() {
 }
 
 function enableCalendarResize() {
-  if (isPhoneLayoutMode()) {
+  if (isPhoneLayoutMode() || isTabletLayoutMode()) {
     dockCalendarPanel();
     return;
   }
@@ -21023,25 +21347,33 @@ function updateTopPanelSizing() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
   const vw = mainView.clientWidth;
-  const baseGap = 2;
-  const baseRowH = 124;
-  const baseBuildingW = 200;
-  const baseDeptW = 320;
-  const baseCalendarW = 210;
+  const tabletLayout = mainView.classList.contains('tablet-layout');
+  const tabletPortrait = tabletLayout && mainView.classList.contains('tablet-portrait');
+  const baseGap = tabletLayout ? 12 : 2;
+  const baseRowH = tabletLayout ? (tabletPortrait ? 148 : 138) : 124;
+  const baseBuildingW = tabletLayout ? (tabletPortrait ? 250 : 230) : 200;
+  const baseDeptW = tabletLayout ? (tabletPortrait ? 520 : 390) : 320;
+  const baseCalendarW = tabletLayout ? (tabletPortrait ? 320 : 300) : 210;
   const baseTotal = baseBuildingW + baseDeptW + baseCalendarW + baseGap * 2;
 
-  const desiredWard = Math.min(640, Math.max(360, Math.floor(vw * 0.62)));
+  const desiredWard = tabletLayout
+    ? Math.min(tabletPortrait ? 920 : 860, Math.max(520, Math.floor(vw * (tabletPortrait ? 0.9 : 0.82))))
+    : Math.min(640, Math.max(360, Math.floor(vw * 0.62)));
   const wardW = Math.min(vw, desiredWard);
-  const scale = Math.max(0.7, Math.min(1.15, wardW / baseTotal));
+  const scale = tabletLayout
+    ? Math.max(0.92, Math.min(1.18, wardW / baseTotal))
+    : Math.max(0.7, Math.min(1.15, wardW / baseTotal));
   const shrink = Math.min(1, effectiveScale || 1);
   const gap = Math.max(2, Math.round(baseGap * scale));
 
-  let buildingW = Math.max(170, Math.round(baseBuildingW * scale));
-  let deptW = Math.max(220, Math.round(baseDeptW * scale));
-  const maxCalendarW = Math.max(160, wardW - buildingW - deptW - gap * 2);
-  let calendarW = Math.max(160, Math.round(baseCalendarW * scale));
+  let buildingW = Math.max(tabletLayout ? 210 : 170, Math.round(baseBuildingW * scale));
+  let deptW = Math.max(tabletLayout ? 340 : 220, Math.round(baseDeptW * scale));
+  const maxCalendarW = Math.max(tabletLayout ? 220 : 160, wardW - buildingW - deptW - gap * 2);
+  let calendarW = Math.max(tabletLayout ? 240 : 160, Math.round(baseCalendarW * scale));
   calendarW = Math.min(calendarW, maxCalendarW);
-  const rowH = Math.max(124, Math.min(160, Math.round(baseRowH * scale)));
+  const rowH = tabletLayout
+    ? Math.max(baseRowH, Math.min(tabletPortrait ? 200 : 180, Math.round(baseRowH * scale)))
+    : Math.max(124, Math.min(160, Math.round(baseRowH * scale)));
 
   mainView.style.setProperty('--top-gap', `${gap}px`);
   mainView.style.setProperty('--top-row-h', `${rowH}px`);
@@ -21061,9 +21393,15 @@ function updateEmbeddedLayout() {
   if (!mainView) return;
   const compact = mainView.clientWidth > 0 && mainView.clientWidth <= 720;
   const phoneLayout = isPhoneLayoutMode();
-  mainView.classList.toggle('compact-layout', compact && !phoneLayout);
+  const tabletLayout = isTabletLayoutMode();
+  const tabletLandscape = tabletLayout && (window.innerWidth || 0) >= (window.innerHeight || 0);
+  mainView.classList.toggle('compact-layout', compact && !phoneLayout && !tabletLayout);
   mainView.classList.toggle('phone-layout', phoneLayout);
+  mainView.classList.toggle('tablet-layout', tabletLayout);
+  mainView.classList.toggle('tablet-landscape', tabletLayout && tabletLandscape);
+  mainView.classList.toggle('tablet-portrait', tabletLayout && !tabletLandscape);
   document.body.classList.toggle('phone-layout-active', phoneLayout);
+  document.body.classList.toggle('tablet-layout-active', tabletLayout);
   syncPhoneBuildingSizing();
 }
 
