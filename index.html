@@ -60,20 +60,6 @@ body {
   padding-right: 0 !important;
 }
 
-#twintower-app {
-  isolation: isolate;
-  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
-  text-size-adjust: none !important;
-  -webkit-text-size-adjust: none !important;
-}
-
-#twintower-app button,
-#twintower-app input,
-#twintower-app select,
-#twintower-app textarea {
-  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
-}
-
 #twintower-app .building {
   display: flex !important;
   flex-direction: column !important;
@@ -2040,58 +2026,6 @@ h2 {
   color: #ffffff;
 }
 
-/* Harden button colors against intranet/global theme overrides. */
-#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb {
-  background: var(--color-ipeb) !important;
-  background-color: var(--color-ipeb) !important;
-  background-image: none !important;
-  border-color: var(--color-ipeb-border) !important;
-  color: #475569 !important;
-}
-
-#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active,
-#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:hover {
-  background: var(--color-ipeb-border) !important;
-  background-color: var(--color-ipeb-border) !important;
-  background-image: none !important;
-  border-color: var(--color-ipeb-border) !important;
-  color: #ffffff !important;
-}
-
-#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030 {
-  background: var(--color-mcbtc2030) !important;
-  background-color: var(--color-mcbtc2030) !important;
-  background-image: none !important;
-  border-color: var(--color-mcbtc2030-border) !important;
-  color: #5b4a3d !important;
-}
-
-#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active,
-#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:hover {
-  background: var(--color-mcbtc2030-border) !important;
-  background-color: var(--color-mcbtc2030-border) !important;
-  background-image: none !important;
-  border-color: var(--color-mcbtc2030-border) !important;
-  color: #ffffff !important;
-}
-
-#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  background-image: none !important;
-  border-color: #d8b4fe !important;
-  color: #8b3ac7 !important;
-}
-
-#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active,
-#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active:hover {
-  background: #c026d3 !important;
-  background-color: #c026d3 !important;
-  background-image: none !important;
-  border-color: #c026d3 !important;
-  color: #ffffff !important;
-}
-
 .top-dept-panel .dept-item {
   border-color: #c7d2fe;
   background: #eef2ff;
@@ -2136,82 +2070,6 @@ h2 {
   background: #a855f7;
   border-color: #a855f7;
   color: #ffffff;
-}
-
-/* Harden Clinical/Neutral inner items against intranet button/card overrides. */
-#twintower-app .top-dept-panel .dept-item {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  background-image: none !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-  border-style: solid !important;
-  border-width: 2px !important;
-  border-radius: 8px !important;
-  box-sizing: border-box !important;
-  transform: none !important;
-}
-
-#twintower-app .top-dept-panel .dept-item,
-#twintower-app .top-dept-panel .dept-item:hover {
-  background-color: #eef2ff !important;
-  border-color: #c7d2fe !important;
-  color: #4338ca !important;
-}
-
-#twintower-app .top-dept-panel .dept-item.active,
-#twintower-app .top-dept-panel .dept-item.active:hover {
-  background-color: #6366f1 !important;
-  border-color: #6366f1 !important;
-  color: #ffffff !important;
-}
-
-#twintower-app .top-dept-panel .ward-building-row .dept-item,
-#twintower-app .top-dept-panel .ward-building-row .dept-item:hover {
-  background-color: #faf5ff !important;
-  border-color: #e9d5ff !important;
-  color: #9333ea !important;
-}
-
-#twintower-app .top-dept-panel .ward-building-row .dept-item.active,
-#twintower-app .top-dept-panel .ward-building-row .dept-item.active:hover {
-  background-color: #a855f7 !important;
-  border-color: #a855f7 !important;
-  color: #ffffff !important;
-}
-
-#twintower-app .top-dept-panel #wardButtons .ward-btn {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  background-image: none !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-  border-style: solid !important;
-  border-width: 2px !important;
-  border-radius: 6px !important;
-  box-sizing: border-box !important;
-  transform: none !important;
-}
-
-#twintower-app .top-dept-panel #wardButtons .ward-btn,
-#twintower-app .top-dept-panel #wardButtons .ward-btn:hover {
-  background-color: #ffffff !important;
-  border-color: #ffc107 !important;
-  color: #856404 !important;
-}
-
-#twintower-app .top-dept-panel #wardButtons .ward-btn.active,
-#twintower-app .top-dept-panel #wardButtons .ward-btn.active:hover {
-  background-color: #ffc107 !important;
-  border-color: #ffc107 !important;
-  color: #856404 !important;
-}
-
-#twintower-app .top-dept-panel #wardButtons .ward-items-grid,
-#twintower-app .top-dept-panel #wardButtons .ward-building-row {
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
 }
 
 .top-dept-panel #wardSection {
@@ -17291,7 +17149,6 @@ function renderDepartments() {
   targetBtn.onclick = () => setDeptTarget(currentDeptTarget === 'ipeb' ? 'mcbtc2030' : 'ipeb');
   targetGroup.appendChild(targetBtn);
   deptButtons.appendChild(targetGroup);
-  applyDeptTargetButtonTheme(targetBtn);
 
   const sideGroup = document.createElement('div');
   sideGroup.className = 'dept-group';
@@ -17307,8 +17164,6 @@ function renderDepartments() {
   sideGroup.appendChild(clinicalBtn);
   sideGroup.appendChild(nonBtn);
   deptButtons.appendChild(sideGroup);
-  applyDeptSideButtonTheme(clinicalBtn, currentDeptSide === 'clinical');
-  applyDeptSideButtonTheme(nonBtn, currentDeptSide === 'nonClinical');
   const clinicalList = document.createElement('div');
   clinicalList.id = 'clinicalList';
   clinicalList.className = 'dept-list';
@@ -17329,43 +17184,6 @@ function renderDepartments() {
   }
 }
 
-function applyDeptTargetButtonTheme(btn) {
-  if (!btn) return;
-  const isMcbtc2030 = currentDeptTarget === 'mcbtc2030';
-  const baseBg = isMcbtc2030 ? '#FFE0B2' : '#E6E6FA';
-  const activeBg = isMcbtc2030 ? '#FF8C00' : '#9370DB';
-  const baseText = isMcbtc2030 ? '#5b4a3d' : '#475569';
-  btn.style.setProperty('appearance', 'none', 'important');
-  btn.style.setProperty('-webkit-appearance', 'none', 'important');
-  btn.style.setProperty('background-image', 'none', 'important');
-  btn.style.setProperty('box-shadow', 'none', 'important');
-  btn.style.setProperty('text-shadow', 'none', 'important');
-  btn.style.setProperty('background', activeBg, 'important');
-  btn.style.setProperty('background-color', activeBg, 'important');
-  btn.style.setProperty('border-color', activeBg, 'important');
-  btn.style.setProperty('color', '#ffffff', 'important');
-  btn.dataset.baseBg = baseBg;
-  btn.dataset.activeBg = activeBg;
-  btn.dataset.baseText = baseText;
-}
-
-function applyDeptSideButtonTheme(btn, active) {
-  if (!btn) return;
-  const baseBg = '#ffffff';
-  const baseBorder = '#d8b4fe';
-  const baseText = '#8b3ac7';
-  const activeBg = '#c026d3';
-  btn.style.setProperty('appearance', 'none', 'important');
-  btn.style.setProperty('-webkit-appearance', 'none', 'important');
-  btn.style.setProperty('background-image', 'none', 'important');
-  btn.style.setProperty('box-shadow', 'none', 'important');
-  btn.style.setProperty('text-shadow', 'none', 'important');
-  btn.style.setProperty('background', active ? activeBg : baseBg, 'important');
-  btn.style.setProperty('background-color', active ? activeBg : baseBg, 'important');
-  btn.style.setProperty('border-color', active ? activeBg : baseBorder, 'important');
-  btn.style.setProperty('color', active ? '#ffffff' : baseText, 'important');
-}
-
 function updateDeptSideButtons() {
   const sideGroup = document.querySelector('#deptButtons [data-role="side-group"]');
   if (!sideGroup) return;
@@ -17374,10 +17192,7 @@ function updateDeptSideButtons() {
     const isClinical = label === 'clinical';
     const active = (isClinical && currentDeptSide === 'clinical') || (!isClinical && currentDeptSide === 'nonClinical');
     btn.classList.toggle('active', active);
-    applyDeptSideButtonTheme(btn, active);
   });
-  const targetBtn = document.querySelector('#deptButtons [data-role="target-group"] .dept-btn');
-  if (targetBtn) applyDeptTargetButtonTheme(targetBtn);
 }
 
 function updateDeptListVisibility(activeSide) {
