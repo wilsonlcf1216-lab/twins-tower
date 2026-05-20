@@ -2017,8 +2017,8 @@ h2 {
   display: grid;
   grid-template-columns: minmax(220px, var(--tablet-landscape-left-w)) minmax(0, 1fr);
   align-items: start;
-  gap: 6px;
-  padding: 2px 0 4px;
+  gap: 3px;
+  padding: 0 0 2px;
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -2029,17 +2029,22 @@ h2 {
   order: 2;
   flex: 1 1 100%;
   width: 100%;
-  min-height: 30px;
-  padding: 0 8px;
+  min-height: 24px;
+  padding: 0 6px;
   grid-column: 1;
   grid-row: 2;
+}
+
+.main-view.tablet-layout.tablet-landscape .top-filter-input {
+  min-height: 26px;
+  font-size: 12px;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
   display: grid !important;
   order: 1;
   grid-template-columns: minmax(0, 1fr);
-  gap: 4px !important;
+  gap: 2px !important;
   width: 100% !important;
   grid-column: 1;
   grid-row: 1;
@@ -2052,7 +2057,7 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape .top-below-row {
   display: flex !important;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: flex-start;
   gap: 6px;
   width: calc(100% - 12px);
@@ -2114,14 +2119,6 @@ h2 {
   order: 2;
 }
 
-.main-view.tablet-layout.tablet-landscape #topDeptPanel.expanded,
-.main-view.tablet-layout.tablet-landscape #topExceptionalPanel.expanded,
-.main-view.tablet-layout.tablet-landscape #topCalendarPanel.expanded {
-  order: 3;
-  width: 100%;
-  flex: 1 1 100%;
-}
-
 .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
   display: none !important;
   gap: 6px !important;
@@ -2130,9 +2127,9 @@ h2 {
 .main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel > .top-panel-header,
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel > .top-panel-header {
-  min-height: 26px;
+  min-height: 24px;
   padding: 0 6px;
-  font-size: 11px;
+  font-size: 10px;
   border-bottom-color: rgba(191, 219, 254, 0.72);
   background: linear-gradient(180deg, rgba(239,246,255,0.82) 0%, rgba(255,255,255,0.96) 100%);
 }
@@ -2141,14 +2138,22 @@ h2 {
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
   align-self: flex-start;
-  border-radius: 16px;
-  box-shadow: 0 10px 22px rgba(99, 102, 241, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.07);
+}
+
+.main-view.tablet-layout.tablet-landscape .panel-toggle-btn {
+  min-width: 22px;
+  min-height: 22px;
+  padding: 0 5px;
+  font-size: 11px;
+  border-radius: 10px;
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
   max-height: min(20vh, 170px);
   overflow-y: auto;
-  padding: 4px 6px 6px;
+  padding: 4px 5px 5px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -2156,7 +2161,7 @@ h2 {
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
   max-height: min(20vh, 170px);
   overflow-y: auto;
-  padding: 4px 6px 6px;
+  padding: 4px 5px 5px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -2177,7 +2182,7 @@ h2 {
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
   min-height: 172px;
   max-height: min(20vh, 170px);
-  padding: 4px 6px 6px;
+  padding: 4px 5px 5px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -2196,6 +2201,16 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-group {
   justify-content: stretch;
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-btn,
+.main-view.tablet-layout.tablet-landscape #topDeptPanel .ward-btn,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-area-item {
+  min-height: 26px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  line-height: 1.15;
 }
 
 .main-view.tablet-layout.tablet-landscape .building-container {
@@ -7174,8 +7189,8 @@ body.phone-layout-active .private-ward-card-body {
   display: grid !important;
   grid-template-columns: minmax(220px, var(--tablet-landscape-left-w)) minmax(0, 1fr) !important;
   align-items: start !important;
-  gap: 6px !important;
-  padding: 2px 0 4px !important;
+  gap: 3px !important;
+  padding: 0 0 2px !important;
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
@@ -7193,17 +7208,22 @@ body.phone-layout-active .private-ward-card-body {
   order: 2 !important;
   flex: 1 1 100% !important;
   width: 100% !important;
-  min-height: 30px !important;
-  padding: 0 8px !important;
+  min-height: 24px !important;
+  padding: 0 6px !important;
   grid-column: 1 !important;
   grid-row: 2 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-filter-input {
+  min-height: 26px !important;
+  font-size: 12px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
   display: grid !important;
   order: 1 !important;
   grid-template-columns: minmax(0, 1fr) !important;
-  gap: 4px !important;
+  gap: 2px !important;
   width: 100% !important;
   grid-column: 1 !important;
   grid-row: 1 !important;
@@ -7216,7 +7236,7 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-below-row {
   display: flex !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   align-items: flex-start !important;
   gap: 6px !important;
   width: calc(100% - 12px) !important;
@@ -7287,20 +7307,12 @@ body.phone-layout-active .private-ward-card-body {
   order: 2 !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.expanded,
-#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel.expanded,
-#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel.expanded {
-  order: 3 !important;
-  width: 100% !important;
-  flex: 1 1 100% !important;
-}
-
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel > .top-panel-header,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel > .top-panel-header {
-  min-height: 26px !important;
+  min-height: 24px !important;
   padding: 0 6px !important;
-  font-size: 11px !important;
+  font-size: 10px !important;
   border-bottom-color: rgba(191, 219, 254, 0.72) !important;
   background: linear-gradient(180deg, rgba(239,246,255,0.82) 0%, rgba(255,255,255,0.96) 100%) !important;
 }
@@ -7309,14 +7321,22 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
   align-self: flex-start !important;
-  border-radius: 16px !important;
-  box-shadow: 0 10px 22px rgba(99, 102, 241, 0.08) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.07) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .panel-toggle-btn {
+  min-width: 22px !important;
+  min-height: 22px !important;
+  padding: 0 5px !important;
+  font-size: 11px !important;
+  border-radius: 10px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
   max-height: min(20vh, 170px) !important;
   overflow-y: auto !important;
-  padding: 4px 6px 6px !important;
+  padding: 4px 5px 5px !important;
   width: 100% !important;
   box-sizing: border-box !important;
 }
@@ -7324,7 +7344,7 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
   max-height: min(20vh, 170px) !important;
   overflow-y: auto !important;
-  padding: 4px 6px 6px !important;
+  padding: 4px 5px 5px !important;
   width: 100% !important;
   box-sizing: border-box !important;
 }
@@ -7340,7 +7360,7 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
   min-height: 172px !important;
   max-height: min(20vh, 170px) !important;
-  padding: 4px 6px 6px !important;
+  padding: 4px 5px 5px !important;
   width: 100% !important;
   box-sizing: border-box !important;
 }
@@ -7359,6 +7379,16 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-group {
   justify-content: stretch !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .dept-btn,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .ward-btn,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-area-item {
+  min-height: 26px !important;
+  padding: 4px 6px !important;
+  border-radius: 8px !important;
+  font-size: 10px !important;
+  line-height: 1.15 !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .building-container {
