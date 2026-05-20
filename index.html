@@ -7085,8 +7085,8 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait .top-linked-panel {
-  min-height: 126px !important;
-  height: 126px !important;
+  min-height: 142px !important;
+  height: 142px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel > .top-panel-header,
@@ -20212,7 +20212,10 @@ function isTabletLayoutMode() {
   const h = window.innerHeight || 0;
   const minSide = Math.min(w, h);
   const maxSide = Math.max(w, h);
-  return isLikelyIpadDevice() && minSide >= 744 && maxSide <= 1400;
+  const coarsePointer = typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches;
+  const touchCapable = (navigator.maxTouchPoints || 0) > 0 || coarsePointer;
+  const tabletSizedViewport = minSide >= 700 && maxSide <= 1600;
+  return tabletSizedViewport && (isLikelyIpadDevice() || touchCapable);
 }
 
 function isCompactLayoutMode() {
@@ -20302,8 +20305,8 @@ function getTabletConnectionPanelFixedHeight() {
   const itemHeight = 24;
   const raw = baseHeight + (maxSideSections * sectionHeight) + (maxSideItems * itemHeight);
   const tabletPortrait = isTabletLayoutMode() && (window.innerHeight || 0) > (window.innerWidth || 0);
-  const viewportCap = Math.round((window.innerHeight || 900) * (tabletPortrait ? 0.18 : 0.26));
-  return Math.max(tabletPortrait ? 112 : 152, Math.min(raw || 176, viewportCap || (tabletPortrait ? 180 : 240)));
+  const viewportCap = Math.round((window.innerHeight || 900) * (tabletPortrait ? 0.22 : 0.26));
+  return Math.max(tabletPortrait ? 136 : 152, Math.min(raw || 188, viewportCap || (tabletPortrait ? 210 : 240)));
 }
 
 function syncMobileDeptSummary() {
