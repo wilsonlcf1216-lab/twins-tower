@@ -60,6 +60,29 @@ body {
   padding-right: 0 !important;
 }
 
+#twintower-app {
+  isolation: isolate;
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
+  text-size-adjust: none !important;
+  -webkit-text-size-adjust: none !important;
+}
+
+#twintower-app,
+#twintower-app * ,
+#twintower-app *::before,
+#twintower-app *::after {
+  font-family: inherit !important;
+}
+
+#twintower-app button,
+#twintower-app input,
+#twintower-app select,
+#twintower-app textarea {
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: none !important;
+}
+
 #twintower-app .building {
   display: flex !important;
   flex-direction: column !important;
@@ -17201,6 +17224,7 @@ function renderDepartments() {
   targetBtn.onclick = () => setDeptTarget(currentDeptTarget === 'ipeb' ? 'mcbtc2030' : 'ipeb');
   targetGroup.appendChild(targetBtn);
   deptButtons.appendChild(targetGroup);
+  applyDeptTargetButtonTheme(targetBtn);
 
   const sideGroup = document.createElement('div');
   sideGroup.className = 'dept-group';
@@ -17216,6 +17240,8 @@ function renderDepartments() {
   sideGroup.appendChild(clinicalBtn);
   sideGroup.appendChild(nonBtn);
   deptButtons.appendChild(sideGroup);
+  applyDeptSideButtonTheme(clinicalBtn, currentDeptSide === 'clinical');
+  applyDeptSideButtonTheme(nonBtn, currentDeptSide === 'nonClinical');
   const clinicalList = document.createElement('div');
   clinicalList.id = 'clinicalList';
   clinicalList.className = 'dept-list';
@@ -17236,6 +17262,43 @@ function renderDepartments() {
   }
 }
 
+function applyDeptTargetButtonTheme(btn) {
+  if (!btn) return;
+  const isMcbtc2030 = currentDeptTarget === 'mcbtc2030';
+  const baseBg = isMcbtc2030 ? '#FFE0B2' : '#E6E6FA';
+  const activeBg = isMcbtc2030 ? '#FF8C00' : '#9370DB';
+  const baseText = isMcbtc2030 ? '#5b4a3d' : '#475569';
+  btn.style.setProperty('appearance', 'none', 'important');
+  btn.style.setProperty('-webkit-appearance', 'none', 'important');
+  btn.style.setProperty('background-image', 'none', 'important');
+  btn.style.setProperty('box-shadow', 'none', 'important');
+  btn.style.setProperty('text-shadow', 'none', 'important');
+  btn.style.setProperty('background', activeBg, 'important');
+  btn.style.setProperty('background-color', activeBg, 'important');
+  btn.style.setProperty('border-color', activeBg, 'important');
+  btn.style.setProperty('color', '#ffffff', 'important');
+  btn.dataset.baseBg = baseBg;
+  btn.dataset.activeBg = activeBg;
+  btn.dataset.baseText = baseText;
+}
+
+function applyDeptSideButtonTheme(btn, active) {
+  if (!btn) return;
+  const baseBg = '#ffffff';
+  const baseBorder = '#d8b4fe';
+  const baseText = '#8b3ac7';
+  const activeBg = '#c026d3';
+  btn.style.setProperty('appearance', 'none', 'important');
+  btn.style.setProperty('-webkit-appearance', 'none', 'important');
+  btn.style.setProperty('background-image', 'none', 'important');
+  btn.style.setProperty('box-shadow', 'none', 'important');
+  btn.style.setProperty('text-shadow', 'none', 'important');
+  btn.style.setProperty('background', active ? activeBg : baseBg, 'important');
+  btn.style.setProperty('background-color', active ? activeBg : baseBg, 'important');
+  btn.style.setProperty('border-color', active ? activeBg : baseBorder, 'important');
+  btn.style.setProperty('color', active ? '#ffffff' : baseText, 'important');
+}
+
 function updateDeptSideButtons() {
   const sideGroup = document.querySelector('#deptButtons [data-role="side-group"]');
   if (!sideGroup) return;
@@ -17244,7 +17307,103 @@ function updateDeptSideButtons() {
     const isClinical = label === 'clinical';
     const active = (isClinical && currentDeptSide === 'clinical') || (!isClinical && currentDeptSide === 'nonClinical');
     btn.classList.toggle('active', active);
+    applyDeptSideButtonTheme(btn, active);
   });
+  const targetBtn = document.querySelector('#deptButtons [data-role="target-group"] .dept-btn');
+  if (targetBtn) applyDeptTargetButtonTheme(targetBtn);
+}
+
+let typographyProtectionObserver = null;
+let typographyProtectionQueued = false;
+const typographyProtectedProperties = [
+  'font-family',
+  'font-size',
+  'font-weight',
+  'font-style',
+  'line-height',
+  'letter-spacing',
+  'text-transform'
+];
+
+function protectTypographyForElement(el) {
+  if (!el || el.nodeType !== 1) return;
+  if (!(el.id === 'twintower-app' || (el.closest && el.closest('#twintower-app')))) return;
+  const computed = window.getComputedStyle(el);
+  typographyProtectedProperties.forEach((prop) => {
+    const value = computed.getPropertyValue(prop);
+    if (value) {
+      el.style.setProperty(prop, value, 'important');
+    }
+  });
+  if (el.matches && el.matches('button, input, select, textarea')) {
+    el.style.setProperty('appearance', 'none', 'important');
+    el.style.setProperty('-webkit-appearance', 'none', 'important');
+  }
+}
+
+function protectTypographyTree(root = null) {
+  const app = root && root.nodeType === 1 ? root : document.getElementById('twintower-app');
+  if (!app) return;
+  protectTypographyForElement(app);
+  app.querySelectorAll('*').forEach((el) => protectTypographyForElement(el));
+}
+
+function scheduleTypographyProtection(root = null) {
+  if (typographyProtectionQueued) return;
+  typographyProtectionQueued = true;
+  const run = () => {
+    typographyProtectionQueued = false;
+    protectTypographyTree(root);
+  };
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(run);
+  } else {
+    setTimeout(run, 0);
+  }
+}
+
+function initTypographyProtection() {
+  const app = document.getElementById('twintower-app');
+  if (!app) return;
+  protectTypographyTree(app);
+  setTimeout(() => protectTypographyTree(app), 80);
+  setTimeout(() => protectTypographyTree(app), 300);
+  setTimeout(() => protectTypographyTree(app), 1000);
+  if (typographyProtectionObserver) return;
+  typographyProtectionObserver = new MutationObserver((mutations) => {
+    let shouldProtect = false;
+    for (const mutation of mutations) {
+      if (mutation.type === 'childList') {
+        shouldProtect = true;
+        break;
+      }
+      if (mutation.type === 'attributes') {
+        shouldProtect = true;
+        break;
+      }
+    }
+    if (shouldProtect) scheduleTypographyProtection(app);
+  });
+  typographyProtectionObserver.observe(app, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class', 'style']
+  });
+  typographyProtectionObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class', 'style']
+  });
+  typographyProtectionObserver.observe(document.body, {
+    attributes: true,
+    attributeFilter: ['class', 'style']
+  });
+  if (document.head) {
+    typographyProtectionObserver.observe(document.head, {
+      childList: true,
+      subtree: true
+    });
+  }
 }
 
 function updateDeptListVisibility(activeSide) {
@@ -20397,6 +20556,7 @@ function switchRightBuilding(index, options = {}) {
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
   buildingContainer = document.getElementById('buildingContainer');
+  initTypographyProtection();
   const defaultPan = getDefaultPanOffsets();
   panX = defaultPan.x;
   panY = defaultPan.y;
@@ -20509,10 +20669,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('load', function() {
     refreshEmbeddedLayout();
+    scheduleTypographyProtection();
   });
 
   setTimeout(refreshEmbeddedLayout, 120);
   setTimeout(refreshEmbeddedLayout, 500);
+  setTimeout(scheduleTypographyProtection, 150);
+  setTimeout(scheduleTypographyProtection, 600);
   setTimeout(function() {
     stabilizePhoneLayoutVisibility();
     syncPhoneLayoutPanels();
