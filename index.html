@@ -1706,7 +1706,11 @@ h2 {
 }
 
 .main-view.tablet-layout {
-  padding: 0;
+  --tablet-panel-gap: 10px;
+  --tablet-card-radius: 18px;
+  --tablet-panel-max-h: min(34vh, 320px);
+  --tablet-link-panel-h: 136px;
+  padding: 0 0 14px;
   overflow-x: hidden;
   overflow-y: auto;
   background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 22%, #ffffff 100%);
@@ -1718,49 +1722,37 @@ h2 {
   left: 0;
   right: 0;
   z-index: 650;
-  width: 100%;
-  max-width: 860px;
+  width: min(100%, 980px);
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: 8px;
-  padding: max(8px, env(safe-area-inset-top, 0px)) 10px 8px;
-  background: linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.94) 100%);
-  border-bottom: 1px solid rgba(199, 210, 254, 0.8);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.08);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--tablet-panel-gap);
+  padding: max(10px, env(safe-area-inset-top, 0px)) 12px 10px;
+  background: linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-bottom: 1px solid rgba(199, 210, 254, 0.82);
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.10);
   backdrop-filter: blur(12px);
-  transform: none;
 }
 
 .main-view.tablet-layout .top-search-tools {
-  order: 4;
-  margin-left: auto;
-  height: auto;
-}
-
-.main-view.tablet-layout .calendar-toggle-btn {
-  width: 36px;
-  height: 42px;
-  border-radius: 12px;
-  box-shadow: 0 6px 14px rgba(99, 102, 241, 0.12);
+  display: none !important;
 }
 
 .main-view.tablet-layout .top-search-box {
   order: 1;
-  flex: 1 1 260px;
-  width: auto;
-  min-width: 240px;
-  min-height: 42px;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
   height: auto;
-  padding: 0 12px;
+  padding: 0 14px;
   border: 1px solid #c7d2fe;
-  border-radius: 14px;
-  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.08);
 }
 
 .main-view.tablet-layout .top-filter-input {
-  min-height: 38px;
+  min-height: 40px;
   font-size: 14px;
   line-height: 1.25;
 }
@@ -1773,61 +1765,128 @@ h2 {
 }
 
 .main-view.tablet-layout .mobile-building-selectors,
-.main-view.tablet-layout .mobile-top-tabs,
-.main-view.tablet-layout .mobile-dept-summary {
-  display: none !important;
+.main-view.tablet-layout .mobile-top-tabs {
+  display: grid !important;
+  width: 100% !important;
+}
+
+.main-view.tablet-layout .mobile-building-selectors {
+  order: 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--tablet-panel-gap) !important;
+}
+
+.main-view.tablet-layout .mobile-building-row {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 8px;
+  min-height: 76px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.98) 100%);
+  border: 1px solid rgba(191, 219, 254, 0.96);
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.09);
+}
+
+.main-view.tablet-layout .mobile-building-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: 0.02em;
+  color: #4338ca;
+}
+
+.main-view.tablet-layout .mobile-building-options {
+  display: grid;
+  gap: 6px;
+}
+
+.main-view.tablet-layout #mobileLeftBuildingSelector {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.main-view.tablet-layout #mobileRightBuildingSelector {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.main-view.tablet-layout .mobile-building-options .building-btn {
+  min-height: 34px;
+  font-size: 11px;
+  line-height: 1.15;
 }
 
 .main-view.tablet-layout .top-panel,
 .main-view.tablet-layout .top-linked-panel {
-  border-radius: 18px;
+  width: 100%;
+  border: 1px solid rgba(191, 219, 254, 0.92);
+  border-radius: var(--tablet-card-radius);
+  background: rgba(255, 255, 255, 0.98);
   box-shadow: 0 12px 28px rgba(99, 102, 241, 0.10);
 }
 
-.main-view.tablet-layout #topExceptionalPanel.top-panel {
-  order: 2;
-  flex: 0 1 220px;
-  width: 220px;
-  min-height: 42px;
-  height: 42px;
-  padding: 4px 8px;
+.main-view.tablet-layout .top-linked-panel {
+  order: 3;
+  min-height: var(--tablet-link-panel-h);
+  height: var(--tablet-link-panel-h);
+}
+
+.main-view.tablet-layout .top-linked-panel .link-display {
+  min-height: 0;
+  max-height: none;
+}
+
+.main-view.tablet-layout .mobile-top-tabs {
+  order: 4;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px !important;
+}
+
+.main-view.tablet-layout .mobile-top-tab {
+  min-height: 36px;
+  padding: 0 8px;
+  font-size: 11px;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.10);
+}
+
+.main-view.tablet-layout #topDeptPanel.top-panel,
+.main-view.tablet-layout #topExceptionalPanel.top-panel,
+.main-view.tablet-layout #topCalendarPanel {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  order: 5;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.main-view.tablet-layout #topDeptPanel.hidden,
+.main-view.tablet-layout #topExceptionalPanel.hidden,
+.main-view.tablet-layout #topCalendarPanel.hidden {
+  display: none !important;
 }
 
 .main-view.tablet-layout #topExceptionalPanel.top-panel.expanded {
-  height: auto;
-  max-height: min(22vh, 200px);
+  max-height: var(--tablet-panel-max-h);
 }
 
 .main-view.tablet-layout #topExceptionalPanel .exceptional-list {
-  margin-top: 6px;
-}
-
-.main-view.tablet-layout #topDeptPanel.top-panel {
-  order: 3;
-  flex: 0 1 300px;
-  width: auto;
-  min-width: 240px;
-  max-width: 340px;
-  min-height: 42px;
-  height: 42px;
-  padding: 3px 5px;
-  overflow: visible;
-}
-
-.main-view.tablet-layout #topDeptPanel.top-panel.expanded {
-  height: auto;
-  max-height: min(31vh, 300px);
+  max-height: calc(var(--tablet-panel-max-h) - 42px);
+  overflow-y: auto;
+  margin-top: 0;
 }
 
 .main-view.tablet-layout #topDeptPanel .top-dept-body {
   min-height: 0;
-  overflow: visible;
-}
-
-.main-view.tablet-layout #topDeptPanel.top-panel.expanded .top-dept-body {
   overflow-y: auto;
-  max-height: min(28vh, 258px);
-  padding-bottom: 4px;
+  max-height: calc(var(--tablet-panel-max-h) + 64px);
+  padding: 8px;
 }
 
 .main-view.tablet-layout #topDeptPanel #wardSection {
@@ -1836,74 +1895,19 @@ h2 {
 }
 
 .main-view.tablet-layout #topDeptPanel #wardButtons {
-  max-height: min(19vh, 170px);
+  max-height: min(18vh, 180px);
   overflow-y: auto;
 }
 
-.main-view.tablet-layout .timeline-top-row {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(240px, 0.68fr);
-  gap: 8px;
-  height: auto;
-  min-height: 0;
-  width: min(760px, calc(100% - 24px));
-  margin: 0 auto;
-  padding: 0;
+.main-view.tablet-layout #topCalendarPanel .calendar-panel {
+  min-height: 220px;
+  max-height: min(38vh, 340px);
+  overflow: auto;
 }
 
-.main-view.tablet-layout .top-left-group {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 10px;
-  width: 100%;
-  height: auto;
-}
-
-.main-view.tablet-layout .top-building-panel,
-.main-view.tablet-layout .top-calendar-panel {
-  width: auto;
-  min-width: 0;
-  min-height: 88px;
-  height: auto;
-  padding: 5px 7px;
-}
-
-.main-view.tablet-layout .top-building-selector {
-  gap: 3px;
-}
-
-.main-view.tablet-layout .top-building-panel .building-btn {
-  min-height: 24px;
-  padding: 3px 5px;
-  font-size: 9px;
-  line-height: 1.15;
-  white-space: normal;
-}
-
-.main-view.tablet-layout .top-calendar-panel .calendar-panel {
-  min-height: 108px;
-  height: auto;
-}
-
-.main-view.tablet-layout .top-below-row {
-  height: auto;
-  min-height: 0;
-  width: calc(100% - 16px);
-  margin: 8px auto 0;
-  padding: 0 0 10px;
-}
-
-.main-view.tablet-layout .top-linked-panel {
-  width: 100%;
-  min-height: var(--tablet-link-panel-h, 168px);
-  height: var(--tablet-link-panel-h, 168px);
-}
-
-.main-view.tablet-layout .top-linked-panel .link-display {
-  min-height: 0;
-  max-height: none;
-}
-
+.main-view.tablet-layout .timeline-top-row,
+.main-view.tablet-layout .top-left-group,
+.main-view.tablet-layout .top-below-row,
 .main-view.tablet-layout .calendar-placeholder,
 .main-view.tablet-layout .panel-resize-handle {
   display: none !important;
@@ -1913,366 +1917,108 @@ h2 {
   position: relative !important;
   inset: auto !important;
   display: flex !important;
-  width: calc(100% - 16px) !important;
-  min-height: 60vh !important;
+  width: calc(100% - 18px) !important;
+  min-height: 64vh !important;
   height: auto !important;
   flex: 1 1 auto !important;
   align-self: stretch !important;
   overflow: auto !important;
   margin: 0 auto 12px !important;
-  padding: 18px 10px 12px !important;
+  padding: 14px 10px 12px !important;
   border-radius: 22px !important;
   background: rgba(255, 255, 255, 0.96) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 32px rgba(59, 130, 246, 0.12) !important;
   z-index: 0 !important;
 }
 
-.main-view.tablet-layout.tablet-landscape .top-search-box {
-  flex-basis: 280px;
-}
-
-.main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel {
-  flex-basis: 210px;
-  width: 210px;
-}
-
-.main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel {
-  flex-basis: 280px;
-}
-
-.main-view.tablet-layout.tablet-landscape .building-container {
-  min-height: 64vh !important;
-}
-
 .main-view.tablet-layout.tablet-landscape {
-  --top-control-h: 30px;
-  padding: 6px;
-  overflow: hidden;
-  background: transparent;
+  --tablet-panel-gap: 8px;
+  --tablet-panel-max-h: min(28vh, 250px);
+  --tablet-link-panel-h: 124px;
+  padding: 0 0 10px;
 }
 
 .main-view.tablet-layout.tablet-landscape .top-search-floating {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  left: auto;
-  width: auto;
-  max-width: calc(100% - 12px);
-  margin: 0;
-  gap: 2px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  backdrop-filter: none;
-  z-index: 120;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-search-tools {
-  order: 0;
-  margin-left: 0;
-  height: var(--top-control-h);
-}
-
-.main-view.tablet-layout.tablet-landscape .calendar-toggle-btn {
-  width: 28px;
-  height: var(--top-control-h);
-  border-radius: 5px;
-  box-shadow: none;
+  width: calc(100% - 20px);
+  max-width: 1180px;
+  grid-template-columns: minmax(280px, 1.15fr) minmax(320px, 0.85fr);
+  align-items: start;
+  padding: max(8px, env(safe-area-inset-top, 0px)) 10px 8px;
 }
 
 .main-view.tablet-layout.tablet-landscape .top-search-box {
-  flex: 0 0 128px;
-  width: 128px;
-  min-width: 128px;
-  min-height: var(--top-control-h);
-  height: var(--top-control-h);
-  padding: 1px 5px;
-  border-radius: 7px;
-  box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+  grid-column: 1 / 2;
+  min-height: 42px;
+  padding: 0 12px;
 }
 
-.main-view.tablet-layout.tablet-landscape .top-filter-input {
-  min-height: 26px;
-  font-size: 8px;
-  line-height: 1.2;
+.main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
+  grid-column: 2 / 3;
+  align-self: stretch;
 }
 
-.main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel {
-  flex: 0 0 116px;
-  width: 116px;
-  min-height: var(--top-control-h);
-  height: var(--top-control-h);
-  padding: 1px 4px;
+.main-view.tablet-layout.tablet-landscape .top-linked-panel,
+.main-view.tablet-layout.tablet-landscape .mobile-top-tabs,
+.main-view.tablet-layout.tablet-landscape #topDeptPanel,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
+.main-view.tablet-layout.tablet-landscape #topCalendarPanel {
+  grid-column: 1 / -1;
 }
 
-.main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel.expanded {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  width: 196px;
-  height: auto;
-  max-height: min(42vh, 280px);
-  z-index: 700;
+.main-view.tablet-layout.tablet-landscape .mobile-building-row {
+  min-height: 72px;
+  padding: 10px;
 }
 
-.main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel {
-  flex: 0 0 158px;
-  width: 158px;
-  min-width: 158px;
-  max-width: 158px;
-  min-height: var(--top-control-h);
-  height: var(--top-control-h);
-  padding: 1px 4px;
-  background: white;
-  box-shadow: 0 4px 12px rgba(102,126,234,0.2);
-}
-
-.main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel.expanded {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  width: 212px;
-  max-width: min(212px, calc(100vw - 24px));
-  height: auto;
-  max-height: min(56vh, 420px);
-  z-index: 710;
-  background: white;
-  border: 2px solid #667eea;
-  border-radius: 12px;
-  box-shadow: 0 10px 28px rgba(59, 130, 246, 0.16);
-}
-
-.main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel.expanded .top-dept-body {
-  max-height: min(52vh, 372px);
-  overflow-y: auto;
-  padding-bottom: 4px;
-}
-
-.main-view.tablet-layout.tablet-landscape .timeline-top-row {
-  display: flex;
-  gap: var(--top-gap);
-  align-items: stretch;
-  height: var(--top-row-h);
-  width: auto;
-  margin-bottom: 0;
-  padding: 0;
-  padding-right: min(270px, 31vw);
-}
-
-.main-view.tablet-layout.tablet-landscape .top-left-group {
-  display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
-  gap: var(--top-gap);
-  height: 100%;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-building-panel {
-  flex: 1 1 0;
-  width: auto;
-  min-width: 0;
-  min-height: 0;
-  height: 100%;
-  padding: 4px 6px;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-building-selector {
-  gap: 3px;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-building-panel .building-btn {
-  min-height: 24px;
-  padding: 3px 5px;
-  font-size: 8px;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-panel-header {
-  min-height: 24px;
-  padding: 2px 5px;
+.main-view.tablet-layout.tablet-landscape .mobile-building-options .building-btn {
+  min-height: 30px;
   font-size: 10px;
-  gap: 4px;
 }
 
-.main-view.tablet-layout.tablet-landscape .top-calendar-panel {
-  flex: 0 0 var(--top-calendar-w);
-  width: var(--top-calendar-w);
-  min-height: 0;
-  height: 100%;
-  padding: 4px 6px;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-calendar-panel .calendar-panel {
-  min-height: 0;
-  height: 100%;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-below-row {
-  width: auto;
-  margin: 0 0 var(--top-gap);
-  padding: 0;
-}
-
-.main-view.tablet-layout.tablet-landscape .top-linked-panel {
-  width: var(--top-linked-w);
-  min-height: var(--tablet-link-panel-h, 168px);
-  height: var(--tablet-link-panel-h, 168px);
-}
-
-.main-view.tablet-layout.tablet-landscape .building-container {
-  position: absolute !important;
-  inset: 0 !important;
-  width: auto !important;
-  min-height: 0 !important;
-  height: auto !important;
-  margin: 0 !important;
-  padding: 26px 5px 10px !important;
-  border-radius: 15px !important;
-}
-
-.main-view.tablet-layout.tablet-portrait .top-search-floating {
-  --tablet-portrait-overlay-max-h: min(42vh, 320px);
-  max-width: calc(100% - 12px);
-  gap: 6px;
-  padding: max(6px, env(safe-area-inset-top, 0px)) 6px 0;
-  overflow: visible;
-}
-
-.main-view.tablet-layout.tablet-portrait .top-search-box {
-  order: 1;
-  flex: 1 1 100%;
-  min-width: 0;
-  min-height: 40px;
-  padding: 0 10px;
-}
-
-.main-view.tablet-layout.tablet-portrait .top-search-tools {
-  display: none !important;
-}
-
-.main-view.tablet-layout.tablet-portrait .mobile-building-selectors {
-  order: 2;
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
   gap: 6px !important;
-  width: 100% !important;
 }
 
-.main-view.tablet-layout.tablet-portrait .mobile-building-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  min-height: 52px;
-  align-items: stretch;
-  gap: 4px;
-  padding: 8px 8px 7px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(239,246,255,0.98) 100%);
-  border: 1px solid rgba(191, 219, 254, 0.95);
-  border-radius: 14px;
-  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.08);
-}
-
-.main-view.tablet-layout.tablet-portrait .mobile-building-label {
-  font-size: 10px;
-  text-align: center;
-  letter-spacing: 0.02em;
-}
-
-.main-view.tablet-layout.tablet-portrait .mobile-building-options .building-btn {
+.main-view.tablet-layout.tablet-landscape .mobile-top-tab {
   min-height: 34px;
   font-size: 10px;
 }
 
-.main-view.tablet-layout.tablet-portrait .top-linked-panel {
-  order: 3;
-  width: 100%;
-  min-height: var(--tablet-link-panel-h, 112px);
-  height: var(--tablet-link-panel-h, 112px);
-  margin-top: 2px;
-  border-radius: 18px;
-  box-shadow: 0 14px 28px rgba(59, 130, 246, 0.12);
+.main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
+  min-height: 200px;
+  max-height: min(34vh, 280px);
 }
 
-.main-view.tablet-layout.tablet-portrait .mobile-top-tabs {
-  order: 4;
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px !important;
-  width: 100%;
+.main-view.tablet-layout.tablet-landscape .building-container {
+  min-height: 66vh !important;
+  padding: 12px 10px 10px !important;
 }
 
-.main-view.tablet-layout.tablet-portrait .mobile-top-tab {
-  min-height: 32px;
-  font-size: 10px;
-  padding: 0 4px;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.10);
+.main-view.tablet-layout.tablet-portrait {
+  --tablet-panel-max-h: min(36vh, 340px);
+  --tablet-link-panel-h: 144px;
+  padding: 0 0 12px;
 }
 
-.main-view.tablet-layout.tablet-portrait #topDeptPanel.top-panel,
-.main-view.tablet-layout.tablet-portrait #topExceptionalPanel.top-panel,
-.main-view.tablet-layout.tablet-portrait #topCalendarPanel {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  right: 0;
-  width: auto;
-  max-width: none;
-  height: auto;
-  min-height: 0;
-  max-height: var(--tablet-portrait-overlay-max-h);
-  z-index: 710;
-  background: white;
-  border: 1px solid #c7d2fe;
-  border-radius: 16px;
-  box-shadow: 0 14px 32px rgba(59, 130, 246, 0.16);
-  overflow: hidden;
+.main-view.tablet-layout.tablet-portrait .top-search-floating {
+  width: calc(100% - 14px);
+  max-width: 100%;
+  padding: max(8px, env(safe-area-inset-top, 0px)) 7px 8px;
 }
 
-.main-view.tablet-layout.tablet-portrait #topDeptPanel.hidden,
-.main-view.tablet-layout.tablet-portrait #topExceptionalPanel.hidden,
-.main-view.tablet-layout.tablet-portrait #topCalendarPanel.hidden {
-  display: none !important;
-}
-
-.main-view.tablet-layout.tablet-portrait #topDeptPanel .top-dept-body {
-  max-height: calc(var(--tablet-portrait-overlay-max-h) - 18px);
-  overflow-y: auto;
-  padding: 6px;
-}
-
-.main-view.tablet-layout.tablet-portrait .timeline-top-row {
-  display: none !important;
-}
-
-.main-view.tablet-layout.tablet-portrait .top-left-group {
-  display: none !important;
-}
-
-.main-view.tablet-layout.tablet-portrait #topExceptionalPanel .exceptional-list {
-  max-height: calc(var(--tablet-portrait-overlay-max-h) - 14px);
-  overflow-y: auto;
+.main-view.tablet-layout.tablet-portrait .mobile-building-row {
+  min-height: 78px;
 }
 
 .main-view.tablet-layout.tablet-portrait #topCalendarPanel .calendar-panel {
-  min-height: min(220px, var(--tablet-portrait-overlay-max-h));
-  max-height: var(--tablet-portrait-overlay-max-h);
-  overflow: hidden;
-}
-
-.main-view.tablet-layout.tablet-portrait .top-below-row {
-  width: calc(100% - 12px);
-  margin: 4px auto 0;
-  padding: 0 0 8px;
-  display: none;
+  min-height: 230px;
+  max-height: min(40vh, 360px);
 }
 
 .main-view.tablet-layout.tablet-portrait .building-container {
-  width: calc(100% - 12px) !important;
+  width: calc(100% - 14px) !important;
   min-height: 68vh !important;
-  margin: 0 auto 10px !important;
-  padding: 10px 6px 8px !important;
+  padding: 12px 8px 10px !important;
 }
 
 .main-view.phone-layout .mobile-top-tabs {
@@ -6902,190 +6648,89 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 /* Final iPad overrides */
-#twintower-app .main-view.tablet-layout.tablet-landscape {
-  --top-control-h: 28px !important;
+#twintower-app .main-view.tablet-layout {
+  --tablet-panel-gap: 10px !important;
+  --tablet-card-radius: 18px !important;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 22%, #ffffff 100%) !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating {
-  position: absolute !important;
-  top: 6px !important;
-  right: 6px !important;
-  left: auto !important;
-  width: auto !important;
-  max-width: calc(100% - 12px) !important;
-  gap: 2px !important;
-  padding: 0 !important;
-  flex-wrap: nowrap !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-  z-index: 500 !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-tools {
-  display: flex !important;
-  height: var(--top-control-h) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .calendar-toggle-btn {
-  width: 26px !important;
-  height: var(--top-control-h) !important;
-  font-size: 14px !important;
-  border-radius: 5px !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box {
-  flex: 0 0 118px !important;
-  width: 118px !important;
-  min-width: 118px !important;
-  height: var(--top-control-h) !important;
-  min-height: var(--top-control-h) !important;
-  padding: 1px 4px !important;
-  border-radius: 7px !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-filter-input {
-  min-height: 24px !important;
-  font-size: 8px !important;
-  padding: 2px 4px !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel {
-  flex: 0 0 104px !important;
-  width: 104px !important;
-  min-width: 104px !important;
-  height: var(--top-control-h) !important;
-  min-height: var(--top-control-h) !important;
-  padding: 1px 3px !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel {
-  flex: 0 0 142px !important;
-  width: 142px !important;
-  min-width: 142px !important;
-  max-width: 142px !important;
-  height: var(--top-control-h) !important;
-  min-height: var(--top-control-h) !important;
-  padding: 1px 3px !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel.expanded {
-  width: 188px !important;
-  max-height: min(40vh, 260px) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel.expanded {
-  width: 206px !important;
-  max-width: min(206px, calc(100vw - 18px)) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .top-panel-header {
-  min-height: 22px !important;
-  padding: 1px 4px !important;
-  font-size: 9px !important;
-  line-height: 1.1 !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-landscape .timeline-top-row {
-  padding-right: min(248px, 28vw) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait .top-search-floating {
+#twintower-app .main-view.tablet-layout .top-search-floating {
   position: sticky !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   z-index: 650 !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  padding: max(6px, env(safe-area-inset-top, 0px)) 6px 4px !important;
-  gap: 6px !important;
-  display: flex !important;
-  flex-wrap: wrap !important;
-  overflow: visible !important;
-  background: linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.96) 100%) !important;
-  border-bottom: 1px solid rgba(191, 219, 254, 0.9) !important;
-  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.08) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait .top-search-box {
-  order: 1 !important;
-  flex: 1 1 100% !important;
-  width: 100% !important;
-  min-width: 0 !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-selectors {
-  order: 2 !important;
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: var(--tablet-panel-gap) !important;
+  background: linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%) !important;
+  border-bottom: 1px solid rgba(199, 210, 254, 0.82) !important;
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.10) !important;
+}
+
+#twintower-app .main-view.tablet-layout .top-search-tools,
+#twintower-app .main-view.tablet-layout .timeline-top-row,
+#twintower-app .main-view.tablet-layout .top-left-group,
+#twintower-app .main-view.tablet-layout .top-below-row,
+#twintower-app .main-view.tablet-layout .calendar-placeholder,
+#twintower-app .main-view.tablet-layout .panel-resize-handle {
+  display: none !important;
+}
+
+#twintower-app .main-view.tablet-layout .mobile-building-selectors,
+#twintower-app .main-view.tablet-layout .mobile-top-tabs,
+#twintower-app .main-view.tablet-layout #topDeptPanel,
+#twintower-app .main-view.tablet-layout #topExceptionalPanel,
+#twintower-app .main-view.tablet-layout #topCalendarPanel,
+#twintower-app .main-view.tablet-layout .top-linked-panel {
   width: 100% !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-portrait .top-linked-panel {
-  order: 3 !important;
-  width: 100% !important;
-  height: var(--tablet-link-panel-h, 112px) !important;
-  min-height: var(--tablet-link-panel-h, 112px) !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait .mobile-top-tabs {
-  order: 4 !important;
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  width: 100% !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel,
-#twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel,
-#twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel {
+#twintower-app .main-view.tablet-layout #topDeptPanel,
+#twintower-app .main-view.tablet-layout #topExceptionalPanel,
+#twintower-app .main-view.tablet-layout #topCalendarPanel {
   position: relative !important;
   top: auto !important;
   left: auto !important;
   right: auto !important;
-  order: 5 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-height: 0 !important;
-  height: auto !important;
   margin: 0 !important;
-  border-radius: 16px !important;
-  overflow: hidden !important;
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.12) !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel.hidden,
-#twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel.hidden,
-#twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel.hidden {
-  display: none !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait #topDeptPanel .top-dept-body {
-  max-height: min(34vh, 300px) !important;
-  overflow-y: auto !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait #topExceptionalPanel .exceptional-list {
-  max-height: min(30vh, 250px) !important;
-  overflow-y: auto !important;
-}
-
-#twintower-app .main-view.tablet-layout.tablet-portrait #topCalendarPanel .calendar-panel {
-  min-height: 220px !important;
-  max-height: min(38vh, 320px) !important;
+#twintower-app .main-view.tablet-layout .building-container {
+  position: relative !important;
+  inset: auto !important;
+  display: flex !important;
+  width: calc(100% - 18px) !important;
+  min-height: 64vh !important;
+  height: auto !important;
   overflow: auto !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-portrait .timeline-top-row,
-#twintower-app .main-view.tablet-layout.tablet-portrait .top-left-group,
-#twintower-app .main-view.tablet-layout.tablet-portrait .top-below-row {
-  display: none !important;
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating {
+  width: calc(100% - 20px) !important;
+  max-width: 1180px !important;
+  grid-template-columns: minmax(280px, 1.15fr) minmax(320px, 0.85fr) !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-portrait .building-container {
-  width: calc(100% - 12px) !important;
-  min-height: 68vh !important;
-  padding: 10px 6px 8px !important;
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box {
+  grid-column: 1 / 2 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
+  grid-column: 2 / 3 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .top-linked-panel,
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tabs,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
+  grid-column: 1 / -1 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait .top-search-floating {
+  width: calc(100% - 14px) !important;
+  max-width: 100% !important;
 }
 </style>
 </head>
@@ -19998,6 +19643,13 @@ function setCalendarPanelVisible(visible) {
   const wrap = document.getElementById('topCalendarPanel');
   const panel = document.getElementById('calendarPanel');
   const btn = document.getElementById('calendarToggleBtn');
+  if (isTabletLayoutMode()) {
+    if (isCalendarPanelVisible) {
+      currentMobileTopPanel = 'calendar';
+    } else if (currentMobileTopPanel === 'calendar') {
+      currentMobileTopPanel = 'dept';
+    }
+  }
   if (wrap) wrap.classList.toggle('hidden', !isCalendarPanelVisible);
   if (panel) panel.classList.toggle('hidden', !isCalendarPanelVisible);
   if (wrap) wrap.classList.toggle('expanded', isCalendarPanelVisible);
@@ -20098,21 +19750,6 @@ function isPhoneLayoutMode() {
   return minSide > 0 && minSide <= 600 && maxSide <= 960;
 }
 
-function isTabletPortraitPhoneUiMode() {
-  if (!isTabletLayoutMode()) return false;
-  const w = window.innerWidth || 0;
-  const h = window.innerHeight || 0;
-  return h > w;
-}
-
-function isPhoneLikeLayoutMode() {
-  return isPhoneLayoutMode() || isTabletPortraitPhoneUiMode();
-}
-
-function isTabletPortraitPhoneOverlayMode() {
-  return isTabletPortraitPhoneUiMode();
-}
-
 function isLikelyIpadDevice() {
   const ua = navigator.userAgent || '';
   const platform = navigator.platform || '';
@@ -20129,13 +19766,17 @@ function isTabletLayoutMode() {
   return isLikelyIpadDevice() && minSide >= 744 && maxSide <= 1400;
 }
 
+function isCompactLayoutMode() {
+  return isPhoneLayoutMode() || isTabletLayoutMode();
+}
+
 function getDefaultPanOffsets() {
   if (isPhoneLayoutMode()) {
     return { x: 5, y: basePanY + 12 };
   }
   if (isTabletLayoutMode()) {
     const landscape = (window.innerWidth || 0) >= (window.innerHeight || 0);
-    return { x: landscape ? basePanX - 110 : basePanX + 4, y: basePanY + 6 };
+    return { x: landscape ? basePanX - 168 : basePanX - 18, y: basePanY + 8 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -20222,14 +19863,14 @@ function syncMobileDeptSummary() {
   const name = document.getElementById('mobileDeptName');
   const wardSection = document.getElementById('wardSection');
   if (!panel || !summary || !name) return;
-  const showSummary = isPhoneLikeLayoutMode() && !!currentDept && wardSection && wardSection.style.display !== 'none';
+  const showSummary = (isPhoneLayoutMode() || isTabletLayoutMode()) && !!currentDept && wardSection && wardSection.style.display !== 'none';
   panel.classList.toggle('mobile-subdept-mode', !!showSummary);
   summary.classList.toggle('show', !!showSummary);
   name.textContent = currentDept ? String(currentDept) : '';
 }
 
 function clearMobileDeptSelection() {
-  if (!isPhoneLikeLayoutMode()) return;
+  if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
   currentDept = null;
   const wardSection = document.getElementById('wardSection');
   const wardButtons = document.getElementById('wardButtons');
@@ -20254,7 +19895,7 @@ function positionMobileDeptSearchResults() {
   const resultsEl = document.getElementById('deptSearchResults');
   const searchBox = document.querySelector('.top-search-box');
   if (!resultsEl) return;
-  if (!isPhoneLikeLayoutMode()) {
+  if (!isPhoneLayoutMode() && !isTabletLayoutMode()) {
     resultsEl.style.position = '';
     resultsEl.style.top = '';
     resultsEl.style.left = '';
@@ -20299,7 +19940,7 @@ function dismissDeptFilterKeyboard(input) {
 }
 
 function focusDeptFilterFromUserGesture() {
-  if (!isPhoneLikeLayoutMode()) return;
+  if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
   const input = document.getElementById('deptFilter');
   if (!input) return;
   const focusInput = () => {
@@ -20318,9 +19959,13 @@ function focusDeptFilterFromUserGesture() {
 }
 
 function switchMobileTopPanel(panel) {
-  if (!isPhoneLikeLayoutMode()) return;
+  if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
   const next = String(panel || '');
-  currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
+  if (isTabletLayoutMode()) {
+    currentMobileTopPanel = next || 'dept';
+  } else {
+    currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
+  }
   syncPhoneLayoutPanels();
 }
 
@@ -20355,7 +20000,7 @@ function dockCalendarPanel() {
 }
 
 function syncMobileBuildingSelectorLabels() {
-  const isPhoneLayout = isPhoneLikeLayoutMode();
+  const isCompactLayout = isPhoneLayoutMode() || isTabletLayoutMode();
   const leftLabels = [
     ['0', 'MCBTC', 'MCBTC'],
     ['1', 'CLINICAL SCIENCES BUILDING', 'CSB'],
@@ -20365,7 +20010,7 @@ function syncMobileBuildingSelectorLabels() {
   leftLabels.forEach(([idx, full, short]) => {
     const btn = document.querySelector(`#leftBuildingSelector .building-btn[data-building-index="${idx}"]`);
     if (!btn) return;
-    btn.textContent = isPhoneLayout ? short : full;
+    btn.textContent = isCompactLayout ? short : full;
     btn.title = full;
     const mobileBtn = document.querySelector(`#mobileLeftBuildingSelector .building-btn[data-mobile-left-building="${idx}"]`);
     if (mobileBtn) {
@@ -20380,7 +20025,7 @@ function syncMobileBuildingSelectorLabels() {
   rightLabels.forEach(([idx, full, short]) => {
     const btn = document.querySelector(`#rightBuildingSelector .building-btn[data-right-building="${idx}"]`);
     if (!btn) return;
-    btn.textContent = isPhoneLayout ? short : full;
+    btn.textContent = isCompactLayout ? short : full;
     btn.title = full;
     const mobileBtn = document.querySelector(`#mobileRightBuildingSelector .building-btn[data-mobile-right-building="${idx}"]`);
     if (mobileBtn) {
@@ -20467,41 +20112,24 @@ function stabilizePhoneLayoutVisibility() {
   }
 }
 
-function updatePhoneLikeOverlaySizing() {
-  const mainView = document.querySelector('.main-view');
-  const stack = document.querySelector('.top-search-floating');
-  if (!mainView || !stack) return;
-  if (!isTabletPortraitPhoneOverlayMode()) {
-    mainView.style.removeProperty('--phone-overlay-max-h');
-    mainView.style.removeProperty('--tablet-portrait-overlay-max-h');
-    return;
-  }
-  const rect = stack.getBoundingClientRect();
-  const viewportH = window.innerHeight || document.documentElement.clientHeight || 0;
-  const available = Math.floor(viewportH - rect.bottom - 10);
-  const capped = Math.max(140, Math.min(available, Math.floor(viewportH * 0.58)));
-  mainView.style.setProperty('--phone-overlay-max-h', `${capped}px`);
-  mainView.style.setProperty('--tablet-portrait-overlay-max-h', `${capped}px`);
-}
-
 function syncPhoneLayoutPanels() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
   const phoneLayout = mainView.classList.contains('phone-layout');
   const tabletLayout = mainView.classList.contains('tablet-layout');
   const tabletLandscape = tabletLayout && mainView.classList.contains('tablet-landscape');
+  const searchBox = document.querySelector('.top-search-box');
+  const tabs = document.getElementById('mobileTopTabs');
+  const mobileSelectors = document.getElementById('mobileBuildingSelectors');
+  const deptPanel = document.getElementById('topDeptPanel');
+  const exceptionalPanel = document.getElementById('topExceptionalPanel');
+  const wrap = document.getElementById('topCalendarPanel');
+  const panel = document.getElementById('calendarPanel');
+  const linked = document.querySelector('.top-linked-panel');
+  const stack = document.querySelector('.top-search-floating');
   if (phoneLayout) {
     dockWardConnectionPanel();
     dockCalendarPanel();
-    const stack = document.querySelector('.top-search-floating');
-    const searchBox = document.querySelector('.top-search-box');
-    const mobileSelectors = document.getElementById('mobileBuildingSelectors');
-    const tabs = document.getElementById('mobileTopTabs');
-    const deptPanel = document.getElementById('topDeptPanel');
-    const exceptionalPanel = document.getElementById('topExceptionalPanel');
-    const wrap = document.getElementById('topCalendarPanel');
-    const panel = document.getElementById('calendarPanel');
-    const linked = document.querySelector('.top-linked-panel');
     if (stack) {
       ensurePanelPlaceholder('calendarMobileRestore', wrap);
       ensurePanelPlaceholder('linkedMobileRestore', linked);
@@ -20539,39 +20167,32 @@ function syncPhoneLayoutPanels() {
     }
     isDeptContentCollapsed = false;
     syncDeptPanelCollapsedState();
-    if (exceptionalPanel) exceptionalPanel.classList.toggle('expanded', currentMobileTopPanel === 'exceptional');
+    isExceptionalPanelExpanded = currentMobileTopPanel === 'exceptional';
+    syncExceptionalPanelState();
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
-    updatePhoneLikeOverlaySizing();
     return;
   }
-  restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
-  restorePanelFromPlaceholder('linkedMobileRestore', document.querySelector('.top-linked-panel'));
-  restorePanelFromPlaceholder('linkedTabletPortraitRestore', document.querySelector('.top-linked-panel'));
-  restorePanelFromPlaceholder('deptTabletPortraitRestore', document.getElementById('topDeptPanel'));
-  restorePanelFromPlaceholder('exceptionTabletPortraitRestore', document.getElementById('topExceptionalPanel'));
-  restorePanelFromPlaceholder('calendarTabletPortraitRestore', document.getElementById('topCalendarPanel'));
+  restorePanelFromPlaceholder('calendarMobileRestore', wrap);
+  restorePanelFromPlaceholder('linkedMobileRestore', linked);
+  restorePanelFromPlaceholder('linkedTabletDeckRestore', linked);
+  restorePanelFromPlaceholder('deptTabletDeckRestore', deptPanel);
+  restorePanelFromPlaceholder('exceptionTabletDeckRestore', exceptionalPanel);
+  restorePanelFromPlaceholder('calendarTabletDeckRestore', wrap);
   syncMobileBuildingSelectorLabels();
   syncAllBuildingSelectorStates();
   stabilizePhoneLayoutVisibility();
-  const deptPanel = document.getElementById('topDeptPanel');
-  const exceptionalPanel = document.getElementById('topExceptionalPanel');
-  const wrap = document.getElementById('topCalendarPanel');
-  const panel = document.getElementById('calendarPanel');
-  const linked = document.querySelector('.top-linked-panel');
   if (linked) linked.style.height = '';
+  if (linked) linked.style.removeProperty('display');
   mainView.style.removeProperty('--mobile-link-panel-h');
-  if (tabletLayout && !tabletLandscape) {
-    const tabs = document.getElementById('mobileTopTabs');
-    const mobileSelectors = document.getElementById('mobileBuildingSelectors');
-    const topLeftGroup = document.querySelector('.top-left-group');
-    const stack = document.querySelector('.top-search-floating');
+  if (tabletLayout) {
     if (stack) {
-      ensurePanelPlaceholder('linkedTabletPortraitRestore', linked);
-      ensurePanelPlaceholder('deptTabletPortraitRestore', deptPanel);
-      ensurePanelPlaceholder('exceptionTabletPortraitRestore', exceptionalPanel);
-      ensurePanelPlaceholder('calendarTabletPortraitRestore', wrap);
+      ensurePanelPlaceholder('linkedTabletDeckRestore', linked);
+      ensurePanelPlaceholder('deptTabletDeckRestore', deptPanel);
+      ensurePanelPlaceholder('exceptionTabletDeckRestore', exceptionalPanel);
+      ensurePanelPlaceholder('calendarTabletDeckRestore', wrap);
+      if (searchBox) stack.appendChild(searchBox);
       if (mobileSelectors) stack.appendChild(mobileSelectors);
       if (linked) {
         linked.classList.remove('ward-floating');
@@ -20594,6 +20215,9 @@ function syncPhoneLayoutPanels() {
         stack.appendChild(wrap);
       }
     }
+    if (currentMobileTopPanel !== 'dept' && currentMobileTopPanel !== 'exceptional' && currentMobileTopPanel !== 'calendar') {
+      currentMobileTopPanel = 'dept';
+    }
     if (tabs) {
       tabs.style.setProperty('display', 'grid', 'important');
       tabs.querySelectorAll('.mobile-top-tab').forEach((btn) => {
@@ -20601,75 +20225,73 @@ function syncPhoneLayoutPanels() {
       });
     }
     if (mobileSelectors) mobileSelectors.style.setProperty('display', 'grid', 'important');
-    if (topLeftGroup) topLeftGroup.style.setProperty('display', 'none', 'important');
     if (linked) {
       const fixedHeight = getTabletConnectionPanelFixedHeight();
       mainView.style.setProperty('--tablet-link-panel-h', `${fixedHeight}px`);
       linked.style.height = `${fixedHeight}px`;
+      linked.style.setProperty('display', 'block', 'important');
     }
     if (deptPanel) {
       const show = currentMobileTopPanel === 'dept';
       deptPanel.classList.toggle('hidden', !show);
       deptPanel.classList.toggle('expanded', !!show);
+      deptPanel.style.setProperty('display', show ? 'block' : 'none', 'important');
     }
     if (exceptionalPanel) {
       const show = currentMobileTopPanel === 'exceptional';
       exceptionalPanel.classList.toggle('hidden', !show);
-      exceptionalPanel.classList.toggle('expanded', !!show);
+      exceptionalPanel.style.setProperty('display', show ? 'block' : 'none', 'important');
     }
     if (wrap) {
       const show = currentMobileTopPanel === 'calendar';
       wrap.classList.toggle('hidden', !show);
       wrap.classList.toggle('expanded', !!show);
+      wrap.style.setProperty('display', show ? 'block' : 'none', 'important');
     }
     isCalendarPanelVisible = currentMobileTopPanel === 'calendar';
-    if (panel) panel.classList.toggle('hidden', !isCalendarPanelVisible);
-    isDeptContentCollapsed = currentMobileTopPanel !== 'dept';
+    if (panel) {
+      panel.classList.toggle('hidden', !isCalendarPanelVisible);
+      panel.style.setProperty('display', isCalendarPanelVisible ? 'flex' : 'none', 'important');
+    }
+    isExceptionalPanelExpanded = currentMobileTopPanel === 'exceptional';
+    syncExceptionalPanelState();
+    isDeptContentCollapsed = false;
     syncDeptPanelCollapsedState();
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
-    updatePhoneLikeOverlaySizing();
     return;
   }
   currentMobileTopPanel = 'none';
-  if (tabletLayout) {
-    dockWardConnectionPanel();
-    dockCalendarPanel();
-    if (deptPanel) deptPanel.classList.remove('hidden', 'mobile-subdept-mode');
+  mainView.style.removeProperty('--tablet-link-panel-h');
+  if (mobileSelectors) mobileSelectors.style.display = '';
+  if (tabs) tabs.style.display = '';
+  if (deptPanel) {
+    deptPanel.classList.remove('hidden', 'mobile-subdept-mode');
+    deptPanel.style.display = '';
+  }
+  if (deptPanel) {
     if (!currentDept) {
       isDeptContentCollapsed = true;
       syncDeptPanelCollapsedState();
     }
-    if (exceptionalPanel) {
-      exceptionalPanel.classList.remove('hidden');
-      syncExceptionalPanelState();
-    }
-    if (wrap) {
-      wrap.classList.toggle('hidden', !isCalendarPanelVisible);
-      wrap.classList.toggle('expanded', !!isCalendarPanelVisible);
-    }
-    if (panel) panel.classList.toggle('hidden', !isCalendarPanelVisible);
-    if (!tabletLandscape) {
-      if (exceptionalPanel) exceptionalPanel.classList.remove('expanded');
-    }
-    updateDeptListVisibility(currentDeptSide);
-    populateDeptList(currentDeptSide);
-    syncMobileDeptSummary();
-    updatePhoneLikeOverlaySizing();
-    return;
-  }
-  if (deptPanel) {
-    deptPanel.classList.remove('hidden', 'mobile-subdept-mode');
   }
   if (exceptionalPanel) {
     exceptionalPanel.classList.remove('hidden');
-    syncExceptionalPanelState();
+    exceptionalPanel.style.display = '';
   }
+  if (wrap) {
+    wrap.classList.toggle('hidden', !isCalendarPanelVisible);
+    wrap.classList.toggle('expanded', !!isCalendarPanelVisible);
+    wrap.style.display = '';
+  }
+  if (panel) panel.style.display = '';
+  dockWardConnectionPanel();
+  dockCalendarPanel();
+  syncExceptionalPanelState();
   updateDeptListVisibility(currentDeptSide);
   populateDeptList(currentDeptSide);
   syncMobileDeptSummary();
-  updatePhoneLikeOverlaySizing();
   enableWardConnectionDrag();
   if (isCalendarPanelVisible) {
     enableCalendarResize();
@@ -22263,7 +21885,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchBox = document.querySelector('.top-search-box');
   if (searchBox && deptFilter) {
     const focusFromTap = (e) => {
-      if (!isPhoneLikeLayoutMode()) return;
+      if (!isCompactLayoutMode()) return;
       if (e && e.target && e.target.closest && e.target.closest('.dept-search-results')) return;
       focusDeptFilterFromUserGesture();
     };
@@ -22646,7 +22268,7 @@ function fitBuildingToViewport(options = {}) {
   const building = document.getElementById('building');
   if (!container || !building) return;
   const preserveView = !!options.preserveView;
-  const phoneLayout = isPhoneLikeLayoutMode();
+  const compactLayout = isCompactLayoutMode();
   const zooming = isZoomInteractionActive();
   const availW = container.clientWidth - 8;
   const availH = container.clientHeight - 8;
@@ -22676,9 +22298,9 @@ function fitBuildingToViewport(options = {}) {
   forceCrispText();
   const scaledActualW = building.getBoundingClientRect().width;
   const fits = scaledActualW <= container.clientWidth + 0.5;
-  container.style.justifyContent = (phoneLayout || fits) ? 'flex-start' : 'center';
+  container.style.justifyContent = (compactLayout || fits) ? 'flex-start' : 'center';
   if (fits) {
-    if (phoneLayout) {
+    if (compactLayout) {
       if (!preserveView && !zooming) {
         requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
       }
@@ -22690,7 +22312,7 @@ function fitBuildingToViewport(options = {}) {
     }
     return;
   }
-  if (phoneLayout) {
+  if (compactLayout) {
     if (!preserveView && !zooming) {
       requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
     }
@@ -22703,7 +22325,7 @@ function fitBuildingToViewport(options = {}) {
 }
 
 function alignToReference() {
-  if (isPhoneLikeLayoutMode()) return;
+  if (isCompactLayoutMode()) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
   const topBelowRow = document.querySelector('.top-below-row');
@@ -22735,7 +22357,7 @@ function alignToReference() {
 }
 
 function alignMcbtcToReference() {
-  if (isPhoneLikeLayoutMode()) return;
+  if (isCompactLayoutMode()) return;
   if (currentLeftBuilding !== 0) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
@@ -22770,7 +22392,7 @@ function alignMcbtcToReference() {
 }
 
 function alignBuildingToReference() {
-  if (isPhoneLikeLayoutMode()) return;
+  if (isCompactLayoutMode()) return;
   if (currentLeftBuilding !== 1) return;
   const container = document.getElementById('buildingContainer');
   const topBelowRow = document.querySelector('.top-below-row');
@@ -22836,7 +22458,7 @@ function getCenteredTextStartX(el) {
 }
 
 function alignPhoneBuildingToExceptionalTab() {
-  if (!isPhoneLikeLayoutMode()) return;
+  if (!isCompactLayoutMode()) return;
   if (isZoomInteractionActive()) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
