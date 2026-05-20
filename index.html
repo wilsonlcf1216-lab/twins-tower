@@ -1945,6 +1945,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape {
+  --top-control-h: 34px;
   padding: 6px;
   overflow: hidden;
   background: transparent;
@@ -1981,9 +1982,9 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .top-search-box {
-  flex: 0 0 180px;
-  width: 180px;
-  min-width: 180px;
+  flex: 0 0 160px;
+  width: 160px;
+  min-width: 160px;
   min-height: var(--top-control-h);
   height: var(--top-control-h);
   padding: 2px 8px;
@@ -1998,8 +1999,8 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel.top-panel {
-  flex: 0 0 168px;
-  width: 168px;
+  flex: 0 0 150px;
+  width: 150px;
   min-height: var(--top-control-h);
   height: var(--top-control-h);
   padding: 2px 6px;
@@ -2016,10 +2017,10 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel.top-panel {
-  flex: 0 0 246px;
-  width: 246px;
-  min-width: 246px;
-  max-width: 246px;
+  flex: 0 0 220px;
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
   min-height: var(--top-control-h);
   height: var(--top-control-h);
   padding: 2px 4px;
@@ -2031,8 +2032,8 @@ h2 {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
-  width: 300px;
-  max-width: min(300px, calc(100vw - 24px));
+  width: 272px;
+  max-width: min(272px, calc(100vw - 24px));
   height: auto;
   max-height: min(56vh, 420px);
   z-index: 710;
@@ -2056,7 +2057,7 @@ h2 {
   width: auto;
   margin-bottom: 0;
   padding: 0;
-  padding-right: min(430px, 44vw);
+  padding-right: min(372px, 40vw);
 }
 
 .main-view.tablet-layout.tablet-landscape .top-left-group {
@@ -2754,7 +2755,7 @@ h2 {
 .top-dept-body {
   flex: 1;
   min-height: 0;
-  overflow: visible;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -2769,6 +2770,7 @@ h2 {
 
 #topDeptPanel.top-panel.expanded {
   height: auto;
+  max-height: min(68vh, 520px);
 }
 
 .top-filter-input {
@@ -3079,14 +3081,19 @@ h2 {
 }
 
 .top-dept-panel #wardButtons {
-  max-height: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: min(44vh, 340px);
   overflow-x: hidden;
   overflow-y: auto;
+  scrollbar-gutter: stable;
+  scroll-padding-bottom: 16px;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
   gap: 4px;
+  padding-bottom: 16px;
 }
 
 .top-dept-panel .ward-building-row {
@@ -3420,14 +3427,16 @@ h2 {
 .dept-search-results::-webkit-scrollbar,
 .exceptional-list::-webkit-scrollbar,
 .calendar-agenda::-webkit-scrollbar,
-.calendar-right::-webkit-scrollbar {
+.calendar-right::-webkit-scrollbar,
+.top-dept-panel #wardButtons::-webkit-scrollbar {
   width: 10px;
 }
 
 .dept-search-results::-webkit-scrollbar-track,
 .exceptional-list::-webkit-scrollbar-track,
 .calendar-agenda::-webkit-scrollbar-track,
-.calendar-right::-webkit-scrollbar-track {
+.calendar-right::-webkit-scrollbar-track,
+.top-dept-panel #wardButtons::-webkit-scrollbar-track {
   background: rgba(102,126,234,0.08);
   border-radius: 999px;
 }
@@ -3435,7 +3444,8 @@ h2 {
 .dept-search-results::-webkit-scrollbar-thumb,
 .exceptional-list::-webkit-scrollbar-thumb,
 .calendar-agenda::-webkit-scrollbar-thumb,
-.calendar-right::-webkit-scrollbar-thumb {
+.calendar-right::-webkit-scrollbar-thumb,
+.top-dept-panel #wardButtons::-webkit-scrollbar-thumb {
   background: rgba(102,126,234,0.45);
   border-radius: 999px;
   border: 2px solid transparent;
@@ -3445,8 +3455,9 @@ h2 {
 .dept-search-results,
 .exceptional-list,
 .calendar-agenda,
-.calendar-right {
-  scrollbar-width: thin;
+.calendar-right,
+.top-dept-panel #wardButtons {
+  scrollbar-width: auto;
   scrollbar-color: rgba(102,126,234,0.45) rgba(102,126,234,0.08);
 }
 
@@ -6591,6 +6602,80 @@ body.phone-layout-active .private-ward-card-body {
   max-height: min(46vh, 360px);
   overflow-y: auto;
 }
+
+.main-view.tablet-layout.tablet-portrait.phone-layout {
+  --top-control-h: 36px;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .top-search-floating {
+  gap: 6px !important;
+  padding: 6px 6px 0 !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .top-search-box {
+  min-height: 40px !important;
+  padding: 0 10px !important;
+  border-radius: 14px !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .top-filter-input {
+  min-height: 36px !important;
+  font-size: 14px !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .top-search-box .dept-search-results {
+  max-height: min(32vh, 260px) !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .top-linked-panel {
+  height: 116px !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .mobile-building-selectors {
+  gap: 6px !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .mobile-building-row {
+  grid-template-columns: 72px minmax(0, 1fr);
+  min-height: 36px;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .mobile-building-label {
+  font-size: 10px;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .mobile-building-options .building-btn {
+  min-height: 36px;
+  font-size: 10px;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .mobile-top-tabs {
+  gap: 4px !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .mobile-top-tab {
+  min-height: 30px;
+  font-size: 10px;
+  padding: 0 3px;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout #topDeptPanel .top-dept-body {
+  max-height: min(20vh, 156px) !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout #topExceptionalPanel .exceptional-list {
+  max-height: min(18vh, 132px) !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout #topCalendarPanel .calendar-panel {
+  min-height: 188px;
+  max-height: min(22vh, 188px) !important;
+}
+
+.main-view.tablet-layout.tablet-portrait.phone-layout .building-container {
+  min-height: 70vh !important;
+  padding: 12px 5px 8px !important;
+}
 }
 /* Building Themes & Borders */
 /* .theme-ipeb .space { background-color: var(--color-ipeb); border-color: #ddd; } */
@@ -7027,15 +7112,15 @@ MCBTC|B01|2|Tunnel|Tunnel||||
 CSB|11|1|Hospital Adminstration Office|Hospital Administration Offices|Neutral||Admin|
 CSB|10|1|CUHK Clinical Research Centre|CUHK Clinical Research Centre|Neutral||CUHK|
 CSB|9|1|Dept of Medicine & Therapeutics Faculty of Medicine, CUHK|Dept of M&T, CUHK|Neutral||CUHK|
-CSB|8|1|Dept of M&T|Dept of M&T|Clinical||M&T|
-CSB|8|1|Dept of M&T|Dept of M&T|Neutral||M&T|
+CSB|8|1|Dept of M&T|Dept of M&T|Clinical|Day/Special Area|M&T|
+CSB|8|1|Dept of M&T|Dept of M&T|Neutral||CUHK|
 CSB|8|2|Special Medical Clinic|Special Medical Clinic|Clinical|Day/Special Area|M&T|
 CSB|8|3|Clinical Research Management Office|CRMO|Neutral||CUHK|
 CSB|8|4|Phase 1 Clinical Trial Centre|Clinical Trial Centre|Neutral||CUHK|
 CSB|8|5|Clinical Research Ethics Committee|CREC|Neutral||CUHK|
 CSB|7|1|CUHK Clinical Research Centre|CUHK Clinical Research Centre|Neutral||CUHK|
 CSB|6|1|Dept of Paediatrics|Dept of PAED|Clinical|Day/Special Area|PAED|
-CSB|6|1|Dept of Paediatrics|Dept of PAED|Clinical||CUHK|
+CSB|6|1|Dept of Paediatrics|Dept of PAED|Neutral||CUHK|
 CSB|6|2|Dept of Otorhinolaryngology, Head & Neck Surgery, CUHK|Dept of Otorhinolaryngology, Head & Neck Surgery, CUHK|Neutral||CUHK|
 CSB|5|1|Dept of Orthopaedics & Traumatology|Dept of O&T|Clinical|Day/Special Area|ORT|
 CSB|4|1|Dept of Surgery|Dept of SURG|Clinical|Day/Special Area|SUR|
@@ -7210,6 +7295,18 @@ if (!window.ipebMenuSourceRows) {
     "replaceLeftSource": true
   },
   {
+    "building": "SB",
+    "floor": "2",
+    "order": 3,
+    "display": "Private Clinic",
+    "sourceName": "2F",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "PRIVATE",
+    "subDepartment": "",
+    "replaceLeftSource": true
+  },
+  {
     "building": "MCBTC",
     "floor": "5",
     "order": 2,
@@ -7303,7 +7400,7 @@ if (!window.ipebMenuSourceRows) {
 if (!window.mcbtc2030MenuSourceRows) {
   window.mcbtc2030MenuSourceRows = [
   {
-    "building": "MCBTC2030",
+    "building": "Eye Centre",
     "floor": "0",
     "order": 1,
     "display": "Eye Centre",
@@ -7312,6 +7409,7 @@ if (!window.mcbtc2030MenuSourceRows) {
     "type": "Day/Special Area",
     "department": "O&VS",
     "subDepartment": "",
+    "replaceLeftSource": true,
     "tower": "right",
     "wing": "mcbtc2030",
     "index": 3
@@ -7348,7 +7446,7 @@ if (!window.mcbtc2030MenuSourceRows) {
     "replaceLeftSource": true
   },
   {
-    "building": "MCBTC2030",
+    "building": "SB",
     "floor": "5",
     "order": 3,
     "display": "Skin Bank",
@@ -7360,7 +7458,8 @@ if (!window.mcbtc2030MenuSourceRows) {
     "tower": "right",
     "wing": "mcbtc2030",
     "index": 2,
-    "replaceLeftSource": true
+    "replaceLeftSource": true,
+    "remove": true
   },
   {
     "building": "MCBTC2030",
@@ -7393,6 +7492,102 @@ if (!window.mcbtc2030MenuSourceRows) {
     "index": 7,
     "replaceLeftSource": true,
     "remove": true
+  },
+  {
+    "building": "CSB",
+    "floor": "3",
+    "order": 20,
+    "display": "Dept of ENT",
+    "sourceName": "Dept of ENT",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "ENT",
+    "subDepartment": "",
+    "replaceLeftSource": true,
+    "remove": true
+  },
+  {
+    "building": "CSB",
+    "floor": "3",
+    "order": 20,
+    "display": "Dept of ENT",
+    "sourceName": "Dept of ENT",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "O&VS",
+    "subDepartment": ""
+  },
+  {
+    "building": "CSB",
+    "floor": "5",
+    "order": 1,
+    "display": "Dept of O&T",
+    "sourceName": "Dept of O&T",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "ORT",
+    "subDepartment": "",
+    "replaceLeftSource": true,
+    "remove": true
+  },
+  {
+    "building": "CSB",
+    "floor": "5",
+    "order": 1,
+    "display": "Dept of O&T",
+    "sourceName": "Dept of O&T",
+    "side": "Neutral",
+    "type": "",
+    "department": "CUHK",
+    "subDepartment": ""
+  },
+  {
+    "building": "CSB",
+    "floor": "8",
+    "order": 1,
+    "display": "Dept of M&T",
+    "sourceName": "Dept of M&T",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "M&T",
+    "subDepartment": "",
+    "replaceLeftSource": true,
+    "remove": true
+  },
+  {
+    "building": "CSB",
+    "floor": "8",
+    "order": 1,
+    "display": "Dept of M&T",
+    "sourceName": "Dept of M&T",
+    "side": "Neutral",
+    "type": "",
+    "department": "CUHK",
+    "subDepartment": ""
+  },
+  {
+    "building": "CSB",
+    "floor": "4",
+    "order": 1,
+    "display": "Dept of SURG",
+    "sourceName": "Dept of SURG",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "SURG",
+    "subDepartment": "",
+    "replaceLeftSource": true,
+    "remove": true
+  },
+  {
+    "building": "CSB",
+    "floor": "4",
+    "order": 1,
+    "display": "Dept of SURG",
+    "sourceName": "Dept of SURG",
+    "side": "Neutral",
+    "type": "",
+    "department": "CUHK",
+    "subDepartment": ""
   },
   {
     "building": "MCBTC2030",
@@ -7538,6 +7733,28 @@ if (!window.mcbtc2030MenuSourceRows) {
     "remove": true
   },
   {
+    "building": "CSB",
+    "floor": "3",
+    "order": 10,
+    "display": "MSSU (Gen)",
+    "sourceName": "MSSU",
+    "side": "Neutral",
+    "type": "",
+    "department": "Allied Health",
+    "subDepartment": ""
+  },
+  {
+    "building": "DTB",
+    "floor": "2",
+    "order": 2,
+    "display": "MSSU (Gen)",
+    "sourceName": "MSSU",
+    "side": "Neutral",
+    "type": "",
+    "department": "Allied Health",
+    "subDepartment": ""
+  },
+  {
     "building": "MCBTC2030",
     "floor": "3",
     "order": 4,
@@ -7580,10 +7797,10 @@ if (!window.mcbtc2030MenuSourceRows) {
     "index": 0
   },
   {
-    "building": "MCBTC2030",
+    "building": "SB",
     "floor": "6",
     "order": 2,
-    "display": "9F Private Ward",
+    "display": "9E Private Ward",
     "sourceName": "Private Ward",
     "side": "Clinical",
     "type": "Ward",
@@ -7595,12 +7812,12 @@ if (!window.mcbtc2030MenuSourceRows) {
     "exceptionalTitle": "PRIVATE WARD 搬遷記錄",
     "exceptionalYear": "2030",
     "exceptionalSourceMatch": "9E Private Maternity Ward",
-    "exceptionalSourceDisplay": "9F Private Ward",
+    "exceptionalSourceDisplay": "9E Private Ward",
     "exceptionalSourceMeta": "9/F",
-    "exceptionalSourceBuilding": "DTB"
+    "exceptionalSourceBuilding": "SB"
   },
   {
-    "building": "MCBTC2030",
+    "building": "SB",
     "floor": "4",
     "order": 2,
     "display": "5F Integrated Ward",
@@ -7619,7 +7836,7 @@ if (!window.mcbtc2030MenuSourceRows) {
     "exceptionalSourceMeta": "5/F"
   },
   {
-    "building": "MCBTC2030",
+    "building": "SB",
     "floor": "4",
     "order": 1,
     "display": "5E Integrated Ward",
@@ -7689,30 +7906,6 @@ if (!window.mcbtc2030MenuSourceRows) {
     "subDepartment": ""
   },
   {
-    "building": "CSB",
-    "floor": "11",
-    "order": 1,
-    "display": "Hospital Administration Offices",
-    "sourceName": "Hospital Adminstration Office",
-    "side": "Neutral",
-    "type": "",
-    "department": "Admin",
-    "subDepartment": "",
-    "replaceLeftSource": true,
-    "remove": true
-  },
-  {
-    "building": "CSB",
-    "floor": "11",
-    "order": 1,
-    "display": "Hospital Administration Offices",
-    "sourceName": "Hospital Adminstration Office",
-    "side": "Neutral",
-    "type": "",
-    "department": "Admin",
-    "subDepartment": "Hospital Administration Offices"
-  },
-  {
     "building": "DTB",
     "floor": "2",
     "order": 6,
@@ -7738,6 +7931,30 @@ if (!window.mcbtc2030MenuSourceRows) {
   },
   {
     "building": "CSB",
+    "floor": "11",
+    "order": 1,
+    "display": "Hospital Administration Offices",
+    "sourceName": "Hospital Adminstration Office",
+    "side": "Neutral",
+    "type": "",
+    "department": "Admin",
+    "subDepartment": "",
+    "replaceLeftSource": true,
+    "remove": true
+  },
+  {
+    "building": "CSB",
+    "floor": "11",
+    "order": 1,
+    "display": "Hospital Administration Offices",
+    "sourceName": "Hospital Adminstration Office",
+    "side": "Neutral",
+    "type": "",
+    "department": "Admin",
+    "subDepartment": "Hospital Administration Offices"
+  },
+  {
+    "building": "CSB",
     "floor": "8",
     "order": 1,
     "display": "Dept of M&T",
@@ -7759,6 +7976,26 @@ if (!window.mcbtc2030MenuSourceRows) {
     "type": "",
     "department": "CUHK",
     "subDepartment": ""
+  },
+  {
+    "building": "SB",
+    "floor": "5",
+    "order": 3,
+    "display": "Skin Bank",
+    "sourceName": "Skin Bank",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "SUR",
+    "subDepartment": "",
+    "tower": "right",
+    "wing": "mcbtc2030",
+    "index": 2,
+    "exceptionalTitle": "SKIN BANK 搬遷記錄",
+    "exceptionalYear": "2030",
+    "exceptionalSourceMatch": "1F ART Lab",
+    "exceptionalSourceDisplay": "1F ART",
+    "exceptionalSourceMeta": "1/F",
+    "exceptionalSourceBuilding": "SB"
   }
 ];
 }
@@ -12112,6 +12349,22 @@ const linkedSpaces = [
   {
     "right": [
       {
+        "floor": "1",
+        "wing": "nwing",
+        "index": 3
+      }
+    ],
+    "left": [
+      {
+        "building": 3,
+        "floor": "2",
+        "index": 2
+      }
+    ]
+  },
+  {
+    "right": [
+      {
         "floor": "15",
         "wing": "sewing",
         "index": 0
@@ -16250,6 +16503,7 @@ function createEmptyDeptCatalog() {
 
 function normalizeMenuBuildingKey(value) {
   const key = String(value || '').trim().toUpperCase();
+  if (key === 'EYE CENTRE' || key === 'EYECENTRE') return 'EYE CENTRE';
   if (key === 'MCBTC2030') return 'MCBTC2030';
   if (key === 'DTB' || key === 'HKLM') return 'HKLM';
   if (key === 'SB' || key === 'EF') return 'EF';
@@ -16280,9 +16534,6 @@ function buildMenuOverrideKey(row) {
   return [
     side,
     type,
-    normalizeMenuBuildingKey(row && row.building),
-    String(row && row.floor || '').trim(),
-    String(row && row.order || '').trim(),
     normalizeMenuDepartment(row && row.department),
     String(row && row.sourceName || '').trim()
   ].join('|');
@@ -16299,9 +16550,10 @@ function getMenuItemKey(item, buildingKey = '') {
 
 function getMenuBuildingLabel(buildingKey) {
   const key = String(buildingKey || '').toUpperCase();
+  if (key === 'EYE CENTRE') return 'Eye Centre';
   if (key === 'MCBTC2030') return 'MCBTC2030';
   if (key === 'HKLM') return 'DTB(HKLM)';
-  if (key === 'EF') return 'SB(EF)';
+  if (key === 'EF') return 'SB';
   return key;
 }
 
@@ -16440,6 +16692,8 @@ function rebuildDeptCatalog() {
     const flags = availability.get(linkKey);
     if (!flags) return;
     if (flags.ipeb) {
+      const deptKey = normalizeMenuDepartment(row.department).toUpperCase();
+      if (normalizeMenuSide(row.side) === 'clinical' && deptKey === 'CUHK') return;
       const sourceKey = buildMenuOverrideKey(row);
       if (!ipebOverrides.has(sourceKey)) {
         insertMenuRow(out.ipeb, row);
@@ -16448,6 +16702,7 @@ function rebuildDeptCatalog() {
     if (flags.mcbtc2030) {
       const deptKey = normalizeMenuDepartment(row.department).toUpperCase();
       if (deptKey === 'O&G' || deptKey === 'PRIVATE' || deptKey === 'MSSU') return;
+      if (normalizeMenuSide(row.side) === 'clinical' && deptKey === 'CUHK') return;
       const sourceKey = buildMenuOverrideKey(row);
       if (!mcbtc2030Overrides.has(sourceKey)) {
         insertMenuRow(out.mcbtc2030, row);
@@ -17159,7 +17414,7 @@ function getExceptionalListEntryLabel(migration, move) {
       return 'SB 9/F 9E Private Ward';
     }
     if (title === 'SKIN BANK 搬遷記錄' && source2027Destinations.length > 0) {
-      return 'SB 1/F 1F Skin Bank';
+      return 'SB 1/F 1F ART';
     }
     if (title === '4B INTEGRATED WARD 搬遷記錄' && source2027Destinations.length > 0) {
       return 'SB 5/F 5E & 5F Integrated Ward';
@@ -17243,13 +17498,15 @@ function getExceptionalSourcePresentation(migration, move, activeYear) {
     sourceItems.forEach((item) => {
       item.displayName = '9E Private Ward';
       item.metaOverride = '9/F';
+      item.building = 'SB';
     });
     return { items: sourceItems, notes: sourceNotes };
   }
   if (title === 'SKIN BANK 搬遷記錄') {
     sourceItems.forEach((item) => {
-      item.displayName = '1F Skin Bank';
+      item.displayName = '1F ART';
       item.metaOverride = '1/F';
+      item.building = 'SB';
     });
     return { items: sourceItems, notes: sourceNotes };
   }
@@ -19016,7 +19273,20 @@ function renderDept(deptKey) {
   if (wardSection) wardSection.style.display = 'flex';
   const data = deptCatalog[currentDeptSide][deptKey] || {};
   if (currentDeptSide === 'nonClinical') {
-    const groupNames = Object.keys(data.groups || {});
+    let groupNames = Object.keys(data.groups || {});
+    if (currentDeptTarget === 'mcbtc2030' && String(deptKey || '') === 'Admin') {
+      groupNames = groupNames.slice().sort((a, b) => {
+        const getRank = (name) => {
+          if (name === 'GR') return 0;
+          if (name === 'Hospital Administration Offices') return 999;
+          return 100;
+        };
+        const av = getRank(a);
+        const bv = getRank(b);
+        if (av !== bv) return av - bv;
+        return a.localeCompare(b);
+      });
+    }
     if (groupNames.length > 0) {
       const groupBar = document.createElement('div');
       groupBar.className = 'ward-building-row';
@@ -19633,6 +19903,17 @@ function isPhoneLayoutMode() {
   return minSide > 0 && minSide <= 600 && maxSide <= 960;
 }
 
+function isTabletPortraitPhoneUiMode() {
+  if (!isTabletLayoutMode()) return false;
+  const w = window.innerWidth || 0;
+  const h = window.innerHeight || 0;
+  return h > w;
+}
+
+function isPhoneLikeLayoutMode() {
+  return isPhoneLayoutMode() || isTabletPortraitPhoneUiMode();
+}
+
 function isLikelyIpadDevice() {
   const ua = navigator.userAgent || '';
   const platform = navigator.platform || '';
@@ -19740,14 +20021,14 @@ function syncMobileDeptSummary() {
   const name = document.getElementById('mobileDeptName');
   const wardSection = document.getElementById('wardSection');
   if (!panel || !summary || !name) return;
-  const showSummary = isPhoneLayoutMode() && !!currentDept && wardSection && wardSection.style.display !== 'none';
+  const showSummary = isPhoneLikeLayoutMode() && !!currentDept && wardSection && wardSection.style.display !== 'none';
   panel.classList.toggle('mobile-subdept-mode', !!showSummary);
   summary.classList.toggle('show', !!showSummary);
   name.textContent = currentDept ? String(currentDept) : '';
 }
 
 function clearMobileDeptSelection() {
-  if (!isPhoneLayoutMode()) return;
+  if (!isPhoneLikeLayoutMode()) return;
   currentDept = null;
   const wardSection = document.getElementById('wardSection');
   const wardButtons = document.getElementById('wardButtons');
@@ -19772,7 +20053,7 @@ function positionMobileDeptSearchResults() {
   const resultsEl = document.getElementById('deptSearchResults');
   const searchBox = document.querySelector('.top-search-box');
   if (!resultsEl) return;
-  if (!isPhoneLayoutMode()) {
+  if (!isPhoneLikeLayoutMode()) {
     resultsEl.style.position = '';
     resultsEl.style.top = '';
     resultsEl.style.left = '';
@@ -19817,7 +20098,7 @@ function dismissDeptFilterKeyboard(input) {
 }
 
 function focusDeptFilterFromUserGesture() {
-  if (!isPhoneLayoutMode()) return;
+  if (!isPhoneLikeLayoutMode()) return;
   const input = document.getElementById('deptFilter');
   if (!input) return;
   const focusInput = () => {
@@ -19836,7 +20117,7 @@ function focusDeptFilterFromUserGesture() {
 }
 
 function switchMobileTopPanel(panel) {
-  if (!isPhoneLayoutMode()) return;
+  if (!isPhoneLikeLayoutMode()) return;
   const next = String(panel || '');
   currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
   syncPhoneLayoutPanels();
@@ -19873,7 +20154,7 @@ function dockCalendarPanel() {
 }
 
 function syncMobileBuildingSelectorLabels() {
-  const isPhoneLayout = isPhoneLayoutMode();
+  const isPhoneLayout = isPhoneLikeLayoutMode();
   const leftLabels = [
     ['0', 'MCBTC', 'MCBTC'],
     ['1', 'CLINICAL SCIENCES BUILDING', 'CSB'],
@@ -21687,7 +21968,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchBox = document.querySelector('.top-search-box');
   if (searchBox && deptFilter) {
     const focusFromTap = (e) => {
-      if (!isPhoneLayoutMode()) return;
+      if (!isPhoneLikeLayoutMode()) return;
       if (e && e.target && e.target.closest && e.target.closest('.dept-search-results')) return;
       focusDeptFilterFromUserGesture();
     };
@@ -21841,12 +22122,13 @@ function updateEmbeddedLayout() {
   const phoneLayout = isPhoneLayoutMode();
   const tabletLayout = isTabletLayoutMode();
   const tabletLandscape = tabletLayout && (window.innerWidth || 0) >= (window.innerHeight || 0);
+  const portraitPhoneUi = tabletLayout && !tabletLandscape;
   mainView.classList.toggle('compact-layout', compact && !phoneLayout && !tabletLayout);
-  mainView.classList.toggle('phone-layout', phoneLayout);
+  mainView.classList.toggle('phone-layout', phoneLayout || portraitPhoneUi);
   mainView.classList.toggle('tablet-layout', tabletLayout);
   mainView.classList.toggle('tablet-landscape', tabletLayout && tabletLandscape);
   mainView.classList.toggle('tablet-portrait', tabletLayout && !tabletLandscape);
-  document.body.classList.toggle('phone-layout-active', phoneLayout);
+  document.body.classList.toggle('phone-layout-active', phoneLayout || portraitPhoneUi);
   document.body.classList.toggle('tablet-layout-active', tabletLayout);
   syncPhoneBuildingSizing();
 }
@@ -22055,7 +22337,7 @@ function fitBuildingToViewport(options = {}) {
   const building = document.getElementById('building');
   if (!container || !building) return;
   const preserveView = !!options.preserveView;
-  const phoneLayout = isPhoneLayoutMode();
+  const phoneLayout = isPhoneLikeLayoutMode();
   const zooming = isZoomInteractionActive();
   const availW = container.clientWidth - 8;
   const availH = container.clientHeight - 8;
@@ -22112,7 +22394,7 @@ function fitBuildingToViewport(options = {}) {
 }
 
 function alignToReference() {
-  if (isPhoneLayoutMode()) return;
+  if (isPhoneLikeLayoutMode()) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
   const topBelowRow = document.querySelector('.top-below-row');
@@ -22144,7 +22426,7 @@ function alignToReference() {
 }
 
 function alignMcbtcToReference() {
-  if (isPhoneLayoutMode()) return;
+  if (isPhoneLikeLayoutMode()) return;
   if (currentLeftBuilding !== 0) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
@@ -22179,7 +22461,7 @@ function alignMcbtcToReference() {
 }
 
 function alignBuildingToReference() {
-  if (isPhoneLayoutMode()) return;
+  if (isPhoneLikeLayoutMode()) return;
   if (currentLeftBuilding !== 1) return;
   const container = document.getElementById('buildingContainer');
   const topBelowRow = document.querySelector('.top-below-row');
@@ -22245,7 +22527,7 @@ function getCenteredTextStartX(el) {
 }
 
 function alignPhoneBuildingToExceptionalTab() {
-  if (!isPhoneLayoutMode()) return;
+  if (!isPhoneLikeLayoutMode()) return;
   if (isZoomInteractionActive()) return;
   const container = document.getElementById('buildingContainer');
   const building = document.getElementById('building');
