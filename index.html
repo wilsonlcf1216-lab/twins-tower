@@ -17442,6 +17442,7 @@ function renderDepartments() {
   } else {
     syncDeptPanelCollapsedState();
   }
+  scheduleCompactDeptPanelInlineStyles();
 }
 
 function updateDeptSideButtons() {
@@ -17453,6 +17454,216 @@ function updateDeptSideButtons() {
     const active = (isClinical && currentDeptSide === 'clinical') || (!isClinical && currentDeptSide === 'nonClinical');
     btn.classList.toggle('active', active);
   });
+  scheduleCompactDeptPanelInlineStyles();
+}
+
+let compactDeptPanelInlineRaf = 0;
+
+function isCompactEmbeddedLayout() {
+  const mainView = document.querySelector('.main-view');
+  return !!(mainView && mainView.classList.contains('compact-layout') && !mainView.classList.contains('phone-layout'));
+}
+
+function setImportantInlineStyles(el, styles) {
+  if (!el || !styles) return;
+  Object.entries(styles).forEach(([key, value]) => {
+    el.style.setProperty(key, value, 'important');
+  });
+}
+
+function applyCompactDeptPanelInlineStyles() {
+  if (!isCompactEmbeddedLayout()) return;
+  const panel = document.getElementById('topDeptPanel');
+  if (!panel) return;
+
+  const targetGroup = panel.querySelector('.dept-group[data-role="target-group"]');
+  const targetBtn = targetGroup ? targetGroup.querySelector('.dept-btn') : null;
+  if (targetGroup) {
+    setImportantInlineStyles(targetGroup, {
+      'background': '#eef4ff',
+      'border-radius': '6px',
+      'padding': '2px',
+      'box-shadow': 'none'
+    });
+  }
+  if (targetBtn) {
+    const isMcbtc2030 = targetBtn.classList.contains('theme-mcbtc2030');
+    setImportantInlineStyles(targetBtn, {
+      'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
+      'font-size': '11px',
+      'font-weight': '600',
+      'line-height': '1',
+      'min-height': 'calc(var(--top-control-h) - 10px)',
+      'padding': '0 8px',
+      'border-radius': '6px',
+      'margin': '0',
+      'border-width': '1px',
+      'border-style': 'solid',
+      'box-shadow': 'none',
+      'background-image': 'none',
+      'color': isMcbtc2030 ? '#ffffff' : '#ffffff',
+      'background': isMcbtc2030 ? 'var(--color-mcbtc2030-border)' : 'var(--color-ipeb-border)',
+      'border-color': isMcbtc2030 ? 'var(--color-mcbtc2030-border)' : 'var(--color-ipeb-border)'
+    });
+  }
+
+  const sideGroup = panel.querySelector('.dept-group[data-role="side-group"]');
+  if (sideGroup) {
+    setImportantInlineStyles(sideGroup, {
+      'background': '#f8efff',
+      'border-radius': '6px',
+      'padding': '2px',
+      'box-shadow': 'none'
+    });
+    sideGroup.querySelectorAll('.dept-btn').forEach((btn) => {
+      const active = btn.classList.contains('active');
+      setImportantInlineStyles(btn, {
+        'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
+        'font-size': '11px',
+        'font-weight': '600',
+        'line-height': '1',
+        'min-height': 'calc(var(--top-control-h) - 10px)',
+        'padding': '0 8px',
+        'border-radius': '6px',
+        'margin': '0',
+        'border': '0',
+        'box-shadow': 'none',
+        'background-image': 'none',
+        'color': active ? '#ffffff' : '#8b3ac7',
+        'background': active ? '#c026d3' : 'transparent'
+      });
+    });
+  }
+
+  panel.querySelectorAll('.dept-list').forEach((list) => {
+    setImportantInlineStyles(list, {
+      'margin-top': '4px',
+      'gap': '4px'
+    });
+  });
+
+  panel.querySelectorAll('.dept-item').forEach((item) => {
+    const isActive = item.classList.contains('active');
+    const isWardRow = !!item.closest('.ward-building-row');
+    setImportantInlineStyles(item, {
+      'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
+      'font-size': '9px',
+      'font-weight': '600',
+      'line-height': '1.08',
+      'min-height': '28px',
+      'height': 'auto',
+      'padding': '4px 6px',
+      'display': 'flex',
+      'align-items': 'center',
+      'justify-content': 'center',
+      'text-align': 'center',
+      'white-space': 'normal',
+      'overflow-wrap': 'anywhere',
+      'border-width': '2px',
+      'border-style': 'solid',
+      'border-radius': '8px',
+      'box-shadow': 'none',
+      'background-image': 'none',
+      'background': isActive
+        ? (isWardRow ? '#a855f7' : '#6366f1')
+        : (isWardRow ? '#faf5ff' : '#eef2ff'),
+      'border-color': isActive
+        ? (isWardRow ? '#a855f7' : '#6366f1')
+        : (isWardRow ? '#e9d5ff' : '#c7d2fe'),
+      'color': isActive ? '#ffffff' : (isWardRow ? '#9333ea' : '#4338ca')
+    });
+    if (isWardRow) {
+      setImportantInlineStyles(item, {
+        'flex': '1 1 88px',
+        'min-width': '88px'
+      });
+    }
+  });
+
+  const wardButtons = panel.querySelector('#wardButtons');
+  if (wardButtons) {
+    setImportantInlineStyles(wardButtons, {
+      'max-height': 'none',
+      'overflow-x': 'hidden',
+      'overflow-y': 'auto',
+      'display': 'flex',
+      'flex-direction': 'column',
+      'flex-wrap': 'nowrap',
+      'align-items': 'stretch',
+      'gap': '4px'
+    });
+  }
+
+  panel.querySelectorAll('.ward-btn').forEach((btn) => {
+    const active = btn.classList.contains('active');
+    const isDay = btn.classList.contains('ward-btn-day');
+    const isTwoLine = btn.classList.contains('ward-btn-fit-two-line');
+    let background = '#ffffff';
+    let borderColor = '#ffc107';
+    let color = '#856404';
+    if (btn.classList.contains('theme-ipeb')) {
+      background = active ? 'var(--color-ipeb-border)' : 'var(--color-ipeb)';
+      borderColor = active ? 'var(--color-ipeb-border)' : 'var(--color-ipeb-border)';
+      color = active ? '#ffffff' : '#333333';
+    } else if (btn.classList.contains('theme-mcbtc')) {
+      background = active ? 'var(--color-mcbtc-border)' : 'var(--color-mcbtc)';
+      borderColor = active ? 'var(--color-mcbtc-border)' : 'var(--color-mcbtc-border)';
+      color = active ? '#ffffff' : '#333333';
+    } else if (btn.classList.contains('theme-csb')) {
+      background = active ? 'var(--color-csb-border)' : 'var(--color-csb)';
+      borderColor = active ? 'var(--color-csb-border)' : 'var(--color-csb-border)';
+      color = '#333333';
+    } else if (btn.classList.contains('theme-dtb')) {
+      background = active ? 'var(--color-dtb-border)' : 'var(--color-dtb)';
+      borderColor = active ? 'var(--color-dtb-border)' : 'var(--color-dtb-border)';
+      color = active ? '#ffffff' : '#333333';
+    } else if (btn.classList.contains('theme-sb')) {
+      background = active ? 'var(--color-sb-border)' : 'var(--color-sb)';
+      borderColor = active ? 'var(--color-sb-border)' : 'var(--color-sb-border)';
+      color = active ? '#ffffff' : '#333333';
+    } else if (active) {
+      background = '#ffc107';
+      borderColor = '#ffc107';
+    }
+    setImportantInlineStyles(btn, {
+      'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
+      'font-size': isDay ? '8px' : '9px',
+      'font-weight': active ? '700' : '600',
+      'line-height': isTwoLine || isDay ? '1.05' : '1',
+      'height': isTwoLine ? '32px' : '24px',
+      'min-height': isTwoLine ? '32px' : '24px',
+      'padding': isTwoLine || isDay ? '2px 4px' : '4px 6px',
+      'border-width': '2px',
+      'border-style': 'solid',
+      'border-radius': '6px',
+      'background': background,
+      'border-color': borderColor,
+      'color': color,
+      'box-shadow': 'none',
+      'background-image': 'none',
+      'margin': '1px',
+      'width': '100%',
+      'min-width': '0',
+      'max-width': '100%',
+      'display': isTwoLine || isDay ? '-webkit-box' : 'inline-flex',
+      'align-items': 'center',
+      'justify-content': 'center',
+      'text-align': 'center',
+      'white-space': isTwoLine || isDay ? 'normal' : 'nowrap',
+      'overflow': 'hidden',
+      'text-overflow': isTwoLine || isDay ? 'clip' : 'ellipsis',
+      'box-sizing': 'border-box'
+    });
+  });
+}
+
+function scheduleCompactDeptPanelInlineStyles() {
+  if (!isCompactEmbeddedLayout()) return;
+  if (compactDeptPanelInlineRaf) return;
+  compactDeptPanelInlineRaf = requestAnimationFrame(() => {
+    compactDeptPanelInlineRaf = 0;
+    applyCompactDeptPanelInlineStyles();
+  });
 }
 
 function updateDeptListVisibility(activeSide) {
@@ -17460,6 +17671,7 @@ function updateDeptListVisibility(activeSide) {
   const nonList = document.getElementById('nonList');
   if (clinicalList) clinicalList.style.display = activeSide === 'clinical' ? 'grid' : 'none';
   if (nonList) nonList.style.display = activeSide === 'nonClinical' ? 'grid' : 'none';
+  scheduleCompactDeptPanelInlineStyles();
 }
 
 function sortDeptKeys(keys) {
@@ -17491,6 +17703,7 @@ function populateDeptList(side) {
     btn.onclick = () => renderDept(deptKey);
     currentList.appendChild(btn);
   });
+  scheduleCompactDeptPanelInlineStyles();
 }
 
 function setDeptTarget(target) {
@@ -18097,11 +18310,13 @@ function renderDept(deptKey) {
     if (groupNames.length > 0) {
       renderDeptGroup(deptKey, groupNames[0]);
       syncMobileDeptSummary();
+      scheduleCompactDeptPanelInlineStyles();
       return;
     }
     if (data.direct) {
       syncMobileDeptSummary();
       applyWardFilter();
+      scheduleCompactDeptPanelInlineStyles();
       return;
     }
   }
@@ -18112,6 +18327,7 @@ function renderDept(deptKey) {
     wardButtons.appendChild(empty);
     syncMobileDeptSummary();
     applyWardFilter();
+    scheduleCompactDeptPanelInlineStyles();
     return;
   }
   const categoryBar = document.createElement('div');
@@ -18137,6 +18353,7 @@ function renderDept(deptKey) {
     applyWardFilter();
   }
   syncMobileDeptSummary();
+  scheduleCompactDeptPanelInlineStyles();
 }
 
 function renderDeptGroup(deptKey, groupName) {
@@ -18161,6 +18378,7 @@ function renderDeptGroup(deptKey, groupName) {
   wardButtons.appendChild(buildMenuItemsContainer(group.direct, { dayMode: /day|special/i.test(String(groupName || '')) }));
   syncMobileDeptSummary();
   applyWardFilter();
+  scheduleCompactDeptPanelInlineStyles();
 }
 function renderDeptCategory(deptKey, cat) {
   const wardButtons = document.getElementById('wardButtons');
@@ -18184,6 +18402,7 @@ function renderDeptCategory(deptKey, cat) {
   wardButtons.appendChild(buildMenuItemsContainer(data[cat], { dayMode: cat === 'day' }));
   syncMobileDeptSummary();
   applyWardFilter();
+  scheduleCompactDeptPanelInlineStyles();
 }
 function resolveDeptItem(buildingKey, item) {
   const normalizedBuildingKey = normalizeMenuBuildingKey(buildingKey);
@@ -18246,6 +18465,7 @@ function handleAllSelection(buildingKey, items) {
   });
   updateDisplay();
   updateLinkDisplay();
+  scheduleCompactDeptPanelInlineStyles();
 }
 function handleDeptItemClick(buildingKey, item) {
   hideDeptSearchResults();
@@ -18273,6 +18493,7 @@ function handleDeptItemClick(buildingKey, item) {
   });
   updateDisplay();
   updateLinkDisplay();
+  scheduleCompactDeptPanelInlineStyles();
 }
 
 function findLeftByName(buildingIndex, name) {
@@ -20781,6 +21002,7 @@ function refreshEmbeddedLayout() {
   stabilizePhoneLayoutVisibility();
   syncPhoneLayoutPanels();
   updateTopPanelSizing();
+  scheduleCompactDeptPanelInlineStyles();
   scheduleWardButtonNormalization();
   scheduleFitBuildingToViewport();
 }
