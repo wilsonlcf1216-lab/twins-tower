@@ -20262,6 +20262,14 @@ function getViewportSize() {
   };
 }
 
+function getScreenSize() {
+  const sw = Number(screen && screen.width) || 0;
+  const sh = Number(screen && screen.height) || 0;
+  const width = Math.max(sw, sh);
+  const height = Math.min(sw, sh);
+  return { width, height };
+}
+
 function isLandscapeViewport() {
   const viewport = getViewportSize();
   if (viewport.width > 0 && viewport.height > 0 && Math.abs(viewport.width - viewport.height) >= 24) {
@@ -20295,10 +20303,14 @@ function isTabletLayoutMode() {
   const h = viewport.height || 0;
   const minSide = Math.min(w, h);
   const maxSide = Math.max(w, h);
+  const screenSize = getScreenSize();
+  const screenMinSide = screenSize.height || 0;
+  const screenMaxSide = screenSize.width || 0;
   const coarsePointer = typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches;
   const touchCapable = (navigator.maxTouchPoints || 0) > 0 || coarsePointer;
   const tabletSizedViewport = minSide >= 700 && maxSide <= 1600;
-  return tabletSizedViewport && (isLikelyIpadDevice() || touchCapable);
+  const tabletSizedScreen = screenMinSide >= 744 && screenMaxSide <= 1600;
+  return (tabletSizedViewport || tabletSizedScreen) && (isLikelyIpadDevice() || touchCapable);
 }
 
 function isCompactLayoutMode() {
