@@ -1857,7 +1857,8 @@ h2 {
 .main-view.tablet-layout .mobile-top-tab {
   min-height: 30px;
   padding: 0 6px;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 700;
   border-radius: 14px;
   border: 1px solid #dbeafe;
   background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.95) 100%);
@@ -1909,7 +1910,8 @@ h2 {
   border-bottom: 1px solid rgba(191, 219, 254, 0.9);
   background: linear-gradient(180deg, rgba(239,246,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
   color: #4338ca;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 800;
   gap: 8px;
 }
 
@@ -2130,20 +2132,20 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-portrait .mobile-building-row {
-  grid-template-columns: minmax(0, 1fr);
-  align-items: stretch;
-  gap: 4px;
-  min-height: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
   padding: 6px 8px;
 }
 
 .main-view.tablet-layout.tablet-portrait .mobile-building-label {
-  white-space: normal;
-  line-height: 1.1;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .main-view.tablet-layout.tablet-portrait .mobile-building-label-text br {
-  display: inline;
+  display: none;
 }
 
 .main-view.tablet-layout.tablet-portrait #mobileLeftBuildingSelector {
@@ -2487,7 +2489,7 @@ h2 {
 }
 
 
-#topDeptPanel > .top-panel-header {
+.main-view:not(.tablet-layout):not(.phone-layout) #topDeptPanel > .top-panel-header {
   display: none;
 }
 
@@ -6911,7 +6913,8 @@ body.phone-layout-active .private-ward-card-body {
   background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.95) 100%) !important;
   color: #4b5563 !important;
   padding: 0 6px !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
 }
 
 #twintower-app .main-view.tablet-layout .mobile-top-tab.active {
@@ -6944,7 +6947,8 @@ body.phone-layout-active .private-ward-card-body {
   border-bottom: 1px solid rgba(191, 219, 254, 0.9) !important;
   background: linear-gradient(180deg, rgba(239,246,255,0.95) 0%, rgba(255,255,255,0.98) 100%) !important;
   color: #4338ca !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
   gap: 8px !important;
 }
 
@@ -7052,20 +7056,20 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-row {
-  grid-template-columns: minmax(0, 1fr) !important;
-  align-items: stretch !important;
-  gap: 4px !important;
-  min-height: 0 !important;
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
   padding: 6px 8px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-label {
-  white-space: normal !important;
-  line-height: 1.1 !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait .mobile-building-label-text br {
-  display: inline !important;
+  display: none !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait #mobileLeftBuildingSelector {
