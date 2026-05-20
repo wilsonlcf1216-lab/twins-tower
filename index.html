@@ -1950,9 +1950,17 @@ h2 {
   padding: 6px 8px 8px;
 }
 
+.main-view.tablet-layout #topDeptPanel.mobile-subdept-mode .top-dept-body {
+  max-height: min(48vh, 420px);
+}
+
 .main-view.tablet-layout #topDeptPanel #wardSection {
   min-height: 0;
   overflow: hidden;
+}
+
+.main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardSection {
+  overflow: visible;
 }
 
 .main-view.tablet-layout #topDeptPanel #deptButtons {
@@ -1962,6 +1970,11 @@ h2 {
 .main-view.tablet-layout #topDeptPanel #wardButtons {
   max-height: min(16vh, 150px);
   overflow-y: auto;
+}
+
+.main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardButtons {
+  max-height: none;
+  overflow-y: visible;
 }
 
 .main-view.tablet-layout #topCalendarPanel .calendar-panel {
@@ -2189,6 +2202,10 @@ h2 {
   box-sizing: border-box;
 }
 
+.main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode .top-dept-body {
+  max-height: min(42vh, 360px);
+}
+
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
   max-height: min(26vh, 220px);
   overflow-y: auto;
@@ -2199,6 +2216,11 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
   max-height: min(12vh, 98px);
+}
+
+.main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode #wardButtons {
+  max-height: none;
+  overflow-y: visible;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tab {
@@ -7187,6 +7209,19 @@ body.phone-layout-active .private-ward-card-body {
   padding: 6px 8px 8px !important;
 }
 
+#twintower-app .main-view.tablet-layout #topDeptPanel.mobile-subdept-mode .top-dept-body {
+  max-height: min(48vh, 420px) !important;
+}
+
+#twintower-app .main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardSection {
+  overflow: visible !important;
+}
+
+#twintower-app .main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardButtons {
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+
 #twintower-app .main-view.tablet-layout #topExceptionalPanel .exceptional-list {
   max-height: calc(var(--tablet-panel-max-h) - 34px) !important;
   padding: 6px 8px 8px !important;
@@ -7404,6 +7439,10 @@ body.phone-layout-active .private-ward-card-body {
   box-sizing: border-box !important;
 }
 
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode .top-dept-body {
+  max-height: min(42vh, 360px) !important;
+}
+
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
   max-height: min(26vh, 220px) !important;
   overflow-y: auto !important;
@@ -7414,6 +7453,11 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
   max-height: min(12vh, 98px) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode #wardButtons {
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box .dept-search-results {
