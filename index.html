@@ -2138,6 +2138,82 @@ h2 {
   color: #ffffff;
 }
 
+/* Harden Clinical/Neutral inner items against intranet button/card overrides. */
+#twintower-app .top-dept-panel .dept-item {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
+#twintower-app .top-dept-panel .dept-item,
+#twintower-app .top-dept-panel .dept-item:hover {
+  background-color: #eef2ff !important;
+  border-color: #c7d2fe !important;
+  color: #4338ca !important;
+}
+
+#twintower-app .top-dept-panel .dept-item.active,
+#twintower-app .top-dept-panel .dept-item.active:hover {
+  background-color: #6366f1 !important;
+  border-color: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .ward-building-row .dept-item,
+#twintower-app .top-dept-panel .ward-building-row .dept-item:hover {
+  background-color: #faf5ff !important;
+  border-color: #e9d5ff !important;
+  color: #9333ea !important;
+}
+
+#twintower-app .top-dept-panel .ward-building-row .dept-item.active,
+#twintower-app .top-dept-panel .ward-building-row .dept-item.active:hover {
+  background-color: #a855f7 !important;
+  border-color: #a855f7 !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  border-radius: 6px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn,
+#twintower-app .top-dept-panel #wardButtons .ward-btn:hover {
+  background-color: #ffffff !important;
+  border-color: #ffc107 !important;
+  color: #856404 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.active:hover {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #856404 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-items-grid,
+#twintower-app .top-dept-panel #wardButtons .ward-building-row {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
 .top-dept-panel #wardSection {
   flex: 0 0 auto;
   min-height: 0;
