@@ -1706,10 +1706,10 @@ h2 {
 }
 
 .main-view.tablet-layout {
-  --tablet-panel-gap: 10px;
+  --tablet-panel-gap: 8px;
   --tablet-card-radius: 18px;
-  --tablet-panel-max-h: min(34vh, 320px);
-  --tablet-link-panel-h: 136px;
+  --tablet-panel-max-h: min(31vh, 290px);
+  --tablet-link-panel-h: 124px;
   padding: 0 0 14px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -1778,27 +1778,34 @@ h2 {
 
 .main-view.tablet-layout .mobile-building-row {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
   gap: 8px;
-  min-height: 76px;
-  padding: 12px;
+  min-height: 50px;
+  padding: 8px 10px;
   background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.98) 100%);
   border: 1px solid rgba(191, 219, 254, 0.96);
-  border-radius: 16px;
-  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.09);
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.08);
 }
 
 .main-view.tablet-layout .mobile-building-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-align: left;
   letter-spacing: 0.02em;
   color: #4338ca;
+  white-space: nowrap;
+}
+
+.main-view.tablet-layout .mobile-building-label-text br {
+  display: none;
 }
 
 .main-view.tablet-layout .mobile-building-options {
   display: grid;
   gap: 6px;
+  align-items: center;
 }
 
 .main-view.tablet-layout #mobileLeftBuildingSelector {
@@ -1810,9 +1817,10 @@ h2 {
 }
 
 .main-view.tablet-layout .mobile-building-options .building-btn {
-  min-height: 34px;
-  font-size: 11px;
+  min-height: 28px;
+  font-size: 10px;
   line-height: 1.15;
+  padding: 0 6px;
 }
 
 .main-view.tablet-layout .top-panel,
@@ -1839,14 +1847,29 @@ h2 {
   order: 4;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px !important;
+  padding: 4px;
+  border: 1px solid rgba(191, 219, 254, 0.92);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
 }
 
 .main-view.tablet-layout .mobile-top-tab {
-  min-height: 36px;
+  min-height: 34px;
   padding: 0 8px;
   font-size: 11px;
   border-radius: 14px;
-  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.10);
+  border: 1px solid #dbeafe;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.95) 100%);
+  color: #4b5563;
+  box-shadow: 0 6px 14px rgba(59, 130, 246, 0.08);
+}
+
+.main-view.tablet-layout .mobile-top-tab.active {
+  background: linear-gradient(180deg, #eef2ff 0%, #dbeafe 100%);
+  color: #3730a3;
+  border-color: #a5b4fc;
+  box-shadow: 0 10px 18px rgba(99, 102, 241, 0.14);
 }
 
 .main-view.tablet-layout #topDeptPanel.top-panel,
@@ -1864,6 +1887,9 @@ h2 {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-view.tablet-layout #topDeptPanel.hidden,
@@ -1872,21 +1898,43 @@ h2 {
   display: none !important;
 }
 
+.main-view.tablet-layout #topDeptPanel > .top-panel-header,
+.main-view.tablet-layout #topExceptionalPanel > .top-panel-header,
+.main-view.tablet-layout #topCalendarPanel > .top-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(191, 219, 254, 0.9);
+  background: linear-gradient(180deg, rgba(239,246,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
+  color: #4338ca;
+  font-size: 12px;
+}
+
+.main-view.tablet-layout #topDeptPanel.top-panel.expanded,
+.main-view.tablet-layout #topExceptionalPanel.top-panel.expanded,
+.main-view.tablet-layout #topCalendarPanel.expanded {
+  max-height: min(41vh, 360px);
+}
+
 .main-view.tablet-layout #topExceptionalPanel.top-panel.expanded {
   max-height: var(--tablet-panel-max-h);
 }
 
 .main-view.tablet-layout #topExceptionalPanel .exceptional-list {
-  max-height: calc(var(--tablet-panel-max-h) - 42px);
+  max-height: calc(var(--tablet-panel-max-h) - 34px);
   overflow-y: auto;
   margin-top: 0;
+  padding: 8px 10px 10px;
 }
 
 .main-view.tablet-layout #topDeptPanel .top-dept-body {
   min-height: 0;
   overflow-y: auto;
-  max-height: calc(var(--tablet-panel-max-h) + 64px);
-  padding: 8px;
+  overflow-x: hidden;
+  max-height: calc(var(--tablet-panel-max-h) + 12px);
+  padding: 8px 10px 10px;
 }
 
 .main-view.tablet-layout #topDeptPanel #wardSection {
@@ -1894,14 +1942,18 @@ h2 {
   overflow: hidden;
 }
 
+.main-view.tablet-layout #topDeptPanel #deptButtons {
+  overflow-x: hidden;
+}
+
 .main-view.tablet-layout #topDeptPanel #wardButtons {
-  max-height: min(18vh, 180px);
+  max-height: min(16vh, 150px);
   overflow-y: auto;
 }
 
 .main-view.tablet-layout #topCalendarPanel .calendar-panel {
-  min-height: 220px;
-  max-height: min(38vh, 340px);
+  min-height: 200px;
+  max-height: min(36vh, 320px);
   overflow: auto;
 }
 
@@ -1933,8 +1985,8 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape {
   --tablet-panel-gap: 8px;
-  --tablet-panel-max-h: min(28vh, 250px);
-  --tablet-link-panel-h: 124px;
+  --tablet-panel-max-h: min(26vh, 220px);
+  --tablet-link-panel-h: 112px;
   padding: 0 0 10px;
 }
 
@@ -1966,13 +2018,13 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-row {
-  min-height: 72px;
-  padding: 10px;
+  min-height: 46px;
+  padding: 7px 8px;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-options .building-btn {
-  min-height: 30px;
-  font-size: 10px;
+  min-height: 26px;
+  font-size: 9px;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
@@ -1980,7 +2032,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tab {
-  min-height: 34px;
+  min-height: 30px;
   font-size: 10px;
 }
 
@@ -1995,8 +2047,8 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-portrait {
-  --tablet-panel-max-h: min(36vh, 340px);
-  --tablet-link-panel-h: 144px;
+  --tablet-panel-max-h: min(33vh, 300px);
+  --tablet-link-panel-h: 118px;
   padding: 0 0 12px;
 }
 
@@ -2007,12 +2059,12 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-portrait .mobile-building-row {
-  min-height: 78px;
+  min-height: 48px;
 }
 
 .main-view.tablet-layout.tablet-portrait #topCalendarPanel .calendar-panel {
-  min-height: 230px;
-  max-height: min(40vh, 360px);
+  min-height: 200px;
+  max-height: min(35vh, 320px);
 }
 
 .main-view.tablet-layout.tablet-portrait .building-container {
@@ -6649,8 +6701,9 @@ body.phone-layout-active .private-ward-card-body {
 
 /* Final iPad overrides */
 #twintower-app .main-view.tablet-layout {
-  --tablet-panel-gap: 10px !important;
+  --tablet-panel-gap: 8px !important;
   --tablet-card-radius: 18px !important;
+  --tablet-panel-max-h: min(31vh, 290px) !important;
   background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 22%, #ffffff 100%) !important;
 }
 
@@ -6686,6 +6739,48 @@ body.phone-layout-active .private-ward-card-body {
   width: 100% !important;
 }
 
+#twintower-app .main-view.tablet-layout .mobile-building-row {
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  align-items: center !important;
+  min-height: 50px !important;
+  padding: 8px 10px !important;
+}
+
+#twintower-app .main-view.tablet-layout .mobile-building-label {
+  font-size: 10px !important;
+  white-space: nowrap !important;
+}
+
+#twintower-app .main-view.tablet-layout .mobile-building-label-text br {
+  display: none !important;
+}
+
+#twintower-app .main-view.tablet-layout .mobile-building-options .building-btn {
+  min-height: 28px !important;
+  font-size: 10px !important;
+  padding: 0 6px !important;
+}
+
+#twintower-app .main-view.tablet-layout .mobile-top-tabs {
+  padding: 4px !important;
+  border: 1px solid rgba(191, 219, 254, 0.92) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+}
+
+#twintower-app .main-view.tablet-layout .mobile-top-tab {
+  min-height: 34px !important;
+  border: 1px solid #dbeafe !important;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.95) 100%) !important;
+  color: #4b5563 !important;
+}
+
+#twintower-app .main-view.tablet-layout .mobile-top-tab.active {
+  background: linear-gradient(180deg, #eef2ff 0%, #dbeafe 100%) !important;
+  color: #3730a3 !important;
+  border-color: #a5b4fc !important;
+}
+
 #twintower-app .main-view.tablet-layout #topDeptPanel,
 #twintower-app .main-view.tablet-layout #topExceptionalPanel,
 #twintower-app .main-view.tablet-layout #topCalendarPanel {
@@ -6694,6 +6789,38 @@ body.phone-layout-active .private-ward-card-body {
   left: auto !important;
   right: auto !important;
   margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: start !important;
+}
+
+#twintower-app .main-view.tablet-layout #topDeptPanel > .top-panel-header,
+#twintower-app .main-view.tablet-layout #topExceptionalPanel > .top-panel-header,
+#twintower-app .main-view.tablet-layout #topCalendarPanel > .top-panel-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  padding: 0 12px !important;
+  border-bottom: 1px solid rgba(191, 219, 254, 0.9) !important;
+  background: linear-gradient(180deg, rgba(239,246,255,0.95) 0%, rgba(255,255,255,0.98) 100%) !important;
+  color: #4338ca !important;
+  font-size: 12px !important;
+}
+
+#twintower-app .main-view.tablet-layout #topDeptPanel .top-dept-body {
+  max-height: calc(var(--tablet-panel-max-h) + 12px) !important;
+  overflow-x: hidden !important;
+}
+
+#twintower-app .main-view.tablet-layout #topExceptionalPanel .exceptional-list {
+  max-height: calc(var(--tablet-panel-max-h) - 34px) !important;
+  padding: 8px 10px 10px !important;
+}
+
+#twintower-app .main-view.tablet-layout #topCalendarPanel .calendar-panel {
+  min-height: 200px !important;
+  max-height: min(36vh, 320px) !important;
 }
 
 #twintower-app .main-view.tablet-layout .building-container {
@@ -6712,12 +6839,26 @@ body.phone-layout-active .private-ward-card-body {
   grid-template-columns: minmax(280px, 1.15fr) minmax(320px, 0.85fr) !important;
 }
 
+#twintower-app .main-view.tablet-layout.tablet-landscape {
+  --tablet-panel-max-h: min(26vh, 220px) !important;
+}
+
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box {
   grid-column: 1 / 2 !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-selectors {
   grid-column: 2 / 3 !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-row {
+  min-height: 46px !important;
+  padding: 7px 8px !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-options .building-btn {
+  min-height: 26px !important;
+  font-size: 9px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-linked-panel,
@@ -6731,6 +6872,10 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-portrait .top-search-floating {
   width: calc(100% - 14px) !important;
   max-width: 100% !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-portrait {
+  --tablet-panel-max-h: min(33vh, 300px) !important;
 }
 </style>
 </head>
@@ -19647,7 +19792,7 @@ function setCalendarPanelVisible(visible) {
     if (isCalendarPanelVisible) {
       currentMobileTopPanel = 'calendar';
     } else if (currentMobileTopPanel === 'calendar') {
-      currentMobileTopPanel = 'dept';
+      currentMobileTopPanel = 'none';
     }
   }
   if (wrap) wrap.classList.toggle('hidden', !isCalendarPanelVisible);
@@ -19776,7 +19921,7 @@ function getDefaultPanOffsets() {
   }
   if (isTabletLayoutMode()) {
     const landscape = (window.innerWidth || 0) >= (window.innerHeight || 0);
-    return { x: landscape ? basePanX - 168 : basePanX - 18, y: basePanY + 8 };
+    return { x: landscape ? basePanX - 72 : basePanX - 2, y: basePanY + 8 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -19961,11 +20106,7 @@ function focusDeptFilterFromUserGesture() {
 function switchMobileTopPanel(panel) {
   if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
   const next = String(panel || '');
-  if (isTabletLayoutMode()) {
-    currentMobileTopPanel = next || 'dept';
-  } else {
-    currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
-  }
+  currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
   syncPhoneLayoutPanels();
 }
 
@@ -20215,8 +20356,8 @@ function syncPhoneLayoutPanels() {
         stack.appendChild(wrap);
       }
     }
-    if (currentMobileTopPanel !== 'dept' && currentMobileTopPanel !== 'exceptional' && currentMobileTopPanel !== 'calendar') {
-      currentMobileTopPanel = 'dept';
+    if (currentMobileTopPanel !== 'dept' && currentMobileTopPanel !== 'exceptional' && currentMobileTopPanel !== 'calendar' && currentMobileTopPanel !== 'none') {
+      currentMobileTopPanel = 'none';
     }
     if (tabs) {
       tabs.style.setProperty('display', 'grid', 'important');
@@ -20235,18 +20376,18 @@ function syncPhoneLayoutPanels() {
       const show = currentMobileTopPanel === 'dept';
       deptPanel.classList.toggle('hidden', !show);
       deptPanel.classList.toggle('expanded', !!show);
-      deptPanel.style.setProperty('display', show ? 'block' : 'none', 'important');
+      deptPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
     }
     if (exceptionalPanel) {
       const show = currentMobileTopPanel === 'exceptional';
       exceptionalPanel.classList.toggle('hidden', !show);
-      exceptionalPanel.style.setProperty('display', show ? 'block' : 'none', 'important');
+      exceptionalPanel.style.setProperty('display', show ? 'flex' : 'none', 'important');
     }
     if (wrap) {
       const show = currentMobileTopPanel === 'calendar';
       wrap.classList.toggle('hidden', !show);
       wrap.classList.toggle('expanded', !!show);
-      wrap.style.setProperty('display', show ? 'block' : 'none', 'important');
+      wrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
     }
     isCalendarPanelVisible = currentMobileTopPanel === 'calendar';
     if (panel) {
@@ -22268,6 +22409,8 @@ function fitBuildingToViewport(options = {}) {
   const building = document.getElementById('building');
   if (!container || !building) return;
   const preserveView = !!options.preserveView;
+  const phoneLayout = isPhoneLayoutMode();
+  const tabletLayout = isTabletLayoutMode();
   const compactLayout = isCompactLayoutMode();
   const zooming = isZoomInteractionActive();
   const availW = container.clientWidth - 8;
@@ -22298,11 +22441,15 @@ function fitBuildingToViewport(options = {}) {
   forceCrispText();
   const scaledActualW = building.getBoundingClientRect().width;
   const fits = scaledActualW <= container.clientWidth + 0.5;
-  container.style.justifyContent = (compactLayout || fits) ? 'flex-start' : 'center';
+  container.style.justifyContent = (phoneLayout || (!tabletLayout && fits)) ? 'flex-start' : 'center';
   if (fits) {
-    if (compactLayout) {
+    if (phoneLayout) {
       if (!preserveView && !zooming) {
         requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
+      }
+    } else if (tabletLayout) {
+      if (!preserveView && !zooming) {
+        requestAnimationFrame(centerUsingBaseline);
       }
     } else {
       if (!preserveView && !zooming) container.scrollLeft = 0;
@@ -22312,15 +22459,21 @@ function fitBuildingToViewport(options = {}) {
     }
     return;
   }
-  if (compactLayout) {
+  if (phoneLayout) {
     if (!preserveView && !zooming) {
       requestAnimationFrame(() => requestAnimationFrame(alignPhoneBuildingToExceptionalTab));
     }
     return;
   }
+  if (tabletLayout) {
+    if (!preserveView && !zooming) {
+      requestAnimationFrame(centerUsingBaseline);
+    }
+    return;
+  }
   if (!preserveView && !isDragging && !zooming) {
     requestAnimationFrame(centerUsingBaseline);
-      requestAnimationFrame(alignToReference);
+    requestAnimationFrame(alignToReference);
   }
 }
 
