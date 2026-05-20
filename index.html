@@ -20825,6 +20825,25 @@ function clearMobileDeptSelection() {
   applyDeptFilter();
 }
 
+function syncCompactDeptPanelContent() {
+  if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
+  const wardSection = document.getElementById('wardSection');
+  const wardButtons = document.getElementById('wardButtons');
+  updateDeptListVisibility(currentDeptSide);
+  populateDeptList(currentDeptSide);
+  if (currentDept) {
+    setDeptFooterVisible(true);
+    isDeptContentCollapsed = false;
+    syncDeptPanelCollapsedState();
+    renderDept(currentDept);
+    return;
+  }
+  if (wardSection) wardSection.style.display = 'none';
+  if (wardButtons) wardButtons.innerHTML = '';
+  syncMobileDeptSummary();
+  applyDeptFilter();
+}
+
 function hideDeptSearchResults() {
   const resultsEl = document.getElementById('deptSearchResults');
   if (!resultsEl) return;
@@ -20951,9 +20970,7 @@ function syncTabletLandscapeTopPanelState() {
   isDeptContentCollapsed = !showDept;
   syncExceptionalPanelState();
   syncDeptPanelCollapsedState();
-  updateDeptListVisibility(currentDeptSide);
-  populateDeptList(currentDeptSide);
-  syncMobileDeptSummary();
+  syncCompactDeptPanelContent();
   syncTabletPanelToggleButtons();
 }
 
@@ -21158,9 +21175,7 @@ function syncPhoneLayoutPanels() {
     syncDeptPanelCollapsedState();
     isExceptionalPanelExpanded = currentMobileTopPanel === 'exceptional';
     syncExceptionalPanelState();
-    updateDeptListVisibility(currentDeptSide);
-    populateDeptList(currentDeptSide);
-    syncMobileDeptSummary();
+    syncCompactDeptPanelContent();
     syncTabletPanelToggleButtons();
     return;
   }
@@ -21244,9 +21259,7 @@ function syncPhoneLayoutPanels() {
       syncExceptionalPanelState();
       isDeptContentCollapsed = currentMobileTopPanel !== 'dept';
       syncDeptPanelCollapsedState();
-      updateDeptListVisibility(currentDeptSide);
-      populateDeptList(currentDeptSide);
-      syncMobileDeptSummary();
+      syncCompactDeptPanelContent();
       syncTabletPanelToggleButtons();
       syncTabletLandscapeTopPanelState();
       return;
@@ -21326,9 +21339,7 @@ function syncPhoneLayoutPanels() {
       isDeptContentCollapsed = false;
       syncDeptPanelCollapsedState();
     }
-    updateDeptListVisibility(currentDeptSide);
-    populateDeptList(currentDeptSide);
-    syncMobileDeptSummary();
+    syncCompactDeptPanelContent();
     syncTabletPanelToggleButtons();
     return;
   }
