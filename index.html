@@ -6605,11 +6605,17 @@ body.phone-layout-active .private-ward-card-body {
 
 .main-view.tablet-layout.tablet-portrait.phone-layout {
   --top-control-h: 36px;
+  --phone-overlay-max-h: min(40vh, 300px);
 }
 
 .main-view.tablet-layout.tablet-portrait.phone-layout .top-search-floating {
+  position: sticky !important;
+  position: -webkit-sticky !important;
+  top: 0 !important;
+  z-index: 7100 !important;
   gap: 6px !important;
   padding: 6px 6px 0 !important;
+  overflow: visible !important;
 }
 
 .main-view.tablet-layout.tablet-portrait.phone-layout .top-search-box {
@@ -6628,7 +6634,7 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 .main-view.tablet-layout.tablet-portrait.phone-layout .top-linked-panel {
-  height: 116px !important;
+  height: 96px !important;
 }
 
 .main-view.tablet-layout.tablet-portrait.phone-layout .mobile-building-selectors {
@@ -6659,17 +6665,38 @@ body.phone-layout-active .private-ward-card-body {
   padding: 0 3px;
 }
 
+.main-view.tablet-layout.tablet-portrait.phone-layout #topDeptPanel,
+.main-view.tablet-layout.tablet-portrait.phone-layout #topExceptionalPanel,
+.main-view.tablet-layout.tablet-portrait.phone-layout #topCalendarPanel {
+  position: absolute !important;
+  left: 6px !important;
+  right: 6px !important;
+  top: calc(100% + 4px) !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: var(--phone-overlay-max-h) !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.16) !important;
+  z-index: 7120 !important;
+}
+
 .main-view.tablet-layout.tablet-portrait.phone-layout #topDeptPanel .top-dept-body {
-  max-height: min(20vh, 156px) !important;
+  max-height: calc(var(--phone-overlay-max-h) - 18px) !important;
+  overflow-y: auto !important;
 }
 
 .main-view.tablet-layout.tablet-portrait.phone-layout #topExceptionalPanel .exceptional-list {
-  max-height: min(18vh, 132px) !important;
+  max-height: calc(var(--phone-overlay-max-h) - 14px) !important;
+  overflow-y: auto !important;
 }
 
 .main-view.tablet-layout.tablet-portrait.phone-layout #topCalendarPanel .calendar-panel {
-  min-height: 188px;
-  max-height: min(22vh, 188px) !important;
+  min-height: min(176px, var(--phone-overlay-max-h));
+  max-height: var(--phone-overlay-max-h) !important;
+  overflow: hidden !important;
 }
 
 .main-view.tablet-layout.tablet-portrait.phone-layout .building-container {
@@ -19914,6 +19941,10 @@ function isPhoneLikeLayoutMode() {
   return isPhoneLayoutMode() || isTabletPortraitPhoneUiMode();
 }
 
+function isTabletPortraitPhoneOverlayMode() {
+  return isTabletPortraitPhoneUiMode();
+}
+
 function isLikelyIpadDevice() {
   const ua = navigator.userAgent || '';
   const platform = navigator.platform || '';
@@ -20266,6 +20297,21 @@ function stabilizePhoneLayoutVisibility() {
   }
 }
 
+function updatePhoneLikeOverlaySizing() {
+  const mainView = document.querySelector('.main-view');
+  const stack = document.querySelector('.top-search-floating');
+  if (!mainView || !stack) return;
+  if (!isTabletPortraitPhoneOverlayMode()) {
+    mainView.style.removeProperty('--phone-overlay-max-h');
+    return;
+  }
+  const rect = stack.getBoundingClientRect();
+  const viewportH = window.innerHeight || document.documentElement.clientHeight || 0;
+  const available = Math.floor(viewportH - rect.bottom - 10);
+  const capped = Math.max(140, Math.min(available, Math.floor(viewportH * 0.58)));
+  mainView.style.setProperty('--phone-overlay-max-h', `${capped}px`);
+}
+
 function syncPhoneLayoutPanels() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
@@ -20325,6 +20371,7 @@ function syncPhoneLayoutPanels() {
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
+    updatePhoneLikeOverlaySizing();
     return;
   }
   restorePanelFromPlaceholder('calendarMobileRestore', document.getElementById('topCalendarPanel'));
@@ -20363,6 +20410,7 @@ function syncPhoneLayoutPanels() {
     updateDeptListVisibility(currentDeptSide);
     populateDeptList(currentDeptSide);
     syncMobileDeptSummary();
+    updatePhoneLikeOverlaySizing();
     return;
   }
   if (deptPanel) {
@@ -20375,6 +20423,7 @@ function syncPhoneLayoutPanels() {
   updateDeptListVisibility(currentDeptSide);
   populateDeptList(currentDeptSide);
   syncMobileDeptSummary();
+  updatePhoneLikeOverlaySizing();
   enableWardConnectionDrag();
   if (isCalendarPanelVisible) {
     enableCalendarResize();
