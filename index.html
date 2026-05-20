@@ -60,6 +60,462 @@ body {
   padding-right: 0 !important;
 }
 
+#twintower-app {
+  isolation: isolate;
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
+  text-size-adjust: none !important;
+  -webkit-text-size-adjust: none !important;
+}
+
+#twintower-app button,
+#twintower-app input,
+#twintower-app select,
+#twintower-app textarea {
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Intranet-safe baseline for the department system only.
+   Keep this narrowly scoped so blank page layout stays unchanged. */
+#twintower-app .top-search-floating,
+#twintower-app .top-search-floating *,
+#twintower-app #topDeptPanel,
+#twintower-app #topDeptPanel *,
+#twintower-app #leftBuildingSelector,
+#twintower-app #leftBuildingSelector *,
+#twintower-app #rightBuildingSelector,
+#twintower-app #rightBuildingSelector *,
+#twintower-app #mobileBuildingSelectors,
+#twintower-app #mobileBuildingSelectors *,
+#twintower-app #mobileTopTabs,
+#twintower-app #mobileTopTabs * {
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+#twintower-app .top-panel-header {
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+}
+
+#twintower-app .top-filter-input {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  font-weight: 400 !important;
+  color: #1f2937 !important;
+}
+
+#twintower-app .top-building-panel .building-btn,
+#twintower-app .top-dept-panel .dept-btn,
+#twintower-app .dept-collapse-btn,
+#twintower-app .mobile-building-options .building-btn,
+#twintower-app .mobile-top-tab,
+#twintower-app .mobile-dept-reset {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+#twintower-app .top-building-panel .building-btn {
+  padding: 3px 6px !important;
+  font-size: 9px !important;
+  line-height: 1.1 !important;
+  font-weight: 600 !important;
+}
+
+#twintower-app #topDeptPanel.top-panel {
+  min-height: var(--top-control-h) !important;
+  height: var(--top-control-h) !important;
+  padding: 2px 4px !important;
+  gap: 0 !important;
+}
+
+#twintower-app #topDeptPanel.top-panel.expanded {
+  height: auto !important;
+}
+
+#twintower-app .top-dept-panel #deptButtons {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  align-items: stretch !important;
+  grid-auto-rows: minmax(calc(var(--top-control-h) - 8px), auto) !important;
+}
+
+#twintower-app .top-dept-panel .dept-group {
+  width: auto !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 0 !important;
+  height: calc(var(--top-control-h) - 8px) !important;
+  padding: 2px !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  align-items: stretch !important;
+}
+
+#twintower-app #topDeptPanel.top-panel.expanded .dept-group {
+  height: auto !important;
+  min-height: calc(var(--top-control-h) - 8px) !important;
+}
+
+#twintower-app .top-dept-panel .dept-group .dept-btn {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  min-height: calc(var(--top-control-h) - 10px) !important;
+  height: auto !important;
+  padding: 0 8px !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  transition: none !important;
+  transform: none !important;
+  scale: 1 !important;
+  animation: none !important;
+  filter: none !important;
+  outline: none !important;
+  border-width: 1px !important;
+}
+
+#twintower-app #topDeptPanel.top-panel.expanded .dept-group .dept-btn {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.05 !important;
+}
+
+#twintower-app .top-dept-panel .dept-item {
+  padding: 4px 6px !important;
+  font-size: 9px !important;
+  line-height: 1.08 !important;
+  font-weight: 600 !important;
+  min-height: 28px !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  transition: none !important;
+  transform: none !important;
+  scale: 1 !important;
+  animation: none !important;
+  filter: none !important;
+  outline: none !important;
+  border-width: 2px !important;
+}
+
+#twintower-app .top-dept-panel .ward-building-row .dept-item {
+  min-width: 88px !important;
+  flex: 1 1 88px !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn {
+  transition: none !important;
+  transform: none !important;
+  scale: 1 !important;
+  animation: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+#twintower-app .top-dept-panel .dept-btn:hover,
+#twintower-app .top-dept-panel .dept-btn:focus,
+#twintower-app .top-dept-panel .dept-btn:active,
+#twintower-app .top-dept-panel .dept-btn.active:hover,
+#twintower-app .top-dept-panel .dept-item:hover,
+#twintower-app .top-dept-panel .dept-item:focus,
+#twintower-app .top-dept-panel .dept-item:active,
+#twintower-app .top-dept-panel .dept-item.active:hover,
+#twintower-app .top-dept-panel .ward-building-row .dept-item:hover,
+#twintower-app .top-dept-panel .ward-building-row .dept-item.active:hover {
+  transform: none !important;
+  scale: 1 !important;
+  animation: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn:active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.active:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.active:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.active:active {
+  transform: none !important;
+  scale: 1 !important;
+  animation: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb {
+  background-color: #ffffff !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #475569 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb:active {
+  background-color: var(--color-ipeb) !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #475569 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb.active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb.active:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb.active:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-ipeb.active:active {
+  background-color: var(--color-ipeb-border) !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc {
+  background-color: #ffffff !important;
+  border-color: var(--color-mcbtc-border) !important;
+  color: #8b3a62 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc:active {
+  background-color: var(--color-mcbtc) !important;
+  border-color: var(--color-mcbtc-border) !important;
+  color: #8b3a62 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc.active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc.active:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc.active:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc.active:active {
+  background-color: var(--color-mcbtc-border) !important;
+  border-color: var(--color-mcbtc-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030 {
+  background-color: #ffffff !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #8c5a14 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030:active {
+  background-color: var(--color-mcbtc2030) !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #8c5a14 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030.active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030.active:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030.active:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-mcbtc2030.active:active {
+  background-color: var(--color-mcbtc2030-border) !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb {
+  background-color: #ffffff !important;
+  border-color: var(--color-csb-border) !important;
+  color: #7a6a13 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb:active {
+  background-color: var(--color-csb) !important;
+  border-color: var(--color-csb-border) !important;
+  color: #7a6a13 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb.active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb.active:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb.active:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-csb.active:active {
+  background-color: var(--color-csb-border) !important;
+  border-color: var(--color-csb-border) !important;
+  color: #333333 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb {
+  background-color: #ffffff !important;
+  border-color: var(--color-dtb-border) !important;
+  color: #256a86 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb:active {
+  background-color: var(--color-dtb) !important;
+  border-color: var(--color-dtb-border) !important;
+  color: #256a86 !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb.active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb.active:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb.active:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-dtb.active:active {
+  background-color: var(--color-dtb-border) !important;
+  border-color: var(--color-dtb-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb {
+  background-color: #ffffff !important;
+  border-color: var(--color-sb-border) !important;
+  color: #2f7f2f !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb:active {
+  background-color: var(--color-sb) !important;
+  border-color: var(--color-sb-border) !important;
+  color: #2f7f2f !important;
+}
+
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb.active,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb.active:hover,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb.active:focus,
+#twintower-app .top-dept-panel #wardButtons .ward-btn.theme-sb.active:active {
+  background-color: var(--color-sb-border) !important;
+  border-color: var(--color-sb-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb:hover,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb:focus,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb:active {
+  background: var(--color-ipeb) !important;
+  background-color: var(--color-ipeb) !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #475569 !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:hover,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:focus,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:active {
+  background: var(--color-ipeb-border) !important;
+  background-color: var(--color-ipeb-border) !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030:hover,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030:focus,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030:active {
+  background: var(--color-mcbtc2030) !important;
+  background-color: var(--color-mcbtc2030) !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #5b4a3d !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:hover,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:focus,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:active {
+  background: var(--color-mcbtc2030-border) !important;
+  background-color: var(--color-mcbtc2030-border) !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn:hover,
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn:focus,
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn:active {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-color: #d8b4fe !important;
+  color: #8b3ac7 !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active:hover,
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active:focus,
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active:active {
+  background: #c026d3 !important;
+  background-color: #c026d3 !important;
+  border-color: #c026d3 !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-item:hover,
+#twintower-app .top-dept-panel .dept-item:focus,
+#twintower-app .top-dept-panel .dept-item:active {
+  background: #eef2ff !important;
+  border-color: #c7d2fe !important;
+  color: #4338ca !important;
+}
+
+#twintower-app .top-dept-panel .dept-item.active:hover,
+#twintower-app .top-dept-panel .dept-item.active:focus,
+#twintower-app .top-dept-panel .dept-item.active:active {
+  background: #6366f1 !important;
+  border-color: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .ward-building-row .dept-item:hover,
+#twintower-app .top-dept-panel .ward-building-row .dept-item:focus,
+#twintower-app .top-dept-panel .ward-building-row .dept-item:active {
+  background: #faf5ff !important;
+  border-color: #e9d5ff !important;
+  color: #9333ea !important;
+}
+
+#twintower-app .top-dept-panel .ward-building-row .dept-item.active:hover,
+#twintower-app .top-dept-panel .ward-building-row .dept-item.active:focus,
+#twintower-app .top-dept-panel .ward-building-row .dept-item.active:active {
+  background: #a855f7 !important;
+  border-color: #a855f7 !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .main-view.phone-layout .mobile-building-label {
+  font-size: 11px !important;
+  line-height: 1.05 !important;
+  font-weight: 800 !important;
+}
+
+#twintower-app .main-view.phone-layout .mobile-building-options .building-btn,
+#twintower-app .main-view.phone-layout .mobile-top-tab {
+  font-size: 10px !important;
+  line-height: 1.1 !important;
+  font-weight: 700 !important;
+}
+
+#twintower-app .main-view.phone-layout .mobile-dept-name {
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+}
+
 #twintower-app .building {
   display: flex !important;
   flex-direction: column !important;
@@ -924,266 +1380,6 @@ h2 {
 
 .main-view.compact-layout .top-below-row .top-linked-panel {
   height: 100%;
-}
-
-/* Only for intranet/embedded compact layout: restore department item look
-   without affecting blank web mode. */
-.main-view.compact-layout #topDeptPanel.top-panel {
-  min-height: var(--top-control-h) !important;
-  height: var(--top-control-h) !important;
-  padding: 2px 4px !important;
-  gap: 0 !important;
-}
-
-.main-view.compact-layout #topDeptPanel.top-panel.expanded {
-  height: auto !important;
-}
-
-.main-view.compact-layout #topDeptPanel .top-dept-body {
-  flex: 1 !important;
-  min-height: 0 !important;
-  overflow: visible !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0 !important;
-}
-
-.main-view.compact-layout #topDeptPanel #deptButtons {
-  flex: 1 !important;
-  min-height: 0 !important;
-  overflow: visible !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-  gap: 4px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  box-sizing: border-box !important;
-  align-items: stretch !important;
-  grid-auto-rows: minmax(calc(var(--top-control-h) - 8px), auto) !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group {
-  width: auto !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  min-height: 0 !important;
-  height: calc(var(--top-control-h) - 8px) !important;
-  padding: 2px !important;
-  border: 0 !important;
-  border-radius: 6px !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  box-sizing: border-box !important;
-  align-items: stretch !important;
-}
-
-.main-view.compact-layout #topDeptPanel.top-panel.expanded .dept-group {
-  height: auto !important;
-  min-height: calc(var(--top-control-h) - 8px) !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group .dept-btn {
-  flex: 1 1 0 !important;
-  width: auto !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  min-height: calc(var(--top-control-h) - 10px) !important;
-  height: auto !important;
-  padding: 0 8px !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  margin: 0 !important;
-  border: 0 !important;
-  border-radius: 6px !important;
-  box-shadow: none !important;
-  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  line-height: 1 !important;
-  background: transparent !important;
-  background-image: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-}
-
-.main-view.compact-layout #topDeptPanel.top-panel.expanded .dept-group .dept-btn {
-  white-space: normal !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  overflow-wrap: anywhere !important;
-  line-height: 1.05 !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-list {
-  grid-column: 1 / -1 !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  margin-top: 4px !important;
-}
-
-.main-view.compact-layout #topDeptPanel #nonList.dept-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-btn {
-  margin-bottom: 0 !important;
-  text-align: center !important;
-  flex: 0 0 auto !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] {
-  background: #eef4ff !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn {
-  color: #3157c8 !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb {
-  background: var(--color-ipeb) !important;
-  border: 1px solid var(--color-ipeb-border) !important;
-  color: #475569 !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active,
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:hover {
-  background: var(--color-ipeb-border) !important;
-  border-color: var(--color-ipeb-border) !important;
-  color: #ffffff !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030 {
-  background: var(--color-mcbtc2030) !important;
-  border: 1px solid var(--color-mcbtc2030-border) !important;
-  color: #5b4a3d !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active,
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:hover {
-  background: var(--color-mcbtc2030-border) !important;
-  border-color: var(--color-mcbtc2030-border) !important;
-  color: #ffffff !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] {
-  background: #f8efff !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] .dept-btn {
-  color: #8b3ac7 !important;
-  background: transparent !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] .dept-btn.active,
-.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] .dept-btn.active:hover {
-  background: #c026d3 !important;
-  color: #ffffff !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-item {
-  border-color: #c7d2fe !important;
-  background: #eef2ff !important;
-  color: #4338ca !important;
-  white-space: normal !important;
-  overflow-wrap: anywhere !important;
-  line-height: 1.08 !important;
-  min-height: 28px !important;
-  height: auto !important;
-  padding: 4px 6px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  border-width: 2px !important;
-  border-style: solid !important;
-  border-radius: 8px !important;
-  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
-  font-size: 9px !important;
-  font-weight: 600 !important;
-  box-shadow: none !important;
-  background-image: none !important;
-}
-
-.main-view.compact-layout #topDeptPanel .dept-item.active,
-.main-view.compact-layout #topDeptPanel .dept-item.active:hover {
-  background: #6366f1 !important;
-  border-color: #6366f1 !important;
-  color: #ffffff !important;
-}
-
-.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item,
-.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item:hover {
-  border-color: #e9d5ff !important;
-  background: #faf5ff !important;
-  color: #9333ea !important;
-}
-
-.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item.active,
-.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item.active:hover {
-  background: #a855f7 !important;
-  border-color: #a855f7 !important;
-  color: #ffffff !important;
-}
-
-.main-view.compact-layout #topDeptPanel #wardButtons {
-  max-height: none !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  flex-wrap: nowrap !important;
-  align-items: stretch !important;
-  gap: 4px !important;
-}
-
-.main-view.compact-layout #topDeptPanel .ward-building-row {
-  flex-wrap: wrap !important;
-}
-
-.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item {
-  flex: 1 1 88px !important;
-  min-width: 88px !important;
-}
-
-.main-view.compact-layout #topDeptPanel #wardButtons .ward-btn {
-  padding: 4px 6px !important;
-  border: 2px solid #ffc107 !important;
-  background: white !important;
-  color: #856404 !important;
-  border-radius: 6px !important;
-  cursor: pointer !important;
-  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
-  font-size: 9px !important;
-  font-weight: 600 !important;
-  transition: all 0.3s ease !important;
-  margin: 1px !important;
-  height: 24px !important;
-  display: inline-flex !important;
-  box-sizing: border-box !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  overflow: hidden !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  text-overflow: ellipsis !important;
-  line-height: 1 !important;
-  width: 100% !important;
-  background-image: none !important;
-  box-shadow: none !important;
-}
-
-.main-view.compact-layout #topDeptPanel #wardButtons .ward-btn.active {
-  background: #ffc107 !important;
-  border-color: #ffc107 !important;
-  color: #856404 !important;
-  font-weight: bold !important;
 }
 
 .main-view.phone-layout {
@@ -2284,6 +2480,58 @@ h2 {
 .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active:hover {
   background: #c026d3;
   color: #ffffff;
+}
+
+/* Harden button colors against intranet/global theme overrides. */
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb {
+  background: var(--color-ipeb) !important;
+  background-color: var(--color-ipeb) !important;
+  background-image: none !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #475569 !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:hover {
+  background: var(--color-ipeb-border) !important;
+  background-color: var(--color-ipeb-border) !important;
+  background-image: none !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030 {
+  background: var(--color-mcbtc2030) !important;
+  background-color: var(--color-mcbtc2030) !important;
+  background-image: none !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #5b4a3d !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:hover {
+  background: var(--color-mcbtc2030-border) !important;
+  background-color: var(--color-mcbtc2030-border) !important;
+  background-image: none !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-color: #d8b4fe !important;
+  color: #8b3ac7 !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active,
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active:hover {
+  background: #c026d3 !important;
+  background-color: #c026d3 !important;
+  background-image: none !important;
+  border-color: #c026d3 !important;
+  color: #ffffff !important;
 }
 
 .top-dept-panel .dept-item {
@@ -17409,6 +17657,7 @@ function renderDepartments() {
   targetBtn.onclick = () => setDeptTarget(currentDeptTarget === 'ipeb' ? 'mcbtc2030' : 'ipeb');
   targetGroup.appendChild(targetBtn);
   deptButtons.appendChild(targetGroup);
+  applyDeptTargetButtonTheme(targetBtn);
 
   const sideGroup = document.createElement('div');
   sideGroup.className = 'dept-group';
@@ -17424,6 +17673,8 @@ function renderDepartments() {
   sideGroup.appendChild(clinicalBtn);
   sideGroup.appendChild(nonBtn);
   deptButtons.appendChild(sideGroup);
+  applyDeptSideButtonTheme(clinicalBtn, currentDeptSide === 'clinical');
+  applyDeptSideButtonTheme(nonBtn, currentDeptSide === 'nonClinical');
   const clinicalList = document.createElement('div');
   clinicalList.id = 'clinicalList';
   clinicalList.className = 'dept-list';
@@ -17442,7 +17693,43 @@ function renderDepartments() {
   } else {
     syncDeptPanelCollapsedState();
   }
-  scheduleCompactDeptPanelInlineStyles();
+}
+
+function applyDeptTargetButtonTheme(btn) {
+  if (!btn) return;
+  const isMcbtc2030 = currentDeptTarget === 'mcbtc2030';
+  const baseBg = isMcbtc2030 ? '#FFE0B2' : '#E6E6FA';
+  const activeBg = isMcbtc2030 ? '#FF8C00' : '#9370DB';
+  const baseText = isMcbtc2030 ? '#5b4a3d' : '#475569';
+  btn.style.setProperty('appearance', 'none', 'important');
+  btn.style.setProperty('-webkit-appearance', 'none', 'important');
+  btn.style.setProperty('background-image', 'none', 'important');
+  btn.style.setProperty('box-shadow', 'none', 'important');
+  btn.style.setProperty('text-shadow', 'none', 'important');
+  btn.style.setProperty('background', activeBg, 'important');
+  btn.style.setProperty('background-color', activeBg, 'important');
+  btn.style.setProperty('border-color', activeBg, 'important');
+  btn.style.setProperty('color', '#ffffff', 'important');
+  btn.dataset.baseBg = baseBg;
+  btn.dataset.activeBg = activeBg;
+  btn.dataset.baseText = baseText;
+}
+
+function applyDeptSideButtonTheme(btn, active) {
+  if (!btn) return;
+  const baseBg = '#ffffff';
+  const baseBorder = '#d8b4fe';
+  const baseText = '#8b3ac7';
+  const activeBg = '#c026d3';
+  btn.style.setProperty('appearance', 'none', 'important');
+  btn.style.setProperty('-webkit-appearance', 'none', 'important');
+  btn.style.setProperty('background-image', 'none', 'important');
+  btn.style.setProperty('box-shadow', 'none', 'important');
+  btn.style.setProperty('text-shadow', 'none', 'important');
+  btn.style.setProperty('background', active ? activeBg : baseBg, 'important');
+  btn.style.setProperty('background-color', active ? activeBg : baseBg, 'important');
+  btn.style.setProperty('border-color', active ? activeBg : baseBorder, 'important');
+  btn.style.setProperty('color', active ? '#ffffff' : baseText, 'important');
 }
 
 function updateDeptSideButtons() {
@@ -17453,217 +17740,10 @@ function updateDeptSideButtons() {
     const isClinical = label === 'clinical';
     const active = (isClinical && currentDeptSide === 'clinical') || (!isClinical && currentDeptSide === 'nonClinical');
     btn.classList.toggle('active', active);
+    applyDeptSideButtonTheme(btn, active);
   });
-  scheduleCompactDeptPanelInlineStyles();
-}
-
-let compactDeptPanelInlineRaf = 0;
-
-function isCompactEmbeddedLayout() {
-  const mainView = document.querySelector('.main-view');
-  return !!(mainView && mainView.classList.contains('compact-layout') && !mainView.classList.contains('phone-layout'));
-}
-
-function setImportantInlineStyles(el, styles) {
-  if (!el || !styles) return;
-  Object.entries(styles).forEach(([key, value]) => {
-    el.style.setProperty(key, value, 'important');
-  });
-}
-
-function applyCompactDeptPanelInlineStyles() {
-  if (!isCompactEmbeddedLayout()) return;
-  const panel = document.getElementById('topDeptPanel');
-  if (!panel) return;
-
-  const targetGroup = panel.querySelector('.dept-group[data-role="target-group"]');
-  const targetBtn = targetGroup ? targetGroup.querySelector('.dept-btn') : null;
-  if (targetGroup) {
-    setImportantInlineStyles(targetGroup, {
-      'background': '#eef4ff',
-      'border-radius': '6px',
-      'padding': '2px',
-      'box-shadow': 'none'
-    });
-  }
-  if (targetBtn) {
-    const isMcbtc2030 = targetBtn.classList.contains('theme-mcbtc2030');
-    setImportantInlineStyles(targetBtn, {
-      'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
-      'font-size': '11px',
-      'font-weight': '600',
-      'line-height': '1',
-      'min-height': 'calc(var(--top-control-h) - 10px)',
-      'padding': '0 8px',
-      'border-radius': '6px',
-      'margin': '0',
-      'border-width': '1px',
-      'border-style': 'solid',
-      'box-shadow': 'none',
-      'background-image': 'none',
-      'color': isMcbtc2030 ? '#ffffff' : '#ffffff',
-      'background': isMcbtc2030 ? 'var(--color-mcbtc2030-border)' : 'var(--color-ipeb-border)',
-      'border-color': isMcbtc2030 ? 'var(--color-mcbtc2030-border)' : 'var(--color-ipeb-border)'
-    });
-  }
-
-  const sideGroup = panel.querySelector('.dept-group[data-role="side-group"]');
-  if (sideGroup) {
-    setImportantInlineStyles(sideGroup, {
-      'background': '#f8efff',
-      'border-radius': '6px',
-      'padding': '2px',
-      'box-shadow': 'none'
-    });
-    sideGroup.querySelectorAll('.dept-btn').forEach((btn) => {
-      const active = btn.classList.contains('active');
-      setImportantInlineStyles(btn, {
-        'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
-        'font-size': '11px',
-        'font-weight': '600',
-        'line-height': '1',
-        'min-height': 'calc(var(--top-control-h) - 10px)',
-        'padding': '0 8px',
-        'border-radius': '6px',
-        'margin': '0',
-        'border': '0',
-        'box-shadow': 'none',
-        'background-image': 'none',
-        'color': active ? '#ffffff' : '#8b3ac7',
-        'background': active ? '#c026d3' : 'transparent'
-      });
-    });
-  }
-
-  panel.querySelectorAll('.dept-list').forEach((list) => {
-    setImportantInlineStyles(list, {
-      'margin-top': '4px',
-      'gap': '4px'
-    });
-  });
-
-  panel.querySelectorAll('.dept-item').forEach((item) => {
-    const isActive = item.classList.contains('active');
-    const isWardRow = !!item.closest('.ward-building-row');
-    setImportantInlineStyles(item, {
-      'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
-      'font-size': '9px',
-      'font-weight': '600',
-      'line-height': '1.08',
-      'min-height': '28px',
-      'height': 'auto',
-      'padding': '4px 6px',
-      'display': 'flex',
-      'align-items': 'center',
-      'justify-content': 'center',
-      'text-align': 'center',
-      'white-space': 'normal',
-      'overflow-wrap': 'anywhere',
-      'border-width': '2px',
-      'border-style': 'solid',
-      'border-radius': '8px',
-      'box-shadow': 'none',
-      'background-image': 'none',
-      'background': isActive
-        ? (isWardRow ? '#a855f7' : '#6366f1')
-        : (isWardRow ? '#faf5ff' : '#eef2ff'),
-      'border-color': isActive
-        ? (isWardRow ? '#a855f7' : '#6366f1')
-        : (isWardRow ? '#e9d5ff' : '#c7d2fe'),
-      'color': isActive ? '#ffffff' : (isWardRow ? '#9333ea' : '#4338ca')
-    });
-    if (isWardRow) {
-      setImportantInlineStyles(item, {
-        'flex': '1 1 88px',
-        'min-width': '88px'
-      });
-    }
-  });
-
-  const wardButtons = panel.querySelector('#wardButtons');
-  if (wardButtons) {
-    setImportantInlineStyles(wardButtons, {
-      'max-height': 'none',
-      'overflow-x': 'hidden',
-      'overflow-y': 'auto',
-      'display': 'flex',
-      'flex-direction': 'column',
-      'flex-wrap': 'nowrap',
-      'align-items': 'stretch',
-      'gap': '4px'
-    });
-  }
-
-  panel.querySelectorAll('.ward-btn').forEach((btn) => {
-    const active = btn.classList.contains('active');
-    const isDay = btn.classList.contains('ward-btn-day');
-    const isTwoLine = btn.classList.contains('ward-btn-fit-two-line');
-    let background = '#ffffff';
-    let borderColor = '#ffc107';
-    let color = '#856404';
-    if (btn.classList.contains('theme-ipeb')) {
-      background = active ? 'var(--color-ipeb-border)' : 'var(--color-ipeb)';
-      borderColor = active ? 'var(--color-ipeb-border)' : 'var(--color-ipeb-border)';
-      color = active ? '#ffffff' : '#333333';
-    } else if (btn.classList.contains('theme-mcbtc')) {
-      background = active ? 'var(--color-mcbtc-border)' : 'var(--color-mcbtc)';
-      borderColor = active ? 'var(--color-mcbtc-border)' : 'var(--color-mcbtc-border)';
-      color = active ? '#ffffff' : '#333333';
-    } else if (btn.classList.contains('theme-csb')) {
-      background = active ? 'var(--color-csb-border)' : 'var(--color-csb)';
-      borderColor = active ? 'var(--color-csb-border)' : 'var(--color-csb-border)';
-      color = '#333333';
-    } else if (btn.classList.contains('theme-dtb')) {
-      background = active ? 'var(--color-dtb-border)' : 'var(--color-dtb)';
-      borderColor = active ? 'var(--color-dtb-border)' : 'var(--color-dtb-border)';
-      color = active ? '#ffffff' : '#333333';
-    } else if (btn.classList.contains('theme-sb')) {
-      background = active ? 'var(--color-sb-border)' : 'var(--color-sb)';
-      borderColor = active ? 'var(--color-sb-border)' : 'var(--color-sb-border)';
-      color = active ? '#ffffff' : '#333333';
-    } else if (active) {
-      background = '#ffc107';
-      borderColor = '#ffc107';
-    }
-    setImportantInlineStyles(btn, {
-      'font-family': "'PingFang TC','Noto Sans TC','Microsoft JhengHei','Helvetica Neue',Arial,sans-serif",
-      'font-size': isDay ? '8px' : '9px',
-      'font-weight': active ? '700' : '600',
-      'line-height': isTwoLine || isDay ? '1.05' : '1',
-      'height': isTwoLine ? '32px' : '24px',
-      'min-height': isTwoLine ? '32px' : '24px',
-      'padding': isTwoLine || isDay ? '2px 4px' : '4px 6px',
-      'border-width': '2px',
-      'border-style': 'solid',
-      'border-radius': '6px',
-      'background': background,
-      'border-color': borderColor,
-      'color': color,
-      'box-shadow': 'none',
-      'background-image': 'none',
-      'margin': '1px',
-      'width': '100%',
-      'min-width': '0',
-      'max-width': '100%',
-      'display': isTwoLine || isDay ? '-webkit-box' : 'inline-flex',
-      'align-items': 'center',
-      'justify-content': 'center',
-      'text-align': 'center',
-      'white-space': isTwoLine || isDay ? 'normal' : 'nowrap',
-      'overflow': 'hidden',
-      'text-overflow': isTwoLine || isDay ? 'clip' : 'ellipsis',
-      'box-sizing': 'border-box'
-    });
-  });
-}
-
-function scheduleCompactDeptPanelInlineStyles() {
-  if (!isCompactEmbeddedLayout()) return;
-  if (compactDeptPanelInlineRaf) return;
-  compactDeptPanelInlineRaf = requestAnimationFrame(() => {
-    compactDeptPanelInlineRaf = 0;
-    applyCompactDeptPanelInlineStyles();
-  });
+  const targetBtn = document.querySelector('#deptButtons [data-role="target-group"] .dept-btn');
+  if (targetBtn) applyDeptTargetButtonTheme(targetBtn);
 }
 
 function updateDeptListVisibility(activeSide) {
@@ -17671,7 +17751,6 @@ function updateDeptListVisibility(activeSide) {
   const nonList = document.getElementById('nonList');
   if (clinicalList) clinicalList.style.display = activeSide === 'clinical' ? 'grid' : 'none';
   if (nonList) nonList.style.display = activeSide === 'nonClinical' ? 'grid' : 'none';
-  scheduleCompactDeptPanelInlineStyles();
 }
 
 function sortDeptKeys(keys) {
@@ -17703,7 +17782,6 @@ function populateDeptList(side) {
     btn.onclick = () => renderDept(deptKey);
     currentList.appendChild(btn);
   });
-  scheduleCompactDeptPanelInlineStyles();
 }
 
 function setDeptTarget(target) {
@@ -18310,13 +18388,11 @@ function renderDept(deptKey) {
     if (groupNames.length > 0) {
       renderDeptGroup(deptKey, groupNames[0]);
       syncMobileDeptSummary();
-      scheduleCompactDeptPanelInlineStyles();
       return;
     }
     if (data.direct) {
       syncMobileDeptSummary();
       applyWardFilter();
-      scheduleCompactDeptPanelInlineStyles();
       return;
     }
   }
@@ -18327,7 +18403,6 @@ function renderDept(deptKey) {
     wardButtons.appendChild(empty);
     syncMobileDeptSummary();
     applyWardFilter();
-    scheduleCompactDeptPanelInlineStyles();
     return;
   }
   const categoryBar = document.createElement('div');
@@ -18353,7 +18428,6 @@ function renderDept(deptKey) {
     applyWardFilter();
   }
   syncMobileDeptSummary();
-  scheduleCompactDeptPanelInlineStyles();
 }
 
 function renderDeptGroup(deptKey, groupName) {
@@ -18378,7 +18452,6 @@ function renderDeptGroup(deptKey, groupName) {
   wardButtons.appendChild(buildMenuItemsContainer(group.direct, { dayMode: /day|special/i.test(String(groupName || '')) }));
   syncMobileDeptSummary();
   applyWardFilter();
-  scheduleCompactDeptPanelInlineStyles();
 }
 function renderDeptCategory(deptKey, cat) {
   const wardButtons = document.getElementById('wardButtons');
@@ -18402,7 +18475,6 @@ function renderDeptCategory(deptKey, cat) {
   wardButtons.appendChild(buildMenuItemsContainer(data[cat], { dayMode: cat === 'day' }));
   syncMobileDeptSummary();
   applyWardFilter();
-  scheduleCompactDeptPanelInlineStyles();
 }
 function resolveDeptItem(buildingKey, item) {
   const normalizedBuildingKey = normalizeMenuBuildingKey(buildingKey);
@@ -18465,7 +18537,6 @@ function handleAllSelection(buildingKey, items) {
   });
   updateDisplay();
   updateLinkDisplay();
-  scheduleCompactDeptPanelInlineStyles();
 }
 function handleDeptItemClick(buildingKey, item) {
   hideDeptSearchResults();
@@ -18493,7 +18564,6 @@ function handleDeptItemClick(buildingKey, item) {
   });
   updateDisplay();
   updateLinkDisplay();
-  scheduleCompactDeptPanelInlineStyles();
 }
 
 function findLeftByName(buildingIndex, name) {
@@ -21002,7 +21072,6 @@ function refreshEmbeddedLayout() {
   stabilizePhoneLayoutVisibility();
   syncPhoneLayoutPanels();
   updateTopPanelSizing();
-  scheduleCompactDeptPanelInlineStyles();
   scheduleWardButtonNormalization();
   scheduleFitBuildingToViewport();
 }
