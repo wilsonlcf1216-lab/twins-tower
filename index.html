@@ -926,6 +926,266 @@ h2 {
   height: 100%;
 }
 
+/* Only for intranet/embedded compact layout: restore department item look
+   without affecting blank web mode. */
+.main-view.compact-layout #topDeptPanel.top-panel {
+  min-height: var(--top-control-h) !important;
+  height: var(--top-control-h) !important;
+  padding: 2px 4px !important;
+  gap: 0 !important;
+}
+
+.main-view.compact-layout #topDeptPanel.top-panel.expanded {
+  height: auto !important;
+}
+
+.main-view.compact-layout #topDeptPanel .top-dept-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+}
+
+.main-view.compact-layout #topDeptPanel #deptButtons {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  align-items: stretch !important;
+  grid-auto-rows: minmax(calc(var(--top-control-h) - 8px), auto) !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group {
+  width: auto !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 0 !important;
+  height: calc(var(--top-control-h) - 8px) !important;
+  padding: 2px !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  align-items: stretch !important;
+}
+
+.main-view.compact-layout #topDeptPanel.top-panel.expanded .dept-group {
+  height: auto !important;
+  min-height: calc(var(--top-control-h) - 8px) !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group .dept-btn {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  min-height: calc(var(--top-control-h) - 10px) !important;
+  height: auto !important;
+  padding: 0 8px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  background: transparent !important;
+  background-image: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.main-view.compact-layout #topDeptPanel.top-panel.expanded .dept-group .dept-btn {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.05 !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-list {
+  grid-column: 1 / -1 !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  margin-top: 4px !important;
+}
+
+.main-view.compact-layout #topDeptPanel #nonList.dept-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-btn {
+  margin-bottom: 0 !important;
+  text-align: center !important;
+  flex: 0 0 auto !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] {
+  background: #eef4ff !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn {
+  color: #3157c8 !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb {
+  background: var(--color-ipeb) !important;
+  border: 1px solid var(--color-ipeb-border) !important;
+  color: #475569 !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active,
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:hover {
+  background: var(--color-ipeb-border) !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #ffffff !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030 {
+  background: var(--color-mcbtc2030) !important;
+  border: 1px solid var(--color-mcbtc2030-border) !important;
+  color: #5b4a3d !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active,
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:hover {
+  background: var(--color-mcbtc2030-border) !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #ffffff !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] {
+  background: #f8efff !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] .dept-btn {
+  color: #8b3ac7 !important;
+  background: transparent !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] .dept-btn.active,
+.main-view.compact-layout #topDeptPanel .dept-group[data-role="side-group"] .dept-btn.active:hover {
+  background: #c026d3 !important;
+  color: #ffffff !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-item {
+  border-color: #c7d2fe !important;
+  background: #eef2ff !important;
+  color: #4338ca !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.08 !important;
+  min-height: 28px !important;
+  height: auto !important;
+  padding: 4px 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-radius: 8px !important;
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+.main-view.compact-layout #topDeptPanel .dept-item.active,
+.main-view.compact-layout #topDeptPanel .dept-item.active:hover {
+  background: #6366f1 !important;
+  border-color: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item,
+.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item:hover {
+  border-color: #e9d5ff !important;
+  background: #faf5ff !important;
+  color: #9333ea !important;
+}
+
+.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item.active,
+.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item.active:hover {
+  background: #a855f7 !important;
+  border-color: #a855f7 !important;
+  color: #ffffff !important;
+}
+
+.main-view.compact-layout #topDeptPanel #wardButtons {
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+}
+
+.main-view.compact-layout #topDeptPanel .ward-building-row {
+  flex-wrap: wrap !important;
+}
+
+.main-view.compact-layout #topDeptPanel .ward-building-row .dept-item {
+  flex: 1 1 88px !important;
+  min-width: 88px !important;
+}
+
+.main-view.compact-layout #topDeptPanel #wardButtons .ward-btn {
+  padding: 4px 6px !important;
+  border: 2px solid #ffc107 !important;
+  background: white !important;
+  color: #856404 !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  margin: 1px !important;
+  height: 24px !important;
+  display: inline-flex !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  line-height: 1 !important;
+  width: 100% !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.main-view.compact-layout #topDeptPanel #wardButtons .ward-btn.active {
+  background: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #856404 !important;
+  font-weight: bold !important;
+}
+
 .main-view.phone-layout {
   padding: max(20px, env(safe-area-inset-top, 0px)) 0 0;
   overflow-x: hidden;
