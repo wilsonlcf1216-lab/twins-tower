@@ -1999,7 +1999,7 @@ h2 {
 .main-view.tablet-layout.tablet-landscape {
   --tablet-panel-gap: 6px;
   --tablet-panel-max-h: min(24vh, 208px);
-  --tablet-link-panel-h: 118px;
+  --tablet-link-panel-h: 132px;
   --tablet-landscape-left-w: min(29vw, 300px);
   padding: 0 0 8px;
 }
@@ -2048,10 +2048,13 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape .top-below-row {
   display: flex !important;
-  width: var(--tablet-landscape-left-w);
-  min-width: 220px;
-  margin: 4px 0 8px 6px;
-  height: var(--top-linked-h);
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 6px;
+  width: calc(100% - var(--tablet-landscape-left-w) - 18px);
+  min-width: 0;
+  margin: 4px 6px 8px calc(var(--tablet-landscape-left-w) + 12px);
+  height: auto;
 }
 
 .main-view.tablet-layout.tablet-landscape .top-search-floating .top-panel {
@@ -2059,17 +2062,20 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape .top-linked-panel {
-  flex: 1 1 auto;
+  order: 1;
+  flex: 1 1 100%;
   width: 100%;
   min-width: 0;
+  min-height: var(--tablet-link-panel-h);
+  height: var(--tablet-link-panel-h);
 }
 
-.main-view.tablet-layout.tablet-landscape .mobile-top-tabs,
 .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  width: 100%;
-  flex: 1 1 100%;
+  width: auto;
+  flex: 1 1 calc((100% - 12px) / 3);
+  min-width: 0;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-building-row {
@@ -2096,7 +2102,7 @@ h2 {
 .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  order: 3;
+  order: 2;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
@@ -2112,18 +2118,24 @@ h2 {
   font-size: 12px;
 }
 
+.main-view.tablet-layout.tablet-landscape #topDeptPanel,
+.main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
+.main-view.tablet-layout.tablet-landscape #topCalendarPanel {
+  align-self: stretch;
+}
+
 .main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
-  max-height: calc(var(--tablet-panel-max-h) + 6px);
+  max-height: min(20vh, 170px);
   padding: 4px 6px 6px;
 }
 
 .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
-  max-height: calc(var(--tablet-panel-max-h) - 30px);
+  max-height: min(20vh, 170px);
   padding: 4px 6px 6px;
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
-  max-height: min(14vh, 116px);
+  max-height: min(12vh, 98px);
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tab {
@@ -2137,7 +2149,7 @@ h2 {
 
 .main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
   min-height: 172px;
-  max-height: min(26vh, 220px);
+  max-height: min(20vh, 170px);
 }
 
 .main-view.tablet-layout.tablet-landscape .building-container {
@@ -7127,7 +7139,7 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape {
   --tablet-panel-gap: 6px !important;
   --tablet-panel-max-h: min(24vh, 208px) !important;
-  --tablet-link-panel-h: 118px !important;
+  --tablet-link-panel-h: 132px !important;
   --tablet-landscape-left-w: min(29vw, 300px) !important;
 }
 
@@ -7154,10 +7166,13 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-below-row {
   display: flex !important;
-  width: var(--tablet-landscape-left-w) !important;
-  min-width: 220px !important;
-  margin: 4px 0 8px 6px !important;
-  height: var(--top-linked-h) !important;
+  flex-wrap: wrap !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+  width: calc(100% - var(--tablet-landscape-left-w) - 18px) !important;
+  min-width: 0 !important;
+  margin: 4px 6px 8px calc(var(--tablet-landscape-left-w) + 12px) !important;
+  height: auto !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tabs {
@@ -7174,17 +7189,20 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-linked-panel {
-  flex: 1 1 auto !important;
+  order: 1 !important;
+  flex: 1 1 100% !important;
   width: 100% !important;
   min-width: 0 !important;
+  min-height: var(--tablet-link-panel-h) !important;
+  height: var(--tablet-link-panel-h) !important;
 }
 
-#twintower-app .main-view.tablet-layout.tablet-landscape .mobile-top-tabs,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  width: 100% !important;
-  flex: 1 1 100% !important;
+  width: auto !important;
+  flex: 1 1 calc((100% - 12px) / 3) !important;
+  min-width: 0 !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .mobile-building-row {
@@ -7211,7 +7229,7 @@ body.phone-layout-active .private-ward-card-body {
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
 #twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
-  order: 3 !important;
+  order: 2 !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel > .top-panel-header,
@@ -7222,22 +7240,33 @@ body.phone-layout-active .private-ward-card-body {
   font-size: 12px !important;
 }
 
+#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel,
+#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel {
+  align-self: stretch !important;
+}
+
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel .top-dept-body {
-  max-height: calc(var(--tablet-panel-max-h) + 6px) !important;
+  max-height: min(20vh, 170px) !important;
   padding: 4px 6px 6px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topExceptionalPanel .exceptional-list {
-  max-height: calc(var(--tablet-panel-max-h) - 30px) !important;
+  max-height: min(20vh, 170px) !important;
   padding: 4px 6px 6px !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
-  max-height: min(14vh, 116px) !important;
+  max-height: min(12vh, 98px) !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box .dept-search-results {
   max-height: min(30vh, 240px) !important;
+}
+
+#twintower-app .main-view.tablet-layout.tablet-landscape #topCalendarPanel .calendar-panel {
+  min-height: 172px !important;
+  max-height: min(20vh, 170px) !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-portrait .top-search-floating {
@@ -20494,7 +20523,7 @@ function getDefaultPanOffsets() {
   }
   if (isTabletLayoutMode()) {
     const landscape = isLandscapeViewport();
-    return { x: landscape ? basePanX + 64 : basePanX + 28, y: basePanY + 8 };
+    return { x: landscape ? basePanX + 38 : basePanX + 28, y: basePanY + 8 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -20572,8 +20601,8 @@ function getTabletConnectionPanelFixedHeight() {
   const raw = baseHeight + (maxSideSections * sectionHeight) + (maxSideItems * itemHeight);
   const tabletPortrait = isTabletLayoutMode() && !isLandscapeViewport();
   const tabletLandscape = isTabletLayoutMode() && isLandscapeViewport();
-  const viewportCap = Math.round((window.innerHeight || 900) * (tabletPortrait ? 0.22 : (tabletLandscape ? 0.18 : 0.26)));
-  return Math.max(tabletPortrait ? 136 : (tabletLandscape ? 108 : 152), Math.min(raw || (tabletLandscape ? 152 : 188), viewportCap || (tabletPortrait ? 210 : (tabletLandscape ? 138 : 240))));
+  const viewportCap = Math.round((window.innerHeight || 900) * (tabletPortrait ? 0.22 : (tabletLandscape ? 0.22 : 0.26)));
+  return Math.max(tabletPortrait ? 136 : (tabletLandscape ? 126 : 152), Math.min(raw || (tabletLandscape ? 170 : 188), viewportCap || (tabletPortrait ? 210 : (tabletLandscape ? 174 : 240))));
 }
 
 function syncMobileDeptSummary() {
@@ -20846,6 +20875,7 @@ function syncPhoneLayoutPanels() {
   const panel = document.getElementById('calendarPanel');
   const linked = document.querySelector('.top-linked-panel');
   const stack = document.querySelector('.top-search-floating');
+  const anchorRow = document.querySelector('.top-below-row');
   if (phoneLayout) {
     dockWardConnectionPanel();
     dockCalendarPanel();
@@ -20915,8 +20945,10 @@ function syncPhoneLayoutPanels() {
         ensurePanelPlaceholder('calendarTabletDeckRestore', wrap);
         if (mobileSelectors && mobileSelectors.parentElement !== stack) stack.appendChild(mobileSelectors);
         if (searchBox && searchBox.parentElement !== stack) stack.appendChild(searchBox);
-        if (deptPanel && deptPanel.parentElement !== stack) stack.appendChild(deptPanel);
-        if (exceptionalPanel && exceptionalPanel.parentElement !== stack) stack.appendChild(exceptionalPanel);
+      }
+      if (anchorRow) {
+        if (deptPanel && deptPanel.parentElement !== anchorRow) anchorRow.appendChild(deptPanel);
+        if (exceptionalPanel && exceptionalPanel.parentElement !== anchorRow) anchorRow.appendChild(exceptionalPanel);
         if (wrap) {
           wrap.classList.remove('calendar-floating', 'calendar-dragging');
           wrap.style.left = '';
@@ -20924,7 +20956,7 @@ function syncPhoneLayoutPanels() {
           wrap.style.width = '';
           wrap.style.height = '';
           delete wrap.dataset.manualPosition;
-          if (wrap.parentElement !== stack) stack.appendChild(wrap);
+          if (wrap.parentElement !== anchorRow) anchorRow.appendChild(wrap);
         }
       }
       if (mobileSelectors) mobileSelectors.style.setProperty('display', 'grid', 'important');
@@ -23312,7 +23344,7 @@ function centerUsingBaseline() {
   const halfViewportInContentUnits = container.clientWidth / (2 * scale);
   let biasPx = 0;
   if (mainView && mainView.classList.contains('tablet-layout')) {
-    biasPx = isLandscapeViewport() ? 64 : 42;
+    biasPx = isLandscapeViewport() ? 38 : 42;
   }
   const biasContentUnits = biasPx / scale;
   const desired = Math.max(0, Math.min(targetX - halfViewportInContentUnits + (info.width || 0) / 2 + biasContentUnits, maxScroll));
