@@ -2415,17 +2415,18 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 26px;
+  min-width: 54px;
   height: 26px;
-  padding: 0 8px;
+  padding: 0 10px;
   border: 1px solid rgba(165, 180, 252, 0.95);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.96);
   color: #4338ca;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .panel-toggle-btn:hover {
@@ -6902,6 +6903,10 @@ body.phone-layout-active .private-ward-card-body {
 
 #twintower-app .main-view.tablet-layout .panel-toggle-btn {
   flex: 0 0 auto !important;
+  min-width: 54px !important;
+  padding: 0 10px !important;
+  font-size: 11px !important;
+  white-space: nowrap !important;
 }
 
 #twintower-app .main-view.tablet-layout #topDeptPanel .top-dept-body {
@@ -7040,7 +7045,7 @@ body.phone-layout-active .private-ward-card-body {
           <span class="exceptional-header-icon">!</span>
           <span class="top-panel-title">Exceptional Areas</span>
           <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('exceptional')" aria-label="Toggle Exceptional Areas">
-            <span class="exceptional-toggle-icon" id="exceptionalHeaderToggleIcon">▼</span>
+            <span class="exceptional-toggle-icon" id="exceptionalHeaderToggleIcon">展開</span>
           </button>
         </div>
         <div class="exceptional-list" id="exceptionalAreaList"></div>
@@ -7077,7 +7082,7 @@ body.phone-layout-active .private-ward-card-body {
         <div class="top-panel-header">
           <span class="top-panel-title">Department List</span>
           <button class="panel-toggle-btn" type="button" onclick="toggleTabletHeaderPanel('dept')" aria-label="Toggle Department List">
-            <span id="deptHeaderToggleIcon">▼</span>
+            <span id="deptHeaderToggleIcon">展開</span>
           </button>
         </div>
         <div class="top-dept-body" id="deptSection">
@@ -7124,7 +7129,7 @@ body.phone-layout-active .private-ward-card-body {
         <div class="top-panel-header" onclick="toggleCalendarPanelHeader()">
           <span class="top-panel-title">Calendar (Prototype Testing)</span>
           <button class="panel-toggle-btn" type="button" onclick="event.stopPropagation(); toggleTabletHeaderPanel('calendar')" aria-label="Toggle Calendar">
-            <span id="calendarHeaderToggleIcon">▼</span>
+            <span id="calendarHeaderToggleIcon">展開</span>
           </button>
         </div>
         <div class="calendar-panel" id="calendarPanel">
@@ -20013,9 +20018,9 @@ function syncTabletPanelToggleButtons() {
   const deptOpen = currentMobileTopPanel === 'dept';
   const exceptionalOpen = currentMobileTopPanel === 'exceptional';
   const calendarOpen = currentMobileTopPanel === 'calendar';
-  if (deptIcon) deptIcon.textContent = deptOpen ? '▲' : '▼';
-  if (exceptionalIcon) exceptionalIcon.textContent = exceptionalOpen ? '▲' : '▼';
-  if (calendarIcon) calendarIcon.textContent = calendarOpen ? '▲' : '▼';
+  if (deptIcon) deptIcon.textContent = deptOpen ? '收起' : '展開';
+  if (exceptionalIcon) exceptionalIcon.textContent = exceptionalOpen ? '收起' : '展開';
+  if (calendarIcon) calendarIcon.textContent = calendarOpen ? '收起' : '展開';
 }
 
 function toggleTabletHeaderPanel(panelName) {
@@ -20103,7 +20108,7 @@ function getDefaultPanOffsets() {
   }
   if (isTabletLayoutMode()) {
     const landscape = (window.innerWidth || 0) >= (window.innerHeight || 0);
-    return { x: landscape ? basePanX - 56 : basePanX + 14, y: basePanY + 8 };
+    return { x: landscape ? basePanX - 112 : basePanX + 28, y: basePanY + 8 };
   }
   return { x: basePanX, y: basePanY };
 }
@@ -22614,7 +22619,8 @@ function fitBuildingToViewport(options = {}) {
   if (userScale > activeScaleMax) {
     userScale = activeScaleMax;
   }
-  const effective = Math.min(autoScale * userScale, activeScaleMax);
+  const layoutScaleBoost = tabletLayout ? (((window.innerWidth || 0) >= (window.innerHeight || 0)) ? 1 : 1.08) : 1;
+  const effective = Math.min(autoScale * userScale * layoutScaleBoost, activeScaleMax);
   effectiveScale = effective;
   updateTopPanelSizing();
   if (!preserveView && !isDragging && !zooming) {
@@ -22834,7 +22840,12 @@ function centerUsingBaseline() {
   if (!info) return;
   const targetX = info.avgX;
   const halfViewportInContentUnits = container.clientWidth / (2 * scale);
-  const desired = Math.max(0, Math.min(targetX - halfViewportInContentUnits + (info.width || 0) / 2, maxScroll));
+  let biasPx = 0;
+  if (mainView && mainView.classList.contains('tablet-layout')) {
+    biasPx = mainView.classList.contains('tablet-landscape') ? -96 : 42;
+  }
+  const biasContentUnits = biasPx / scale;
+  const desired = Math.max(0, Math.min(targetX - halfViewportInContentUnits + (info.width || 0) / 2 + biasContentUnits, maxScroll));
   container.scrollLeft = Math.floor(desired);
 }
 
