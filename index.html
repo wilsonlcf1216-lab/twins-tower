@@ -2026,6 +2026,58 @@ h2 {
   color: #ffffff;
 }
 
+/* Harden button colors against intranet/global theme overrides. */
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb {
+  background: var(--color-ipeb) !important;
+  background-color: var(--color-ipeb) !important;
+  background-image: none !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #475569 !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-ipeb.active:hover {
+  background: var(--color-ipeb-border) !important;
+  background-color: var(--color-ipeb-border) !important;
+  background-image: none !important;
+  border-color: var(--color-ipeb-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030 {
+  background: var(--color-mcbtc2030) !important;
+  background-color: var(--color-mcbtc2030) !important;
+  background-image: none !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #5b4a3d !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active,
+#twintower-app .top-dept-panel .dept-group[data-role="target-group"] .dept-btn.theme-mcbtc2030.active:hover {
+  background: var(--color-mcbtc2030-border) !important;
+  background-color: var(--color-mcbtc2030-border) !important;
+  background-image: none !important;
+  border-color: var(--color-mcbtc2030-border) !important;
+  color: #ffffff !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-color: #d8b4fe !important;
+  color: #8b3ac7 !important;
+}
+
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active,
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn.active:hover {
+  background: #c026d3 !important;
+  background-color: #c026d3 !important;
+  background-image: none !important;
+  border-color: #c026d3 !important;
+  color: #ffffff !important;
+}
+
 .top-dept-panel .dept-item {
   border-color: #c7d2fe;
   background: #eef2ff;
