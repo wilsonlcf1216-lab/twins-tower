@@ -23360,11 +23360,14 @@ function updateTopPanelSizing() {
 function updateEmbeddedLayout() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
-  const compact = mainView.clientWidth > 0 && mainView.clientWidth <= 720;
-  const phoneLayout = isPhoneLayoutMode();
+  const narrowDesktop = mainView.clientWidth > 0 && mainView.clientWidth <= 720;
+  let phoneLayout = isPhoneLayoutMode();
   const tabletLayout = isTabletLayoutMode();
   const tabletLandscape = tabletLayout && isLandscapeViewport();
-  const layoutKey = phoneLayout ? 'phone' : (tabletLayout ? (tabletLandscape ? 'tablet-landscape' : 'tablet-portrait') : (compact ? 'compact' : 'desktop'));
+  if (!phoneLayout && !tabletLayout && narrowDesktop) {
+    phoneLayout = true;
+  }
+  const layoutKey = phoneLayout ? 'phone' : (tabletLayout ? (tabletLandscape ? 'tablet-landscape' : 'tablet-portrait') : 'desktop');
   if (layoutKey !== lastEmbeddedLayoutKey && layoutKey === 'tablet-landscape') {
     pendingTabletLandscapePanReset = true;
     currentMobileTopPanel = 'none';
@@ -23372,7 +23375,7 @@ function updateEmbeddedLayout() {
     isExceptionalPanelExpanded = false;
   }
   lastEmbeddedLayoutKey = layoutKey;
-  mainView.classList.toggle('compact-layout', compact && !phoneLayout && !tabletLayout);
+  mainView.classList.remove('compact-layout');
   mainView.classList.toggle('phone-layout', phoneLayout);
   mainView.classList.toggle('tablet-layout', tabletLayout);
   mainView.classList.toggle('tablet-landscape', tabletLayout && tabletLandscape);
@@ -23829,7 +23832,7 @@ function centerUsingBaseline() {
   const scale = effectiveScale || 1;
   const viewportInContentUnits = container.clientWidth / scale;
   const maxScroll = Math.max(0, building.scrollWidth - viewportInContentUnits);
-  if (mainView && mainView.classList.contains('compact-layout')) {
+  if (mainView && mainView.classList.contains('phone-layout')) {
     const desiredCenter = Math.max(0, (building.scrollWidth - viewportInContentUnits) / 2);
     container.scrollLeft = Math.floor(Math.min(desiredCenter, maxScroll));
     return;
