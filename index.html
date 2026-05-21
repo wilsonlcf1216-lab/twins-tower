@@ -7701,7 +7701,7 @@ body.phone-layout-active .private-ward-card-body {
   right: 10px;
   bottom: 10px;
   z-index: 9800;
-  display: none;
+  display: block;
   width: min(360px, calc(100vw - 20px));
   border: 1px solid rgba(99, 102, 241, 0.32);
   border-radius: 12px;
@@ -19576,9 +19576,8 @@ function updateDebugWindowState() {
   const toggle = document.getElementById('twintowerDebugToggle');
   if (!dock || !body || !toggle) return;
   const embedded = isEmbeddedFrameMode();
-  dock.classList.toggle('show', embedded);
+  dock.classList.add('show');
   dock.classList.toggle('expanded', debugWindowExpanded);
-  if (!embedded) return;
   const mainView = document.querySelector('.main-view');
   const sideButtons = Array.from(document.querySelectorAll('#deptButtons [data-role="side-group"] .dept-btn')).map((btn) => {
     const label = String(btn.textContent || '').trim();
