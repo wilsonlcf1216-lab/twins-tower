@@ -7923,8 +7923,9 @@ body.phone-layout-active .private-ward-card-body {
   <div class="twintower-debug-actions">
     <button class="twintower-debug-action" type="button" onclick="debugRefresh()">Refresh</button>
     <button class="twintower-debug-action" type="button" onclick="debugForceNeutral()">Force Neutral</button>
-    <button class="twintower-debug-action" type="button" onclick="debugForceCompact()">Force Compact</button>
+    <button class="twintower-debug-action" type="button" onclick="debugToggleLayout()">Layout: Auto</button>
     <button class="twintower-debug-action" type="button" onclick="debugToggleEmbedded()">Embedded: Auto</button>
+    <button class="twintower-debug-action" type="button" onclick="debugReset()">Reset</button>
   </div>
   <pre id="twintowerDebugBody" class="twintower-debug-body"></pre>
 </div>
@@ -17356,6 +17357,7 @@ let currentClickedSpace = null;
 let debugWindowExpanded = true;
 let debugWindowScheduled = false;
 let debugForceEmbeddedMode = null;
+let debugForceLayoutKey = null;
 let currentLinkedGroup = null;
 let currentExceptionalLinkGroup = null;
 let scaleMax = 2.0;
@@ -19547,7 +19549,19 @@ function applyDeptSideButtonTheme(btn, active) {
 
 function updateDeptSideButtons() {
   const sideGroup = document.querySelector('#deptButtons [data-role="side-group"]');
-  if (!sideGroup) return;
+  if (!sideGroup) {
+    if (isEmbeddedFrameMode()) {
+      try {
+        renderDepartments();
+      } catch (e) {}
+      setTimeout(() => {
+        try {
+          updateDeptSideButtons();
+        } catch (e) {}
+      }, 0);
+    }
+    return;
+  }
   sideGroup.dataset.activeSide = currentDeptSide;
   sideGroup.querySelectorAll('.dept-btn').forEach((btn) => {
     const side = String(btn.dataset && btn.dataset.deptSide || '').trim();
@@ -19596,6 +19610,9 @@ function isEmbeddedFrameMode() {
 }
 
 function debugRefresh() {
+  try {
+    refreshEmbeddedLayout();
+  } catch (e) {}
   scheduleDebugWindowUpdate();
 }
 
@@ -19606,15 +19623,14 @@ function debugForceNeutral() {
   scheduleDebugWindowUpdate();
 }
 
-function debugForceCompact() {
+function debugToggleLayout() {
+  if (debugForceLayoutKey === null) debugForceLayoutKey = 'desktop';
+  else if (debugForceLayoutKey === 'desktop') debugForceLayoutKey = 'compact';
+  else if (debugForceLayoutKey === 'compact') debugForceLayoutKey = 'phone';
+  else if (debugForceLayoutKey === 'phone') debugForceLayoutKey = 'tablet-portrait';
+  else if (debugForceLayoutKey === 'tablet-portrait') debugForceLayoutKey = 'tablet-landscape';
+  else debugForceLayoutKey = null;
   try {
-    const mainView = document.querySelector('.main-view');
-    if (mainView) {
-      mainView.classList.add('phone-layout');
-      mainView.classList.remove('tablet-layout');
-      mainView.classList.remove('compact-layout');
-      mainView.classList.add('compact-layout');
-    }
     refreshEmbeddedLayout();
   } catch (e) {}
   scheduleDebugWindowUpdate();
@@ -19624,6 +19640,15 @@ function debugToggleEmbedded() {
   if (debugForceEmbeddedMode === null) debugForceEmbeddedMode = true;
   else if (debugForceEmbeddedMode === true) debugForceEmbeddedMode = false;
   else debugForceEmbeddedMode = null;
+  scheduleDebugWindowUpdate();
+}
+
+function debugReset() {
+  debugForceEmbeddedMode = null;
+  debugForceLayoutKey = null;
+  try {
+    refreshEmbeddedLayout();
+  } catch (e) {}
   scheduleDebugWindowUpdate();
 }
 
@@ -19644,6 +19669,7 @@ function updateDebugWindowState() {
   const body = document.getElementById('twintowerDebugBody');
   const toggle = document.getElementById('twintowerDebugToggle');
   const embeddedBtn = dock ? dock.querySelector('.twintower-debug-action[onclick="debugToggleEmbedded()"]') : null;
+  const layoutBtn = dock ? dock.querySelector('.twintower-debug-action[onclick="debugToggleLayout()"]') : null;
   if (!dock || !body || !toggle) return;
   const embedded = isEmbeddedFrameMode();
   dock.classList.add('show');
@@ -19651,6 +19677,12 @@ function updateDebugWindowState() {
   const mainView = document.querySelector('.main-view');
   const deptButtonsEl = document.getElementById('deptButtons');
   const sideGroupEl = document.querySelector('#deptButtons [data-role="side-group"]');
+  const deptChildren = deptButtonsEl
+    ? Array.from(deptButtonsEl.children).map((el) => {
+        const role = String(el && el.dataset && el.dataset.role || '').trim() || '-';
+        return `${String(el && el.tagName || '?').toLowerCase()}(role=${role})`;
+      })
+    : [];
   const sideButtons = Array.from(document.querySelectorAll('#deptButtons [data-role="side-group"] .dept-btn')).map((btn) => {
     const label = String(btn.textContent || '').trim();
     const active = btn.classList.contains('active') ? 'active' : 'idle';
@@ -19661,25 +19693,42 @@ function updateDebugWindowState() {
   const wardButtons = Array.from(document.querySelectorAll('#wardButtons .ward-btn'));
   const fitWide = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-wide')).map((btn) => String(btn.textContent || '').trim());
   const fitTwoLine = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-two-line')).map((btn) => String(btn.textContent || '').trim());
+  const forceSingle = wardButtons.filter((btn) => btn.classList.contains('ward-btn-force-single-line')).map((btn) => String(btn.textContent || '').trim());
   const embeddedLabel = debugForceEmbeddedMode === null ? 'Auto' : (debugForceEmbeddedMode ? 'Forced On' : 'Forced Off');
+  const layoutLabel = debugForceLayoutKey === null ? 'Auto' : String(debugForceLayoutKey);
+  const viewportW = window.innerWidth || 0;
+  const viewportH = window.innerHeight || 0;
+  const vv = window.visualViewport || null;
+  const vvW = vv && vv.width ? Math.round(vv.width) : 0;
+  const vvH = vv && vv.height ? Math.round(vv.height) : 0;
+  const vvScale = vv && typeof vv.scale === 'number' ? vv.scale : 0;
+  const appRoot = document.getElementById('twintower-app');
+  const appRect = appRoot ? appRoot.getBoundingClientRect() : null;
   const lines = [
     `embedded: ${embedded ? 'yes' : 'no'}`,
     `embeddedFlag: ${embeddedLabel}`,
+    `layoutFlag: ${layoutLabel}`,
     `url: ${String(location && location.href || '').slice(0, 160)}`,
+    `viewport: ${viewportW}x${viewportH} dpr=${window.devicePixelRatio || 1}`,
+    `visualViewport: ${vvW}x${vvH} scale=${vvScale || '-'}`,
     `layout: ${mainView ? mainView.className : '-'}`,
     `topPanel: ${String(currentMobileTopPanel || 'none')}`,
     `deptTarget: ${String(currentDeptTarget || '-')}`,
     `deptSide: ${String(currentDeptSide || '-')}`,
     `currentDept: ${String(currentDept || '-')}`,
+    `appRect: ${appRect ? `${Math.round(appRect.width)}x${Math.round(appRect.height)}` : '-'}`,
     `deptButtons: ${deptButtonsEl ? 'yes' : 'no'} children=${deptButtonsEl ? deptButtonsEl.children.length : 0}`,
+    `deptChildren: ${deptChildren.length ? deptChildren.join(' ') : '-'}`,
     `sideGroup: ${sideGroupEl ? 'yes' : 'no'} btns=${sideButtons.length}`,
     `sideButtons: ${sideButtons.length ? sideButtons.join(' | ') : '-'}`,
-    `wardButtons: total=${wardButtons.length}, fitWide=${fitWide.length}, fitTwoLine=${fitTwoLine.length}`,
+    `wardButtons: total=${wardButtons.length}, fitWide=${fitWide.length}, fitTwoLine=${fitTwoLine.length}, forceSingle=${forceSingle.length}`,
     `fitWideSample: ${fitWide.slice(0, 8).join(' | ') || '-'}`,
-    `fitTwoLineSample: ${fitTwoLine.slice(0, 8).join(' | ') || '-'}`
+    `fitTwoLineSample: ${fitTwoLine.slice(0, 8).join(' | ') || '-'}`,
+    `forceSingleSample: ${forceSingle.slice(0, 8).join(' | ') || '-'}`
   ];
   toggle.textContent = `Debug Panel ${debugWindowExpanded ? 'Hide' : 'Show'}`;
   if (embeddedBtn) embeddedBtn.textContent = `Embedded: ${embeddedLabel}`;
+  if (layoutBtn) layoutBtn.textContent = `Layout: ${layoutLabel}`;
   body.textContent = lines.join('\n');
 }
 
@@ -20197,7 +20246,7 @@ function normalizeWardButtonSizes(root = document.getElementById('wardButtons'))
   if (!root) return;
   if (isEmbeddedFrameMode()) {
     root.querySelectorAll('.ward-btn').forEach((btn) => {
-      btn.classList.remove('ward-btn-fit-wide', 'ward-btn-fit-two-line');
+      btn.classList.remove('ward-btn-fit-wide', 'ward-btn-fit-two-line', 'ward-btn-force-single-line');
     });
     scheduleDebugWindowUpdate();
     return;
@@ -23470,10 +23519,17 @@ function updateTopPanelSizing() {
 function updateEmbeddedLayout() {
   const mainView = document.querySelector('.main-view');
   if (!mainView) return;
-  const compact = mainView.clientWidth > 0 && mainView.clientWidth <= 720;
-  const phoneLayout = isPhoneLayoutMode();
-  const tabletLayout = isTabletLayoutMode();
-  const tabletLandscape = tabletLayout && isLandscapeViewport();
+  let compact = mainView.clientWidth > 0 && mainView.clientWidth <= 720;
+  let phoneLayout = isPhoneLayoutMode();
+  let tabletLayout = isTabletLayoutMode();
+  let tabletLandscape = tabletLayout && isLandscapeViewport();
+  if (debugForceLayoutKey) {
+    const forced = String(debugForceLayoutKey);
+    compact = forced === 'compact';
+    phoneLayout = forced === 'phone';
+    tabletLayout = forced === 'tablet-portrait' || forced === 'tablet-landscape';
+    tabletLandscape = forced === 'tablet-landscape';
+  }
   const layoutKey = phoneLayout ? 'phone' : (tabletLayout ? (tabletLandscape ? 'tablet-landscape' : 'tablet-portrait') : (compact ? 'compact' : 'desktop'));
   if (layoutKey !== lastEmbeddedLayoutKey && layoutKey === 'tablet-landscape') {
     pendingTabletLandscapePanReset = true;
