@@ -514,6 +514,14 @@ body {
   color: #ffffff !important;
 }
 
+#twintower-app .top-dept-panel .dept-group[data-role="side-group"] .dept-btn[data-active-side="1"] {
+  background: #c026d3 !important;
+  background-color: #c026d3 !important;
+  background-image: none !important;
+  border-color: #c026d3 !important;
+  color: #ffffff !important;
+}
+
 #twintower-app .top-dept-panel .dept-item:hover,
 #twintower-app .top-dept-panel .dept-item:focus,
 #twintower-app .top-dept-panel .dept-item:active {
@@ -19452,9 +19460,11 @@ function applyDeptSideButtonTheme(btn, active) {
 function updateDeptSideButtons() {
   const sideGroup = document.querySelector('#deptButtons [data-role="side-group"]');
   if (!sideGroup) return;
+  sideGroup.dataset.activeSide = currentDeptSide;
   sideGroup.querySelectorAll('.dept-btn').forEach((btn) => {
     const side = String(btn.dataset && btn.dataset.deptSide || '').trim();
     const active = side ? side === currentDeptSide : false;
+    btn.dataset.activeSide = active ? '1' : '0';
     btn.classList.toggle('active', active);
     applyDeptSideButtonTheme(btn, active);
   });
@@ -19484,6 +19494,14 @@ function sortDeptKeys(keys) {
     if (aIsCuhk !== bIsCuhk) return aIsCuhk ? 1 : -1;
     return String(a || '').localeCompare(String(b || ''));
   });
+}
+
+function isEmbeddedFrameMode() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
 }
 
 function populateDeptList(side) {
@@ -19960,6 +19978,12 @@ function selectDeptGroup(side) {
   populateDeptList(side);
   syncMobileDeptSummary();
   applyDeptFilter();
+  if (isEmbeddedFrameMode()) {
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => updateDeptSideButtons());
+    }
+    setTimeout(() => updateDeptSideButtons(), 80);
+  }
 }
 
 function sortMenuItems(items) {
@@ -19977,6 +20001,12 @@ function sortMenuItems(items) {
 
 function normalizeWardButtonSizes(root = document.getElementById('wardButtons')) {
   if (!root) return;
+  if (isEmbeddedFrameMode()) {
+    root.querySelectorAll('.ward-btn').forEach((btn) => {
+      btn.classList.remove('ward-btn-fit-wide', 'ward-btn-fit-two-line');
+    });
+    return;
+  }
   const getTextWidth = (() => {
     let canvas = null;
     let ctx = null;
