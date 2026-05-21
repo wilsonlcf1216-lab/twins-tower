@@ -19490,6 +19490,7 @@ function renderDepartments() {
   deptButtons.appendChild(sideGroup);
   applyDeptSideButtonTheme(clinicalBtn, currentDeptSide === 'clinical');
   applyDeptSideButtonTheme(nonBtn, currentDeptSide === 'nonClinical');
+  ensureDeptSideGroupButtons(sideGroup);
   const clinicalList = document.createElement('div');
   clinicalList.id = 'clinicalList';
   clinicalList.className = 'dept-list';
@@ -19557,6 +19558,28 @@ function getDeptSideGroupElement() {
   return any || null;
 }
 
+function ensureDeptSideGroupButtons(sideGroup) {
+  if (!sideGroup) return;
+  const ensureButton = (side, label) => {
+    const normalizedSide = String(side || '').trim();
+    if (!normalizedSide) return null;
+    let btn = Array.from(sideGroup.querySelectorAll('button, .dept-btn')).find((el) => String(el && el.dataset && el.dataset.deptSide || '').trim() === normalizedSide);
+    if (!btn) {
+      btn = document.createElement('button');
+      sideGroup.appendChild(btn);
+    }
+    btn.classList.add('dept-btn');
+    btn.dataset.deptSide = normalizedSide;
+    btn.textContent = label;
+    btn.onclick = () => selectDeptGroup(normalizedSide);
+    return btn;
+  };
+  const clinicalBtn = ensureButton('clinical', 'Clinical');
+  const nonBtn = ensureButton('nonClinical', 'Neutral');
+  if (clinicalBtn) applyDeptSideButtonTheme(clinicalBtn, currentDeptSide === 'clinical');
+  if (nonBtn) applyDeptSideButtonTheme(nonBtn, currentDeptSide === 'nonClinical');
+}
+
 function updateDeptSideButtons() {
   const sideGroup = getDeptSideGroupElement();
   if (!sideGroup) {
@@ -19572,6 +19595,7 @@ function updateDeptSideButtons() {
     }
     return;
   }
+  ensureDeptSideGroupButtons(sideGroup);
   sideGroup.dataset.activeSide = currentDeptSide;
   sideGroup.querySelectorAll('.dept-btn').forEach((btn) => {
     const side = String(btn.dataset && btn.dataset.deptSide || '').trim();
@@ -19693,6 +19717,15 @@ function updateDebugWindowState() {
         return `${String(el && el.tagName || '?').toLowerCase()}(role=${role})`;
       })
     : [];
+  const sideGroupChildSummary = sideGroupEl
+    ? Array.from(sideGroupEl.children).map((el) => {
+        const tag = String(el && el.tagName || '?').toLowerCase();
+        const cls = String(el && el.className || '').trim() || '-';
+        const side = String(el && el.dataset && el.dataset.deptSide || '').trim() || '-';
+        const text = String(el && el.textContent || '').trim().slice(0, 24);
+        return `${tag}.${cls}(side=${side},text=${text})`;
+      })
+    : [];
   const sideButtons = Array.from(document.querySelectorAll('#deptButtons [data-role="side-group"] .dept-btn')).map((btn) => {
     const label = String(btn.textContent || '').trim();
     const active = btn.classList.contains('active') ? 'active' : 'idle';
@@ -19747,6 +19780,7 @@ function updateDebugWindowState() {
     `deptButtons: ${deptButtonsEl ? 'yes' : 'no'} children=${deptButtonsEl ? deptButtonsEl.children.length : 0}`,
     `deptChildren: ${deptChildren.length ? deptChildren.join(' ') : '-'}`,
     `sideGroup: ${sideGroupEl ? 'yes' : 'no'} roleLen=${sideRoleLen} btns=${sideButtons.length}`,
+    `sideGroupChildren: ${sideGroupChildSummary.length ? sideGroupChildSummary.join(' | ') : '-'}`,
     `sideButtons: ${sideButtons.length ? sideButtons.join(' | ') : '-'}`,
     `wardButtons: total=${wardButtons.length}, fitWide=${fitWide.length}, fitTwoLine=${fitTwoLine.length}, forceSingle=${forceSingle.length}`,
     `fitWideSample: ${fitWide.slice(0, 8).join(' | ') || '-'}`,
@@ -20303,10 +20337,17 @@ function normalizeWardButtonSizes(root = document.getElementById('wardButtons'))
     btn.classList.remove('ward-btn-fit-wide', 'ward-btn-fit-two-line');
     if (btn.offsetParent === null || btn.clientWidth <= 0) return;
     if (btn.classList.contains('ward-btn-force-single-line')) return;
+    const label = String(btn.textContent || '').trim();
+    if (!label) return;
+    if (label === 'ALL') return;
+    if (label.length <= 3) return;
+    if (/^[0-9]{1,2}[A-Z]$/i.test(label)) return;
     const textWidth = getTextWidth(btn);
-    if (textWidth <= getInnerWidth(btn) + 1) return;
+    const innerWidth = getInnerWidth(btn);
+    if (innerWidth < 40) return;
+    if (textWidth <= innerWidth + 2) return;
     btn.classList.add('ward-btn-fit-wide');
-    if (textWidth <= getInnerWidth(btn) + 1) return;
+    if (textWidth <= innerWidth + 2) return;
     btn.classList.add('ward-btn-fit-two-line');
   });
 
