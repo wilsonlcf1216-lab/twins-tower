@@ -7695,6 +7695,52 @@ body.phone-layout-active .private-ward-card-body {
   font-weight: 700 !important;
   padding: 5px 10px !important;
 }
+
+.twintower-debug-dock {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  z-index: 9800;
+  display: none;
+  width: min(360px, calc(100vw - 20px));
+  border: 1px solid rgba(99, 102, 241, 0.32);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #e2e8f0;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.32);
+  backdrop-filter: blur(8px);
+}
+
+.twintower-debug-dock.show {
+  display: block;
+}
+
+.twintower-debug-toggle {
+  width: 100%;
+  border: 0;
+  border-radius: 12px 12px 0 0;
+  background: rgba(79, 70, 229, 0.9);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.twintower-debug-dock:not(.expanded) .twintower-debug-body {
+  display: none;
+}
+
+.twintower-debug-body {
+  margin: 0;
+  padding: 10px 12px 12px;
+  max-height: min(42vh, 360px);
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font: 11px/1.35 Menlo, Monaco, Consolas, "Courier New", monospace;
+}
 </style>
 </head>
 <body>
@@ -7842,6 +7888,11 @@ body.phone-layout-active .private-ward-card-body {
       <div class="building" id="building"></div>
     </div>
   </div>
+</div>
+
+<div id="twintowerDebugDock" class="twintower-debug-dock expanded">
+  <button id="twintowerDebugToggle" class="twintower-debug-toggle" type="button" onclick="toggleDebugWindow()">Debug Panel</button>
+  <pre id="twintowerDebugBody" class="twintower-debug-body"></pre>
 </div>
 
 <div class="private-ward-info-modal" id="privateWardInfoModal">
@@ -17268,6 +17319,8 @@ let currentDept = null;
 let currentDeptSide = 'clinical';
 let selectedTimePeriod = null;
 let currentClickedSpace = null;
+let debugWindowExpanded = true;
+let debugWindowScheduled = false;
 let currentLinkedGroup = null;
 let currentExceptionalLinkGroup = null;
 let scaleMax = 2.0;
@@ -19470,6 +19523,7 @@ function updateDeptSideButtons() {
   });
   const targetBtn = document.querySelector('#deptButtons [data-role="target-group"] .dept-btn');
   if (targetBtn) applyDeptTargetButtonTheme(targetBtn);
+  scheduleDebugWindowUpdate();
 }
 
 function updateDeptListVisibility(activeSide) {
@@ -19502,6 +19556,68 @@ function isEmbeddedFrameMode() {
   } catch (e) {
     return true;
   }
+}
+
+function toggleDebugWindow(forceExpanded) {
+  const dock = document.getElementById('twintowerDebugDock');
+  if (!dock) return;
+  if (typeof forceExpanded === 'boolean') {
+    debugWindowExpanded = !!forceExpanded;
+  } else {
+    debugWindowExpanded = !debugWindowExpanded;
+  }
+  dock.classList.toggle('expanded', debugWindowExpanded);
+  scheduleDebugWindowUpdate();
+}
+
+function updateDebugWindowState() {
+  const dock = document.getElementById('twintowerDebugDock');
+  const body = document.getElementById('twintowerDebugBody');
+  const toggle = document.getElementById('twintowerDebugToggle');
+  if (!dock || !body || !toggle) return;
+  const embedded = isEmbeddedFrameMode();
+  dock.classList.toggle('show', embedded);
+  dock.classList.toggle('expanded', debugWindowExpanded);
+  if (!embedded) return;
+  const mainView = document.querySelector('.main-view');
+  const sideButtons = Array.from(document.querySelectorAll('#deptButtons [data-role="side-group"] .dept-btn')).map((btn) => {
+    const label = String(btn.textContent || '').trim();
+    const active = btn.classList.contains('active') ? 'active' : 'idle';
+    const side = String(btn.dataset && btn.dataset.deptSide || '').trim() || '-';
+    const dataActive = String(btn.dataset && btn.dataset.activeSide || '').trim() || '0';
+    return `${label}: ${active}, side=${side}, data=${dataActive}`;
+  });
+  const wardButtons = Array.from(document.querySelectorAll('#wardButtons .ward-btn'));
+  const fitWide = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-wide')).map((btn) => String(btn.textContent || '').trim());
+  const fitTwoLine = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-two-line')).map((btn) => String(btn.textContent || '').trim());
+  const lines = [
+    `embedded: ${embedded ? 'yes' : 'no'}`,
+    `layout: ${mainView ? mainView.className : '-'}`,
+    `topPanel: ${String(currentMobileTopPanel || 'none')}`,
+    `deptTarget: ${String(currentDeptTarget || '-')}`,
+    `deptSide: ${String(currentDeptSide || '-')}`,
+    `currentDept: ${String(currentDept || '-')}`,
+    `sideButtons: ${sideButtons.length ? sideButtons.join(' | ') : '-'}`,
+    `wardButtons: total=${wardButtons.length}, fitWide=${fitWide.length}, fitTwoLine=${fitTwoLine.length}`,
+    `fitWideSample: ${fitWide.slice(0, 8).join(' | ') || '-'}`,
+    `fitTwoLineSample: ${fitTwoLine.slice(0, 8).join(' | ') || '-'}`
+  ];
+  toggle.textContent = `Debug Panel ${debugWindowExpanded ? 'Hide' : 'Show'}`;
+  body.textContent = lines.join('\n');
+}
+
+function scheduleDebugWindowUpdate() {
+  if (debugWindowScheduled) return;
+  debugWindowScheduled = true;
+  const run = () => {
+    debugWindowScheduled = false;
+    updateDebugWindowState();
+  };
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(run);
+    return;
+  }
+  setTimeout(run, 0);
 }
 
 function populateDeptList(side) {
@@ -19984,6 +20100,7 @@ function selectDeptGroup(side) {
     }
     setTimeout(() => updateDeptSideButtons(), 80);
   }
+  scheduleDebugWindowUpdate();
 }
 
 function sortMenuItems(items) {
@@ -20005,6 +20122,7 @@ function normalizeWardButtonSizes(root = document.getElementById('wardButtons'))
     root.querySelectorAll('.ward-btn').forEach((btn) => {
       btn.classList.remove('ward-btn-fit-wide', 'ward-btn-fit-two-line');
     });
+    scheduleDebugWindowUpdate();
     return;
   }
   const getTextWidth = (() => {
@@ -20057,6 +20175,7 @@ function normalizeWardButtonSizes(root = document.getElementById('wardButtons'))
       })
       .forEach((btn) => grid.appendChild(btn));
   });
+  scheduleDebugWindowUpdate();
 }
 
 function scheduleWardButtonNormalization() {
@@ -20986,6 +21105,7 @@ function syncCompactDeptPanelContent() {
   if (wardButtons) wardButtons.innerHTML = '';
   syncMobileDeptSummary();
   applyDeptFilter();
+  scheduleDebugWindowUpdate();
 }
 
 function hideDeptSearchResults() {
@@ -21072,6 +21192,7 @@ function switchMobileTopPanel(panel) {
   }
   syncPhoneLayoutPanels();
   syncTabletLandscapeTopPanelState();
+  scheduleDebugWindowUpdate();
 }
 
 function syncTabletLandscapeTopPanelState() {
@@ -23101,6 +23222,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initCalendar();
   enableWardConnectionDrag();
   enableCalendarResize();
+  scheduleDebugWindowUpdate();
   
   const deptFilter = document.getElementById('deptFilter');
   if (deptFilter) {
@@ -23299,6 +23421,7 @@ function refreshEmbeddedLayout() {
   syncPhoneLayoutPanels();
   updateTopPanelSizing();
   scheduleWardButtonNormalization();
+  scheduleDebugWindowUpdate();
   if (pendingTabletLandscapePanReset && buildingContainer) {
     pendingTabletLandscapePanReset = false;
     const defaultPan = getDefaultPanOffsets();
