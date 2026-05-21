@@ -19547,8 +19547,18 @@ function applyDeptSideButtonTheme(btn, active) {
   btn.style.setProperty('color', active ? '#ffffff' : baseText, 'important');
 }
 
+function getDeptSideGroupElement() {
+  const deptButtons = document.getElementById('deptButtons');
+  if (!deptButtons) return null;
+  const normalized = (value) => String(value || '').trim().toLowerCase().replace(/\s+/g, '');
+  const direct = Array.from(deptButtons.children).find((el) => normalized(el && el.dataset && el.dataset.role) === 'side-group');
+  if (direct) return direct;
+  const any = Array.from(deptButtons.querySelectorAll('[data-role]')).find((el) => normalized(el && el.dataset && el.dataset.role) === 'side-group');
+  return any || null;
+}
+
 function updateDeptSideButtons() {
-  const sideGroup = document.querySelector('#deptButtons [data-role="side-group"]');
+  const sideGroup = getDeptSideGroupElement();
   if (!sideGroup) {
     if (isEmbeddedFrameMode()) {
       try {
@@ -19676,7 +19686,7 @@ function updateDebugWindowState() {
   dock.classList.toggle('expanded', debugWindowExpanded);
   const mainView = document.querySelector('.main-view');
   const deptButtonsEl = document.getElementById('deptButtons');
-  const sideGroupEl = document.querySelector('#deptButtons [data-role="side-group"]');
+  const sideGroupEl = getDeptSideGroupElement();
   const deptChildren = deptButtonsEl
     ? Array.from(deptButtonsEl.children).map((el) => {
         const role = String(el && el.dataset && el.dataset.role || '').trim() || '-';
@@ -19694,6 +19704,21 @@ function updateDebugWindowState() {
   const fitWide = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-wide')).map((btn) => String(btn.textContent || '').trim());
   const fitTwoLine = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-two-line')).map((btn) => String(btn.textContent || '').trim());
   const forceSingle = wardButtons.filter((btn) => btn.classList.contains('ward-btn-force-single-line')).map((btn) => String(btn.textContent || '').trim());
+  const wardStyleSample = wardButtons.slice(0, 2).map((btn) => {
+    try {
+      const label = String(btn.textContent || '').trim();
+      const cs = window.getComputedStyle(btn);
+      const height = cs && cs.height ? cs.height : '-';
+      const minH = cs && cs.minHeight ? cs.minHeight : '-';
+      const lh = cs && cs.lineHeight ? cs.lineHeight : '-';
+      const pad = `${cs && cs.paddingTop ? cs.paddingTop : '-'} ${cs && cs.paddingRight ? cs.paddingRight : '-'} ${cs && cs.paddingBottom ? cs.paddingBottom : '-'} ${cs && cs.paddingLeft ? cs.paddingLeft : '-'}`;
+      const display = cs && cs.display ? cs.display : '-';
+      const gridRow = cs && cs.gridRow ? cs.gridRow : '-';
+      return `${label}: ${display} h=${height} minH=${minH} lh=${lh} pad=${pad} gridRow=${gridRow}`;
+    } catch (e) {
+      return '-';
+    }
+  });
   const embeddedLabel = debugForceEmbeddedMode === null ? 'Auto' : (debugForceEmbeddedMode ? 'Forced On' : 'Forced Off');
   const layoutLabel = debugForceLayoutKey === null ? 'Auto' : String(debugForceLayoutKey);
   const viewportW = window.innerWidth || 0;
@@ -19704,6 +19729,8 @@ function updateDebugWindowState() {
   const vvScale = vv && typeof vv.scale === 'number' ? vv.scale : 0;
   const appRoot = document.getElementById('twintower-app');
   const appRect = appRoot ? appRoot.getBoundingClientRect() : null;
+  const sideRole = sideGroupEl ? String(sideGroupEl.dataset && sideGroupEl.dataset.role || '') : '';
+  const sideRoleLen = sideRole ? sideRole.length : 0;
   const lines = [
     `embedded: ${embedded ? 'yes' : 'no'}`,
     `embeddedFlag: ${embeddedLabel}`,
@@ -19719,12 +19746,13 @@ function updateDebugWindowState() {
     `appRect: ${appRect ? `${Math.round(appRect.width)}x${Math.round(appRect.height)}` : '-'}`,
     `deptButtons: ${deptButtonsEl ? 'yes' : 'no'} children=${deptButtonsEl ? deptButtonsEl.children.length : 0}`,
     `deptChildren: ${deptChildren.length ? deptChildren.join(' ') : '-'}`,
-    `sideGroup: ${sideGroupEl ? 'yes' : 'no'} btns=${sideButtons.length}`,
+    `sideGroup: ${sideGroupEl ? 'yes' : 'no'} roleLen=${sideRoleLen} btns=${sideButtons.length}`,
     `sideButtons: ${sideButtons.length ? sideButtons.join(' | ') : '-'}`,
     `wardButtons: total=${wardButtons.length}, fitWide=${fitWide.length}, fitTwoLine=${fitTwoLine.length}, forceSingle=${forceSingle.length}`,
     `fitWideSample: ${fitWide.slice(0, 8).join(' | ') || '-'}`,
     `fitTwoLineSample: ${fitTwoLine.slice(0, 8).join(' | ') || '-'}`,
-    `forceSingleSample: ${forceSingle.slice(0, 8).join(' | ') || '-'}`
+    `forceSingleSample: ${forceSingle.slice(0, 8).join(' | ') || '-'}`,
+    `wardStyleSample: ${wardStyleSample.length ? wardStyleSample.join(' | ') : '-'}`
   ];
   toggle.textContent = `Debug Panel ${debugWindowExpanded ? 'Hide' : 'Show'}`;
   if (embeddedBtn) embeddedBtn.textContent = `Embedded: ${embeddedLabel}`;
