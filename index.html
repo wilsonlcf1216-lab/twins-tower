@@ -7732,6 +7732,34 @@ body.phone-layout-active .private-ward-card-body {
   display: none;
 }
 
+.twintower-debug-dock:not(.expanded) .twintower-debug-actions {
+  display: none;
+}
+
+.twintower-debug-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 10px 0;
+}
+
+.twintower-debug-action {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+  padding: 5px 10px;
+  background: rgba(30, 41, 59, 0.86);
+  color: #e2e8f0;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.twintower-debug-action:hover {
+  background: rgba(51, 65, 85, 0.92);
+}
+
 .twintower-debug-body {
   margin: 0;
   padding: 10px 12px 12px;
@@ -7892,6 +7920,12 @@ body.phone-layout-active .private-ward-card-body {
 
 <div id="twintowerDebugDock" class="twintower-debug-dock expanded">
   <button id="twintowerDebugToggle" class="twintower-debug-toggle" type="button" onclick="toggleDebugWindow()">Debug Panel</button>
+  <div class="twintower-debug-actions">
+    <button class="twintower-debug-action" type="button" onclick="debugRefresh()">Refresh</button>
+    <button class="twintower-debug-action" type="button" onclick="debugForceNeutral()">Force Neutral</button>
+    <button class="twintower-debug-action" type="button" onclick="debugForceCompact()">Force Compact</button>
+    <button class="twintower-debug-action" type="button" onclick="debugToggleEmbedded()">Embedded: Auto</button>
+  </div>
   <pre id="twintowerDebugBody" class="twintower-debug-body"></pre>
 </div>
 
@@ -17321,6 +17355,7 @@ let selectedTimePeriod = null;
 let currentClickedSpace = null;
 let debugWindowExpanded = true;
 let debugWindowScheduled = false;
+let debugForceEmbeddedMode = null;
 let currentLinkedGroup = null;
 let currentExceptionalLinkGroup = null;
 let scaleMax = 2.0;
@@ -19551,11 +19586,45 @@ function sortDeptKeys(keys) {
 }
 
 function isEmbeddedFrameMode() {
+  if (debugForceEmbeddedMode === true) return true;
+  if (debugForceEmbeddedMode === false) return false;
   try {
     return window.self !== window.top;
   } catch (e) {
     return true;
   }
+}
+
+function debugRefresh() {
+  scheduleDebugWindowUpdate();
+}
+
+function debugForceNeutral() {
+  try {
+    selectDeptGroup('nonClinical');
+  } catch (e) {}
+  scheduleDebugWindowUpdate();
+}
+
+function debugForceCompact() {
+  try {
+    const mainView = document.querySelector('.main-view');
+    if (mainView) {
+      mainView.classList.add('phone-layout');
+      mainView.classList.remove('tablet-layout');
+      mainView.classList.remove('compact-layout');
+      mainView.classList.add('compact-layout');
+    }
+    refreshEmbeddedLayout();
+  } catch (e) {}
+  scheduleDebugWindowUpdate();
+}
+
+function debugToggleEmbedded() {
+  if (debugForceEmbeddedMode === null) debugForceEmbeddedMode = true;
+  else if (debugForceEmbeddedMode === true) debugForceEmbeddedMode = false;
+  else debugForceEmbeddedMode = null;
+  scheduleDebugWindowUpdate();
 }
 
 function toggleDebugWindow(forceExpanded) {
@@ -19574,11 +19643,14 @@ function updateDebugWindowState() {
   const dock = document.getElementById('twintowerDebugDock');
   const body = document.getElementById('twintowerDebugBody');
   const toggle = document.getElementById('twintowerDebugToggle');
+  const embeddedBtn = dock ? dock.querySelector('.twintower-debug-action[onclick="debugToggleEmbedded()"]') : null;
   if (!dock || !body || !toggle) return;
   const embedded = isEmbeddedFrameMode();
   dock.classList.add('show');
   dock.classList.toggle('expanded', debugWindowExpanded);
   const mainView = document.querySelector('.main-view');
+  const deptButtonsEl = document.getElementById('deptButtons');
+  const sideGroupEl = document.querySelector('#deptButtons [data-role="side-group"]');
   const sideButtons = Array.from(document.querySelectorAll('#deptButtons [data-role="side-group"] .dept-btn')).map((btn) => {
     const label = String(btn.textContent || '').trim();
     const active = btn.classList.contains('active') ? 'active' : 'idle';
@@ -19589,19 +19661,25 @@ function updateDebugWindowState() {
   const wardButtons = Array.from(document.querySelectorAll('#wardButtons .ward-btn'));
   const fitWide = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-wide')).map((btn) => String(btn.textContent || '').trim());
   const fitTwoLine = wardButtons.filter((btn) => btn.classList.contains('ward-btn-fit-two-line')).map((btn) => String(btn.textContent || '').trim());
+  const embeddedLabel = debugForceEmbeddedMode === null ? 'Auto' : (debugForceEmbeddedMode ? 'Forced On' : 'Forced Off');
   const lines = [
     `embedded: ${embedded ? 'yes' : 'no'}`,
+    `embeddedFlag: ${embeddedLabel}`,
+    `url: ${String(location && location.href || '').slice(0, 160)}`,
     `layout: ${mainView ? mainView.className : '-'}`,
     `topPanel: ${String(currentMobileTopPanel || 'none')}`,
     `deptTarget: ${String(currentDeptTarget || '-')}`,
     `deptSide: ${String(currentDeptSide || '-')}`,
     `currentDept: ${String(currentDept || '-')}`,
+    `deptButtons: ${deptButtonsEl ? 'yes' : 'no'} children=${deptButtonsEl ? deptButtonsEl.children.length : 0}`,
+    `sideGroup: ${sideGroupEl ? 'yes' : 'no'} btns=${sideButtons.length}`,
     `sideButtons: ${sideButtons.length ? sideButtons.join(' | ') : '-'}`,
     `wardButtons: total=${wardButtons.length}, fitWide=${fitWide.length}, fitTwoLine=${fitTwoLine.length}`,
     `fitWideSample: ${fitWide.slice(0, 8).join(' | ') || '-'}`,
     `fitTwoLineSample: ${fitTwoLine.slice(0, 8).join(' | ') || '-'}`
   ];
   toggle.textContent = `Debug Panel ${debugWindowExpanded ? 'Hide' : 'Show'}`;
+  if (embeddedBtn) embeddedBtn.textContent = `Embedded: ${embeddedLabel}`;
   body.textContent = lines.join('\n');
 }
 
