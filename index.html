@@ -18665,6 +18665,116 @@ const isIframeEmbed = (() => {
 let deptFilterHasFocus = false;
 let gesturePinchActive = false;
 let gestureInitialUserScale = 1;
+let embeddedTapCandidate = null;
+
+function isEmbeddedCompactMode() {
+  return isIframeEmbed && (isPhoneLayoutMode() || isTabletLayoutMode());
+}
+
+function getEmbeddedViewportCenterClientPoint() {
+  const container = document.getElementById('buildingContainer');
+  if (!container) return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  const rect = container.getBoundingClientRect();
+  return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+}
+
+function ensureEmbeddedZoomControls() {
+  if (!isEmbeddedCompactMode()) return;
+  if (document.getElementById('embeddedZoomControls')) return;
+  const container = document.getElementById('twintower-app') || document.body;
+  const wrap = document.createElement('div');
+  wrap.id = 'embeddedZoomControls';
+  wrap.style.position = 'fixed';
+  wrap.style.right = '10px';
+  wrap.style.bottom = '12px';
+  wrap.style.zIndex = '99999';
+  wrap.style.display = 'flex';
+  wrap.style.flexDirection = 'column';
+  wrap.style.gap = '8px';
+  const mkBtn = (label) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.style.width = '44px';
+    b.style.height = '44px';
+    b.style.borderRadius = '14px';
+    b.style.border = '1px solid rgba(15, 23, 42, 0.18)';
+    b.style.background = 'rgba(255, 255, 255, 0.94)';
+    b.style.backdropFilter = 'blur(6px)';
+    b.style.webkitBackdropFilter = 'blur(6px)';
+    b.style.fontSize = '20px';
+    b.style.fontWeight = '700';
+    b.style.lineHeight = '1';
+    b.style.color = '#0f172a';
+    b.style.boxShadow = '0 10px 22px rgba(15, 23, 42, 0.16)';
+    b.style.touchAction = 'manipulation';
+    return b;
+  };
+  const plus = mkBtn('+');
+  const minus = mkBtn('–');
+  const apply = (factor) => {
+    const center = getEmbeddedViewportCenterClientPoint();
+    zoomToClientPoint(userScale * factor, center.x, center.y);
+  };
+  plus.addEventListener('click', () => apply(1.14));
+  minus.addEventListener('click', () => apply(1 / 1.14));
+  wrap.appendChild(plus);
+  wrap.appendChild(minus);
+  container.appendChild(wrap);
+}
+
+let embeddedDebugHud = null;
+function ensureEmbeddedDebugHud() {
+  if (!isEmbeddedCompactMode()) return;
+  if (embeddedDebugHud && embeddedDebugHud.isConnected) return;
+  const host = document.getElementById('twintower-app') || document.body;
+  const hud = document.createElement('div');
+  hud.id = 'embeddedDebugHud';
+  hud.style.position = 'fixed';
+  hud.style.left = '8px';
+  hud.style.bottom = '12px';
+  hud.style.zIndex = '99999';
+  hud.style.maxWidth = 'min(92vw, 520px)';
+  hud.style.padding = '8px 10px';
+  hud.style.borderRadius = '12px';
+  hud.style.border = '1px solid rgba(15, 23, 42, 0.14)';
+  hud.style.background = 'rgba(255, 255, 255, 0.92)';
+  hud.style.backdropFilter = 'blur(6px)';
+  hud.style.webkitBackdropFilter = 'blur(6px)';
+  hud.style.fontSize = '11px';
+  hud.style.lineHeight = '1.25';
+  hud.style.color = '#0f172a';
+  hud.style.boxShadow = '0 10px 22px rgba(15, 23, 42, 0.14)';
+  hud.style.pointerEvents = 'none';
+  hud.textContent = 'debug: ready';
+  host.appendChild(hud);
+  embeddedDebugHud = hud;
+}
+
+function setEmbeddedDebugText(text) {
+  if (!isEmbeddedCompactMode()) return;
+  ensureEmbeddedDebugHud();
+  if (!embeddedDebugHud) return;
+  embeddedDebugHud.textContent = String(text || '');
+}
+
+function getSpaceDatasetKey(spaceEl) {
+  if (!spaceEl) return null;
+  const tower = String(spaceEl.dataset.tower || '');
+  const floor = String(spaceEl.dataset.floor || '');
+  const index = parseInt(spaceEl.dataset.index || '', 10);
+  const rawBuildingIndex = parseInt(spaceEl.dataset.building || '', 10);
+  const buildingIndex = tower === 'left' && Number.isFinite(rawBuildingIndex) ? rawBuildingIndex : null;
+  const wing = tower === 'right' ? String(spaceEl.dataset.wing || '') : '';
+  if (!tower || !floor || !Number.isFinite(index)) return null;
+  return { tower, floor, index, buildingIndex, wing };
+}
+
+function hitTestSpaceFromTouch(touch) {
+  if (!touch || typeof document.elementFromPoint !== 'function') return null;
+  const hit = document.elementFromPoint(touch.clientX, touch.clientY);
+  return hit && hit.closest ? hit.closest('.space') : null;
+}
 
 function shouldPreserveCurrentView() {
   if (!buildingContainer) return false;
@@ -22381,6 +22491,15 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
       selectedSpaces.add(key);
     });
 
+    if (isEmbeddedCompactMode() && currentLinkedGroup.right.length > 0) {
+      const wantsMcbtc2030 = currentLinkedGroup.right.some(s => String(s.wing || '') === 'mcbtc2030');
+      const wantsIpeb = currentLinkedGroup.right.some(s => String(s.wing || '') !== 'mcbtc2030');
+      const desired = wantsMcbtc2030 ? 1 : (wantsIpeb ? 0 : currentRightBuilding);
+      if (desired !== currentRightBuilding) {
+        switchRightBuilding(desired, { preservePan: true });
+      }
+    }
+
     // 自動導航：滾動到連結的空間
     if (tower === 'left' && currentLinkedGroup.right.length > 0) {
       const target = currentLinkedGroup.right[0];
@@ -22403,6 +22522,11 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
   }
   updateDisplay();
   updateLinkDisplay();
+  if (isEmbeddedCompactMode()) {
+    const rightLen = currentLinkedGroup ? (currentLinkedGroup.right || []).length : 0;
+    const leftLen = currentLinkedGroup ? (currentLinkedGroup.left || []).length : 0;
+    setEmbeddedDebugText(`tap ${tower} ${String(floor)}F #${String(index)} · right=${currentRightBuilding} · links L=${leftLen} R=${rightLen} · scale=${userScale.toFixed(2)}`);
+  }
 }
 
 // 選擇時間段
@@ -23034,6 +23158,22 @@ function zoomToClientPoint(nextUserScale, clientX, clientY) {
 
 function handleTouchStart(e) {
   if (e.touches.length === 1) {
+    if (isEmbeddedCompactMode()) {
+      const spaceEl = e.target && e.target.closest ? e.target.closest('.space') : null;
+      if (spaceEl && buildingContainer && buildingContainer.contains(spaceEl)) {
+        embeddedTapCandidate = {
+          startedAt: performance.now(),
+          startX: e.touches[0].clientX,
+          startY: e.touches[0].clientY,
+          data: getSpaceDatasetKey(spaceEl)
+        };
+        isDragging = false;
+        isPinching = false;
+        touchDragMoved = false;
+        return;
+      }
+    }
+    embeddedTapCandidate = null;
     isDragging = true;
     isPinching = false;
     touchDragMoved = false;
@@ -23044,6 +23184,7 @@ function handleTouchStart(e) {
     buildingContainer.style.cursor = 'grabbing';
     // e.preventDefault(); // Allow click/scroll if not handled? But standard is prevent for drag.
   } else if (e.touches.length === 2) {
+    embeddedTapCandidate = null;
     isDragging = false;
     isPinching = true;
     initialDist = getTouchDistance(e.touches);
@@ -23060,6 +23201,25 @@ function handleTouchStart(e) {
 }
 
 function handleTouchMove(e) {
+  if (embeddedTapCandidate && e.touches && e.touches.length === 1) {
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+    const dx = x - embeddedTapCandidate.startX;
+    const dy = y - embeddedTapCandidate.startY;
+    if ((Math.abs(dx) + Math.abs(dy)) >= 7) {
+      embeddedTapCandidate = null;
+      isDragging = true;
+      isPinching = false;
+      touchDragMoved = true;
+      startX = x;
+      startY = y;
+      panStartX = panX;
+      panStartY = panY;
+    } else if (isEmbeddedCompactMode()) {
+      e.preventDefault();
+      return;
+    }
+  }
   if (e.touches.length === 1 && isDragging) {
     const x = e.touches[0].clientX;
     const y = e.touches[0].clientY;
@@ -23104,27 +23264,25 @@ function handleTouchMove(e) {
 }
 
 function handleTouchEnd(e) {
-  if (isIframeEmbed && (isPhoneLayoutMode() || isTabletLayoutMode()) && !touchDragMoved && !isPinching && !isZoomInteractionActive()) {
+  if (isEmbeddedCompactMode() && !touchDragMoved && !isPinching && !isZoomInteractionActive()) {
     const t = e && e.changedTouches && e.changedTouches[0];
-    if (t && typeof document.elementFromPoint === 'function') {
-      const hit = document.elementFromPoint(t.clientX, t.clientY);
-      const spaceEl = hit && hit.closest ? hit.closest('.space') : null;
+    let data = embeddedTapCandidate && embeddedTapCandidate.data ? embeddedTapCandidate.data : null;
+    if (!data && t) {
+      const spaceEl = hitTestSpaceFromTouch(t);
       if (spaceEl && buildingContainer && buildingContainer.contains(spaceEl)) {
-        const tower = String(spaceEl.dataset.tower || '');
-        const floor = String(spaceEl.dataset.floor || '');
-        const index = parseInt(spaceEl.dataset.index || '', 10);
-        const rawBuildingIndex = parseInt(spaceEl.dataset.building || '', 10);
-        const buildingIndex = tower === 'left' && Number.isFinite(rawBuildingIndex) ? rawBuildingIndex : null;
-        const wing = tower === 'right' ? String(spaceEl.dataset.wing || '') : '';
-        if (tower && floor && Number.isFinite(index)) {
-          suppressSpaceClickOnce = true;
-          toggleSpace(tower, floor, index, buildingIndex, wing);
-          try { e.preventDefault(); } catch (err) {}
-          try { e.stopPropagation(); } catch (err) {}
-        }
+        data = getSpaceDatasetKey(spaceEl);
       }
     }
+    const withinTime = embeddedTapCandidate ? (performance.now() - embeddedTapCandidate.startedAt) < 520 : true;
+    if (data && withinTime) {
+      suppressSpaceClickOnce = true;
+      embeddedTapCandidate = null;
+      toggleSpace(data.tower, data.floor, data.index, data.buildingIndex, data.wing);
+      try { e.preventDefault(); } catch (err) {}
+      try { e.stopPropagation(); } catch (err) {}
+    }
   }
+  embeddedTapCandidate = null;
   if (touchDragMoved) suppressSpaceClickOnce = true;
   if (e && e.touches && e.touches.length === 1) {
     isDragging = true;
@@ -23205,6 +23363,20 @@ function handleGestureEnd(e) {
   if (!gesturePinchActive) return;
   gesturePinchActive = false;
   try { e.preventDefault(); } catch (err) {}
+}
+
+function routeEmbeddedTouchToBuilding(e, phase) {
+  if (!isEmbeddedCompactMode()) return false;
+  if (!buildingContainer) return false;
+  const touch = (e && ((e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]))) || null;
+  const hit = touch ? hitTestSpaceFromTouch(touch) : null;
+  const targetEl = hit || (e && e.target) || null;
+  if (!targetEl) return false;
+  if (!buildingContainer.contains(targetEl)) return false;
+  if (phase === 'start') handleTouchStart(e);
+  if (phase === 'move') handleTouchMove(e);
+  if (phase === 'end') handleTouchEnd(e);
+  return true;
 }
 
 // 初始化
@@ -23302,7 +23474,35 @@ document.addEventListener('DOMContentLoaded', function() {
   buildingContainer.addEventListener('gesturestart', handleGestureStart, { passive: false });
   buildingContainer.addEventListener('gesturechange', handleGestureChange, { passive: false });
   buildingContainer.addEventListener('gestureend', handleGestureEnd, { passive: false });
-  if (isIframeEmbed && (isPhoneLayoutMode() || isTabletLayoutMode())) {
+  if (isEmbeddedCompactMode()) {
+    buildingContainer.removeEventListener('touchstart', handleTouchStart);
+    buildingContainer.removeEventListener('touchmove', handleTouchMove);
+    buildingContainer.removeEventListener('touchend', handleTouchEnd);
+    buildingContainer.removeEventListener('touchcancel', handleTouchEnd);
+    document.addEventListener('touchstart', function(e) {
+      if (routeEmbeddedTouchToBuilding(e, 'start')) {
+        try { e.preventDefault(); } catch (err) {}
+        try { e.stopPropagation(); } catch (err) {}
+      }
+    }, { passive: false, capture: true });
+    document.addEventListener('touchmove', function(e) {
+      if (routeEmbeddedTouchToBuilding(e, 'move')) {
+        try { e.preventDefault(); } catch (err) {}
+        try { e.stopPropagation(); } catch (err) {}
+      }
+    }, { passive: false, capture: true });
+    document.addEventListener('touchend', function(e) {
+      if (routeEmbeddedTouchToBuilding(e, 'end')) {
+        try { e.preventDefault(); } catch (err) {}
+        try { e.stopPropagation(); } catch (err) {}
+      }
+    }, { passive: false, capture: true });
+    document.addEventListener('touchcancel', function(e) {
+      if (routeEmbeddedTouchToBuilding(e, 'end')) {
+        try { e.preventDefault(); } catch (err) {}
+        try { e.stopPropagation(); } catch (err) {}
+      }
+    }, { passive: false, capture: true });
     buildingContainer.style.touchAction = 'none';
   }
   
@@ -23370,6 +23570,8 @@ document.addEventListener('DOMContentLoaded', function() {
     syncPhoneLayoutPanels();
     syncPhoneBuildingSizing();
   }, 0);
+  ensureEmbeddedZoomControls();
+  ensureEmbeddedDebugHud();
 });
 
 function updateTopPanelSizing() {
