@@ -7732,9 +7732,9 @@ body.phone-layout-active .private-ward-card-body {
           <div class="mobile-building-label"><span class="mobile-building-label-text">Existing<br>Tower</span></div>
           <div class="mobile-building-options" id="mobileLeftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-mobile-left-building="0" type="button" onclick="switchLeftBuilding(0)">MCBTC</button>
+            <button class="building-btn theme-dtb" data-mobile-left-building="2" type="button" onclick="switchLeftBuilding(2)" title="Old Block - HKLM Wing">HKLM Wing</button>
+            <button class="building-btn theme-sb" data-mobile-left-building="3" type="button" onclick="switchLeftBuilding(3)" title="Old Block - EF Wing">EF Wing</button>
             <button class="building-btn theme-csb" data-mobile-left-building="1" type="button" onclick="switchLeftBuilding(1)" title="CLINICAL SCIENCES BUILDING">CSB</button>
-            <button class="building-btn theme-dtb" data-mobile-left-building="2" type="button" onclick="switchLeftBuilding(2)" title="Old Block - HKLM Wing">Old HKLM</button>
-            <button class="building-btn theme-sb" data-mobile-left-building="3" type="button" onclick="switchLeftBuilding(3)" title="Old Block - EF Wing">Old EF</button>
           </div>
         </div>
         <div class="mobile-building-row">
@@ -21193,8 +21193,8 @@ function syncMobileBuildingSelectorLabels() {
   const leftLabels = [
     ['0', 'MCBTC', 'MCBTC'],
     ['1', 'CLINICAL SCIENCES BUILDING', 'CSB'],
-    ['2', 'Old Block - HKLM Wing', 'Old HKLM'],
-    ['3', 'Old Block - EF Wing', 'Old EF']
+    ['2', 'Old Block - HKLM Wing', 'HKLM Wing'],
+    ['3', 'Old Block - EF Wing', 'EF Wing']
   ];
   leftLabels.forEach(([idx, full, short]) => {
     const btn = document.querySelector(`#leftBuildingSelector .building-btn[data-building-index="${idx}"]`);
@@ -21235,8 +21235,7 @@ function syncAllBuildingSelectorStates() {
     const parsedDesktop = parseInt(btn.dataset.rightBuilding, 10);
     const parsedMobile = parseInt(btn.dataset.mobileRightBuilding, 10);
     const btnIndex = Number.isFinite(parsedDesktop) ? parsedDesktop : parsedMobile;
-    const disable2030 = btnIndex === 1 && currentLeftBuilding === 0;
-    btn.disabled = !!disable2030;
+    btn.disabled = false;
     btn.classList.toggle('active', btnIndex === currentRightBuilding);
   });
 }
@@ -21323,13 +21322,13 @@ function syncPhoneLayoutPanels() {
     if (stack) {
       ensurePanelPlaceholder('calendarMobileRestore', wrap);
       ensurePanelPlaceholder('linkedMobileRestore', linked);
-      if (searchBox) stack.appendChild(searchBox);
-      if (linked) stack.appendChild(linked);
-      if (mobileSelectors) stack.appendChild(mobileSelectors);
-      if (tabs) stack.appendChild(tabs);
-      if (deptPanel) stack.appendChild(deptPanel);
-      if (exceptionalPanel) stack.appendChild(exceptionalPanel);
-      if (wrap) stack.appendChild(wrap);
+      if (searchBox && searchBox.parentElement !== stack) stack.appendChild(searchBox);
+      if (linked && linked.parentElement !== stack) stack.appendChild(linked);
+      if (mobileSelectors && mobileSelectors.parentElement !== stack) stack.appendChild(mobileSelectors);
+      if (tabs && tabs.parentElement !== stack) stack.appendChild(tabs);
+      if (deptPanel && deptPanel.parentElement !== stack) stack.appendChild(deptPanel);
+      if (exceptionalPanel && exceptionalPanel.parentElement !== stack) stack.appendChild(exceptionalPanel);
+      if (wrap && wrap.parentElement !== stack) stack.appendChild(wrap);
     }
     syncMobileBuildingSelectorLabels();
     syncAllBuildingSelectorStates();
@@ -22921,6 +22920,7 @@ let initialDist = 0;
 let initialScaleRef = 1;
 let pinchAnchorContentX = 0;
 let pinchAnchorContentY = 0;
+let touchDragMoved = false;
 
 function getTouchDistance(touches) {
   if (!touches || touches.length < 2) return 0;
@@ -23006,6 +23006,7 @@ function handleTouchStart(e) {
   if (e.touches.length === 1) {
     isDragging = true;
     isPinching = false;
+    touchDragMoved = false;
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
     panStartX = panX;
@@ -23034,6 +23035,8 @@ function handleTouchMove(e) {
     const y = e.touches[0].clientY;
     const dx = x - startX;
     const dy = y - startY;
+    if (!touchDragMoved && (Math.abs(dx) + Math.abs(dy)) < 7) return;
+    touchDragMoved = true;
     panX = panStartX + dx;
     panY = panStartY + dy;
     applyPanScale();
@@ -23062,9 +23065,11 @@ function handleTouchMove(e) {
 }
 
 function handleTouchEnd(e) {
+  if (touchDragMoved) suppressSpaceClickOnce = true;
   if (e && e.touches && e.touches.length === 1) {
     isDragging = true;
     isPinching = false;
+    touchDragMoved = false;
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
     panStartX = panX;
@@ -23074,6 +23079,7 @@ function handleTouchEnd(e) {
     isPinching = false;
   }
   initialDist = 0;
+  touchDragMoved = false;
   buildingContainer.style.cursor = 'grab';
   forceCrispText();
 }
