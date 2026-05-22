@@ -2013,6 +2013,8 @@ h2 {
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   max-height: calc(var(--tablet-panel-max-h) + 12px);
   padding: 6px 8px 8px;
 }
@@ -2040,8 +2042,10 @@ h2 {
 }
 
 .main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardButtons {
-  max-height: none;
-  overflow-y: visible;
+  max-height: min(44vh, 420px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .main-view.tablet-layout #topCalendarPanel .calendar-panel {
@@ -2286,8 +2290,10 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode #wardButtons {
-  max-height: none;
-  overflow-y: visible;
+  max-height: min(42vh, 360px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .main-view.tablet-layout.tablet-landscape .mobile-top-tab {
@@ -3396,9 +3402,11 @@ h2 {
 .top-dept-panel #wardButtons {
   flex: 1 1 auto;
   min-height: 0;
-  max-height: min(44vh, 340px);
+  max-height: min(62vh, 520px);
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   scrollbar-gutter: stable;
   scroll-padding-bottom: 16px;
   display: flex;
