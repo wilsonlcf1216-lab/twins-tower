@@ -3092,6 +3092,10 @@ h2 {
   max-height: min(68vh, 520px);
 }
 
+.main-view:not(.phone-layout):not(.tablet-layout) #topDeptPanel.top-panel.expanded {
+  max-height: min(82vh, 760px);
+}
+
 .top-filter-input {
   width: 100%;
   padding: 4px 6px;
@@ -3402,11 +3406,9 @@ h2 {
 .top-dept-panel #wardButtons {
   flex: 1 1 auto;
   min-height: 0;
-  max-height: min(62vh, 520px);
+  max-height: min(44vh, 340px);
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
   scrollbar-gutter: stable;
   scroll-padding-bottom: 16px;
   display: flex;
@@ -3415,6 +3417,10 @@ h2 {
   align-items: stretch;
   gap: 4px;
   padding-bottom: 16px;
+}
+
+.main-view:not(.phone-layout):not(.tablet-layout) .top-dept-panel #wardButtons {
+  max-height: min(74vh, 720px);
 }
 
 .top-dept-panel .ward-building-row {
@@ -7301,8 +7307,8 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardButtons {
-  max-height: none !important;
-  overflow-y: visible !important;
+  max-height: min(44vh, 420px) !important;
+  overflow-y: auto !important;
 }
 
 #twintower-app .main-view.tablet-layout #topExceptionalPanel .exceptional-list {
@@ -7539,8 +7545,8 @@ body.phone-layout-active .private-ward-card-body {
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode #wardButtons {
-  max-height: none !important;
-  overflow-y: visible !important;
+  max-height: min(42vh, 360px) !important;
+  overflow-y: auto !important;
 }
 
 #twintower-app .main-view.tablet-layout.tablet-landscape .top-search-box .dept-search-results {
