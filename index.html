@@ -18655,6 +18655,16 @@ let panX = 0;
 let panY = 0;
 let panStartX = 0;
 let panStartY = 0;
+const isIframeEmbed = (() => {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+})();
+let deptFilterHasFocus = false;
+let gesturePinchActive = false;
+let gestureInitialUserScale = 1;
 
 function shouldPreserveCurrentView() {
   if (!buildingContainer) return false;
@@ -21113,6 +21123,7 @@ function focusDeptFilterFromUserGesture() {
     }
     positionMobileDeptSearchResults();
   };
+  focusInput();
   if (typeof requestAnimationFrame === 'function') {
     requestAnimationFrame(focusInput);
   } else {
@@ -23054,13 +23065,22 @@ function handleTouchMove(e) {
     const y = e.touches[0].clientY;
     const dx = x - startX;
     const dy = y - startY;
-    if (!touchDragMoved && (Math.abs(dx) + Math.abs(dy)) < 7) return;
+    if (!touchDragMoved && (Math.abs(dx) + Math.abs(dy)) < 7) {
+      if (isIframeEmbed && (isPhoneLayoutMode() || isTabletLayoutMode())) {
+        e.preventDefault();
+      }
+      return;
+    }
     touchDragMoved = true;
     panX = panStartX + dx;
     panY = panStartY + dy;
     applyPanScale();
     e.preventDefault();
   } else if (e.touches.length === 2) {
+    if (gesturePinchActive) {
+      e.preventDefault();
+      return;
+    }
     const dist = getTouchDistance(e.touches);
     if (initialDist > 0) {
       e.preventDefault();
@@ -23084,6 +23104,27 @@ function handleTouchMove(e) {
 }
 
 function handleTouchEnd(e) {
+  if (isIframeEmbed && (isPhoneLayoutMode() || isTabletLayoutMode()) && !touchDragMoved && !isPinching && !isZoomInteractionActive()) {
+    const t = e && e.changedTouches && e.changedTouches[0];
+    if (t && typeof document.elementFromPoint === 'function') {
+      const hit = document.elementFromPoint(t.clientX, t.clientY);
+      const spaceEl = hit && hit.closest ? hit.closest('.space') : null;
+      if (spaceEl && buildingContainer && buildingContainer.contains(spaceEl)) {
+        const tower = String(spaceEl.dataset.tower || '');
+        const floor = String(spaceEl.dataset.floor || '');
+        const index = parseInt(spaceEl.dataset.index || '', 10);
+        const rawBuildingIndex = parseInt(spaceEl.dataset.building || '', 10);
+        const buildingIndex = tower === 'left' && Number.isFinite(rawBuildingIndex) ? rawBuildingIndex : null;
+        const wing = tower === 'right' ? String(spaceEl.dataset.wing || '') : '';
+        if (tower && floor && Number.isFinite(index)) {
+          suppressSpaceClickOnce = true;
+          toggleSpace(tower, floor, index, buildingIndex, wing);
+          try { e.preventDefault(); } catch (err) {}
+          try { e.stopPropagation(); } catch (err) {}
+        }
+      }
+    }
+  }
   if (touchDragMoved) suppressSpaceClickOnce = true;
   if (e && e.touches && e.touches.length === 1) {
     isDragging = true;
@@ -23144,6 +23185,28 @@ function applyWheelZoom() {
   wheelZoomRafId = typeof requestAnimationFrame === 'function' ? requestAnimationFrame(applyWheelZoom) : 0;
 }
 
+function handleGestureStart(e) {
+  if (!isIframeEmbed || (!isPhoneLayoutMode() && !isTabletLayoutMode())) return;
+  gesturePinchActive = true;
+  gestureInitialUserScale = userScale;
+  try { e.preventDefault(); } catch (err) {}
+}
+
+function handleGestureChange(e) {
+  if (!gesturePinchActive) return;
+  if (!isIframeEmbed || (!isPhoneLayoutMode() && !isTabletLayoutMode())) return;
+  const scale = typeof e.scale === 'number' ? e.scale : 1;
+  const next = gestureInitialUserScale * scale;
+  zoomToClientPoint(next, e.clientX, e.clientY);
+  try { e.preventDefault(); } catch (err) {}
+}
+
+function handleGestureEnd(e) {
+  if (!gesturePinchActive) return;
+  gesturePinchActive = false;
+  try { e.preventDefault(); } catch (err) {}
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
   buildingContainer = document.getElementById('buildingContainer');
@@ -23172,6 +23235,8 @@ document.addEventListener('DOMContentLoaded', function() {
     deptFilter.addEventListener('input', applyDeptFilter);
     deptFilter.addEventListener('focus', positionMobileDeptSearchResults);
     deptFilter.addEventListener('click', positionMobileDeptSearchResults);
+    deptFilter.addEventListener('focus', function() { deptFilterHasFocus = true; });
+    deptFilter.addEventListener('blur', function() { deptFilterHasFocus = false; });
   }
   const searchBox = document.querySelector('.top-search-box');
   if (searchBox && deptFilter) {
@@ -23180,7 +23245,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (e && e.target && e.target.closest && e.target.closest('.dept-search-results')) return;
       focusDeptFilterFromUserGesture();
     };
+    searchBox.addEventListener('pointerdown', focusFromTap);
     searchBox.addEventListener('click', focusFromTap);
+    searchBox.addEventListener('touchstart', focusFromTap, { passive: false });
     searchBox.addEventListener('touchend', focusFromTap, { passive: true });
   }
   document.addEventListener('pointerdown', function(e) {
@@ -23232,6 +23299,12 @@ document.addEventListener('DOMContentLoaded', function() {
   buildingContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
   buildingContainer.addEventListener('touchend', handleTouchEnd);
   buildingContainer.addEventListener('touchcancel', handleTouchEnd);
+  buildingContainer.addEventListener('gesturestart', handleGestureStart, { passive: false });
+  buildingContainer.addEventListener('gesturechange', handleGestureChange, { passive: false });
+  buildingContainer.addEventListener('gestureend', handleGestureEnd, { passive: false });
+  if (isIframeEmbed && (isPhoneLayoutMode() || isTabletLayoutMode())) {
+    buildingContainer.style.touchAction = 'none';
+  }
   
   // Trackpad / Mouse Wheel Zoom
   buildingContainer.addEventListener('wheel', function(e) {
@@ -23267,7 +23340,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   window.addEventListener('resize', function() {
-    refreshEmbeddedLayout();
+    if (!(deptFilterHasFocus && (isPhoneLayoutMode() || isTabletLayoutMode()))) {
+      refreshEmbeddedLayout();
+    }
     positionMobileDeptSearchResults();
   });
   window.addEventListener('orientationchange', function() {
@@ -23276,7 +23351,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', function() {
-      refreshEmbeddedLayout();
+      if (!(deptFilterHasFocus && (isPhoneLayoutMode() || isTabletLayoutMode()))) {
+        refreshEmbeddedLayout();
+      }
       positionMobileDeptSearchResults();
     });
   }
