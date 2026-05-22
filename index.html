@@ -958,6 +958,10 @@ h2 {
   gap: 2px;
 }
 
+.ward-items-grid .ward-btn.ward-btn-all {
+  grid-column: 1 / -1;
+}
+
 .ward-btn.ward-btn-day {
   justify-content: center;
   text-align: center;
@@ -2031,7 +2035,7 @@ h2 {
 }
 
 .main-view.tablet-layout #topDeptPanel #wardButtons {
-  max-height: min(16vh, 150px);
+  max-height: min(28vh, 260px);
   overflow-y: auto;
 }
 
@@ -2278,7 +2282,7 @@ h2 {
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons {
-  max-height: min(12vh, 98px);
+  max-height: min(22vh, 210px);
 }
 
 .main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode #wardButtons {
@@ -20128,6 +20132,7 @@ function buildMenuItemsContainer(entries, options = {}) {
     if (sortedItems.length > 1) {
       const allBtn = document.createElement('button');
       allBtn.className = 'ward-btn ' + getThemeClass(buildingKey);
+      allBtn.classList.add('ward-btn-all');
       allBtn.textContent = 'ALL';
       allBtn.onclick = () => handleAllSelection(buildingKey, sortedItems);
       grid.appendChild(allBtn);
