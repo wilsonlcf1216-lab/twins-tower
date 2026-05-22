@@ -23220,7 +23220,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const deltaUnit = e.deltaMode === 1 ? 16 : (e.deltaMode === 2 ? Math.max(1, buildingContainer.clientHeight || window.innerHeight || 800) : 1);
     let normalizedDeltaY = e.deltaY * deltaUnit;
     normalizedDeltaY = Math.max(-240, Math.min(240, normalizedDeltaY));
-    if (e.ctrlKey) normalizedDeltaY *= 0.6;
+    if (e.ctrlKey) {
+      wheelZoomAccumY = 0;
+      const pinchDeltaY = Math.max(-240, Math.min(240, normalizedDeltaY));
+      const pinchStrength = 0.0028;
+      const factor = Math.exp(-pinchDeltaY * pinchStrength);
+      const nextScale = clampUserScale(userScale * factor);
+      const delta = nextScale - userScale;
+      if (delta) nudgeScale(delta, e.clientX, e.clientY);
+      return;
+    }
     wheelZoomAccumY += normalizedDeltaY;
     wheelZoomAnchorX = e.clientX;
     wheelZoomAnchorY = e.clientY;
