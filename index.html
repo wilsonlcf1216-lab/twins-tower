@@ -18668,7 +18668,9 @@ let gestureInitialUserScale = 1;
 let embeddedTapCandidate = null;
 
 function isEmbeddedCompactMode() {
-  return isIframeEmbed && (isPhoneLayoutMode() || isTabletLayoutMode());
+  const coarsePointer = typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches;
+  const touchCapable = (navigator.maxTouchPoints || 0) > 0 || coarsePointer || ('ontouchstart' in window);
+  return isIframeEmbed && touchCapable;
 }
 
 function getEmbeddedViewportCenterClientPoint() {
@@ -20476,7 +20478,7 @@ function handleAllSelection(buildingKey, items) {
     const resolved = resolveDeptItem(buildingKey, item);
     if (resolved) {
       if (resolved.tower === 'left') {
-        const key = `left-${resolved.buildingIndex}-${resolved.floor}-${''}-${resolved.index}`;
+        const key = `left-${resolved.buildingIndex}-${resolved.floor}--${resolved.index}`;
         selectedSpaces.add(key);
       } else if (resolved.tower === 'right') {
         const key = `right-${resolved.floor}-${resolved.wing || ''}-${resolved.index}`;
@@ -22239,7 +22241,7 @@ function selectWard(wardName) {
       
       let key;
       if (tower === 'left') {
-        key = `left-${building}-${floor}-${wing}-${index}`;
+        key = `left-${building}-${floor}--${index}`;
       } else {
         key = `right-${floor}-${wing}-${index}`;
       }
@@ -22995,7 +22997,7 @@ function updateDisplay() {
     
     if (space.dataset.tower === 'left') {
       const building = space.dataset.building !== undefined ? space.dataset.building : currentLeftBuilding;
-      key = `left-${building}-${space.dataset.floor}-${wing}-${space.dataset.index}`;
+      key = `left-${building}-${space.dataset.floor}--${space.dataset.index}`;
     } else {
       key = `right-${space.dataset.floor}-${wing}-${space.dataset.index}`;
     }
