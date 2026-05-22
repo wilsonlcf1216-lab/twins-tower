@@ -7727,8 +7727,8 @@ body.phone-layout-active .private-ward-card-body {
           <div class="mobile-building-options" id="mobileLeftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-mobile-left-building="0" type="button" onclick="switchLeftBuilding(0)">MCBTC</button>
             <button class="building-btn theme-csb" data-mobile-left-building="1" type="button" onclick="switchLeftBuilding(1)" title="CLINICAL SCIENCES BUILDING">CSB</button>
-            <button class="building-btn theme-dtb" data-mobile-left-building="2" type="button" onclick="switchLeftBuilding(2)" title="DAY TREATMENT BLOCK">DTB</button>
-            <button class="building-btn theme-sb" data-mobile-left-building="3" type="button" onclick="switchLeftBuilding(3)" title="SPECIAL BLOCK">SB</button>
+            <button class="building-btn theme-dtb" data-mobile-left-building="2" type="button" onclick="switchLeftBuilding(2)" title="Old Block - HKLM Wing">Old HKLM</button>
+            <button class="building-btn theme-sb" data-mobile-left-building="3" type="button" onclick="switchLeftBuilding(3)" title="Old Block - EF Wing">Old EF</button>
           </div>
         </div>
         <div class="mobile-building-row">
@@ -7774,8 +7774,8 @@ body.phone-layout-active .private-ward-card-body {
           <div class="top-panel-header">Existing Tower Selection</div>
           <div class="top-building-selector" id="leftBuildingSelector">
             <button class="building-btn theme-mcbtc active" data-building-index="0" onclick="switchLeftBuilding(0)">MCBTC</button>
-            <button class="building-btn theme-dtb" data-building-index="2" onclick="switchLeftBuilding(2)">DAY TREATMENT BLOCK</button>
-            <button class="building-btn theme-sb" data-building-index="3" onclick="switchLeftBuilding(3)">SPECIAL BLOCK</button>
+            <button class="building-btn theme-dtb" data-building-index="2" onclick="switchLeftBuilding(2)">Old Block - HKLM Wing</button>
+            <button class="building-btn theme-sb" data-building-index="3" onclick="switchLeftBuilding(3)">Old Block - EF Wing</button>
             <button class="building-btn theme-csb" data-building-index="1" onclick="switchLeftBuilding(1)" title="CLINICAL SCIENCES BUILDING">CLINICAL SCIENCES BUILDING</button>
           </div>
         </div>
@@ -7854,19 +7854,19 @@ body.phone-layout-active .private-ward-card-body {
 if (!window.leftMenuSourceRows) {
 (function () {
   const raw = String.raw`
-MCBTC|12|1|12A MED Ward Infectious Disease Ward|12A|Clinical|Ward|M&T|
+MCBTC|12|1|12A MED Ward/Infectious Disease Ward|12A|Clinical|Ward|M&T|
 MCBTC|12|2|12B MED Ward|12B|Clinical|Ward|M&T|
-MCBTC|12|3|12C MED Ward Infectious Disease Ward|12C|Clinical|Ward|M&T|
+MCBTC|12|3|12C MED Ward/Infectious Disease Ward|12C|Clinical|Ward|M&T|
 MCBTC|12|4|Shared Facilities|12/F Shared Facilities|Clinical|Day/Special Area|M&T|
 MCBTC|11|1|11A MED Ward|11A|Clinical|Ward|M&T|
 MCBTC|11|2|11B MED Ward|11B|Clinical|Ward|M&T|
 MCBTC|11|3|11C MED Ward|11C|Clinical|Ward|M&T|
 MCBTC|11|4|Shared Facilities|11/F Shared Facilities|Clinical|Day/Special Area|M&T|
 MCBTC|10|1|10A MED Ward (Renal Transplant Centre)|10A|Clinical|Ward|M&T|
-MCBTC|10|2|10B MED Ward Poison Treatment Centre|10B|Clinical|Ward|M&T|
-MCBTC|10|3|10C MED Ward (CCU / HDU)|10C|Clinical|Ward|M&T|
-MCBTC|10|3|10C MED Ward (CCU / HDU)|10CH|Clinical|Ward|M&T|
-MCBTC|10|3|10C MED Ward (CCU / HDU)|CCU|Clinical|Ward|M&T|
+MCBTC|10|2|10B MED Ward/ Poison Treatment Centre|10B|Clinical|Ward|M&T|
+MCBTC|10|3|10C MED Ward (CCU/ HDU)|10C|Clinical|Ward|M&T|
+MCBTC|10|3|10C MED Ward (CCU/ HDU)|10CH|Clinical|Ward|M&T|
+MCBTC|10|3|10C MED Ward (CCU/ HDU)|CCU|Clinical|Ward|M&T|
 MCBTC|10|4|Shared Facilities|10/F Shared Facilities|Clinical|Day/Special Area|M&T|
 MCBTC|9|1|9A ORT Ward|9A|Clinical|Ward|ORT|
 MCBTC|9|2|9B ORT Ward|9B|Clinical|Ward|ORT|
@@ -7874,14 +7874,14 @@ MCBTC|9|3|9C ORT Ward|9C|Clinical|Ward|ORT|
 MCBTC|9|4|Shared Facilities|9/F Shared Facilities|Clinical|Day/Special Area|ORT|
 MCBTC|8|1|8A SUR Ward|8A|Clinical|Ward|SURG|
 MCBTC|8|2|8B SUR Ward|8B|Clinical|Ward|SURG|
-MCBTC|8|3|8C SUR Ward Surgical HDU|8C|Clinical|Ward|SURG|
-MCBTC|8|3|8C SUR Ward Surgical HDU|8CH|Clinical|Ward|SURG|
+MCBTC|8|3|8C SUR Ward Surgical / HDU|8C|Clinical|Ward|SURG|
+MCBTC|8|3|8C SUR Ward Surgical / HDU|8CH|Clinical|Ward|SURG|
 MCBTC|8|4|Shared Facilities|8/F Shared Facilities|Clinical|Day/Special Area|SURG|
-MCBTC|7|1|7A MED Ward (Stroke Unit) Neurosurgery HDU|7A|Clinical|Ward|M&T|
-MCBTC|7|1|7A MED Ward (Stroke Unit) Neurosurgery HDU|7AH|Clinical|Ward|NS|
+MCBTC|7|1|7A MED Ward (Stroke Unit)/ Neurosurgery HDU|7A|Clinical|Ward|M&T|
+MCBTC|7|1|7A MED Ward (Stroke Unit)/ Neurosurgery HDU|7AH|Clinical|Ward|NS|
 MCBTC|7|2|7B SUR Ward (Neurosurgery)|7B|Clinical|Ward|NS|
-MCBTC|7|3|7C SUR Ward (Cardiothoracic) CTS HDU|7C|Clinical|Ward|SURG|
-MCBTC|7|3|7C SUR Ward (Cardiothoracic) CTS HDU|7CH|Clinical|Ward|SURG|
+MCBTC|7|3|7C SUR Ward (Cardiothoracic)/ CTS HDU|7C|Clinical|Ward|SURG|
+MCBTC|7|3|7C SUR Ward (Cardiothoracic)/ CTS HDU|7CH|Clinical|Ward|SURG|
 MCBTC|7|4|Shared Facilities|7/F Shared Facilities|Clinical|Day/Special Area|NS|
 MCBTC|6|1|Private Ward|PRIVATE|Clinical|Ward|PRIVATE|
 MCBTC|6|2|Sterile Supplies Unit|SSU|Neutral||SSU|
@@ -7899,7 +7899,7 @@ MCBTC|3|2|Rapid Response Lab|Rapid Response Lab|Neutral||Lab|
 MCBTC|3|3|DSU|DSU|Clinical|Day/Special Area|OT|
 MCBTC|3|4|OT (3/F)|OT (3/F)|Clinical|Day/Special Area|OT|
 MCBTC|2|1|DIIR|DIIR|Clinical|Day/Special Area|DIIR|
-MCBTC|2|2|Cath Lab|Cath Lab|Clinical|Day/Special Area|M&T|
+MCBTC|2|2|Cardiovascular intervention Centre|Cardiovascular intervention Centre|Clinical|Day/Special Area|M&T|
 MCBTC|2|3|EM Ward|EM Ward|Clinical|Ward|AED|
 MCBTC|2|4|A&E Dept Office|A&E Dept Office|Clinical|Day/Special Area|AED|
 MCBTC|1|1|Auditorium|Auditorium||||
@@ -7919,7 +7919,7 @@ MCBTC|0|10|MRI|MRI|Clinical|Day/Special Area|DIIR|
 MCBTC|0|11|DG Store|DG Store|Neutral||Pharmacy|
 MCBTC|0|11|DG Store|DG Store|Neutral||Admin|HPFM
 MCBTC|0|12|Refuse|Refuse|Neutral||Admin|Housekeeping
-MCBTC|0|13|NEATs|NEATs|Neutral||Admin|NEATs
+MCBTC|0|13|NEATS|NEATS|Neutral||Admin|NEATS
 MCBTC|0|14|L/UL Bays|L/UL Bays||||
 MCBTC|B01|1|Plant Rooms|Plant Rooms||||
 MCBTC|B01|2|Tunnel|Tunnel||||
@@ -7962,7 +7962,7 @@ CSB|2|1|Li Ping Medical Library, CUHK|Medical Library|Neutral||CUHK|
 CSB|2|2|Lecture Theatre & Seminar Rooms, CUHK|Lecture Theatre & Seminar Rooms|Neutral||CUHK|
 CSB|2|3|Medical Information Technology, CUHK|Medical Information Technology|Neutral||CUHK|
 CSB|2|4|Kai Chong Tong Clinical Skills Learning Centre, CUHK|KCT Clinical Skills Learning Centre|Neutral||CUHK|
-CSB|1|1|Dept of Anatomical &cellular Pathology|Dept of A&CP|Neutral||Lab|
+CSB|1|1|Dept of Anatomical & Cellular Pathology|Dept of A&CP|Neutral||Lab|
 CSB|0|1|Foreman Office|Foreman|Neutral||Admin|Foreman
 CSB|0|2|Building Day-to-day South Depot|Day to Day|Neutral||Admin|HPFM
 CSB|0|3|Milk Formula Room|Milk Formula Room|Neutral||Allied Health|Dietitian
@@ -7995,7 +7995,7 @@ DTB|6|2|6K NICU/SCBU|6K|Clinical|Ward|PAED|
 DTB|6|3|6L Paediatric Ward (SCBU)|6L|Clinical|Ward|PAED|
 DTB|6|4|6M Paediatric Ward (PICU & HDU)|6M|Clinical|Ward|PAED|
 DTB|5|1|5H Decanting Ward|5H Decanting Ward||||
-DTB|5|2|5K Orthopaedic Ambulatory Care Centre|5K|Clinical|Day/Special Area|ORT|
+DTB|5|2|5K OACC|5K OACC|Clinical|Day/Special Area|ORT|
 DTB|5|3|5L MED Ward|5L|Clinical|Ward|M&T|
 DTB|5|4|5M MED Ward|5M|Clinical|Ward|M&T|
 DTB|4|1|4H Integrated Renal Care Centre|4H|Clinical|Day/Special Area|M&T|
@@ -8019,7 +8019,7 @@ DTB|2|8|Cluster Secret.|Cluster Secret.|Neutral||Cluster Secret.|
 DTB|2|9|Canteen|Canteen||||
 DTB|2|10|PABX Office|PABX Office|Neutral||Admin|PABX Office
 DTB|2|11|CND Office|CND Office|Neutral||CND Office|
-DTB|2|12|Doctor Lounge|Doctor Lounge|Neutral||Doctor Lounge|
+DTB|2|12|Doctors Lounge|Doctors Lounge|Neutral||Doctors Lounge|
 DTB|1|1|Data Centre|Data Centre|Neutral||IT|
 DTB|1|2|Clinical Pathology|Clinical Pathology|Neutral||Lab|
 DTB|1|3|Microbiology|Microbiology|Neutral||Lab|
@@ -8047,21 +8047,21 @@ SB|11|1|11EF Phase 1 Clinical Trial Centre|Clinical Trial Centre|Neutral||CUHK|
 SB|10|1|10E Temporary Ward|10E Temporary Ward||||
 SB|10|2|10F MSSU Medical Waiving|10F MSSU Medical Waiving||||
 SB|9|1|9E Private Maternity Ward|9E|Clinical|Ward|O&G|
-SB|9|2|9F Assited Reproductive Tech|9F ART|Clinical|Day/Special Area|O&G|
+SB|9|2|9F Assisted Reproductive Technology Unit|9F ART|Clinical|Day/Special Area|O&G|
 SB|8|1|8E Postnatal Ward|8E|Clinical|Ward|O&G|
 SB|8|2|8F Postnatal Ward|8F|Clinical|Ward|O&G|
 SB|7|1|7E First Stage Ward|7E|Clinical|Ward|O&G|
 SB|7|2|7F Antenatal Ward|7F|Clinical|Ward|O&G|
 SB|6|1|6EF Delivery Suite|6EF|Clinical|Day/Special Area|O&G|
 SB|5|1|5E O&G Day Ward|5E|Clinical|Day/Special Area|O&G|
-SB|5|2|5F O&G Gynaecology Ward|5F|Clinical|Ward|O&G|
+SB|5|2|5F Gynaecology Ward|5F|Clinical|Ward|O&G|
 SB|4|1|4E Clinical Oncology|4E|Clinical|Ward|Oncology|
 SB|4|2|4F Clinical Oncology|4F|Clinical|Ward|Oncology|
 SB|3|1|3E Staff Changing (N)|3E Staff Changing|Neutral||Admin|Staff Changing
 SB|3|2|3F Clinical Oncology|3F|Clinical|Ward|Oncology|
 SB|2|1|2E Dean Office|Dean Office|Neutral||CUHK|
 SB|2|2|2E Faculty and Planning Office|Faculty and Planning Office|Neutral||CUHK|
-SB|2|3|2F Private Clinic|2F|Clinical|Day/Special Area|Private|
+SB|2|3|2F CUHK-PWH Medical Centre|2F|Clinical|Day/Special Area|Private|
 SB|1|1|1E CUHK O&G|O&G, CUHK|Neutral||CUHK|
 SB|1|2|1F ART Lab|1F ART|Clinical|Day/Special Area|O&G|
 SB|0|1|Endoscopy Centre|Endoscopy Centre|Clinical|Day/Special Area|SUR|
@@ -8112,7 +8112,7 @@ if (!window.ipebMenuSourceRows) {
     "building": "SB",
     "floor": "2",
     "order": 3,
-    "display": "Private Clinic",
+    "display": "CUHK-PWH Medical Centre",
     "sourceName": "2F",
     "side": "Clinical",
     "type": "Day/Special Area",
@@ -8645,7 +8645,7 @@ if (!window.mcbtc2030MenuSourceRows) {
     "index": 1,
     "exceptionalTitle": "4B INTEGRATED WARD 搬遷記錄",
     "exceptionalYear": "2030",
-    "exceptionalSourceMatch": "5F O&G Gynaecology Ward",
+    "exceptionalSourceMatch": "5F Gynaecology Ward",
     "exceptionalSourceDisplay": "5F Integrated Ward",
     "exceptionalSourceMeta": "5/F"
   },
@@ -8822,12 +8822,12 @@ const leftBuildingsData = [
     "floors": {
       "12": [
         {
-          "name": "12A MED Ward Infectious Disease Ward",
+          "name": "12A MED Ward/Infectious Disease Ward",
           "widthClass": "ward-a",
           "multiline": true,
           "lines": [
-            "12A MED Ward Infectious",
-            "Disease Ward"
+            "12A MED Ward/",
+            "Infectious Disease Ward"
           ]
         },
         {
@@ -8835,12 +8835,12 @@ const leftBuildingsData = [
           "widthClass": "ward-b"
         },
         {
-          "name": "12C MED Ward Infectious Disease Ward",
+          "name": "12C MED Ward/Infectious Disease Ward",
           "widthClass": "ward-c",
           "multiline": true,
           "lines": [
-            "12C MED Ward Infectious",
-            "Disease Ward"
+            "12C MED Ward/",
+            "Infectious Disease Ward"
           ]
         },
         {
@@ -8887,21 +8887,21 @@ const leftBuildingsData = [
           ]
         },
         {
-          "name": "10B MED Ward Poison Treatment Centre",
+          "name": "10B MED Ward/ Poison Treatment Centre",
           "widthClass": "ward-b",
           "multiline": true,
           "lines": [
-            "10B MED Ward Poison",
-            "Treatment Centre"
+            "10B MED Ward/",
+            "Poison Treatment Centre"
           ]
         },
         {
-          "name": "10C MED Ward (CCU / HDU)",
+          "name": "10C MED Ward (CCU/ HDU)",
           "widthClass": "ward-c",
           "multiline": true,
           "lines": [
-            "10C MED Ward (CCU /",
-            "HDU)"
+            "10C MED Ward",
+            "(CCU/HDU)"
           ]
         },
         {
@@ -8947,11 +8947,11 @@ const leftBuildingsData = [
           "widthClass": "ward-b"
         },
         {
-          "name": "8C SUR Ward Surgical HDU",
+          "name": "8C SUR Ward / Surgical HDU",
           "widthClass": "ward-c",
           "multiline": true,
           "lines": [
-            "8C SUR Ward",
+            "8C SUR Ward/",
             "Surgical HDU"
           ]
         },
@@ -8967,12 +8967,12 @@ const leftBuildingsData = [
       ],
       "7": [
         {
-          "name": "7A MED Ward (Stroke Unit) Neurosurgery HDU",
+          "name": "7A MED Ward (Stroke Unit)/ Neurosurgery HDU",
           "widthClass": "ward-a",
           "multiline": true,
           "lines": [
             "7A MED Ward (Stroke",
-            "Unit) Neurosurgery HDU"
+            "Unit)/ Neurosurgery HDU"
           ]
         },
         {
@@ -8985,12 +8985,12 @@ const leftBuildingsData = [
           ]
         },
         {
-          "name": "7C SUR Ward (Cardiothoracic) CTS HDU",
+          "name": "7C SUR Ward (Cardiothoracic)/ CTS HDU",
           "widthClass": "ward-c",
           "multiline": true,
           "lines": [
             "7C SUR Ward",
-            "(Cardiothoracic) CTS HDU"
+            "(Cardiothoracic)/ CTS HDU"
           ]
         },
         {
@@ -9102,7 +9102,7 @@ const leftBuildingsData = [
           "widthClass": "ward-a"
         },
         {
-          "name": "Cath Lab",
+          "name": "Cardiovascular intervention Centre",
           "widthClass": "ward-b"
         },
         {
@@ -9178,7 +9178,7 @@ const leftBuildingsData = [
           "widthClass": "l00-35"
         },
         {
-          "name": "NEATs",
+          "name": "NEATS",
           "widthClass": "l00-35"
         },
         {
@@ -9551,13 +9551,8 @@ const leftBuildingsData = [
       ],
       "1": [
         {
-          "name": "Dept of Anatomical &cellular Pathology",
+          "name": "Dept of Anatomical & Cellular Pathology",
           "widthClass": "csb-450",
-          "multiline": true,
-          "lines": [
-            "Dept of Anatomical",
-            "&cellular Pathology"
-          ]
         }
       ],
       "0": [
@@ -9652,7 +9647,7 @@ const leftBuildingsData = [
       },
       "PATHOLOGY": {
         "wards": [
-          "Dept of Anatomical &cellular Pathology"
+          "Dept of Anatomical & Cellular Pathology"
         ]
       },
       "HR": {
@@ -9738,7 +9733,7 @@ const leftBuildingsData = [
     }
   },
   {
-    "name": "DAY TREATMENT BLOCK",
+    "name": "Old Block - HKLM Wing",
     "floors": {
       "11": [
         {
@@ -9919,13 +9914,8 @@ const leftBuildingsData = [
           ]
         },
         {
-          "name": "5K Orthopaedic Ambulatory Care Centre",
+          "name": "5K OACC",
           "widthClass": "dtb-112",
-          "multiline": true,
-          "lines": [
-            "5K Orthopaedic",
-            "Ambulatory Care Centre"
-          ]
         },
         {
           "name": "5L MED Ward",
@@ -10052,7 +10042,7 @@ const leftBuildingsData = [
           "widthClass": "dtb-35"
         },
         {
-          "name": "Doctor Lounge",
+          "name": "Doctors Lounge",
           "widthClass": "dtb-46"
         }
       ],
@@ -10223,7 +10213,7 @@ const leftBuildingsData = [
       },
       "ONCOLOGY": {
         "wards": [
-          "5K Orthopaedic Ambulatory Care Centre"
+          "5K OACC"
         ]
       },
       "NICU": {
@@ -10291,7 +10281,7 @@ const leftBuildingsData = [
     }
   },
   {
-    "name": "SPECIAL BLOCK",
+    "name": "Old Block - EF Wing",
     "floors": {
       "11": [
         {
@@ -10299,8 +10289,8 @@ const leftBuildingsData = [
           "widthClass": "sb-360",
           "multiline": true,
           "lines": [
-            "11EF Phase 1 Clinical",
-            "Trial Centre"
+            "11EF",
+            "Phase 1 Clinical Trial Centre"
           ]
         }
       ],
@@ -10310,8 +10300,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "10E Temporary",
-            "Ward"
+            "10E",
+            "Temporary Ward"
           ]
         },
         {
@@ -10319,8 +10309,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "10F MSSU",
-            "Medical Waiving"
+            "10F",
+            "MSSU Medical Waiving"
           ]
         }
       ],
@@ -10330,17 +10320,17 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "9E Private",
-            "Maternity Ward"
+            "9E",
+            "Private Maternity Ward"
           ]
         },
         {
-          "name": "9F Assited Reproductive Tech",
+          "name": "9F Assisted Reproductive Technology Unit",
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "9F Assited",
-            "Reproductive Tech"
+            "9F",
+            "Assisted Reproductive Technology Unit"
           ]
         }
       ],
@@ -10350,8 +10340,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "8E Postnatal",
-            "Ward"
+            "8E",
+            "Postnatal Ward"
           ]
         },
         {
@@ -10359,8 +10349,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "8F Postnatal",
-            "Ward"
+            "8F",
+            "Postnatal Ward"
           ]
         }
       ],
@@ -10370,8 +10360,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "7E First",
-            "Stage Ward"
+            "7E",
+            "First Stage Ward"
           ]
         },
         {
@@ -10379,8 +10369,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "7F Antenatal",
-            "Ward"
+            "7F",
+            "Antenatal Ward"
           ]
         }
       ],
@@ -10390,22 +10380,27 @@ const leftBuildingsData = [
           "widthClass": "sb-360",
           "multiline": true,
           "lines": [
-            "6EF Delivery",
-            "Suite"
+            "6EF",
+            " Delivery Suite"
           ]
         }
       ],
       "5": [
         {
           "name": "5E O&G Day Ward",
-          "widthClass": "sb-180"
-        },
-        {
-          "name": "5F O&G Gynaecology Ward",
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "5F O&G",
+            "5E",
+            "O&G Day Ward"
+          ]
+        },
+        {
+          "name": "5F Gynaecology Ward",
+          "widthClass": "sb-180",
+          "multiline": true,
+          "lines": [
+            "5F",
             "Gynaecology Ward"
           ]
         }
@@ -10416,8 +10411,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "4E Clinical",
-            "Oncology"
+            "4E",
+            "Clinical Oncology"
           ]
         },
         {
@@ -10425,8 +10420,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "4F Clinical",
-            "Oncology"
+            "4F",
+            "Clinical Oncology"
           ]
         }
       ],
@@ -10436,8 +10431,8 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "3E Staff",
-            "Changing (N)"
+            "3E",
+            "Staff Changing (N)"
           ]
         },
         {
@@ -10445,43 +10440,58 @@ const leftBuildingsData = [
           "widthClass": "sb-180",
           "multiline": true,
           "lines": [
-            "3F Clinical",
-            "Oncology"
+            "3F",
+            "Clinical Oncology"
           ]
         }
       ],
       "2": [
         {
           "name": "2E Dean Office",
-          "widthClass": "sb-120"
+          "widthClass": "sb-120",
+          "multiline": true,
+          "lines": [
+            "2E",
+            "Dean Office"
+          ]
         },
         {
           "name": "2E Faculty and Planning Office",
           "widthClass": "sb-120",
           "multiline": true,
           "lines": [
-            "2E Faculty and",
-            "Planning Office"
+            "2E",
+            "Faculty and Planning Office"
           ]
         },
         {
-          "name": "2F Private Clinic",
+          "name": "2F CUHK-PWH Medical Centre",
           "widthClass": "sb-120",
           "multiline": true,
           "lines": [
-            "2F Private",
-            "Clinic"
+            "2F",
+            "CUHK-PWH Medical Centre"
           ]
         }
       ],
       "1": [
         {
           "name": "1E CUHK O&G",
-          "widthClass": "sb-180"
+          "widthClass": "sb-180",
+          "multiline": true,
+          "lines": [
+            "1E",
+            "CUHK O&G"
+          ]
         },
         {
           "name": "1F ART Lab",
-          "widthClass": "sb-180"
+          "widthClass": "sb-180",
+          "multiline": true,
+          "lines": [
+            "1F",
+            "ART Lab"
+          ]
         }
       ],
       "0": [
@@ -10526,7 +10536,7 @@ const leftBuildingsData = [
           "7F Antenatal Ward",
           "6EF Delivery Suite",
           "5E O&G Day Ward",
-          "5F O&G Gynaecology Ward",
+          "5F Gynaecology Ward",
           "1E CUHK O&G"
         ]
       },
@@ -11045,7 +11055,7 @@ const rightTowerData = {
         ]
       },
       {
-        "name": "Doctor Lounge",
+        "name": "Doctors Lounge",
         "widthClass": "w-34"
       },
       {
@@ -11382,7 +11392,7 @@ const rightTowerData = {
         "widthClass": "w-55"
       },
       {
-        "name": "NEATs",
+        "name": "NEATS",
         "widthClass": "w-45"
       },
       {
@@ -14447,14 +14457,14 @@ const timelineLinks = {
       { building: 0, floor: '11', index: 2, name: '11C MED WARD' },
       { building: 0, floor: '10', index: 0, name: '10A MED WARD (Renal Transplant Centre)' },
       { building: 0, floor: '10', index: 1, name: '10B MED WARD / Poison Treatment Centre' },
-      { building: 0, floor: '10', index: 2, name: '10C MED WARD (CCU / HDU)' },
+      { building: 0, floor: '10', index: 2, name: '10C MED WARD (CCU/ HDU)' },
       { building: 0, floor: '9', index: 0, name: '9A ORT WARD' },
       { building: 0, floor: '9', index: 1, name: '9B ORT WARD' },
       { building: 0, floor: '9', index: 2, name: '9C ORT WARD' },
       { building: 0, floor: '8', index: 0, name: '8A SUR WARD' },
       { building: 0, floor: '8', index: 1, name: '8B SUR WARD' },
       { building: 0, floor: '8', index: 2, name: '8C SUR WARD / Surgical HDU' },
-      { building: 0, floor: '7', index: 0, name: '7A MED WARD (Stroke Unit) / Neurosurgery HDU' },
+      { building: 0, floor: '7', index: 0, name: '7A MED WARD (Stroke Unit)/ Neurosurgery HDU' },
       { building: 0, floor: '7', index: 1, name: '7B SUR WARD (Neurosurgery)' },
       { building: 0, floor: '7', index: 2, name: '7C SUR WARD (Cardiothoracic)' },
       { building: 0, floor: '5', index: 0, name: 'ICU (5/F)' },
@@ -15044,7 +15054,7 @@ const mcbtc2030Floors = {
       ]
     },
     {
-      "name": "NEATs",
+      "name": "NEATS",
       "px": 40,
       "zone": "SE"
     },
@@ -16613,7 +16623,7 @@ const mcbtc2030ExcelRows = [
     "to",
     "MCBTC2030",
     "0 (SE)",
-    "NEATs"
+    "NEATS"
   ],
   [
     "Eye Centre",
@@ -16958,7 +16968,7 @@ const mcbtc2030ExcelRows = [
     "Clinical Skills Learning Centre,CUHK"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "9",
     "9H Specialist Clinic & HA Staff Clinic",
     "to",
@@ -16967,7 +16977,7 @@ const mcbtc2030ExcelRows = [
     "CSEP-HASC Clinic"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "9",
     "9K Specialist Clinic & HA Staff Clinic",
     "to",
@@ -16976,7 +16986,7 @@ const mcbtc2030ExcelRows = [
     "CSEP-HASC Clinic"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "4",
     "4L CUHK Integrative Medical Centre",
     "to",
@@ -16985,7 +16995,7 @@ const mcbtc2030ExcelRows = [
     "Institute of Integrative Medicine,CUHK"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "4",
     "4M CUHK Centre for Digestive Health",
     "to",
@@ -16994,7 +17004,7 @@ const mcbtc2030ExcelRows = [
     "Dept of O&G/Surgery/O&VS/Institute of Digestive Diease/S.H. HO Centre for Digestive Health,CUHK"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "3",
     "3M Diabetes & Endocrine Research Centre",
     "to",
@@ -17003,7 +17013,7 @@ const mcbtc2030ExcelRows = [
     "Clinical Research Centres,CUHK"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "Q&S",
     "to",
@@ -17012,7 +17022,7 @@ const mcbtc2030ExcelRows = [
     "Q&S"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "MSSU",
     "to",
@@ -17021,7 +17031,7 @@ const mcbtc2030ExcelRows = [
     "MSSU (Gen)"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "HRC",
     "to",
@@ -17030,7 +17040,7 @@ const mcbtc2030ExcelRows = [
     "HRC & Rehab Shop"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "Security",
     "to",
@@ -17039,7 +17049,7 @@ const mcbtc2030ExcelRows = [
     "Security"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "Gen Admin",
     "to",
@@ -17048,7 +17058,7 @@ const mcbtc2030ExcelRows = [
     "GR Office"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "PRO",
     "to",
@@ -17057,7 +17067,7 @@ const mcbtc2030ExcelRows = [
     "PRO"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "Cluster Secret.",
     "to",
@@ -17066,7 +17076,7 @@ const mcbtc2030ExcelRows = [
     "Cluster/Secret."
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "2",
     "CND Office",
     "to",
@@ -17075,7 +17085,7 @@ const mcbtc2030ExcelRows = [
     "CND Office"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "1",
     "Pathology Teaching Lab",
     "to",
@@ -17084,7 +17094,7 @@ const mcbtc2030ExcelRows = [
     "Pathology Museum,CUHK"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "CUHK DIIR",
     "to",
@@ -17093,7 +17103,7 @@ const mcbtc2030ExcelRows = [
     "Dept of Psy/DIIR/Clinical Onocology/Otorhinolaryngology, Head & Neck Surgery/Clinical Trial Centre/CUHK"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "DIIR",
     "to",
@@ -17102,7 +17112,7 @@ const mcbtc2030ExcelRows = [
     "DIIR"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "DIIR",
     "to",
@@ -17111,7 +17121,7 @@ const mcbtc2030ExcelRows = [
     "DIIR( Mammography, Gamma, Bone Density)"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "P&O",
     "to",
@@ -17120,7 +17130,7 @@ const mcbtc2030ExcelRows = [
     "P&O"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "POD",
     "to",
@@ -17129,7 +17139,7 @@ const mcbtc2030ExcelRows = [
     "POD"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "PHY",
     "to",
@@ -17138,7 +17148,7 @@ const mcbtc2030ExcelRows = [
     "PHY"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "OCCU",
     "to",
@@ -17147,7 +17157,7 @@ const mcbtc2030ExcelRows = [
     "OCCU"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "SPEECH",
     "to",
@@ -17156,7 +17166,7 @@ const mcbtc2030ExcelRows = [
     "ST"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "Enquiry",
     "to",
@@ -17165,7 +17175,7 @@ const mcbtc2030ExcelRows = [
     "Enquiry"
   ],
   [
-    "DAY TREATMENT BLOCK",
+    "Old Block - HKLM Wing",
     "0",
     "Admission",
     "to",
@@ -17174,7 +17184,7 @@ const mcbtc2030ExcelRows = [
     "Admission"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "11",
     "11EF Phase 1 Clinical Trial Centre",
     "to",
@@ -17183,7 +17193,7 @@ const mcbtc2030ExcelRows = [
     "Dept of Psy/DIIR/Clinical Onocology/Otorhinolaryngology, Head & Neck Surgery/Clinical Trial Centre/CUHK"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "11",
     "11EF Phase 1 Clinical Trial Centre",
     "to",
@@ -17192,7 +17202,7 @@ const mcbtc2030ExcelRows = [
     "Clinical Trial Centre,CUHK"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "4",
     "4E Clinical Oncology",
     "to",
@@ -17201,7 +17211,7 @@ const mcbtc2030ExcelRows = [
     "Oncology Radi Ward"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "4",
     "4E Clinical Oncology",
     "to",
@@ -17210,7 +17220,7 @@ const mcbtc2030ExcelRows = [
     "Clinical Oncology Ward"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "4",
     "4F Clinical Oncology",
     "to",
@@ -17219,7 +17229,7 @@ const mcbtc2030ExcelRows = [
     "Oncology Radi Ward"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "4",
     "4F Clinical Oncology",
     "to",
@@ -17228,7 +17238,7 @@ const mcbtc2030ExcelRows = [
     "Clinical Oncology Ward"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "3",
     "3F Clinical Oncology",
     "to",
@@ -17237,7 +17247,7 @@ const mcbtc2030ExcelRows = [
     "Haematology and Oncology Ward"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "2",
     "2E Dean Office",
     "to",
@@ -17246,7 +17256,7 @@ const mcbtc2030ExcelRows = [
     "Dean Office/CUHK"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "2",
     "2E Faculty and Planning Office",
     "to",
@@ -17255,7 +17265,7 @@ const mcbtc2030ExcelRows = [
     "Clinical Activity/Coordination Office/CUHK"
   ],
   [
-    "SPECIAL BLOCK",
+    "Old Block - EF Wing",
     "1",
     "1E CUHK O&G",
     "to",
@@ -17325,6 +17335,11 @@ function normalizeMenuBuildingKey(value) {
   if (key === 'MCBTC2030') return 'MCBTC2030';
   if (key === 'DTB' || key === 'HKLM') return 'HKLM';
   if (key === 'SB' || key === 'EF') return 'EF';
+  if (key === 'DTB(HKLM)') return 'HKLM';
+  if (key.includes('DAY TREATMENT BLOCK')) return 'HKLM';
+  if (key.includes('OLD BLOCK') && key.includes('HKLM')) return 'HKLM';
+  if (key.includes('SPECIAL BLOCK')) return 'EF';
+  if (key.includes('OLD BLOCK') && key.includes('EF')) return 'EF';
   if (key === 'CSB') return 'CSB';
   return 'MCBTC';
 }
@@ -17370,8 +17385,8 @@ function getMenuBuildingLabel(buildingKey) {
   const key = String(buildingKey || '').toUpperCase();
   if (key === 'EYE CENTRE') return 'Eye Centre';
   if (key === 'MCBTC2030') return 'MCBTC2030';
-  if (key === 'HKLM') return 'DTB(HKLM)';
-  if (key === 'EF') return 'SB';
+  if (key === 'HKLM') return 'Old Block - HKLM Wing';
+  if (key === 'EF') return 'Old Block - EF Wing';
   return key;
 }
 
@@ -17564,7 +17579,7 @@ const exceptionalCaseMigrations = [
         "year": "2027",
         "label": "連結到",
         "destinations": [
-          "SB 9/F 9E Private Maternity Ward"
+          "9/F E Wing, Old Block"
         ]
       },
       {
@@ -17632,7 +17647,7 @@ const exceptionalCaseMigrations = [
         "year": "2027",
         "label": "連結到",
         "destinations": [
-          "SB 1/F 1F ART Lab"
+          "1/F, F Wing, Old Block"
         ]
       },
       {
@@ -17667,7 +17682,7 @@ const exceptionalCaseMigrations = [
         "label": "連結到",
         "destinations": [
           "SB 5/F 5E O&G Day Ward",
-          "SB 5/F 5F O&G Gynaecology Ward"
+          "SB 5/F 5F Gynaecology Ward"
         ]
       },
       {
@@ -18197,7 +18212,7 @@ function getExceptionalListEntryLabel(migration, move) {
     return 'MCBTC 6/F Private Ward';
   }
   if (title === 'PRIVATE WARD 搬遷記錄' && year === '2030') {
-    return 'SB 9/F 9E Private Ward';
+    return '9/F E Wing, Old Block';
   }
   const destinations = Array.isArray(move && move.destinations) ? move.destinations.map((dest) => String(dest || '').trim()).filter(Boolean) : [];
   if (year === '2030') {
@@ -18229,10 +18244,10 @@ function getExceptionalListEntryLabel(migration, move) {
       return 'MCBTC2030 4/F A&IC Office';
     }
     if (title === 'PRIVATE WARD 搬遷記錄' && source2027Destinations.length > 0) {
-      return 'SB 9/F 9E Private Ward';
+      return '9/F E Wing, Old Block';
     }
     if (title === 'SKIN BANK 搬遷記錄' && source2027Destinations.length > 0) {
-      return 'SB 1/F 1F ART';
+      return '1/F, F Wing, Old Block';
     }
     if (title === '4B INTEGRATED WARD 搬遷記錄' && source2027Destinations.length > 0) {
       return 'SB 5/F 5E & 5F Integrated Ward';
@@ -20163,7 +20178,7 @@ function buildMenuItemsContainer(entries, options = {}) {
       const btn = document.createElement('button');
       const labelText = getMenuItemLabel(item);
       btn.className = 'ward-btn ' + getThemeClass(buildingKey);
-      if (labelText === 'Doctor Lounge') btn.classList.add('ward-btn-force-single-line');
+      if (labelText === 'Doctors Lounge') btn.classList.add('ward-btn-force-single-line');
       btn.textContent = labelText;
       btn.dataset.menuKey = getMenuItemKey(item, buildingKey);
       btn.onclick = () => handleDeptItemClick(buildingKey, item);
@@ -21220,8 +21235,8 @@ function syncMobileBuildingSelectorLabels() {
   const leftLabels = [
     ['0', 'MCBTC', 'MCBTC'],
     ['1', 'CLINICAL SCIENCES BUILDING', 'CSB'],
-    ['2', 'DAY TREATMENT BLOCK', 'DTB'],
-    ['3', 'SPECIAL BLOCK', 'SB']
+    ['2', 'Old Block - HKLM Wing', 'Old HKLM'],
+    ['3', 'Old Block - EF Wing', 'Old EF']
   ];
   leftLabels.forEach(([idx, full, short]) => {
     const btn = document.querySelector(`#leftBuildingSelector .building-btn[data-building-index="${idx}"]`);
@@ -22284,9 +22299,6 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
     wing: wing || ''
   };
   
-  console.log('toggleSpace called with:', { tower, floor, index, buildingIndex, wing });
-  console.log('Resolved clickedSpace:', clickedSpace);
-  
   // 自動導航：如果是左塔點擊且不在當前建築，切換建築
   if (tower === 'left' && clickedSpace.buildingIndex !== currentLeftBuilding) {
     switchLeftBuilding(clickedSpace.buildingIndex);
@@ -22295,12 +22307,9 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
   currentClickedSpace = clickedSpace;
   
   // 檢查連結空間
-  console.log('Clicked Space:', clickedSpace);
   const linkedGroups = [];
   const interactiveMcbtc2030Links = (mcbtc2030Links || []).filter(link => Array.isArray(link.left) && link.left.length > 0);
-  const activeLeftLinks = currentDeptTarget === 'mcbtc2030'
-    ? interactiveMcbtc2030Links
-    : (linkedSpaces || []);
+  const activeLeftLinks = [...(linkedSpaces || []), ...interactiveMcbtc2030Links];
   const activeLinks = tower === 'left'
     ? activeLeftLinks
     : (clickedSpace.wing === 'mcbtc2030' ? interactiveMcbtc2030Links : (linkedSpaces || []));
@@ -22308,7 +22317,6 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
   activeLinks.forEach(link => {
     if (tower === 'left') {
       const match = link.left.some(l => {
-        // Debug logging for matching
         const bStr = String(l.building);
         const fStr = String(l.floor);
         const iStr = String(l.index);
@@ -22320,18 +22328,9 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
         const fMatch = fStr === cFStr;
         const iMatch = iStr === cIStr;
         
-        if (bMatch && fMatch && iMatch) {
-            console.log('MATCH FOUND:', {
-                linkLeft: l,
-                clicked: clickedSpace,
-                comparisons: { b: [bStr, cBStr], f: [fStr, cFStr], i: [iStr, cIStr] }
-            });
-        }
-        
         return bMatch && fMatch && iMatch;
       });
       if (match) {
-        console.log('Found link match (Left->Right):', link);
         linkedGroups.push(link);
       }
     } else {
@@ -22340,7 +22339,6 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = '') {
         (r.wing || '') === clickedSpace.wing &&
         String(r.index) === String(clickedSpace.index)
       )) {
-        console.log('Found link match (Right->Left):', link);
         linkedGroups.push(link);
       }
     }
