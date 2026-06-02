@@ -8260,7 +8260,7 @@ function syncExceptionalPanelState(){const panel = document.getElementById('topE
   const icon = document.getElementById('exceptionalHeaderToggleIcon');
   if (!panel) return;
   panel.classList.toggle('expanded', !!isExceptionalPanelExpanded);
-  if (icon){icon.textContent = isExceptionalPanelExpanded ? '▴' : '▾';}syncTabletPanelToggleButtons();}function toggleExceptionalPanel(){if (isTabletLayoutMode()){toggleTabletHeaderPanel('exceptional');
+  if (icon){icon.textContent = isExceptionalPanelExpanded ? '▴' : '▾';}syncTabletPanelToggleButtons();}function toggleExceptionalPanel(){if (isTabletLayoutActive()){toggleTabletHeaderPanel('exceptional');
     return;}isExceptionalPanelExpanded = !isExceptionalPanelExpanded;
   syncExceptionalPanelState();
   schedulePanelScrollThumbStateUpdate();}function isExceptionalCaseSpace(space){return !!getExceptionalCaseMigration(space);}function hidePrivateWardInfo(){if (!privateWardInfoModal) return;
@@ -9611,11 +9611,11 @@ function toggleTimeline(){const container = document.querySelector('.timeline-co
   const wrap = document.getElementById('topCalendarPanel');
   const panel = document.getElementById('calendarPanel');
   const btn = document.getElementById('calendarToggleBtn');
-  if (isTabletLayoutMode()){if (isCalendarPanelVisible){currentMobileTopPanel = 'calendar';}else if (currentMobileTopPanel === 'calendar'){currentMobileTopPanel = 'none';}}if (wrap) wrap.classList.toggle('hidden', !isCalendarPanelVisible);
+  if (isTabletLayoutActive()){if (isCalendarPanelVisible){currentMobileTopPanel = 'calendar';}else if (currentMobileTopPanel === 'calendar'){currentMobileTopPanel = 'none';}}if (wrap) wrap.classList.toggle('hidden', !isCalendarPanelVisible);
   if (panel) panel.classList.toggle('hidden', !isCalendarPanelVisible);
   if (wrap) wrap.classList.toggle('expanded', isCalendarPanelVisible);
   if (btn) btn.classList.toggle('active', isCalendarPanelVisible);
-  if (isCalendarPanelVisible){if (isTabletLayoutMode()){dockCalendarPanel();}else{initCalendarFloating();}if (wrap && wrap.classList.contains('calendar-floating') && wrap.dataset.manualPosition !== '1'){requestAnimationFrame(() =>{const mainView = document.querySelector('.main-view');
+  if (isCalendarPanelVisible){if (isTabletLayoutActive()){dockCalendarPanel();}else{initCalendarFloating();}if (wrap && wrap.classList.contains('calendar-floating') && wrap.dataset.manualPosition !== '1'){requestAnimationFrame(() =>{const mainView = document.querySelector('.main-view');
         const selector = document.getElementById('rightBuildingSelector');
         const target = selector ? (selector.closest('.top-panel') || selector) : null;
         if (!mainView || !target) return;
@@ -9638,7 +9638,7 @@ function toggleTimeline(){const container = document.querySelector('.timeline-co
   const calendarOpen = currentMobileTopPanel === 'calendar';
   if (deptIcon) deptIcon.textContent = deptOpen ? '▴' : '▾';
   if (exceptionalIcon) exceptionalIcon.textContent = exceptionalOpen ? '▴' : '▾';
-  if (calendarIcon) calendarIcon.textContent = calendarOpen ? '▴' : '▾';}function toggleTabletHeaderPanel(panelName){if (!isTabletLayoutMode()) return;
+  if (calendarIcon) calendarIcon.textContent = calendarOpen ? '▴' : '▾';}function toggleTabletHeaderPanel(panelName){if (!isTabletLayoutActive()) return;
   switchMobileTopPanel(panelName);}function collapseDeptContent(){isDeptContentCollapsed = true;
   setDeptFooterVisible(false);
   syncDeptPanelCollapsedState();
@@ -9656,13 +9656,15 @@ function toggleTimeline(){const container = document.querySelector('.timeline-co
   if (!footer) return;
   footer.classList.toggle('show', !!visible);}function syncDeptPanelCollapsedState(){const panel = document.getElementById('topDeptPanel');
   if (!panel) return;
-  panel.classList.toggle('expanded', !isDeptContentCollapsed);}function toggleCalendarPanelHeader(){if (isPhoneLayoutMode() || isTabletLayoutMode()){setCalendarPanelVisible(!isCalendarPanelVisible);
+  panel.classList.toggle('expanded', !isDeptContentCollapsed);}function toggleCalendarPanelHeader(){if (isCompactLayoutActive()){setCalendarPanelVisible(!isCalendarPanelVisible);
     return;}}let currentMobileTopPanel = 'none';
 let lastEmbeddedLayoutKey = '';
 let topDisclaimerHideTimeoutId = 0;
 let pendingTabletLandscapePanReset = false;
 
-function getViewportSize(){const vv = window.visualViewport || null;
+function isPhoneLayoutActive(){const mainView = document.querySelector('.main-view');
+  return mainView ? mainView.classList.contains('phone-layout') : isPhoneLayoutMode();}function isTabletLayoutActive(){const mainView = document.querySelector('.main-view');
+  return mainView ? mainView.classList.contains('tablet-layout') : isTabletLayoutMode();}function isCompactLayoutActive(){return isPhoneLayoutActive() || isTabletLayoutActive();}function getViewportSize(){const vv = window.visualViewport || null;
   const docEl = document.documentElement || null;
   const widthCandidates =[vv && Number(vv.width),
     docEl && Number(docEl.clientWidth),
@@ -9996,22 +9998,25 @@ function bindNoRubberBandScroll(el){if (!el || el.__ttNoRubberBandBound) return;
   // Keep the field temporarily readonly so the mobile viewport can settle without reopening the keyboard.
   input.setAttribute('readonly', 'readonly');
   setTimeout(() =>{blurActiveElement();
-    input.removeAttribute('readonly');}, 160);}function focusDeptFilterFromUserGesture(){if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
+    input.removeAttribute('readonly');}, 160);}function focusDeptFilterFromUserGesture(){if (!isCompactLayoutActive()) return;
   const input = document.getElementById('deptFilter');
   if (!input) return;
   const focusInput = () =>{try{input.focus({preventScroll: true});}catch (e){input.focus();}positionMobileDeptSearchResults();};
   focusInput();
-  if (typeof requestAnimationFrame === 'function'){requestAnimationFrame(focusInput);}else{setTimeout(focusInput, 0);}}function switchMobileTopPanel(panel){if (!isPhoneLayoutMode() && !isTabletLayoutMode()) return;
+  if (typeof requestAnimationFrame === 'function'){requestAnimationFrame(focusInput);}else{setTimeout(focusInput, 0);}}function switchMobileTopPanel(panel){if (!isCompactLayoutActive()) return;
   const next = String(panel || '');
   const scrollY = window.scrollY || window.pageYOffset || 0;
+  const phoneLayoutActive = isPhoneLayoutActive();
+  const tabletLayoutActive = isTabletLayoutActive();
   currentMobileTopPanel = currentMobileTopPanel === next ? 'none' : next;
-  if (isTabletLayoutMode()){isCalendarPanelVisible = currentMobileTopPanel === 'calendar';
+  if (tabletLayoutActive){isCalendarPanelVisible = currentMobileTopPanel === 'calendar';
     isExceptionalPanelExpanded = currentMobileTopPanel === 'exceptional';}syncPhoneLayoutPanels();
   syncTabletLandscapeTopPanelState();
   scheduleDebugWindowUpdate();
   schedulePanelScrollThumbStateUpdate();
-  if (isPhoneLayoutMode()){const restore = () =>{try{window.scrollTo({top: scrollY, left: 0, behavior: 'auto'});}catch (e){window.scrollTo(0, scrollY);}};
-    if (typeof requestAnimationFrame === 'function'){requestAnimationFrame(() =>{requestAnimationFrame(restore);});}else{setTimeout(restore, 0);}setTimeout(restore, 180);}}function syncTabletLandscapeTopPanelState(){if (!isTabletLayoutMode() || !isLandscapeViewport()) return;
+  if (phoneLayoutActive){const restore = () =>{try{window.scrollTo({top: scrollY, left: 0, behavior: 'auto'});}catch (e){window.scrollTo(0, scrollY);}};
+    if (typeof requestAnimationFrame === 'function'){requestAnimationFrame(() =>{requestAnimationFrame(restore);});}else{setTimeout(restore, 0);}setTimeout(restore, 180);}}function syncTabletLandscapeTopPanelState(){const mainView = document.querySelector('.main-view');
+  if (!mainView || !mainView.classList.contains('tablet-layout') || !mainView.classList.contains('tablet-landscape')) return;
   const tabs = document.getElementById('mobileTopTabs');
   const deptPanel = document.getElementById('topDeptPanel');
   const exceptionalPanel = document.getElementById('topExceptionalPanel');
