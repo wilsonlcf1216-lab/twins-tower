@@ -2047,7 +2047,26 @@
   pointer-events: none;}.map-disclaimer-line{display: block;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;}.building{display: flex;
+  text-overflow: ellipsis;}.top-disclaimer-popup{position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.18s ease, transform 0.18s ease;}.top-disclaimer-popup.show{opacity: 1;
+  transform: translateY(0);}.top-disclaimer-popup-inner{width: 100%;
+  box-sizing: border-box;
+  padding: calc(env(safe-area-inset-top) + 10px) 12px 10px;
+  background: rgba(17,24,39,0.82);
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 600;
+  text-align: left;
+  word-break: break-word;}.building{display: flex;
   flex-direction: column;
   gap: 0.5px;
   min-width: min-content;
@@ -3435,6 +3454,10 @@ body.tablet-layout-active{padding: 0 !important;
   padding: 5px 10px !important;}</style>
 </head>
 <body>
+
+<div class="top-disclaimer-popup" id="topDisclaimerPopup" aria-hidden="true">
+  <div class="top-disclaimer-popup-inner">Disclaimer: This map is for informational purposes only. Room allocations, department areas, inter-building connections, and relocation sequences are subject to change. Updates will be posted here.</div>
+</div>
 
 <div id="twintower-app" class="container">
   <div class="main-view">
@@ -9636,6 +9659,7 @@ function toggleTimeline(){const container = document.querySelector('.timeline-co
   panel.classList.toggle('expanded', !isDeptContentCollapsed);}function toggleCalendarPanelHeader(){if (isPhoneLayoutMode() || isTabletLayoutMode()){setCalendarPanelVisible(!isCalendarPanelVisible);
     return;}}let currentMobileTopPanel = 'none';
 let lastEmbeddedLayoutKey = '';
+let topDisclaimerHideTimeoutId = 0;
 let pendingTabletLandscapePanReset = false;
 
 function getViewportSize(){const vv = window.visualViewport || null;
@@ -11408,7 +11432,8 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
     return;}const host = mainView.querySelector('.tablet-landscape-panel-host');
   elements.forEach(restorePlacement);
   if (host && host.parentNode === mainView){host.parentNode.removeChild(host);}}function updateEmbeddedLayout(){const mainView = document.querySelector('.main-view');
-  if (!mainView) return;
+  if (!mainView) return null;
+  const prevLayoutKey = lastEmbeddedLayoutKey;
   const narrowDesktop = mainView.clientWidth > 0 && mainView.clientWidth <= 720;
   let phoneLayout = isPhoneLayoutMode();
   const tabletLayout = isTabletLayoutMode();
@@ -11426,7 +11451,23 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   document.body.classList.toggle('phone-layout-active', phoneLayout);
   document.body.classList.toggle('tablet-layout-active', tabletLayout);
   syncTabletLandscapePanelDom(mainView);
-  syncPhoneBuildingSizing();}function refreshEmbeddedLayout(){updateEmbeddedLayout();
+  syncPhoneBuildingSizing();
+  return{layoutKey, prevLayoutKey};}function hideTopDisclaimerPopup(){const popup = document.getElementById('topDisclaimerPopup');
+  if (!popup) return;
+  popup.classList.remove('show');
+  popup.setAttribute('aria-hidden', 'true');
+  if (topDisclaimerHideTimeoutId){clearTimeout(topDisclaimerHideTimeoutId);
+    topDisclaimerHideTimeoutId = 0;}}function showTopDisclaimerPopup(){const popup = document.getElementById('topDisclaimerPopup');
+  if (!popup) return;
+  popup.classList.add('show');
+  popup.setAttribute('aria-hidden', 'false');
+  if (topDisclaimerHideTimeoutId) clearTimeout(topDisclaimerHideTimeoutId);
+  topDisclaimerHideTimeoutId = window.setTimeout(hideTopDisclaimerPopup, 5000);}function syncTopDisclaimerPopup(layoutInfo){const currentKey = layoutInfo && layoutInfo.layoutKey ? String(layoutInfo.layoutKey) : '';
+  const prevKey = layoutInfo && layoutInfo.prevLayoutKey ? String(layoutInfo.prevLayoutKey) : '';
+  const shouldShow = currentKey === 'phone' || currentKey === 'tablet-portrait';
+  if (shouldShow){if (currentKey !== prevKey) showTopDisclaimerPopup();
+    return;}hideTopDisclaimerPopup();}function refreshEmbeddedLayout(){const layoutInfo = updateEmbeddedLayout();
+  syncTopDisclaimerPopup(layoutInfo);
   stabilizePhoneLayoutVisibility();
   syncPhoneLayoutPanels();
   updateTopPanelSizing();
