@@ -921,7 +921,6 @@
   --tablet-card-radius: 18px;
   --tablet-panel-max-h: min(31vh, 290px);
   --tablet-link-panel-h: 124px;
-  --tablet-disclaimer-lane-h: 34px;
   padding: 0 0 14px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -1079,7 +1078,7 @@
   height: auto !important;
   flex: 1 1 auto !important;
   align-self: stretch !important;
-  overflow: hidden !important;
+  overflow: auto !important;
   margin: 0 auto 12px !important;
   padding: 14px 10px 12px !important;
   border-radius: 22px !important;
@@ -2037,14 +2036,7 @@
   margin-left: 0;
   background: white;
   border-radius: 15px;
-  z-index: 1;}.building-container:active{cursor: grabbing;}.map-stage{display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  min-height: 100%;
-  min-width: 0;
-  position: relative;
-  z-index: 1;}.map-disclaimer{position: absolute;
+  z-index: 1;}.building-container:active{cursor: grabbing;}.map-disclaimer{position: absolute;
   left: 8px;
   bottom: 8px;
   z-index: 0;
@@ -2060,7 +2052,7 @@
   bottom: 6px;
   width: calc(100% - 16px);
   max-width: min(520px, calc(100% - 16px));
-  z-index: 0;
+  z-index: 3;
   font-size: 9px;
   line-height: 1.2;
   color: rgba(15,23,42,0.5);
@@ -2069,21 +2061,13 @@
   background: rgba(255,255,255,0.82);
   box-shadow: 0 1px 4px rgba(15,23,42,0.08);
   -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);}.main-view.tablet-layout .building-container{display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  align-items: stretch !important;
-  overflow: hidden !important;
-  padding: 14px 10px 12px !important;}.main-view.tablet-layout .map-stage{flex: 1 1 auto;
-  min-height: 0;
-  overflow: hidden;}.main-view.tablet-layout .map-disclaimer{position: relative;
-  left: auto;
-  right: auto;
-  bottom: auto;
-  width: 100%;
-  max-width: none;
-  margin-top: 6px;
-  z-index: 2;}.main-view.tablet-layout .map-disclaimer-line{white-space: nowrap;
+  backdrop-filter: blur(4px);}.main-view.tablet-layout .map-disclaimer.tablet-floating{position: fixed;
+  left: var(--tablet-disclaimer-left, 8px);
+  bottom: var(--tablet-disclaimer-bottom, 6px);
+  width: var(--tablet-disclaimer-width, calc(100% - 16px));
+  max-width: var(--tablet-disclaimer-width, min(520px, calc(100% - 16px)));
+  box-sizing: border-box;
+  z-index: 640;}.main-view.tablet-layout .map-disclaimer-line{white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;}.top-disclaimer-popup{position: fixed;
   top: 0;
@@ -3198,7 +3182,6 @@ body.tablet-layout-active{padding: 0 !important;
   gap: 0 !important;}#twintower-app .main-view.tablet-layout{--tablet-panel-gap: 8px !important;
   --tablet-card-radius: 18px !important;
   --tablet-panel-max-h: min(31vh, 290px) !important;
-  --tablet-disclaimer-lane-h: 34px !important;
   background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 22%, #ffffff 100%) !important;}#twintower-app .main-view.tablet-layout .top-search-floating{position: sticky !important;
   top: 0 !important;
   left: 0 !important;
@@ -3290,10 +3273,7 @@ body.tablet-layout-active{padding: 0 !important;
   width: calc(100% - 18px) !important;
   min-height: 64vh !important;
   height: auto !important;
-  overflow: hidden !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  align-items: stretch !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating{position: fixed !important;
+  overflow: auto !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating{position: fixed !important;
   top: var(--vv-top) !important;
   left: 6px !important;
   right: 6px !important;
@@ -3450,16 +3430,12 @@ body.tablet-layout-active{padding: 0 !important;
   padding: 4px 6px !important;
   border-radius: 8px !important;
   font-size: 10px !important;
-  line-height: 1.15 !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .building-container{padding: 1px 8px 10px !important;}#twintower-app .main-view.tablet-layout.tablet-portrait .building-container{padding: 12px 8px 10px !important;}#twintower-app .main-view.tablet-layout .map-stage{flex: 1 1 auto !important;
-  min-height: 0 !important;
-  overflow: hidden !important;}#twintower-app .main-view.tablet-layout .map-disclaimer{position: relative !important;
-  left: auto !important;
+  line-height: 1.15 !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .building-container{padding: 1px 8px 32px !important;}#twintower-app .main-view.tablet-layout.tablet-portrait .building-container{padding: 12px 8px 32px !important;}#twintower-app .main-view.tablet-layout .map-disclaimer{left: 8px !important;
   right: auto !important;
-  bottom: auto !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin-top: 6px !important;
-  z-index: 2 !important;
+  bottom: 6px !important;
+  width: calc(100% - 16px) !important;
+  max-width: min(520px, calc(100% - 16px)) !important;
+  z-index: 3 !important;
   font-size: 9px !important;
   line-height: 1.2 !important;
   color: rgba(15,23,42,0.5) !important;
@@ -3661,9 +3637,7 @@ body.tablet-layout-active{padding: 0 !important;
     </div>
     
     <div class="building-container" id="buildingContainer">
-      <div class="map-stage" id="mapStage">
-        <div class="building" id="building"></div>
-      </div>
+      <div class="building" id="building"></div>
       <div class="map-disclaimer" id="mapDisclaimer">
         <div class="map-disclaimer-line">Disclaimer: This map is for informational purposes only. Room allocations, department areas,</div>
         <div class="map-disclaimer-line">inter-building connections, and relocation sequences are subject to change. Updates will be posted here.</div>
@@ -9724,9 +9698,51 @@ function toggleTimeline(){const container = document.querySelector('.timeline-co
     return;}}let currentMobileTopPanel = 'none';
 let lastEmbeddedLayoutKey = '';
 let topDisclaimerHideTimeoutId = 0;
+let tabletMapDisclaimerRafId = 0;
 let pendingTabletLandscapePanReset = false;
 
-function isPhoneLayoutActive(){const mainView = document.querySelector('.main-view');
+function resetTabletMapDisclaimerPosition(disclaimer){if (!disclaimer) return;
+  disclaimer.classList.remove('tablet-floating');
+  disclaimer.style.removeProperty('position');
+  disclaimer.style.removeProperty('left');
+  disclaimer.style.removeProperty('bottom');
+  disclaimer.style.removeProperty('width');
+  disclaimer.style.removeProperty('max-width');
+  disclaimer.style.removeProperty('z-index');
+  disclaimer.style.removeProperty('box-sizing');
+  disclaimer.style.removeProperty('display');}function updateTabletMapDisclaimerPosition(){const mainView = document.querySelector('.main-view');
+  const disclaimer = document.getElementById('mapDisclaimer');
+  const container = document.getElementById('buildingContainer');
+  if (!disclaimer) return;
+  if (!mainView || !container || !mainView.classList.contains('tablet-layout')){resetTabletMapDisclaimerPosition(disclaimer);
+    return;}const rect = container.getBoundingClientRect();
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const visibleLeft = Math.max(0, rect.left);
+  const visibleRight = Math.min(viewportWidth, rect.right);
+  const visibleTop = Math.max(0, rect.top);
+  const visibleBottom = Math.min(viewportHeight, rect.bottom);
+  const visibleWidth = Math.max(0, visibleRight - visibleLeft);
+  const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+  if (visibleWidth < 140 || visibleHeight < 120){disclaimer.style.display = 'none';
+    disclaimer.classList.remove('tablet-floating');
+    return;}const left = Math.round(visibleLeft + 8);
+  const bottom = Math.round(Math.max(6, viewportHeight - visibleBottom + 6));
+  const width = Math.round(Math.max(180, Math.min(520, visibleWidth - 16)));
+  disclaimer.classList.add('tablet-floating');
+  disclaimer.style.removeProperty('display');
+  disclaimer.style.setProperty('position', 'fixed', 'important');
+  disclaimer.style.setProperty('left', `${left}px`, 'important');
+  disclaimer.style.setProperty('bottom', `${bottom}px`, 'important');
+  disclaimer.style.setProperty('width', `${width}px`, 'important');
+  disclaimer.style.setProperty('max-width', `${width}px`, 'important');
+  disclaimer.style.setProperty('z-index', '640', 'important');
+  disclaimer.style.setProperty('box-sizing', 'border-box', 'important');}function scheduleTabletMapDisclaimerUpdate(){if (tabletMapDisclaimerRafId) return;
+  const run = () =>{tabletMapDisclaimerRafId = 0;
+    updateTabletMapDisclaimerPosition();};
+  if (typeof requestAnimationFrame === 'function'){tabletMapDisclaimerRafId = requestAnimationFrame(run);
+    return;}tabletMapDisclaimerRafId = 1;
+  setTimeout(run, 0);}function isPhoneLayoutActive(){const mainView = document.querySelector('.main-view');
   return mainView ? mainView.classList.contains('phone-layout') : isPhoneLayoutMode();}function isTabletLayoutActive(){const mainView = document.querySelector('.main-view');
   return mainView ? mainView.classList.contains('tablet-layout') : isTabletLayoutMode();}function isCompactLayoutActive(){return isPhoneLayoutActive() || isTabletLayoutActive();}function getViewportSize(){const vv = window.visualViewport || null;
   const docEl = document.documentElement || null;
@@ -11374,14 +11390,19 @@ document.addEventListener('DOMContentLoaded', function(){buildingContainer = doc
   const mainView = document.querySelector('.main-view');
   if (mainView && !appLayoutResizeObserver && typeof ResizeObserver !== 'undefined'){appLayoutResizeObserver = new ResizeObserver(() =>{refreshEmbeddedLayout();});
     appLayoutResizeObserver.observe(mainView);}window.addEventListener('resize', function(){if (!(deptFilterHasFocus && (isPhoneLayoutMode() || isTabletLayoutMode()))){refreshEmbeddedLayout();}scheduleTabletLandscapeInsetsUpdate();
+    scheduleTabletMapDisclaimerUpdate();
     positionMobileDeptSearchResults();});
   window.addEventListener('orientationchange', function(){setTimeout(refreshEmbeddedLayout, 30);
     setTimeout(scheduleTabletLandscapeInsetsUpdate, 30);
+    setTimeout(scheduleTabletMapDisclaimerUpdate, 30);
     setTimeout(positionMobileDeptSearchResults, 30);});
   if (window.visualViewport){window.visualViewport.addEventListener('resize', function(){if (!(deptFilterHasFocus && (isPhoneLayoutMode() || isTabletLayoutMode()))){refreshEmbeddedLayout();}scheduleTabletLandscapeInsetsUpdate();
+      scheduleTabletMapDisclaimerUpdate();
       positionMobileDeptSearchResults();});
     window.visualViewport.addEventListener('scroll', function(){scheduleTabletLandscapeInsetsUpdate();
+      scheduleTabletMapDisclaimerUpdate();
       positionMobileDeptSearchResults();});}window.addEventListener('scroll', positionMobileDeptSearchResults, true);
+  window.addEventListener('scroll', scheduleTabletMapDisclaimerUpdate, true);
 
   window.addEventListener('load', function(){refreshEmbeddedLayout();});
 
@@ -11423,7 +11444,8 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   const belowRow = document.querySelector('.top-below-row');
   const belowH = belowRow ? Math.max(0, Math.round(belowRow.getBoundingClientRect().height || 0) + 6) : 0;
   mainView.style.setProperty('--belowbar-h', `${belowH}px`, 'important');
-  syncTtScrollbarOverlays();}function updateTopPanelSizing(){const mainView = document.querySelector('.main-view');
+  syncTtScrollbarOverlays();
+  scheduleTabletMapDisclaimerUpdate();}function updateTopPanelSizing(){const mainView = document.querySelector('.main-view');
   if (!mainView) return;
   const vw = mainView.clientWidth;
   const tabletLayout = mainView.classList.contains('tablet-layout');
@@ -11537,6 +11559,7 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   if (shouldShow){if (currentKey !== prevKey) showTopDisclaimerPopup();
     return;}hideTopDisclaimerPopup();}function refreshEmbeddedLayout(){const layoutInfo = updateEmbeddedLayout();
   syncTopDisclaimerPopup(layoutInfo);
+  scheduleTabletMapDisclaimerUpdate();
   stabilizePhoneLayoutVisibility();
   syncPhoneLayoutPanels();
   updateTopPanelSizing();
@@ -11668,9 +11691,8 @@ function getSizingMeasureRoot(){if (sizingMeasureRoot) return sizingMeasureRoot;
   const tabletLayout = isTabletLayoutMode();
   const compactLayout = isCompactLayoutMode();
   const zooming = isZoomInteractionActive();
-  const fitViewport = tabletLayout ? (document.getElementById('mapStage') || container) : (document.getElementById('mapStage') || container);
-  const availW = fitViewport.clientWidth - 8;
-  const availH = fitViewport.clientHeight - 8;
+  const availW = container.clientWidth - 8;
+  const availH = container.clientHeight - 8;
   const contentW = building.scrollWidth;
   const contentH = building.scrollHeight;
   if (contentW === 0 || contentH === 0) return;
