@@ -2036,11 +2036,23 @@
   margin-left: 0;
   background: white;
   border-radius: 15px;
-  z-index: 1;}.building-container:active{cursor: grabbing;}.building{display: flex;
+  z-index: 1;}.building-container:active{cursor: grabbing;}.map-disclaimer{position: absolute;
+  left: 8px;
+  bottom: 8px;
+  z-index: 0;
+  max-width: min(520px, calc(100% - 16px));
+  font-size: 10px;
+  line-height: 1.25;
+  color: rgba(0,0,0,0.35);
+  pointer-events: none;}.map-disclaimer-line{display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;}.building{display: flex;
   flex-direction: column;
   gap: 0.5px;
   min-width: min-content;
   position: relative;
+  z-index: 1;
   transform-origin: top left;}.floor-row{display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -3565,6 +3577,11 @@ body.tablet-layout-active{padding: 0 !important;
     
     <div class="building-container" id="buildingContainer">
       <div class="building" id="building"></div>
+      <div class="map-disclaimer" id="mapDisclaimer">
+        <div class="map-disclaimer-line">Disclaimer: This map is for informational purposes only. Room allocations, department areas,</div>
+        <div class="map-disclaimer-line">and thoroughfare connections are subject to change at the discretion of hospital management.</div>
+        <div class="map-disclaimer-line">Updates to the map will be reflected as promptly as possible.</div>
+      </div>
     </div>
   </div>
 </div>
