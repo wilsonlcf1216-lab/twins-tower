@@ -3578,9 +3578,8 @@ body.tablet-layout-active{padding: 0 !important;
     <div class="building-container" id="buildingContainer">
       <div class="building" id="building"></div>
       <div class="map-disclaimer" id="mapDisclaimer">
-        <div class="map-disclaimer-line">Disclaimer: This map is for informational purposes only. Room allocations, department areas,</div>
-        <div class="map-disclaimer-line">and inter-building connections may change based on the hospital service plan.</div>
-        <div class="map-disclaimer-line">Updates to the map will be reflected as promptly as possible.</div>
+        <div class="map-disclaimer-line">Disclaimer: Disclaimer: This map is for informational purposes only. Room allocations, department areas, and inter-building connections</div>
+        <div class="map-disclaimer-line">may change with future revisions to the hospital service plan. Updates will be posted as soon as possible.</div>
       </div>
     </div>
   </div>
@@ -9128,11 +9127,11 @@ function formatRightWingLabel(wing){const w = String(wing || '');
 
   if (leftHits.length > 0){const h = document.createElement('div');
     h.className = 'dept-search-header';
-    h.textContent = '左塔空間';
+    h.textContent = 'Existing tower';
     resultsEl.appendChild(h);
     leftHits.slice(0, maxLeft).forEach(e => addRow(e, `${e.buildingName}· ${e.floor}F`));}if (rightHits.length > 0){const h = document.createElement('div');
     h.className = 'dept-search-header';
-    h.textContent = '右塔空間';
+    h.textContent = 'Future tower';
     resultsEl.appendChild(h);
     rightHits.slice(0, maxRight).forEach(e =>{const wingText = formatRightWingLabel(e.wing);
       const label = wingText ? `${e.buildingName}· ${e.floor}F · ${wingText}` : `${e.buildingName}· ${e.floor}F`;
