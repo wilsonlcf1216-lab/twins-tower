@@ -11501,7 +11501,7 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   if (topDisclaimerHideTimeoutId) clearTimeout(topDisclaimerHideTimeoutId);
   topDisclaimerHideTimeoutId = window.setTimeout(hideTopDisclaimerPopup, 5000);}function syncTopDisclaimerPopup(layoutInfo){const currentKey = layoutInfo && layoutInfo.layoutKey ? String(layoutInfo.layoutKey) : '';
   const prevKey = layoutInfo && layoutInfo.prevLayoutKey ? String(layoutInfo.prevLayoutKey) : '';
-  const shouldShow = currentKey === 'phone' || currentKey === 'tablet-portrait';
+  const shouldShow = currentKey === 'phone';
   if (shouldShow){if (currentKey !== prevKey) showTopDisclaimerPopup();
     return;}hideTopDisclaimerPopup();}function refreshEmbeddedLayout(){const layoutInfo = updateEmbeddedLayout();
   syncTopDisclaimerPopup(layoutInfo);
