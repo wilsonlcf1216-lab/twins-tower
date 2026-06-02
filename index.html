@@ -1079,9 +1079,9 @@
   height: auto !important;
   flex: 1 1 auto !important;
   align-self: stretch !important;
-  overflow: auto !important;
+  overflow: hidden !important;
   margin: 0 auto 12px !important;
-  padding: 14px 10px calc(8px + var(--tablet-disclaimer-lane-h)) !important;
+  padding: 14px 10px 12px !important;
   border-radius: 22px !important;
   background: rgba(255, 255, 255, 0.96) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 32px rgba(59, 130, 246, 0.12) !important;
@@ -1221,7 +1221,7 @@
   font-size: 10px;
   line-height: 1.15;}.main-view.tablet-layout.tablet-landscape .building-container{width: calc(100% - 12px) !important;
   min-height: 69vh !important;
-  padding: 1px 8px calc(8px + var(--tablet-disclaimer-lane-h)) !important;}.main-view.tablet-layout.tablet-portrait{--tablet-panel-max-h: min(33vh, 300px);
+  padding: 1px 8px 10px !important;}.main-view.tablet-layout.tablet-portrait{--tablet-panel-max-h: min(33vh, 300px);
   --tablet-link-panel-h: 110px;
   padding: 0 0 12px;}.main-view.tablet-layout.tablet-portrait .top-search-floating{width: calc(100% - 14px);
   max-width: 100%;
@@ -2037,7 +2037,14 @@
   margin-left: 0;
   background: white;
   border-radius: 15px;
-  z-index: 1;}.building-container:active{cursor: grabbing;}.map-disclaimer{position: absolute;
+  z-index: 1;}.building-container:active{cursor: grabbing;}.map-stage{display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100%;
+  min-width: 0;
+  position: relative;
+  z-index: 1;}.map-disclaimer{position: absolute;
   left: 8px;
   bottom: 8px;
   z-index: 0;
@@ -2062,7 +2069,21 @@
   background: rgba(255,255,255,0.82);
   box-shadow: 0 1px 4px rgba(15,23,42,0.08);
   -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);}.main-view.tablet-layout .map-disclaimer-line{white-space: nowrap;
+  backdrop-filter: blur(4px);}.main-view.tablet-layout .building-container{display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+  padding: 14px 10px 12px !important;}.main-view.tablet-layout .map-stage{flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;}.main-view.tablet-layout .map-disclaimer{position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  max-width: none;
+  margin-top: 6px;
+  z-index: 2;}.main-view.tablet-layout .map-disclaimer-line{white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;}.top-disclaimer-popup{position: fixed;
   top: 0;
@@ -3269,7 +3290,10 @@ body.tablet-layout-active{padding: 0 !important;
   width: calc(100% - 18px) !important;
   min-height: 64vh !important;
   height: auto !important;
-  overflow: auto !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating{position: fixed !important;
+  overflow: hidden !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .top-search-floating{position: fixed !important;
   top: var(--vv-top) !important;
   left: 6px !important;
   right: 6px !important;
@@ -3426,12 +3450,16 @@ body.tablet-layout-active{padding: 0 !important;
   padding: 4px 6px !important;
   border-radius: 8px !important;
   font-size: 10px !important;
-  line-height: 1.15 !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .building-container{padding: 1px 8px calc(8px + var(--tablet-disclaimer-lane-h)) !important;}#twintower-app .main-view.tablet-layout.tablet-portrait .building-container{padding: 12px 8px calc(8px + var(--tablet-disclaimer-lane-h)) !important;}#twintower-app .main-view.tablet-layout .map-disclaimer{left: 8px !important;
+  line-height: 1.15 !important;}#twintower-app .main-view.tablet-layout.tablet-landscape .building-container{padding: 1px 8px 10px !important;}#twintower-app .main-view.tablet-layout.tablet-portrait .building-container{padding: 12px 8px 10px !important;}#twintower-app .main-view.tablet-layout .map-stage{flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;}#twintower-app .main-view.tablet-layout .map-disclaimer{position: relative !important;
+  left: auto !important;
   right: auto !important;
-  bottom: 6px !important;
-  width: calc(100% - 16px) !important;
-  max-width: min(520px, calc(100% - 16px)) !important;
-  z-index: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 6px !important;
+  z-index: 2 !important;
   font-size: 9px !important;
   line-height: 1.2 !important;
   color: rgba(15,23,42,0.5) !important;
@@ -3633,7 +3661,9 @@ body.tablet-layout-active{padding: 0 !important;
     </div>
     
     <div class="building-container" id="buildingContainer">
-      <div class="building" id="building"></div>
+      <div class="map-stage" id="mapStage">
+        <div class="building" id="building"></div>
+      </div>
       <div class="map-disclaimer" id="mapDisclaimer">
         <div class="map-disclaimer-line">Disclaimer: This map is for informational purposes only. Room allocations, department areas,</div>
         <div class="map-disclaimer-line">inter-building connections, and relocation sequences are subject to change. Updates will be posted here.</div>
@@ -11638,9 +11668,9 @@ function getSizingMeasureRoot(){if (sizingMeasureRoot) return sizingMeasureRoot;
   const tabletLayout = isTabletLayoutMode();
   const compactLayout = isCompactLayoutMode();
   const zooming = isZoomInteractionActive();
-  const tabletDisclaimerLaneH = tabletLayout ? 34 : 0;
-  const availW = container.clientWidth - 8;
-  const availH = container.clientHeight - 8 - tabletDisclaimerLaneH;
+  const fitViewport = tabletLayout ? (document.getElementById('mapStage') || container) : (document.getElementById('mapStage') || container);
+  const availW = fitViewport.clientWidth - 8;
+  const availH = fitViewport.clientHeight - 8;
   const contentW = building.scrollWidth;
   const contentH = building.scrollHeight;
   if (contentW === 0 || contentH === 0) return;
