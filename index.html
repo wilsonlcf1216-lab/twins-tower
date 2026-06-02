@@ -2047,7 +2047,23 @@
   pointer-events: none;}.map-disclaimer-line{display: block;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;}.building{display: flex;
+  text-overflow: ellipsis;}.disclaimer-toast{position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, -12px);
+  opacity: 0;
+  z-index: 9999;
+  max-width: min(720px, calc(100% - 24px));
+  font-size: 10px;
+  line-height: 1.25;
+  color: rgba(0,0,0,0.78);
+  background: rgba(255,255,255,0.96);
+  padding: 8px 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;}.disclaimer-toast.show{opacity: 1;
+  transform: translate(-50%, 0);}.building{display: flex;
   flex-direction: column;
   gap: 0.5px;
   min-width: min-content;
@@ -3581,6 +3597,11 @@ body.tablet-layout-active{padding: 0 !important;
         <div class="map-disclaimer-line">Disclaimer: This map is for informational purposes only. Room allocations, department areas,</div>
         <div class="map-disclaimer-line">inter-building connections, and relocation sequences are subject to change. Updates will be posted here.</div>
       </div>
+    </div>
+    <div class="disclaimer-toast" id="disclaimerToast" aria-hidden="true">
+      <div class="map-disclaimer-line">Disclaimer: This map is for informational purposes only. Room allocations, department areas,</div>
+      <div class="map-disclaimer-line">and thoroughfare connections are subject to change at the discretion of hospital management.</div>
+      <div class="map-disclaimer-line">Updates to the map will be reflected as promptly as possible.</div>
     </div>
   </div>
 </div>
@@ -9637,6 +9658,26 @@ function toggleTimeline(){const container = document.querySelector('.timeline-co
     return;}}let currentMobileTopPanel = 'none';
 let lastEmbeddedLayoutKey = '';
 let pendingTabletLandscapePanReset = false;
+let disclaimerToastHideTimer = 0;
+let lastDisclaimerToastLayoutKey = '';
+
+function syncDisclaimerToast(){const toast = document.getElementById('disclaimerToast');
+  if (!toast) return;
+  const tabletPortrait = isTabletLayoutMode() && !isLandscapeViewport();
+  const shouldShow = isPhoneLayoutMode() || tabletPortrait;
+  const nextKey = shouldShow ? (isPhoneLayoutMode() ? 'phone' : 'tablet-portrait') : '';
+  if (!shouldShow){if (disclaimerToastHideTimer){clearTimeout(disclaimerToastHideTimer);
+      disclaimerToastHideTimer = 0;}toast.classList.remove('show');
+    toast.setAttribute('aria-hidden', 'true');
+    lastDisclaimerToastLayoutKey = '';
+    return;}if (nextKey === lastDisclaimerToastLayoutKey) return;
+  lastDisclaimerToastLayoutKey = nextKey;
+  toast.classList.add('show');
+  toast.setAttribute('aria-hidden', 'false');
+  if (disclaimerToastHideTimer) clearTimeout(disclaimerToastHideTimer);
+  disclaimerToastHideTimer = setTimeout(() =>{toast.classList.remove('show');
+      toast.setAttribute('aria-hidden', 'true');
+      disclaimerToastHideTimer = 0;}, 5000);}
 
 function getViewportSize(){const vv = window.visualViewport || null;
   const docEl = document.documentElement || null;
@@ -9661,7 +9702,12 @@ function getViewportSize(){const vv = window.visualViewport || null;
   const h = viewport.height || 0;
   const minSide = Math.min(w, h);
   const maxSide = Math.max(w, h);
-  return minSide > 0 && minSide <= 600 && maxSide <= 960;}function isLikelyIpadDevice(){const ua = navigator.userAgent || '';
+  const basePhone = minSide > 0 && minSide <= 600 && maxSide <= 960;
+  if (basePhone) return true;
+  const mainView = document.querySelector('.main-view');
+  const mainViewWidth = mainView ? Number(mainView.clientWidth) : 0;
+  const widthForNarrow = mainViewWidth > 0 ? mainViewWidth : w;
+  return widthForNarrow > 0 && widthForNarrow <= 720;}function isLikelyIpadDevice(){const ua = navigator.userAgent || '';
   const platform = navigator.platform || '';
   const maxTouchPoints = navigator.maxTouchPoints || 0;
   return /iPad/i.test(ua) || (platform === 'MacIntel' && maxTouchPoints > 1);}function isTabletLayoutMode(){if (isPhoneLayoutMode()) return false;
@@ -9677,7 +9723,7 @@ function getViewportSize(){const vv = window.visualViewport || null;
   const touchCapable = (navigator.maxTouchPoints || 0) > 0 || coarsePointer;
   const tabletSizedViewport = minSide >= 700 && maxSide <= 1600;
   const tabletSizedScreen = screenMinSide >= 744 && screenMaxSide <= 1600;
-  return (tabletSizedViewport || tabletSizedScreen) && (isLikelyIpadDevice() || touchCapable);}function isCompactLayoutMode(){return isPhoneLayoutMode() || isTabletLayoutMode();}function getDefaultPanOffsets(){if (isPhoneLayoutMode()){return{x: 5, y: basePanY + 12};}if (isTabletLayoutMode()){const landscape = isLandscapeViewport();
+  return (tabletSizedViewport || tabletSizedScreen);}function isCompactLayoutMode(){return isPhoneLayoutMode() || isTabletLayoutMode();}function getDefaultPanOffsets(){if (isPhoneLayoutMode()){return{x: 5, y: basePanY + 12};}if (isTabletLayoutMode()){const landscape = isLandscapeViewport();
     return{x: landscape ? basePanX + 38 : basePanX + 28, y: landscape ? basePanY - 6 : basePanY + 8};}return{x: basePanX, y: basePanY};}function ensurePanelPlaceholder(placeholderId, panel){if (!panel) return null;
   let placeholder = document.getElementById(placeholderId);
   if (!placeholder){placeholder = document.createElement('div');
@@ -11433,6 +11479,7 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   scheduleTabletLandscapeInsetsUpdate();
   scheduleWardButtonNormalization();
   scheduleDebugWindowUpdate();
+  syncDisclaimerToast();
   if (pendingTabletLandscapePanReset && buildingContainer){pendingTabletLandscapePanReset = false;
     const defaultPan = getDefaultPanOffsets();
     panX = defaultPan.x;
