@@ -3550,7 +3550,7 @@ body.tablet-layout-active{padding: 0 !important;
 <body>
 
 <div class="top-disclaimer-popup" id="topDisclaimerPopup" aria-hidden="true">
-  <div class="top-disclaimer-popup-inner">Disclaimer: This interactive map is for informational purposes only.  All details are subject to change.  Please check this page regularly for the latest updates.</div>
+  <div class="top-disclaimer-popup-inner">Disclaimer: This interactive map is for informational purposes only.  All details are subject to change.  Please check this page regularly for the latest updates.<br>Last update: 3/6/2026</div>
 </div>
 
 <div id="twintower-app" class="container">
@@ -3698,7 +3698,7 @@ body.tablet-layout-active{padding: 0 !important;
         <div class="map-disclaimer-line">Disclaimer: This interactive map is for informational purposes only.  All details are subject to change. Please check this page regularly for the latest updates.</div>
       </div>
       <div class="map-last-update" id="mapLastUpdate">
-        <div class="map-disclaimer-line">Last Update: 3/6/2026</div>
+        <div class="map-disclaimer-line">Last update: 3/6/2026</div>
       </div>
     </div>
   </div>
@@ -11626,7 +11626,7 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   popup.classList.add('show');
   popup.setAttribute('aria-hidden', 'false');
   if (topDisclaimerHideTimeoutId) clearTimeout(topDisclaimerHideTimeoutId);
-  topDisclaimerHideTimeoutId = window.setTimeout(hideTopDisclaimerPopup, 5000);}function syncTopDisclaimerPopup(layoutInfo){const currentKey = layoutInfo && layoutInfo.layoutKey ? String(layoutInfo.layoutKey) : '';
+  topDisclaimerHideTimeoutId = window.setTimeout(hideTopDisclaimerPopup, 3500);}function syncTopDisclaimerPopup(layoutInfo){const currentKey = layoutInfo && layoutInfo.layoutKey ? String(layoutInfo.layoutKey) : '';
   const prevKey = layoutInfo && layoutInfo.prevLayoutKey ? String(layoutInfo.prevLayoutKey) : '';
   const shouldShow = currentKey === 'phone';
   if (shouldShow){if (currentKey !== prevKey) showTopDisclaimerPopup();
