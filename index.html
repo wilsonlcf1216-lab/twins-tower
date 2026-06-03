@@ -2044,7 +2044,16 @@
   font-size: clamp(8px, 1.05vw, 10px);
   line-height: 1.25;
   color: rgba(0,0,0,0.35);
-  pointer-events: none;}.map-disclaimer-line{display: block;
+  pointer-events: none;}.map-last-update{position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 0;
+  max-width: min(600px, calc(100% - 16px));
+  font-size: clamp(8px, 1.05vw, 10px);
+  line-height: 1.25;
+  color: rgba(0,0,0,0.35);
+  pointer-events: none;
+  text-align: right;}.map-disclaimer-line{display: block;
   white-space: nowrap;
   overflow: visible;
   text-overflow: clip;
@@ -2054,6 +2063,23 @@
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
+  width: max-content;
+  max-width: calc(100% - 16px);
+  z-index: 3;
+  font-size: clamp(6px, 0.85vw, 7px);
+  line-height: 1.08;
+  color: rgba(15,23,42,0.5);
+  padding: 3px 5px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.82);
+  box-shadow: 0 1px 4px rgba(15,23,42,0.08);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);}.main-view.tablet-layout .map-last-update{right: 8px;
+  left: auto;
+  bottom: 6px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
   width: max-content;
   max-width: calc(100% - 16px);
   z-index: 3;
@@ -2076,7 +2102,7 @@
   max-width: 100%;
   overflow: visible;
   text-overflow: clip;
-  word-break: normal;}.top-disclaimer-popup{position: fixed;
+  word-break: normal;}.main-view.phone-layout .map-last-update{display: none !important;}.top-disclaimer-popup{position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -3454,6 +3480,23 @@ body.tablet-layout-active{padding: 0 !important;
   background: rgba(255,255,255,0.82) !important;
   box-shadow: 0 1px 4px rgba(15,23,42,0.08) !important;
   -webkit-backdrop-filter: blur(4px) !important;
+  backdrop-filter: blur(4px) !important;}#twintower-app .main-view.tablet-layout .map-last-update{right: 8px !important;
+  left: auto !important;
+  bottom: 6px !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  width: max-content !important;
+  max-width: calc(100% - 16px) !important;
+  z-index: 3 !important;
+  font-size: clamp(6px, 0.85vw, 7px) !important;
+  line-height: 1.08 !important;
+  color: rgba(15,23,42,0.5) !important;
+  padding: 3px 5px !important;
+  border-radius: 7px !important;
+  background: rgba(255,255,255,0.82) !important;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.08) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
   backdrop-filter: blur(4px) !important;}#twintower-app .main-view.tablet-layout .map-disclaimer-line{white-space: nowrap !important;
   width: auto !important;
   max-width: 100% !important;
@@ -3507,7 +3550,7 @@ body.tablet-layout-active{padding: 0 !important;
 <body>
 
 <div class="top-disclaimer-popup" id="topDisclaimerPopup" aria-hidden="true">
-  <div class="top-disclaimer-popup-inner">Disclaimer: This interactive map is for informational purposes only.  All details are subject to change.  Please check this page regularly for the latest updates.</div>
+  <div class="top-disclaimer-popup-inner">Disclaimer: This interactive map is for informational purposes only.  All details are subject to change.  Please check this page regularly for the latest updates.<br>Last update: 3/6/2026</div>
 </div>
 
 <div id="twintower-app" class="container">
@@ -3653,6 +3696,9 @@ body.tablet-layout-active{padding: 0 !important;
       <div class="building" id="building"></div>
       <div class="map-disclaimer" id="mapDisclaimer">
         <div class="map-disclaimer-line">Disclaimer: This interactive map is for informational purposes only.  All details are subject to change. Please check this page regularly for the latest updates.</div>
+      </div>
+      <div class="map-last-update" id="mapLastUpdate">
+        <div class="map-disclaimer-line">Last update: 3/6/2026</div>
       </div>
     </div>
   </div>
@@ -9717,6 +9763,7 @@ function resetTabletMapDisclaimerPosition(disclaimer){if (!disclaimer) return;
   disclaimer.classList.remove('tablet-floating');
   disclaimer.style.removeProperty('position');
   disclaimer.style.removeProperty('left');
+  disclaimer.style.removeProperty('right');
   disclaimer.style.removeProperty('bottom');
   disclaimer.style.removeProperty('width');
   disclaimer.style.removeProperty('max-width');
@@ -9724,9 +9771,11 @@ function resetTabletMapDisclaimerPosition(disclaimer){if (!disclaimer) return;
   disclaimer.style.removeProperty('box-sizing');
   disclaimer.style.removeProperty('display');}function updateTabletMapDisclaimerPosition(){const mainView = document.querySelector('.main-view');
   const disclaimer = document.getElementById('mapDisclaimer');
+  const lastUpdate = document.getElementById('mapLastUpdate');
   const container = document.getElementById('buildingContainer');
-  if (!disclaimer) return;
+  if (!disclaimer && !lastUpdate) return;
   if (!mainView || !container || !mainView.classList.contains('tablet-layout')){resetTabletMapDisclaimerPosition(disclaimer);
+    resetTabletMapDisclaimerPosition(lastUpdate);
     return;}const rect = container.getBoundingClientRect();
   const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
@@ -9736,20 +9785,32 @@ function resetTabletMapDisclaimerPosition(disclaimer){if (!disclaimer) return;
   const visibleBottom = Math.min(viewportHeight, rect.bottom);
   const visibleWidth = Math.max(0, visibleRight - visibleLeft);
   const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-  if (visibleWidth < 140 || visibleHeight < 120){disclaimer.style.display = 'none';
-    disclaimer.classList.remove('tablet-floating');
+  if (visibleWidth < 140 || visibleHeight < 120){if (disclaimer){disclaimer.style.display = 'none';
+      disclaimer.classList.remove('tablet-floating');}if (lastUpdate){lastUpdate.style.display = 'none';
+      lastUpdate.classList.remove('tablet-floating');}
     return;}const left = Math.round(visibleLeft + 8);
+  const right = Math.round(Math.max(8, viewportWidth - visibleRight + 8));
   const bottom = Math.round(Math.max(6, viewportHeight - visibleBottom + 6));
   const maxWidth = Math.round(Math.max(180, visibleWidth - 16));
-  disclaimer.classList.add('tablet-floating');
-  disclaimer.style.removeProperty('display');
-  disclaimer.style.setProperty('position', 'fixed', 'important');
-  disclaimer.style.setProperty('left', `${left}px`, 'important');
-  disclaimer.style.setProperty('bottom', `${bottom}px`, 'important');
-  disclaimer.style.setProperty('width', 'max-content', 'important');
-  disclaimer.style.setProperty('max-width', `${maxWidth}px`, 'important');
-  disclaimer.style.setProperty('z-index', '640', 'important');
-  disclaimer.style.setProperty('box-sizing', 'border-box', 'important');}function scheduleTabletMapDisclaimerUpdate(){if (tabletMapDisclaimerRafId) return;
+  if (disclaimer){disclaimer.classList.add('tablet-floating');
+    disclaimer.style.removeProperty('display');
+    disclaimer.style.setProperty('position', 'fixed', 'important');
+    disclaimer.style.setProperty('left', `${left}px`, 'important');
+    disclaimer.style.setProperty('right', 'auto', 'important');
+    disclaimer.style.setProperty('bottom', `${bottom}px`, 'important');
+    disclaimer.style.setProperty('width', 'max-content', 'important');
+    disclaimer.style.setProperty('max-width', `${maxWidth}px`, 'important');
+    disclaimer.style.setProperty('z-index', '640', 'important');
+    disclaimer.style.setProperty('box-sizing', 'border-box', 'important');}if (lastUpdate){lastUpdate.classList.add('tablet-floating');
+    lastUpdate.style.removeProperty('display');
+    lastUpdate.style.setProperty('position', 'fixed', 'important');
+    lastUpdate.style.setProperty('right', `${right}px`, 'important');
+    lastUpdate.style.setProperty('left', 'auto', 'important');
+    lastUpdate.style.setProperty('bottom', `${bottom}px`, 'important');
+    lastUpdate.style.setProperty('width', 'max-content', 'important');
+    lastUpdate.style.setProperty('max-width', `${maxWidth}px`, 'important');
+    lastUpdate.style.setProperty('z-index', '640', 'important');
+    lastUpdate.style.setProperty('box-sizing', 'border-box', 'important');}}function scheduleTabletMapDisclaimerUpdate(){if (tabletMapDisclaimerRafId) return;
   const run = () =>{tabletMapDisclaimerRafId = 0;
     updateTabletMapDisclaimerPosition();};
   if (typeof requestAnimationFrame === 'function'){tabletMapDisclaimerRafId = requestAnimationFrame(run);
@@ -11565,7 +11626,7 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   popup.classList.add('show');
   popup.setAttribute('aria-hidden', 'false');
   if (topDisclaimerHideTimeoutId) clearTimeout(topDisclaimerHideTimeoutId);
-  topDisclaimerHideTimeoutId = window.setTimeout(hideTopDisclaimerPopup, 5000);}function syncTopDisclaimerPopup(layoutInfo){const currentKey = layoutInfo && layoutInfo.layoutKey ? String(layoutInfo.layoutKey) : '';
+  topDisclaimerHideTimeoutId = window.setTimeout(hideTopDisclaimerPopup, 3500);}function syncTopDisclaimerPopup(layoutInfo){const currentKey = layoutInfo && layoutInfo.layoutKey ? String(layoutInfo.layoutKey) : '';
   const prevKey = layoutInfo && layoutInfo.prevLayoutKey ? String(layoutInfo.prevLayoutKey) : '';
   const shouldShow = currentKey === 'phone';
   if (shouldShow){if (currentKey !== prevKey) showTopDisclaimerPopup();
