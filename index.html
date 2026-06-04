@@ -9072,9 +9072,13 @@ function formatRightWingLabel(wing){const w = String(wing || '');
   if (w === 'nwing' || w === 'sewing' || w === 'swwing' || w === 'mcbtc2030') return '';
   return w;}function getPreferredRightWing(){if (currentDeptTarget === 'mcbtc2030') return 'mcbtc2030';
   if (currentDeptTarget === 'ipeb') return '';
-  return currentRightBuilding === 1 ? 'mcbtc2030' : '';}function sortRightSpacesByPreferredTarget(spaces){const preferredWing = getPreferredRightWing();
-  return (spaces ||[]).slice().sort((a, b) =>{const aPriority = String(a && a.wing || '') === preferredWing ? 0 : 1;
-    const bPriority = String(b && b.wing || '') === preferredWing ? 0 : 1;
+  return currentRightBuilding === 1 ? 'mcbtc2030' : '';}function getRightSpaceTargetPriority(space){const wing = String(space && space.wing || '');
+  const isMcbtc2030 = wing === 'mcbtc2030';
+  if (currentDeptTarget === 'ipeb') return isMcbtc2030 ? 1 : 0;
+  if (currentDeptTarget === 'mcbtc2030') return isMcbtc2030 ? 0 : 1;
+  return currentRightBuilding === 1 ? (isMcbtc2030 ? 0 : 1) : (isMcbtc2030 ? 1 : 0);}function sortRightSpacesByPreferredTarget(spaces){
+  return (spaces ||[]).slice().sort((a, b) =>{const aPriority = getRightSpaceTargetPriority(a);
+    const bPriority = getRightSpaceTargetPriority(b);
     if (aPriority !== bPriority) return aPriority - bPriority;
     const aFloor = parseInt(String(a && a.floor || '0').replace(/[^\d-]/g, ''), 10) || 0;
     const bFloor = parseInt(String(b && b.floor || '0').replace(/[^\d-]/g, ''), 10) || 0;
@@ -10858,7 +10862,9 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = ''){selectedSpac
 
     if (isEmbeddedCompactMode() && currentLinkedGroup.right.length > 0){const wantsMcbtc2030 = currentLinkedGroup.right.some(s => String(s.wing || '') === 'mcbtc2030');
       const wantsIpeb = currentLinkedGroup.right.some(s => String(s.wing || '') !== 'mcbtc2030');
-      const desired = wantsMcbtc2030 ? 1 : (wantsIpeb ? 0 : currentRightBuilding);
+      const desired = currentDeptTarget === 'ipeb'
+        ? (wantsIpeb ? 0 : (wantsMcbtc2030 ? 1 : currentRightBuilding))
+        : (wantsMcbtc2030 ? 1 : (wantsIpeb ? 0 : currentRightBuilding));
       if (desired !== currentRightBuilding){switchRightBuilding(desired,{preservePan: true});}}// 自動導航：滾動到連結的空間
     if (tower === 'left' && currentLinkedGroup.right.length > 0){const target = currentLinkedGroup.right[0];
       scrollToSpace('right', target.floor, target.index, null, target.wing, false);}else if (tower === 'right' && currentLinkedGroup.left.length > 0){const currentBuildingSpace = currentLinkedGroup.left.find(s => s.building === currentLeftBuilding);
