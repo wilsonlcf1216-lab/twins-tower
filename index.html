@@ -6020,9 +6020,7 @@ const linkedSpaces =[{"right":[{"floor": "19",
         "index": 0}],
     "left":[{"building": 2,
         "floor": "9",
-        "index": 3}]},{"right":[{"floor": "8",
-        "wing": "sewing",
-        "index": 0}]},{"right":[{"floor": "12",
+        "index": 3}]},{"right":[{"floor": "12",
         "wing": "nwing",
         "index": 0}],
     "left":[{"building": 2,
@@ -10725,7 +10723,9 @@ function selectWard(wardName){const resultsEl = document.getElementById('deptSea
   // 檢查連結
   const linkedGroups =[];
   
-  foundSpaces.forEach(space =>{linkedSpaces.forEach(link =>{if (space.tower === 'left'){if (link.left.some(l => l.building === space.building && l.floor === space.floor && l.index === space.index)){linkedGroups.push({link, source: space});}}else{if (link.right.some(r => r.floor === space.floor && r.wing === space.wing && r.index === space.index)){linkedGroups.push({link, source: space});}}});});
+  foundSpaces.forEach(space =>{linkedSpaces.forEach(link =>{const leftItems = Array.isArray(link && link.left) ? link.left :[];
+      const rightItems = Array.isArray(link && link.right) ? link.right :[];
+      if (space.tower === 'left'){if (leftItems.some(l => l.building === space.building && l.floor === space.floor && l.index === space.index)){linkedGroups.push({link, source: space});}}else{if (rightItems.some(r => r.floor === space.floor && r.wing === space.wing && r.index === space.index)){linkedGroups.push({link, source: space});}}});});
   
   if (linkedGroups.length > 0){currentLinkedGroup ={right:[], left:[]};
     
@@ -10801,7 +10801,9 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = ''){selectedSpac
     ? activeLeftLinks
     : (clickedSpace.wing === 'mcbtc2030' ? interactiveMcbtc2030Links : (linkedSpaces ||[]));
   
-  activeLinks.forEach(link =>{if (tower === 'left'){const match = link.left.some(l =>{const bStr = String(l.building);
+  activeLinks.forEach(link =>{const leftItems = Array.isArray(link && link.left) ? link.left :[];
+    const rightItems = Array.isArray(link && link.right) ? link.right :[];
+    if (tower === 'left'){const match = leftItems.some(l =>{const bStr = String(l.building);
         const fStr = String(l.floor);
         const iStr = String(l.index);
         const cBStr = String(clickedSpace.buildingIndex);
@@ -10813,7 +10815,7 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = ''){selectedSpac
         const iMatch = iStr === cIStr;
         
         return bMatch && fMatch && iMatch;});
-      if (match){linkedGroups.push(link);}}else{if (link.right.some(r => 
+      if (match){linkedGroups.push(link);}}else{if (rightItems.some(r => 
         String(r.floor) === String(clickedSpace.floor) && 
         (r.wing || '') === clickedSpace.wing &&
         String(r.index) === String(clickedSpace.index)
@@ -10822,7 +10824,7 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = ''){selectedSpac
   if (linkedGroups.length > 0){currentLinkedGroup ={right:[],
       left:[]};
     
-    linkedGroups.forEach(group =>{group.right.forEach(space =>{if (!currentLinkedGroup.right.some(s => 
+    linkedGroups.forEach(group =>{(Array.isArray(group && group.right) ? group.right :[]).forEach(space =>{if (!currentLinkedGroup.right.some(s => 
           s.floor === space.floor && s.wing === space.wing && s.index === space.index
         )){currentLinkedGroup.right.push(space);}});});
     currentLinkedGroup.right = sortRightSpacesByPreferredTarget(currentLinkedGroup.right);
@@ -10832,7 +10834,7 @@ function toggleSpace(tower, floor, index, buildingIndex, wing = ''){selectedSpac
       currentLinkedGroup.left.push({building: clickedSpace.buildingIndex,
         floor: clickedSpace.floor,
         index: clickedSpace.index});}else{// 如果點擊右塔，顯示所有連結的左塔空間
-      linkedGroups.forEach(group =>{group.left.forEach(space =>{if (!currentLinkedGroup.left.some(s => 
+      linkedGroups.forEach(group =>{(Array.isArray(group && group.left) ? group.left :[]).forEach(space =>{if (!currentLinkedGroup.left.some(s => 
             s.building === space.building && 
             s.floor === space.floor && 
             s.index === space.index
