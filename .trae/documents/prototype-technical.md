@@ -19,7 +19,7 @@ flowchart LR
 | / | 顯示互動式 department 平面圖 prototype |
 
 ## 4. API 定義
-呢個 prototype 唔需要後端 API，資料直接喺前端定義，並以前端函式根據 `Department List` 同 `CONNECT` 產生高亮結果。
+- 呢個 prototype 唔需要後端 API，資料直接喺前端定義，並以前端函式根據 `Department List` 產生右塔高亮結果。
 
 ```ts
 type DepartmentArea = {
@@ -64,6 +64,6 @@ erDiagram
 
 ### 5.2 資料定義說明
 - `Department List` 由既有 menu source rows 重建
-- department 點擊後會先展開子清單，再用 `CONNECT` 已對應嘅 item 批量組合 `DepartmentSelection`
-- 高亮結果同 link panel 共用同一組前端 selection state
+- department 點擊後會先展開子清單，再整理出目標右塔 `DepartmentSelection`
+- `IPEB` target 只會高亮 `IPEB` 空間，唔會寫入 `Ward/Area Connection`
 - 後續如要擴充，可將資料搬去獨立 JSON 或 CMS

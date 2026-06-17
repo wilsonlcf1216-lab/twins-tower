@@ -20,19 +20,19 @@
 |-----------|-----------|-----------|
 | 主畫面 | 頂部資訊區 | 顯示 prototype 名稱、用途說明、目前選取狀態 |
 | 主畫面 | 搜尋列 | 輸入 department code 或名稱後即時過濾清單 |
-| 主畫面 | Department List | 顯示 department 清單，點擊後根據現有 `CONNECT` 關係同步高亮該 department 相關空間 |
+| 主畫面 | Department List | 顯示 department 清單，點擊後只高亮目標右塔區域，例如 `IPEB` target 只亮 `IPEB` 空間 |
 | 主畫面 | 平面圖展示區 | 顯示用戶提供嘅樓層圖作為底圖 |
 | 主畫面 | 高亮 Overlay | 以已分配顏色顯示半透明定位框、外框、動畫脈衝效果 |
 | 主畫面 | 資訊卡 | 顯示 department code、全名、顏色標示同簡短說明 |
 
 ## 3. 核心流程
-使用者開啟頁面後，可以直接從 department 清單揀選目標，或者先搜尋關鍵字，再點選結果，系統會根據現有 `CONNECT` 關係即時批量高亮該 department 相關空間，並同步更新資訊區。
+使用者開啟頁面後，可以直接從 department 清單揀選目標，或者先搜尋關鍵字，再點選結果，系統會根據現有資料來源即時批量高亮目標右塔空間；`IPEB` 模式下只會亮 `IPEB` 區域。
 
 ```mermaid
 flowchart TD
     A["開啟 Prototype 頁面"] --> B["查看 Department List 或輸入搜尋字"]
     B --> C["點選 Department"]
-    C --> D["系統按 CONNECT 批量高亮相關平面圖區域"]
+    C --> D["系統批量高亮目標右塔平面圖區域"]
     D --> E["顯示部門資訊卡與顏色標示"]
     E --> F["可切換至其他 Department 或重設畫面"]
 ```
