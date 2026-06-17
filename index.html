@@ -7781,6 +7781,8 @@ let deptCatalogByTarget ={ipeb:{clinical:{}, nonClinical:{}},
   mcbtc2030:{clinical:{}, nonClinical:{}}};
 let deptCatalog = deptCatalogByTarget.ipeb;
 let currentDeptTarget = 'ipeb';
+const deptHighlightOverrides ={ipeb:{clinical:{}, nonClinical:{}},
+  mcbtc2030:{clinical:{}, nonClinical:{}}};
 
 function createEmptyDeptCatalog(){return{clinical:{}, nonClinical:{}};}function normalizeMenuBuildingKey(value){const key = String(value || '').trim().toUpperCase();
   if (key === 'EYE CENTRE' || key === 'EYECENTRE') return 'EYE CENTRE';
@@ -9060,7 +9062,7 @@ function getThemeClass(buildingKey){const map ={'MCBTC': 'theme-mcbtc',
   sortDeptKeys(Object.keys(catalog)).forEach((deptKey) =>{const btn = document.createElement('div');
     btn.className = 'dept-item';
     btn.textContent = deptKey;
-    btn.onclick = () => renderDept(deptKey);
+    btn.onclick = () => handleDeptListClick(deptKey);
     currentList.appendChild(btn);});}function setDeptTarget(target){const normalized = String(target || '') === 'mcbtc2030' ? 'mcbtc2030' : 'ipeb';
   currentDeptTarget = normalized;
   deptCatalog = deptCatalogByTarget[currentDeptTarget]|| createEmptyDeptCatalog();
@@ -9525,7 +9527,75 @@ function scheduleWardButtonNormalization(){const now = Date.now();
   syncMobileDeptSummary();
   applyWardFilter();
   schedulePanelScrollThumbStateUpdate();
-  scheduleWardButtonNormalization();}function resolveDeptItem(buildingKey, item){const normalizedBuildingKey = normalizeMenuBuildingKey(buildingKey);
+  scheduleWardButtonNormalization();}function handleDeptListClick(deptKey){renderDept(deptKey);
+  activateDeptSelection(deptKey);}function getDeptHighlightOverrideEntries(target, side, deptKey){const targetKey = String(target || '') === 'mcbtc2030' ? 'mcbtc2030' : 'ipeb';
+  const sideKey = String(side || '') === 'nonClinical' ? 'nonClinical' : 'clinical';
+  const targetOverrides = deptHighlightOverrides[targetKey]||{};
+  const sideOverrides = targetOverrides[sideKey]||{};
+  const list = sideOverrides[deptKey];
+  return Array.isArray(list) ? list :[];}function getResolvedDeptSelectionKey(resolved){if (!resolved || !resolved.tower) return '';
+  if (resolved.tower === 'left') return `left|${resolved.buildingIndex}|${resolved.floor}|${resolved.index}`;
+  return `right|${resolved.floor}|${resolved.wing || ''}|${resolved.index}`;}function pushResolvedDeptSelection(target, resolved, seen){const key = getResolvedDeptSelectionKey(resolved);
+  if (!key || seen.has(key)) return;
+  seen.add(key);
+  target.push(resolved);}function collectDeptSelections(deptKey, side = currentDeptSide){const sideKey = String(side || '') === 'nonClinical' ? 'nonClinical' : 'clinical';
+  const sideCatalog = (deptCatalog && deptCatalog[sideKey]) ? deptCatalog[sideKey] :{};
+  const deptData = sideCatalog[deptKey]||{};
+  const selections =[];
+  const seen = new Set();
+  const addEntries = (entryMap) =>{Object.entries(entryMap ||{}).forEach(([buildingKey, items]) =>{(items ||[]).forEach((item) =>{const resolved = resolveDeptItem(buildingKey, item);
+        pushResolvedDeptSelection(selections, resolved, seen);});});};
+  if (sideKey === 'clinical'){addEntries(deptData.ward);
+    addEntries(deptData.day);}else{addEntries(deptData.direct);
+    Object.values(deptData.groups ||{}).forEach((group) => addEntries(group && group.direct));}(getDeptHighlightOverrideEntries(currentDeptTarget, sideKey, deptKey) ||[]).forEach((item) =>{if (!item || typeof item !== 'object') return;
+    const resolved = String(item.tower || 'left') === 'right'
+      ?{tower: 'right', floor: String(item.floor), index: Number(item.index), wing: String(item.wing || '')}
+      :{tower: 'left', floor: String(item.floor), index: Number(item.index), buildingIndex: Number(item.buildingIndex)};
+    if (!Number.isFinite(resolved.index)) return;
+    if (resolved.tower === 'left' && !Number.isFinite(resolved.buildingIndex)) return;
+    pushResolvedDeptSelection(selections, resolved, seen);});
+  return selections;}function buildDeptLinkedGroup(selections){const group ={left:[], right:[]};
+  (selections ||[]).forEach((resolved) =>{if (!resolved) return;
+    if (resolved.tower === 'left'){if (!group.left.some((item) => item.building === resolved.buildingIndex && item.floor === resolved.floor && item.index === resolved.index)){group.left.push({building: resolved.buildingIndex,
+          floor: resolved.floor,
+          index: resolved.index});}
+      return;}if (!group.right.some((item) => item.floor === resolved.floor && item.wing === (resolved.wing || '') && item.index === resolved.index)){group.right.push({floor: resolved.floor,
+        wing: resolved.wing || '',
+        index: resolved.index});}});
+  group.right = sortRightSpacesByPreferredTarget(group.right);
+  return group;}function getPreferredDeptLeftBuilding(items){const counts = new Map();
+  (items ||[]).forEach((item) =>{const building = Number(item && item.building);
+    if (!Number.isFinite(building)) return;
+    counts.set(building, (counts.get(building) || 0) + 1);});
+  if (counts.size === 0) return null;
+  if (counts.has(currentLeftBuilding)) return currentLeftBuilding;
+  let bestBuilding = null;
+  let bestCount = -1;
+  counts.forEach((count, building) =>{if (count > bestCount){bestBuilding = building;
+      bestCount = count;}});
+  return bestBuilding;}function activateDeptSelection(deptKey){hideDeptSearchResults();
+  deptSearchForceHidden = true;
+  selectedSpaces.clear();
+  currentLinkedGroup = null;
+  currentExceptionalLinkGroup = null;
+  currentClickedSpace = null;
+  const selections = collectDeptSelections(deptKey);
+  if (!selections.length){document.querySelectorAll('#wardButtons .ward-btn').forEach((btn) => btn.classList.remove('active'));
+    updateDisplay();
+    updateLinkDisplay();
+    return;}currentLinkedGroup = buildDeptLinkedGroup(selections);
+  const wantsMcbtc2030 = currentLinkedGroup.right.some((item) => String(item && item.wing || '') === 'mcbtc2030');
+  const wantsIpeb = currentLinkedGroup.right.some((item) => String(item && item.wing || '') !== 'mcbtc2030');
+  const desiredRightBuilding = currentDeptTarget === 'mcbtc2030'
+    ? (wantsMcbtc2030 ? 1 : (wantsIpeb ? 0 : currentRightBuilding))
+    : (wantsIpeb ? 0 : (wantsMcbtc2030 ? 1 : currentRightBuilding));
+  const desiredLeftBuilding = getPreferredDeptLeftBuilding(currentLinkedGroup.left);
+  if (desiredRightBuilding !== currentRightBuilding){switchRightBuilding(desiredRightBuilding,{preservePan: true});}if (desiredLeftBuilding !== null && desiredLeftBuilding !== currentLeftBuilding){switchLeftBuilding(desiredLeftBuilding,{preservePan: true});}selectedSpaces.clear();
+  currentLinkedGroup.right.forEach((space) =>{selectedSpaces.add(`right-${space.floor}-${space.wing}-${space.index}`);});
+  currentLinkedGroup.left.forEach((space) =>{selectedSpaces.add(`left-${space.building}-${space.floor}--${space.index}`);});
+  document.querySelectorAll('#wardButtons .ward-btn').forEach((btn) => btn.classList.remove('active'));
+  updateDisplay();
+  updateLinkDisplay();}function resolveDeptItem(buildingKey, item){const normalizedBuildingKey = normalizeMenuBuildingKey(buildingKey);
   const bIndex = buildingMap[normalizedBuildingKey];
   if (item && typeof item === 'object'){if (String(item.tower || 'left') === 'right'){const itemIndex = Number(item.index);
       if (!Number.isFinite(itemIndex)) return null;
