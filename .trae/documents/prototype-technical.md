@@ -11,7 +11,7 @@ flowchart LR
 - 前端：原生 `HTML` + `CSS` + `JavaScript`
 - 初始化方式：直接以單頁 `index.html` 實作，方便快速展示 prototype
 - 後端：`None`
-- 資料來源：前端內嵌 mock department 資料與座標設定
+- 資料來源：前端內嵌 department menu source、`CONNECT` 連結資料同座標設定
 
 ## 3. 路由定義
 | 路由 | 用途 |
@@ -19,7 +19,7 @@ flowchart LR
 | / | 顯示互動式 department 平面圖 prototype |
 
 ## 4. API 定義
-呢個 prototype 唔需要後端 API，資料直接喺前端定義。
+呢個 prototype 唔需要後端 API，資料直接喺前端定義，並以前端函式根據 `Department List` 同 `CONNECT` 產生高亮結果。
 
 ```ts
 type DepartmentArea = {
@@ -34,6 +34,14 @@ type DepartmentArea = {
     width: number;
     height: number;
   };
+};
+
+type DepartmentSelection = {
+  tower: "left" | "right";
+  floor: string;
+  index: number;
+  buildingIndex?: number;
+  wing?: string;
 };
 ```
 
@@ -55,7 +63,7 @@ erDiagram
 ```
 
 ### 5.2 資料定義說明
-- 每個 department 以單一物件表示
-- `bounds` 使用相對於底圖容器嘅百分比座標，方便日後替換圖片時微調
-- prototype 先寫死三個 department：`27.01`、`07.03`、`27.03`
+- `Department List` 由既有 menu source rows 重建
+- department 點擊後會先展開子清單，再用 `CONNECT` 已對應嘅 item 批量組合 `DepartmentSelection`
+- 高亮結果同 link panel 共用同一組前端 selection state
 - 後續如要擴充，可將資料搬去獨立 JSON 或 CMS
