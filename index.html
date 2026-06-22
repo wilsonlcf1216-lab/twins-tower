@@ -1052,7 +1052,7 @@
   overflow: visible !important;
   -webkit-overflow-scrolling: auto !important;
   touch-action: manipulation !important;}.main-view.tablet-layout #topDeptPanel.mobile-subdept-mode .top-dept-body{max-height: min(48vh, 420px);}.main-view.tablet-layout #topDeptPanel #wardSection{min-height: 0;
-  overflow: hidden;}.main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardSection{overflow: visible;}.main-view.tablet-layout #topDeptPanel #deptButtons{overflow-x: hidden;}.main-view.tablet-layout #topDeptPanel #wardButtons{max-height: min(28vh, 260px);
+  overflow: hidden;}.main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardSection{overflow: visible;}.main-view.tablet-layout #topDeptPanel #deptButtons{overflow-x: hidden;}.main-view.tablet-layout #topDeptPanel #wardButtons{max-height: min(38vh, 340px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;}.main-view.tablet-layout #topDeptPanel.mobile-subdept-mode #wardButtons{max-height: min(44vh, 420px);
@@ -1568,7 +1568,7 @@
   height: var(--top-control-h);
   padding: 2px 4px;
   gap: 0;}#topDeptPanel.top-panel.expanded{height: auto;
-  max-height: min(68vh, 520px);}.main-view:not(.phone-layout):not(.tablet-layout) #topDeptPanel.top-panel.expanded{max-height: min(82vh, 760px);}.top-filter-input{width: 100%;
+  max-height: min(76vh, 620px);}.main-view:not(.phone-layout):not(.tablet-layout) #topDeptPanel.top-panel.expanded{max-height: min(86vh, 820px);}.top-filter-input{width: 100%;
   padding: 4px 6px;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -1709,7 +1709,7 @@
   flex-direction: column;
   gap: 4px;}.top-dept-panel #wardButtons{flex: 1 1 auto;
   min-height: 0;
-  max-height: min(44vh, 340px);
+  max-height: min(56vh, 460px);
   overflow-x: hidden;
   overflow-y: auto;
   scroll-padding-bottom: 16px;
@@ -2204,7 +2204,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  line-height: 1.35;}.space.multiline .ward-text .line{display: block;
+  line-height: 1.35;}.space[data-tower="right"][data-wing="mcbtc2030"].digestive-centre-fit .ward-text{font-size: 6px;
+  line-height: 0.98;}.space[data-tower="right"][data-wing="mcbtc2030"].digestive-centre-fit .ward-text .line{padding: 0;}.space.multiline .ward-text .line{display: block;
   width: 100%;
   text-align: center;
   overflow: hidden;
@@ -3438,7 +3439,7 @@ body.tablet-layout-active{padding: 0 !important;
   box-sizing: border-box !important;
   -webkit-overflow-scrolling: touch !important;
   overscroll-behavior: contain !important;
-  touch-action: pan-y !important;}#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons{max-height: min(12vh, 98px) !important;
+  touch-action: pan-y !important;}#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel #wardButtons{max-height: min(22vh, 180px) !important;
   -webkit-overflow-scrolling: touch !important;
   overscroll-behavior: contain !important;
   touch-action: pan-y !important;}#twintower-app .main-view.tablet-layout.tablet-landscape #topDeptPanel.mobile-subdept-mode #wardButtons{max-height: min(42vh, 360px) !important;
@@ -6452,11 +6453,13 @@ const mcbtc2030Floors ={"12":[{"name": "Dean Office/CUHK",
       "lines":["Dept of O&G/Surgery/O&VS"]},{"name": "Institute of/Digestive Disease/S.H. HO Centre/for Digestive Health,/CUHK",
       "px": 50,
       "zone": "M",
+      "specialClass": "digestive-centre-fit",
       "multiline": true,
       "lines":["Institute of",
         "Digestive Disease",
         "S.H. HO Centre",
-        "for Digestive Health,",
+        "for Digestive",
+        "Health,",
         "CUHK",
       ]}],
   "10":[{"name": "Clinical Trial Centre,CUHK",
