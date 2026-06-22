@@ -179,7 +179,8 @@
   animation: none !important;
   filter: none !important;
   box-shadow: none !important;
-  outline: none !important;}#twintower-app .top-dept-panel #wardButtons .ward-btn.ward-btn-fit-two-line{white-space: normal !important;
+  outline: none !important;}#twintower-app .main-view:not(.phone-layout) #topDeptPanel.cuhk-mcbtc2030-wide{flex: 0 0 clamp(300px, 28vw, 360px) !important;
+  width: clamp(300px, 28vw, 360px) !important;}#twintower-app .main-view:not(.phone-layout) #topDeptPanel.cuhk-mcbtc2030-wide .ward-items-container.ward-buildings-grid{grid-template-columns: minmax(0, 1fr) !important;}#twintower-app .top-dept-panel #wardButtons .ward-btn.ward-btn-fit-two-line{white-space: normal !important;
   overflow-wrap: anywhere !important;
   text-overflow: clip !important;
   line-height: 1.05 !important;
@@ -3904,7 +3905,7 @@ HKLM|B01|2|Bulk Store|Bulk Store|Neutral||Admin|Hospital Supplies
 HKLM|B01|3|Plant Rooms|Plant Rooms||||
 HKLM|B01|4|Central Medical Records|CENTRAL MEDICAL RECORDS|Neutral||Admin|HI&R
 HKLM|B01|5|Electron Microscopy Laboratory|Electron Microscopy Laboratory|Neutral||Lab|
-EF|11|1|11EF Phase 1 Clinical Trial Centre|Clinical Trial Centre|Neutral||CUHK|
+EF|11|1|11EF Phase 1 Clinical Trial Centre|11EF Phase 1 Clinical Trial Centre|Neutral||CUHK|
 EF|10|1|10E Temporary Ward|10E Temporary Ward||||
 EF|10|2|10F MSSU Medical Waiving|10F MSSU Medical Waiving||||
 EF|9|1|9E Private Maternity Ward|9E|Clinical|Ward|O&G|
@@ -3921,7 +3922,7 @@ EF|4|2|4F Clinical Oncology|4F|Clinical|Ward|Oncology|
 EF|3|1|3E Staff Changing (N)|3E Staff Changing|Neutral||Admin|Staff Changing
 EF|3|2|3F Clinical Oncology|3F|Clinical|Ward|Oncology|
 EF|2|1|2E Dean Office|Dean Office|Neutral||CUHK|
-EF|2|2|2E Faculty and Planning Office|Faculty and Planning Office|Neutral||CUHK|
+EF|2|2|2E Faculty and Planning Office|2E Faculty and Planning Office|Neutral||CUHK|
 EF|2|3|2F CUHK-PWH Medical Centre|2F|Clinical|Day/Special Area|Private|
 EF|1|1|1E CUHK O&G|O&G, CUHK|Neutral||CUHK|
 EF|1|2|1F ART Lab|1F ART|Clinical|Day/Special Area|O&G|
@@ -9425,11 +9426,13 @@ function scheduleWardButtonNormalization(){const now = Date.now();
   const wait = recentScroll ? (tabletLandscape ? 680 : 220) : 0;
   if (wardNormalizeTimer) clearTimeout(wardNormalizeTimer);
   wardNormalizeTimer = setTimeout(() =>{if (typeof requestAnimationFrame === 'function'){requestAnimationFrame(() => normalizeWardButtonSizes());
-      return;}normalizeWardButtonSizes();}, wait);}function buildMenuItemsContainer(entries, options ={}){const container = document.createElement('div');
+  return;}normalizeWardButtonSizes();}, wait);}function buildMenuItemsContainer(entries, options ={}){const container = document.createElement('div');
   container.className = 'ward-items-container ward-buildings-grid';
   const blocks = Object.entries(entries ||{});
-  if (blocks.length <= 1) container.classList.add('single-col');
-  const defaultColsPerBlock = blocks.length <= 1 ? 4 : 2;
+  const forceSingleColBlocks = !!options.forceSingleColBlocks;
+  const singleColumnBuildingKeys = new Set((options.singleColumnBuildingKeys ||[]).map((key) => String(key).toUpperCase()));
+  if (blocks.length <= 1 || forceSingleColBlocks) container.classList.add('single-col');
+  const defaultColsPerBlock = Number.isFinite(options.defaultColsPerBlock) ? options.defaultColsPerBlock : (blocks.length <= 1 ? 4 : 2);
   blocks.forEach(([buildingKey, items]) =>{const block = document.createElement('div');
     block.className = 'ward-building-block';
     const compact = isPhoneLayoutMode() || isTabletLayoutMode();
@@ -9442,7 +9445,7 @@ function scheduleWardButtonNormalization(){const now = Date.now();
     const upperBuildingKey = String(buildingKey).toUpperCase();
     const dayGridClass = (options.dayMode && upperBuildingKey !== 'HKLM') ? 'ward-items-grid-day' : 'ward-items-grid-2col';
     grid.className = `ward-items-grid ${dayGridClass}`;
-    const cols = compact ? getCompactWardGridCols() : (isWideBlock ? 4 : defaultColsPerBlock);
+    const cols = compact ? getCompactWardGridCols() : (singleColumnBuildingKeys.has(upperBuildingKey) ? 1 : (isWideBlock ? 4 : defaultColsPerBlock));
     grid.style.setProperty('--ward-grid-cols', String(cols));
     const sortedItems = sortMenuItems(items);
     if (sortedItems.length > 1){const allBtn = document.createElement('button');
@@ -9464,7 +9467,10 @@ function scheduleWardButtonNormalization(){const now = Date.now();
   return container;}function renderDept(deptKey){currentDept = deptKey;
   document.querySelectorAll('#clinicalList .dept-item, #nonList .dept-item').forEach(el =>{if (el.textContent === deptKey){el.classList.add('active');}else{el.classList.remove('active');}});
   const wardButtons = document.getElementById('wardButtons');
+  const topDeptPanel = document.getElementById('topDeptPanel');
   const wardSection = document.getElementById('wardSection');
+  const isWideCuhkMenu = currentDeptTarget === 'mcbtc2030' && String(deptKey || '') === 'CUHK';
+  if (topDeptPanel) topDeptPanel.classList.toggle('cuhk-mcbtc2030-wide', isWideCuhkMenu);
   wardButtons.innerHTML = '';
   if (wardSection) wardSection.style.display = 'flex';
   const data = deptCatalog[currentDeptSide][deptKey]||{};
@@ -9483,7 +9489,7 @@ function scheduleWardButtonNormalization(){const now = Date.now();
         btn.textContent = groupName;
         btn.onclick = () => renderDeptGroup(deptKey, groupName);
         groupBar.appendChild(btn);});
-      wardButtons.appendChild(groupBar);}if (data.direct){wardButtons.appendChild(buildMenuItemsContainer(data.direct));}if (groupNames.length > 0){renderDeptGroup(deptKey, groupNames[0]);
+      wardButtons.appendChild(groupBar);}if (data.direct){wardButtons.appendChild(buildMenuItemsContainer(data.direct,{forceSingleColBlocks: isWideCuhkMenu, defaultColsPerBlock: isWideCuhkMenu ? 2 : undefined,singleColumnBuildingKeys: isWideCuhkMenu ?['EF'] : []}));}if (groupNames.length > 0){renderDeptGroup(deptKey, groupNames[0]);
       syncMobileDeptSummary();
       return;}if (data.direct){syncMobileDeptSummary();
       applyWardFilter();
@@ -9515,7 +9521,8 @@ function scheduleWardButtonNormalization(){const now = Date.now();
   const preserveCount = data && data.direct ? 2 : 1;
   while (wardButtons.children.length > preserveCount){wardButtons.removeChild(wardButtons.lastChild);}const group = data && data.groups ? data.groups[groupName]: null;
   if (!group || !group.direct) return;
-  wardButtons.appendChild(buildMenuItemsContainer(group.direct,{dayMode: /day|special/i.test(String(groupName || ''))}));
+  const isWideCuhkMenu = currentDeptTarget === 'mcbtc2030' && String(deptKey || '') === 'CUHK';
+  wardButtons.appendChild(buildMenuItemsContainer(group.direct,{dayMode: /day|special/i.test(String(groupName || '')),forceSingleColBlocks: isWideCuhkMenu,defaultColsPerBlock: isWideCuhkMenu ? 2 : undefined,singleColumnBuildingKeys: isWideCuhkMenu ?['EF'] : []}));
   syncMobileDeptSummary();
   applyWardFilter();
   schedulePanelScrollThumbStateUpdate();
