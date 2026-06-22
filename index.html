@@ -2204,8 +2204,11 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  line-height: 1.35;}.space[data-tower="right"][data-wing="mcbtc2030"].digestive-centre-fit .ward-text{font-size: 6px;
-  line-height: 0.98;}.space[data-tower="right"][data-wing="mcbtc2030"].digestive-centre-fit .ward-text .line{padding: 0;}.space.multiline .ward-text .line{display: block;
+  line-height: 1.35;}.space[data-tower="right"][data-wing="mcbtc2030"].digestive-centre-fit{justify-content: flex-start;
+  align-items: stretch;}.space[data-tower="right"][data-wing="mcbtc2030"].digestive-centre-fit .ward-text{height: 100%;
+  justify-content: flex-start;
+  font-size: 6px;
+  line-height: 0.94;}.space[data-tower="right"][data-wing="mcbtc2030"].digestive-centre-fit .ward-text .line{padding: 0;}.space.multiline .ward-text .line{display: block;
   width: 100%;
   text-align: center;
   overflow: hidden;
@@ -6456,11 +6459,11 @@ const mcbtc2030Floors ={"12":[{"name": "Dean Office/CUHK",
       "specialClass": "digestive-centre-fit",
       "multiline": true,
       "lines":["Institute of",
-        "Digestive Disease",
+        "Digestive",
+        "Disease",
         "S.H. HO Centre",
         "for Digestive",
-        "Health,",
-        "CUHK",
+        "Health, CUHK",
       ]}],
   "10":[{"name": "Clinical Trial Centre,CUHK",
       "px": 170,
@@ -8883,7 +8886,7 @@ function getThemeClass(buildingKey){const map ={'MCBTC': 'theme-mcbtc',
           spaceDiv.style.setProperty('max-width', w, 'important');
           spaceDiv.dataset.desktopPx = String(desktopPx);}if (s && typeof s === 'object' && s.multiline && Array.isArray(s.lines)){const wardText = document.createElement('div');
           wardText.className = 'ward-text';
-          const maxLines = String(floor) === '11' ? 5 : ((String(floor) === '12') ? 4 : 2);
+          const maxLines = s && s.specialClass === 'digestive-centre-fit' ? 6 : (String(floor) === '11' ? 5 : ((String(floor) === '12') ? 4 : 2));
           const lines = s.lines.length > maxLines
             ? s.lines.slice(0, maxLines).map((line, i) => i === maxLines - 1 ? `${String(line ?? '')}...` : String(line ?? ''))
             : s.lines;
