@@ -1,0 +1,140 @@
+Plant
+Shared Facilities
+ISOL Ward B
+ISOL Ward A
+Plant
+Plant Maint
+PAED DAY
+Shared Facilities
+PAED IP Ward
+PAED SUR/ORT Ward
+SCBU
+NICU
+Shared Facilities
+PICU
+PAED ISOL Ward
+Labour & Delivery
+Integrated Birth
+Shared Facilities
+O&G Ward
+O&G Ward
+O&G IVF
+O&G DAY
+O&G Private
+Shared Facilities
+Generic Ward
+Generic Ward
+PLANT
+PABX Office
+Shared Facilities
+Generic Ward
+Generic Ward
+Plant Maint
+Wheelchair Bank
+MSK Programme Floor
+Rehab hub
+Shared Facilities
+MSK Ward
+MSK Ward
+KIDNEY Programme Floor
+DMEC
+MACC
+Shared Facilities
+RENAL/URO Ward
+Generic Ward
+SURG Dept Office
+M&T Dept Office
+PAED Dept Office
+GI Programme Floor
+Shared Facilities
+NIV/GI Ward
+GI Ward
+CTS Programme Floor
+CIC
+Rehab hub
+CCU
+Shared Facilities
+CTS Ward
+CTS Ward
+Sky Lobby
+NEURO Programme Floor
+Rehab hub
+IT Office
+CTS EDU
+Shared Facilities
+NEURO Ward
+NEURO Ward
+Sky Lobby
+Rehab Shop
+Conv. Store
+IT & Data Centre
+Spiritual
+Cafe
+Doctors Lounge
+Shared Facilities
+Generic Ward
+EM Ward
+Endoscopy Centre
+Peri-op Suite 2
+DSU
+SACC
+PLANT
+Medical Record
+PLANT
+Peri-op Staff Changing
+PLT MAINT
+ICU (5/F)
+Peri-op Suite 1
+Peri-op Office
+ICU Office
+HDU (5/F)
+ICU (4/F)
+Staff Changing (N)
+SSU
+Staff Changing (SS)
+Plant
+HDU Office
+HDU (4/F)
+Plant
+CU Biobank & Bioinformatics Hub
+CU Microbiology Lab
+Plant
+CU Basic/ Translational Research
+HA Microbiology Lab
+PABX
+Blood Bank
+CU HAEMAT Lab
+HA HAEMAT Lab
+Shared Lab Reception
+Plant
+CU CHEMPATH Lab
+HA CHEMPATH Lab
+CU HISTO Lab
+HA HISTO Lab
+ICN
+Shroff
+Enquiry
+Canteen
+Private Clinic
+DIIR Office
+A&E Office
+Pharmacy
+PLANT
+A&E
+DIIR In A&E
+EARO DDO
+DG Store
+DIIR
+Milk Kitchen
+Patient Catering
+Mortuary
+NEATS
+L/UL Bay
+Refuse
+Security
+Hospital Supplies
+P&MM- Purchase & Store
+Linen Store
+Housekeeping
+Plant
+Car Park
