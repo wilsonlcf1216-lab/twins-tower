@@ -9515,13 +9515,30 @@ function scheduleWardButtonNormalization(){const now = Date.now();
   currentLinkedGroup = null;
   currentExceptionalLinkGroup = null;
   currentClickedSpace = null;
+  const selectedLeft =[];
+  const selectedRight =[];
+  const addLeftSpace = (space) =>{if (!space) return;
+    if (!selectedLeft.some((item) => item.building === space.building && item.floor === space.floor && item.index === space.index)){selectedLeft.push(space);}
+    selectedSpaces.add(`left-${space.building}-${space.floor}--${space.index}`);};
+  const addRightSpace = (space) =>{if (!space) return;
+    const wing = String(space.wing || '');
+    if (wing === 'mcbtc2030') return;
+    if (!selectedRight.some((item) => item.floor === space.floor && String(item.wing || '') === wing && item.index === space.index)){selectedRight.push(space);}
+    selectedSpaces.add(`right-${space.floor}-${wing}-${space.index}`);};
   const addResolvedItems = (block) =>{if (!block) return;
     Object.entries(block).forEach(([buildingKey, items]) =>{(items ||[]).forEach((item) =>{const resolved = resolveDeptItem(buildingKey, item);
         if (!resolved) return;
-        if (resolved.tower === 'left'){selectedSpaces.add(`left-${resolved.buildingIndex}-${resolved.floor}--${resolved.index}`);}else{selectedSpaces.add(`right-${resolved.floor}-${resolved.wing || ''}-${resolved.index}`);}});});};
+        if (resolved.tower === 'left'){addLeftSpace({building: resolved.buildingIndex, floor: resolved.floor, index: resolved.index});}else{addRightSpace({floor: resolved.floor, wing: resolved.wing || '', index: resolved.index});}});});};
   if (currentDeptSide === 'clinical'){addResolvedItems(data.ward);
     addResolvedItems(data.day);}else{addResolvedItems(data.direct);
     Object.values(data.groups ||{}).forEach((group) => addResolvedItems(group && group.direct));}
+  (linkedSpaces ||[]).forEach((group) =>{const leftItems = Array.isArray(group && group.left) ? group.left :[];
+    const rightItems = Array.isArray(group && group.right) ? group.right :[];
+    const hitsLeft = leftItems.some((space) => selectedLeft.some((picked) => picked.building === space.building && picked.floor === space.floor && picked.index === space.index));
+    const hitsRight = rightItems.some((space) => selectedRight.some((picked) => picked.floor === space.floor && String(picked.wing || '') === String(space.wing || '') && picked.index === space.index));
+    if (!hitsLeft && !hitsRight) return;
+    leftItems.forEach((space) => addLeftSpace(space));
+    rightItems.forEach((space) => addRightSpace(space));});
   updateDisplay();
   updateLinkDisplay();}function renderDeptGroup(deptKey, groupName){const wardButtons = document.getElementById('wardButtons');
   const groupBar = wardButtons.querySelector('[data-role="neutral-group-bar"]');
