@@ -9123,9 +9123,8 @@ function getThemeClass(buildingKey){const map ={'MCBTC': 'theme-mcbtc',
   targetGroup.className = 'dept-group';
   targetGroup.dataset.role = 'target-group';
   const targetBtn = document.createElement('button');
-  targetBtn.className = `dept-btn active ${currentDeptTarget === 'mcbtc2030' ? 'theme-mcbtc2030' : 'theme-ipeb'}`;
-  targetBtn.textContent = currentDeptTarget === 'mcbtc2030' ? 'MCBTC2030' : 'IPEB/Old Block';
-  targetBtn.onclick = () => setDeptTarget(currentDeptTarget === 'ipeb' ? 'mcbtc2030' : 'ipeb');
+  targetBtn.className = 'dept-btn active theme-ipeb';
+  targetBtn.textContent = 'IPEB/Old Block';
   targetGroup.appendChild(targetBtn);
   deptButtons.appendChild(targetGroup);
   applyDeptTargetButtonTheme(targetBtn);
@@ -9242,6 +9241,7 @@ function getThemeClass(buildingKey){const map ={'MCBTC': 'theme-mcbtc',
     btn.onclick = () =>{renderDept(deptKey);
       selectAllDeptSpaces(deptKey);};
     currentList.appendChild(btn);});}function setDeptTarget(target){const normalized = String(target || '') === 'mcbtc2030' ? 'mcbtc2030' : 'ipeb';
+  if (normalized === 'mcbtc2030') return;
   currentDeptTarget = normalized;
   deptCatalog = deptCatalogByTarget[currentDeptTarget]|| createEmptyDeptCatalog();
   currentDept = null;
