@@ -9532,13 +9532,15 @@ function scheduleWardButtonNormalization(){const now = Date.now();
   if (currentDeptSide === 'clinical'){addResolvedItems(data.ward);
     addResolvedItems(data.day);}else{addResolvedItems(data.direct);
     Object.values(data.groups ||{}).forEach((group) => addResolvedItems(group && group.direct));}
+  const seedLeft = selectedLeft.slice();
+  const seedRight = selectedRight.slice();
   (linkedSpaces ||[]).forEach((group) =>{const leftItems = Array.isArray(group && group.left) ? group.left :[];
     const rightItems = Array.isArray(group && group.right) ? group.right :[];
-    const hitsLeft = leftItems.some((space) => selectedLeft.some((picked) => picked.building === space.building && picked.floor === space.floor && picked.index === space.index));
-    const hitsRight = rightItems.some((space) => selectedRight.some((picked) => picked.floor === space.floor && String(picked.wing || '') === String(space.wing || '') && picked.index === space.index));
+    const hitsLeft = leftItems.some((space) => seedLeft.some((picked) => picked.building === space.building && picked.floor === space.floor && picked.index === space.index));
+    const hitsRight = rightItems.some((space) => seedRight.some((picked) => picked.floor === space.floor && String(picked.wing || '') === String(space.wing || '') && picked.index === space.index));
     if (!hitsLeft && !hitsRight) return;
-    leftItems.forEach((space) => addLeftSpace(space));
-    rightItems.forEach((space) => addRightSpace(space));});
+    if (hitsLeft){rightItems.forEach((space) => addRightSpace(space));}
+    if (hitsRight){leftItems.forEach((space) => addLeftSpace(space));}}); 
   updateDisplay();
   updateLinkDisplay();}function renderDeptGroup(deptKey, groupName){const wardButtons = document.getElementById('wardButtons');
   const groupBar = wardButtons.querySelector('[data-role="neutral-group-bar"]');
