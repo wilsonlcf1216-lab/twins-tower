@@ -3944,285 +3944,107 @@ EF|B01|3|Various Stores|Various Stores|Neutral||Admin|P&MM
 
   window.leftMenuSourceRows = rows;})();}</script>
 <script id="ipebMenuSourceFallback">
-if (!window.ipebMenuSourceRows){(function (){const base =[{"building": "MCBTC",
-      "floor": "6",
-      "order": 1,
-      "display": "Private Ward",
-      "sourceName": "Private Ward",
-      "side": "Clinical",
-      "type": "Ward",
-      "department": "PRIVATE",
-      "subDepartment": "",
-      "replaceLeftSource": true},{"building": "EF",
-      "floor": "2",
-      "order": 3,
-      "display": "CUHK-PWH Medical Centre",
-      "sourceName": "2F",
-      "side": "Clinical",
-      "type": "Day/Special Area",
-      "department": "PRIVATE",
-      "subDepartment": "",
-      "replaceLeftSource": true},{"building": "MCBTC",
-      "floor": "5",
-      "order": 2,
-      "display": "Burns Centre",
-      "sourceName": "Burns Centre",
-      "side": "Clinical",
-      "type": "Ward",
-      "department": "SUR",
-      "subDepartment": "",
-      "replaceLeftSource": true},{"building": "MCBTC",
-      "floor": "5",
-      "order": 3,
-      "display": "Skin Bank",
-      "sourceName": "Skin Bank",
-      "side": "Clinical",
-      "type": "Day/Special Area",
-      "department": "SUR",
-      "subDepartment": "",
-      "replaceLeftSource": true},{"building": "MCBTC",
-      "floor": "4",
-      "order": 2,
-      "display": "Integrated Ward",
-      "sourceName": "4B Integrated Ward",
-      "side": "Clinical",
-      "type": "Ward",
-      "department": "O&VS",
-      "subDepartment": "",
-      "replaceLeftSource": true},{"building": "CSB",
-      "floor": "6",
-      "order": 1,
-      "display": "Dept of PAED",
-      "sourceName": "Dept of Paediatrics",
-      "side": "Neutral",
-      "type": "",
-      "department": "CUHK",
-      "subDepartment": "",
-      "replaceLeftSource": true},{"building": "CSB",
-      "floor": "8",
-      "order": 1,
-      "display": "Dept of M&T",
-      "sourceName": "Dept of M&T",
-      "side": "Neutral",
-      "type": "",
-      "department": "M&T",
-      "subDepartment": "",
-      "replaceLeftSource": true,
-      "remove": true},{"building": "MCBTC",
-      "floor": "4",
-      "order": 3,
-      "display": "A&IC Office",
-      "sourceName": "Dept of A&IC, CUHK",
-      "side": "Neutral",
-      "type": "",
-      "department": "CUHK",
-      "subDepartment": "",
-      "replaceLeftSource": true},{"building": "MCBTC",
-      "floor": "7",
-      "order": 4,
-      "display": "7/F Shared Facilities",
-      "sourceName": "Shared Facilities",
-      "side": "Clinical",
-      "type": "Day/Special Area",
-      "department": "SURG",
-      "subDepartment": ""},{"building": "MCBTC",
-      "floor": "7",
-      "order": 4,
-      "display": "7/F Shared Facilities",
-      "sourceName": "Shared Facilities",
-      "side": "Clinical",
-      "type": "Day/Special Area",
-      "department": "M&T",
-      "subDepartment": ""}];
-
-  const raw =`
-1	19/F	Plant			N
-2	19/F	Shared Facilities	M&T		C
-3	19/F	ISOL Ward B	M&T		C
-4	19/F	ISOL Ward A	M&T		C
-5	18/F	Plant			N
-6	18/F	Plant Maint	Admin		N
-7	18/F	PAED DAY	PAED		C
-8	18/F	Shared Facilities	SURG		C
-9	18/F	PAED IP Ward	PAED		C
-10	18/F	PAED SUR/ ORT Ward	SURG		C
-11	17/F	SCBU	PAED		C
-12	17/F	NICU	PAED		C
-13	17/F	Shared Facilities	PAED		C
-14	17/F	PICU	PAED		C
-15	17/F	PAED ISOL Ward	PAED		C
-16	16/F	Labour & Delivery	O&G		C
-17	16/F	Integrated Birth	O&G		C
-18	16/F	Shared Facilities	O&G		C
-19	16/F	O&G Ward	O&G		C
-20	16/F	O&G Ward	O&G		C
-21	15/F	O&G IVF	O&G		C
-22	15/F	O&G DAY	O&G		C
-23	15/F	O&G Private	O&G		C
-24	15/F	Shared Facilities	O&G	M&T	C
-25	15/F	Generic Ward	M&T		C
-26	15/F	Generic Ward	M&T		C
-27	14/F	PLANT			N
-28	14/F	PABX Office	Admin		N
-29	14/F	Shared Facilities	M&T		C
-30	14/F	Generic Ward	M&T		C
-31	14/F	Generic Ward	M&T		C
-32	13/F	Plant Maint	Admin		N
-33	13/F	Wheelchair Bank	ORT		C
-34	13/F	MSK Programme Floor	ORT		C
-35	13/F	Rehab hub	ORT		C
-36	13/F	Shared Facilities	ORT		C
-37	13/F	MSK Ward	ORT		C
-38	13/F	MSK Ward	ORT		C
-39	12/F	KIDNEY Programme Floor	SURG	M&T	C
-40	12/F	DMEC	M&T		C
-41	12/F	MACC	M&T		C
-42	12/F	Shared Facilities	SURG	M&T	C
-43	12/F	RENAL/URO Ward	SURG	M&T	C
-44	12/F	Generic Ward	M&T		C
-45	11/F	SURG Dept Office	SURG		C
-46	11/F	M&T Dept Office	M&T		C
-47	11/F	PAED Dept Office	PAED		C
-48	11/F	GI Programme Floor	SURG	M&T	C
-49	11/F	Shared Facilities	SURG	M&T	C
-50	11/F	NIV/GI Ward	M&T		C
-51	11/F	GI Ward	SURG		C
-52	10/F	CTS Programme Floor	SURG	M&T	C
-53	10/F	CIC	SURG	M&T	C
-54	10/F	Rehab hub	SURG	M&T	C
-55	10/F	CCU	SURG	M&T	C
-56	10/F	Shared Facilities	SURG	M&T	C
-57	10/F	CTS Ward	M&T		C
-58	10/F	CTS Ward	SURG		C
-59	9/F	Sky Lobby			C
-60	9/F	NEURO Programme Floor	NS	M&T	C
-61	9/F	Rehab hub	NS	M&T	C
-62	9/F	IT Office	IT		N
-63	9/F	CTS EDU	SURG	M&T	C
-64	9/F	Shared Facilities	NS	M&T	C
-65	9/F	NEURO Ward	NS		C
-66	9/F	NEURO Ward	M&T		C
-67	8/F	Sky Lobby			N
-68	8/F	Rehab Shop	HRC		N
-69	8/F	Conv. Store			N
-70	8/F	IT & Data Centre	IT		N
-71	8/F	Spiritual	Spiritual		N
-72	8/F	Cafe			N
-73	8/F	Doctors Lounge	Doctors Lounge		N
-74	8/F	Shared Facilities			N
-75	8/F	Generic Ward	SURG		C
-76	8/F	EM Ward	AED		C
-77	7/F	Endoscopy Centre	SURG		C
-78	7/F	Peri-op Suite 2	OT		C
-79	7/F	DSU	OT		C
-80	7/F	SACC	SURG		C
-81	6/F	PLANT			N
-82	6/F	Medical Record	Admin		N
-83	6/F	PLANT			N
-84	6/F	Peri-op Staff Changing	OT		C
-85	6/F	PLT MAINT	Admin		N
-86	5/F	ICU (5/F)	ICU		C
-87	5/F	Peri-op Suite 1	OT		C
-88	5/F	Peri-op Office	OT		C
-89	5/F	ICU Office	ICU		C
-90	5/F	HDU (5/F)	SURG		C
-91	4/F	ICU (4/F)	ICU		C
-92	4/F	Staff Changing (N)	Admin		N
-93	4/F	SSU	SSU		N
-94	4/F	Staff Changing (SS)	Admin		N
-95	3/F	Plant			N
-96	3/F	HDU Office	ICU		C
-97	3/F	HDU (4/F)	M&T	ICU	C
-98	3/F	Plant			N
-99	3/F	CU Biobank & Bioinformatics Hub	Lab	CUHK	N
-100	3/F	CU Microbiology Lab	Lab	CUHK	N
-101	3/F	Plant			N
-102	3/F	CU Basic/ Translational Research	Lab	CUHK	N
-103	3/F	HA Microbiology Lab	Lab		N
-104	2/F	PABX	Admin		N
-105	2/F	Blood Bank	Lab		N
-106	2/F	CU HAEMAT Lab	Lab	CUHK	N
-107	2/F	HA HAEMAT Lab	Lab	CUHK	N
-108	2/F	Shared Lab Reception	Lab		N
-109	2/F	Plant			N
-110	2/F	CU CHEMPATH Lab	Lab	CUHK	N
-111	2/F	HA CHEMPATH Lab	Lab		N
-112	2/F	CU HISTO Lab	Lab	CUHK	N
-113	2/F	HA HISTO Lab	Lab		N
-114	2/F	ICN	ICN		N
-115	1/F	Shroff	Finance		N
-116	1/F	Enquiry	Admin		N
-117	1/F	Canteen	Admin		N
-118	1/F	Private Clinic	PRIVATE		C
-119	1/F	DIIR Office	DIIR		C
-120	1/F	A&E Office	AED		C
-121	1/F	Pharmacy	Pharmacy		N
-122	1/F	PLANT			N
-123	0/F	A&E	AED		C
-124	0/F	DIIR In A&E	DIIR		C
-125	0/F	EARO DDO	Admin		N
-126	0/F	DG Store	Pharmacy		N
-127	0/F	DIIR	DIIR		C
-128	B01	Milk Kitchen	Allied Health		N
-129	B01	Patient Catering	Admin		N
-130	B01	Mortuary	Mortuary		N
-131	B01	NEATS	Admin		N
-132	B01	L/UL Bay			N
-133	B01	Refuse	Admin		N
-134	B01	Security	Admin		N
-135	B01	Hospital Supplies	Admin		N
-136	B01	P&MM- Purchase & Store	Admin		N
-137	B01	Linen Store	Admin		N
-138	B01	Housekeeping	Admin		N
-139	B02	Plant			N
-140	B02	Car Park			N
-`;
-
-  const floorState ={};
-  const wingOrder =['nwing', 'sewing', 'swwing'];
-  const normalizeFloorKey = (value) =>{const raw = String(value || '').trim();
-    if (!raw) return '';
-    if (/^b\d+/i.test(raw)) return raw.toUpperCase();
-    return raw.replace(/\/f$/i, '').trim();};
-  const normalizeSide = (flag) => String(flag || '').trim().toUpperCase() === 'C' ? 'Clinical' : 'Neutral';
-  const normalizeType = (side, name) =>{if (side !== 'Clinical') return '';
-    return /\bward\b/i.test(String(name || '')) ? 'Ward' : 'Day/Special Area';};
-
-  raw
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => line.split('\t').map((c) => String(c || '').trim()))
-    .forEach((cols) =>{const floorKey = normalizeFloorKey(cols[1]);
-      const displayName = String(cols[2] || '').trim();
-      const deptA = String(cols[3] || '').trim();
-      const deptB = String(cols[4] || '').trim();
-      const side = normalizeSide(cols[5]);
-      const type = normalizeType(side, displayName);
-      const depts =[deptA, deptB].filter(Boolean);
-      if (!floorKey || !displayName || depts.length === 0) return;
-      const floorData = rightTowerData && rightTowerData[floorKey];
-      if (!floorData) return;
-      if (!floorState[floorKey]){const flat =[];
-        wingOrder.forEach((wing) =>{(floorData[wing]||[]).forEach((space, index) =>{flat.push({wing, index, name: space && space.name});});});
-        floorState[floorKey]={flat, pos: 0};}
-      const state = floorState[floorKey];
-      if (state.pos >= state.flat.length) return;
-      const coord = state.flat[state.pos++];
-      depts.forEach((dept) =>{base.push({building: 'IPEB',
-          floor: floorKey,
-          order: Number(coord.index) + 1,
-          display: displayName,
-          sourceName: displayName,
-          side,
-          type,
-          department: dept,
-          subDepartment: '',
-          tower: 'right',
-          wing: coord.wing,
-          index: coord.index});});});
-
-  window.ipebMenuSourceRows = base;})();}</script>
+if (!window.ipebMenuSourceRows){window.ipebMenuSourceRows =[{"building": "MCBTC",
+    "floor": "6",
+    "order": 1,
+    "display": "Private Ward",
+    "sourceName": "Private Ward",
+    "side": "Clinical",
+    "type": "Ward",
+    "department": "PRIVATE",
+    "subDepartment": "",
+    "replaceLeftSource": true},{"building": "EF",
+    "floor": "2",
+    "order": 3,
+    "display": "CUHK-PWH Medical Centre",
+    "sourceName": "2F",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "PRIVATE",
+    "subDepartment": "",
+    "replaceLeftSource": true},{"building": "MCBTC",
+    "floor": "5",
+    "order": 2,
+    "display": "Burns Centre",
+    "sourceName": "Burns Centre",
+    "side": "Clinical",
+    "type": "Ward",
+    "department": "SUR",
+    "subDepartment": "",
+    "replaceLeftSource": true},{"building": "MCBTC",
+    "floor": "5",
+    "order": 3,
+    "display": "Skin Bank",
+    "sourceName": "Skin Bank",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "SUR",
+    "subDepartment": "",
+    "replaceLeftSource": true},{"building": "MCBTC",
+    "floor": "4",
+    "order": 2,
+    "display": "Integrated Ward",
+    "sourceName": "4B Integrated Ward",
+    "side": "Clinical",
+    "type": "Ward",
+    "department": "O&VS",
+    "subDepartment": "",
+    "replaceLeftSource": true},{"building": "CSB",
+    "floor": "6",
+    "order": 1,
+    "display": "Dept of PAED",
+    "sourceName": "Dept of Paediatrics",
+    "side": "Neutral",
+    "type": "",
+    "department": "CUHK",
+    "subDepartment": "",
+    "replaceLeftSource": true},{"building": "CSB",
+    "floor": "8",
+    "order": 1,
+    "display": "Dept of M&T",
+    "sourceName": "Dept of M&T",
+    "side": "Neutral",
+    "type": "",
+    "department": "M&T",
+    "subDepartment": "",
+    "replaceLeftSource": true,
+    "remove": true},{"building": "MCBTC",
+    "floor": "4",
+    "order": 3,
+    "display": "A&IC Office",
+    "sourceName": "Dept of A&IC, CUHK",
+    "side": "Neutral",
+    "type": "",
+    "department": "CUHK",
+    "subDepartment": "",
+    "replaceLeftSource": true},{"building": "MCBTC",
+    "floor": "7",
+    "order": 4,
+    "display": "7/F Shared Facilities",
+    "sourceName": "Shared Facilities",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "SURG",
+    "subDepartment": ""},{"building": "MCBTC",
+    "floor": "7",
+    "order": 4,
+    "display": "7/F Shared Facilities",
+    "sourceName": "Shared Facilities",
+    "side": "Clinical",
+    "type": "Day/Special Area",
+    "department": "M&T",
+    "subDepartment": ""},{"building": "IPEB",
+    "floor": "8",
+    "order": 5,
+    "display": "Spiritual",
+    "sourceName": "Spiritual",
+    "side": "Neutral",
+    "type": "",
+    "department": "Spiritual",
+    "subDepartment": "",
+    "tower": "right",
+    "wing": "nwing",
+    "index": 4}];}</script>
 <script id="mcbtc2030MenuSourceFallback">
 if (!window.mcbtc2030MenuSourceRows){window.mcbtc2030MenuSourceRows =[{"building": "Eye Centre",
     "floor": "0",
@@ -9684,7 +9506,24 @@ function scheduleWardButtonNormalization(){const now = Date.now();
   if (typeof requestAnimationFrame === 'function'){requestAnimationFrame(() =>{schedulePanelScrollThumbStateUpdate();
       syncTtScrollbarOverlays();});}else{setTimeout(() =>{schedulePanelScrollThumbStateUpdate();
       syncTtScrollbarOverlays();}, 0);}setTimeout(() =>{schedulePanelScrollThumbStateUpdate();
-    syncTtScrollbarOverlays();}, 80);}function renderDeptGroup(deptKey, groupName){const wardButtons = document.getElementById('wardButtons');
+    syncTtScrollbarOverlays();}, 80);}function selectAllDeptSpaces(deptKey){const catalog = deptCatalog && deptCatalog[currentDeptSide];
+  const data = catalog ? catalog[deptKey] : null;
+  if (!data) return;
+  hideDeptSearchResults();
+  deptSearchForceHidden = true;
+  selectedSpaces.clear();
+  currentLinkedGroup = null;
+  currentExceptionalLinkGroup = null;
+  currentClickedSpace = null;
+  const addResolvedItems = (block) =>{if (!block) return;
+    Object.entries(block).forEach(([buildingKey, items]) =>{(items ||[]).forEach((item) =>{const resolved = resolveDeptItem(buildingKey, item);
+        if (!resolved) return;
+        if (resolved.tower === 'left'){selectedSpaces.add(`left-${resolved.buildingIndex}-${resolved.floor}--${resolved.index}`);}else{selectedSpaces.add(`right-${resolved.floor}-${resolved.wing || ''}-${resolved.index}`);}});});};
+  if (currentDeptSide === 'clinical'){addResolvedItems(data.ward);
+    addResolvedItems(data.day);}else{addResolvedItems(data.direct);
+    Object.values(data.groups ||{}).forEach((group) => addResolvedItems(group && group.direct));}
+  updateDisplay();
+  updateLinkDisplay();}function renderDeptGroup(deptKey, groupName){const wardButtons = document.getElementById('wardButtons');
   const groupBar = wardButtons.querySelector('[data-role="neutral-group-bar"]');
   if (groupBar){groupBar.querySelectorAll('.dept-item').forEach(el =>{if (el.textContent === groupName){el.classList.add('active');}else{el.classList.remove('active');}});}const data = deptCatalog[currentDeptSide][deptKey];
   const preserveCount = data && data.direct ? 2 : 1;
@@ -11005,7 +10844,8 @@ function switchLeftBuilding(index, options ={}){const preservePan = !!options.pr
   if (preservePan){panX = savedPanX;
     panY = savedPanY;
     if (buildingContainer){buildingContainer.scrollLeft = savedScrollLeft;
-      buildingContainer.scrollTop = savedScrollTop;}fitBuildingToViewport({preserveView: true});}else{fitBuildingToViewport();}// 如果當前有連結組，重新選擇
+      buildingContainer.scrollTop = savedScrollTop;}fitBuildingToViewport({preserveView: true});}else{fitBuildingToViewport();}
+  if (selectedSpaces.size > 0){updateDisplay();}// 如果當前有連結組，重新選擇
   if (currentLinkedGroup){selectedSpaces.clear();
     
     currentLinkedGroup.right.forEach(space =>{const key = `right-${space.floor}-${space.wing}-${space.index}`;
