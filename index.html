@@ -8126,7 +8126,7 @@ function getExceptionalCaseMigration(space){return exceptionalCaseMigrations.fin
   updateLinkDisplay();
   focusExceptionalConnectionGroup(group);
   return true;}const normalizeExceptionalText = (() =>{try{new RegExp('[^\\p{L}\\p{N}]+', 'gu');
-    return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À- ]+/g, '');}})();
+    return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À-￿]+/g, '');}})();
 
 function parseExceptionalDestination(dest){const text = String(dest || '').trim();
   const match = text.match(/^(MCBTC2030|IPEB|MCBTC|CSB|DTB|HKLM|SB|EF)\s+([^/\s]+)\/F\s+(.+)$/i);
@@ -9084,7 +9084,7 @@ function getThemeClass(buildingKey){const map ={'MCBTC': 'theme-mcbtc',
   const q = (input ? input.value : '').trim().toLowerCase();
   const tokens = q.split(/[\s,;，、]+/).filter(Boolean);
   if (e && e.type === 'input'){deptSearchForceHidden = false;}const normalize = (() =>{try{new RegExp('[^\\p{L}\\p{N}]+', 'gu');
-      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À- ]+/g, '');}})();
+      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À-￿]+/g, '');}})();
   const tokensNorm = tokens.map(normalize).filter(Boolean);
   updateDeptSearchResults(tokensNorm);
   return;
@@ -9117,8 +9117,7 @@ function formatRightWingLabel(wing){const w = String(wing || '');
   const isMcbtc2030 = wing === 'mcbtc2030';
   if (currentDeptTarget === 'ipeb') return isMcbtc2030 ? 1 : 0;
   if (currentDeptTarget === 'mcbtc2030') return isMcbtc2030 ? 0 : 1;
-  return currentRightBuilding === 1 ? (isMcbtc2030 ? 0 : 1) : (isMcbtc2030 ? 1 : 0);}function sortRightSpacesByPreferredTarget(spaces){
-  return (spaces ||[]).slice().sort((a, b) =>{const aPriority = getRightSpaceTargetPriority(a);
+  return currentRightBuilding === 1 ? (isMcbtc2030 ? 0 : 1) : (isMcbtc2030 ? 1 : 0);}function sortRightSpacesByPreferredTarget(spaces){return (spaces ||[]).slice().sort((a, b) =>{const aPriority = getRightSpaceTargetPriority(a);
     const bPriority = getRightSpaceTargetPriority(b);
     if (aPriority !== bPriority) return aPriority - bPriority;
     const aFloor = parseInt(String(a && a.floor || '0').replace(/[^\d-]/g, ''), 10) || 0;
@@ -9205,7 +9204,7 @@ function formatRightWingLabel(wing){const w = String(wing || '');
     return;}if (!tokensNorm || tokensNorm.length === 0){hideDeptSearchResults();
     return;}if (!deptSearchIndex || !deptSearchIndex[0]|| deptSearchIndex[0].type !== 'space'){deptSearchIndex = null;
     buildDeptSearchIndex();}const normalize = (() =>{try{new RegExp('[^\\p{L}\\p{N}]+', 'gu');
-      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À- ]+/g, '');}})();
+      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À-￿]+/g, '');}})();
   const matches = (text) =>{const raw = String(text || '').toLowerCase();
     const norm = normalize(text);
     return tokensNorm.some(t => raw.includes(t) || norm.includes(t));};
@@ -9802,8 +9801,7 @@ function resetTabletMapDisclaimerPosition(disclaimer){if (!disclaimer) return;
   const visibleHeight = Math.max(0, visibleBottom - visibleTop);
   if (visibleWidth < 140 || visibleHeight < 120){if (disclaimer){disclaimer.style.display = 'none';
       disclaimer.classList.remove('tablet-floating');}if (lastUpdate){lastUpdate.style.display = 'none';
-      lastUpdate.classList.remove('tablet-floating');}
-    return;}const left = Math.round(visibleLeft + 8);
+      lastUpdate.classList.remove('tablet-floating');}return;}const left = Math.round(visibleLeft + 8);
   const right = Math.round(Math.max(8, viewportWidth - visibleRight + 8));
   const bottom = Math.round(Math.max(6, viewportHeight - visibleBottom + 6));
   const maxWidth = Math.round(Math.max(180, visibleWidth - 16));
