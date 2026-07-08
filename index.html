@@ -8305,7 +8305,7 @@ function getExceptionalCaseMigration(space){return exceptionalCaseMigrations.fin
   updateLinkDisplay();
   focusExceptionalConnectionGroup(group);
   return true;}const normalizeExceptionalText = (() =>{try{new RegExp('[^\\p{L}\\p{N}]+', 'gu');
-    return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À- ]+/g, '');}})();
+    return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À-￿]+/g, '');}})();
 
 function parseExceptionalDestination(dest){const text = String(dest || '').trim();
   const match = text.match(/^(MCBTC2030|IPEB|MCBTC|CSB|DTB|HKLM|SB|EF)\s+([^/\s]+)\/F\s+(.+)$/i);
@@ -9264,7 +9264,7 @@ function getThemeClass(buildingKey){const map ={'MCBTC': 'theme-mcbtc',
   const q = (input ? input.value : '').trim().toLowerCase();
   const tokens = q.split(/[\s,;，、]+/).filter(Boolean);
   if (e && e.type === 'input'){deptSearchForceHidden = false;}const normalize = (() =>{try{new RegExp('[^\\p{L}\\p{N}]+', 'gu');
-      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À- ]+/g, '');}})();
+      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À-￿]+/g, '');}})();
   const tokensNorm = tokens.map(normalize).filter(Boolean);
   updateDeptSearchResults(tokensNorm);
   return;
@@ -9384,7 +9384,7 @@ function formatRightWingLabel(wing){const w = String(wing || '');
     return;}if (!tokensNorm || tokensNorm.length === 0){hideDeptSearchResults();
     return;}if (!deptSearchIndex || !deptSearchIndex[0]|| deptSearchIndex[0].type !== 'space'){deptSearchIndex = null;
     buildDeptSearchIndex();}const normalize = (() =>{try{new RegExp('[^\\p{L}\\p{N}]+', 'gu');
-      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À- ]+/g, '');}})();
+      return (s) => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');}catch (e){return (s) => String(s || '').toLowerCase().replace(/[^a-z0-9À-￿]+/g, '');}})();
   const matches = (text) =>{const raw = String(text || '').toLowerCase();
     const norm = normalize(text);
     return tokensNorm.some(t => raw.includes(t) || norm.includes(t));};
