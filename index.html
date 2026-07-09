@@ -25,10 +25,10 @@
   padding: 15px;
   overflow: hidden;
   touch-action: none;}:root{--top-gap: 2px;
-  --top-row-h: 124px;
+  --top-row-h: 148px;
   --top-control-h: 40px;
   --top-building-w: 200px;
-  --top-dept-w: 320px;
+  --top-dept-w: 420px;
   --top-calendar-w: 210px;
   --top-search-w: 240px;
   --top-linked-w: 552px;
@@ -188,6 +188,16 @@
   padding: 2px 4px !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;}#twintower-app .top-dept-panel #wardButtons .ward-btn.ward-btn-span-all{grid-column: 1 / -1 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  text-overflow: clip !important;
+  line-height: 1.08 !important;
+  height: auto !important;
+  min-height: 44px !important;
+  padding: 4px 6px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
   -webkit-box-orient: vertical !important;}#twintower-app .top-dept-panel #wardButtons .ward-btn.ward-btn-fit-wide,
 #twintower-app .top-dept-panel #wardButtons .ward-btn.ward-btn-force-single-line{grid-column: span 2 !important;}#twintower-app .top-dept-panel .dept-btn:hover,
 #twintower-app .top-dept-panel .dept-btn:focus,
@@ -513,6 +523,17 @@
   padding: 2px 4px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;}.ward-btn.ward-btn-span-all{grid-column: 1 / -1;
+  white-space: normal;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  line-height: 1.08;
+  height: auto;
+  min-height: 42px;
+  padding: 4px 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;}.main-view.tablet-layout.tablet-landscape .ward-items-grid .ward-btn.ward-btn-span-2{grid-column: span 2 !important;}.main-view.tablet-layout.tablet-landscape .ward-items-grid .ward-btn.ward-btn-span-4{grid-column: span 4 !important;}.main-view.tablet-layout.tablet-landscape .ward-items-grid .ward-btn.ward-btn-span-all{grid-column: 1 / -1 !important;}.ward-btn:hover{background: #ffc107;
   color: #856404;
   transform: scale(1.05);}.ward-btn.active{background: #ffc107;
@@ -1569,7 +1590,7 @@
   height: var(--top-control-h);
   padding: 2px 4px;
   gap: 0;}#topDeptPanel.top-panel.expanded{height: auto;
-  max-height: min(68vh, 520px);}.main-view:not(.phone-layout):not(.tablet-layout) #topDeptPanel.top-panel.expanded{max-height: min(82vh, 760px);}.top-filter-input{width: 100%;
+  max-height: min(76vh, 640px);}.main-view:not(.phone-layout):not(.tablet-layout) #topDeptPanel.top-panel.expanded{max-height: min(88vh, 860px);}.top-filter-input{width: 100%;
   padding: 4px 6px;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -1719,7 +1740,7 @@
   flex-wrap: nowrap;
   align-items: stretch;
   gap: 4px;
-  padding-bottom: 16px;}.main-view:not(.phone-layout):not(.tablet-layout) .top-dept-panel #wardButtons{max-height: min(74vh, 720px);}.top-dept-panel .ward-building-row{flex-wrap: wrap;}.top-dept-panel .ward-building-row .dept-item{flex: 1 1 88px;
+  padding-bottom: 16px;}.main-view:not(.phone-layout):not(.tablet-layout) .top-dept-panel #wardButtons{max-height: min(80vh, 840px);}.top-dept-panel .ward-building-row{flex-wrap: wrap;}.top-dept-panel .ward-building-row .dept-item{flex: 1 1 88px;
   min-width: 88px;}.top-dept-footer{flex: 0 0 auto;
   display: none;
   justify-content: center;}.top-dept-footer.show{display: flex;}.dept-collapse-btn{width: 100%;
@@ -9550,9 +9571,15 @@ function formatRightWingLabel(wing){const w = String(wing || '');
         void grid.offsetWidth;
         btns.forEach((btn) =>{if (!btn.classList.contains('ward-btn-fit-wide')) return;
           if ((btn.scrollWidth || 0) > (btn.clientWidth || 0) + 1){btn.classList.add('ward-btn-fit-two-line');}});
+        void grid.offsetWidth;
+        btns.forEach((btn) =>{if (!btn.classList.contains('ward-btn-fit-two-line')) return;
+          const stillWide = (Math.ceil(btn.scrollWidth || 0) > Math.ceil(btn.clientWidth || 0) + 1);
+          const stillTall = (Math.ceil(btn.scrollHeight || 0) > Math.ceil(btn.clientHeight || 0) + 1);
+          if (stillWide || stillTall){btn.classList.add('ward-btn-span-all');}});
         const ordered = Array.from(grid.querySelectorAll('.ward-btn')).map((btn, idx) => ({btn, idx}));
         const weight = (btn) =>{const label = String(btn && btn.textContent || '').trim();
           if (label === 'ALL') return -1;
+          if (btn.classList.contains('ward-btn-span-all')) return 3;
           if (btn.classList.contains('ward-btn-fit-two-line')) return 2;
           if (btn.classList.contains('ward-btn-fit-wide') || btn.classList.contains('ward-btn-force-single-line')) return 1;
           return 0;};
@@ -9565,7 +9592,7 @@ function formatRightWingLabel(wing){const w = String(wing || '');
             if (la !== lb) return la - lb;
             return a.idx - b.idx;})
           .forEach(({btn}) => grid.appendChild(btn));});}scheduleDebugWindowUpdate();
-    return;}root.querySelectorAll('.ward-btn').forEach((btn) =>{btn.classList.remove('ward-btn-fit-wide', 'ward-btn-fit-two-line');
+    return;}root.querySelectorAll('.ward-btn').forEach((btn) =>{btn.classList.remove('ward-btn-fit-wide', 'ward-btn-fit-two-line', 'ward-btn-span-all');
     if (!btn || btn.offsetParent === null || btn.clientWidth <= 0) return;
     if (btn.classList.contains('ward-btn-force-single-line')) return;
     const label = String(btn.textContent || '').trim();
@@ -9579,10 +9606,14 @@ function formatRightWingLabel(wing){const w = String(wing || '');
     void btn.offsetWidth;
     const overflowAfterWide = (Math.ceil(btn.scrollWidth || 0) > Math.ceil(btn.clientWidth || 0) + 1);
     if (!overflowAfterWide) return;
-    btn.classList.add('ward-btn-fit-two-line');});
+    btn.classList.add('ward-btn-fit-two-line');
+    void btn.offsetWidth;
+    const overflowAfterTwoLine = (Math.ceil(btn.scrollWidth || 0) > Math.ceil(btn.clientWidth || 0) + 1) || (Math.ceil(btn.scrollHeight || 0) > Math.ceil(btn.clientHeight || 0) + 1);
+    if (overflowAfterTwoLine) btn.classList.add('ward-btn-span-all');});
 
   root.querySelectorAll('.ward-items-grid').forEach((grid) =>{const buttons = Array.from(grid.children).filter((el) => el && el.classList && el.classList.contains('ward-btn'));
     const priority = (btn) =>{if ((btn.textContent || '').trim() === 'ALL') return -1;
+      if (btn.classList.contains('ward-btn-span-all')) return 3;
       if (btn.classList.contains('ward-btn-fit-two-line')) return 2;
       if (btn.classList.contains('ward-btn-fit-wide') || btn.classList.contains('ward-btn-force-single-line')) return 1;
       return 0;};
@@ -11770,9 +11801,9 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   const tabletLandscape = tabletLayout && isLandscapeViewport();
   const tabletPortrait = tabletLayout && !tabletLandscape;
   const baseGap = tabletLandscape ? 4 : (tabletLayout ? 12 : 2);
-  const baseRowH = tabletLandscape ? 88 : (tabletLayout ? (tabletPortrait ? 148 : 138) : 124);
+  const baseRowH = tabletLandscape ? 88 : (tabletLayout ? (tabletPortrait ? 148 : 138) : 148);
   const baseBuildingW = tabletLandscape ? 170 : (tabletLayout ? (tabletPortrait ? 250 : 230) : 200);
-  const baseDeptW = tabletLandscape ? 230 : (tabletLayout ? (tabletPortrait ? 520 : 390) : 320);
+  const baseDeptW = tabletLandscape ? 230 : (tabletLayout ? (tabletPortrait ? 520 : 390) : 420);
   const baseCalendarW = tabletLandscape ? 180 : (tabletLayout ? (tabletPortrait ? 320 : 300) : 210);
   const baseTotal = baseBuildingW + baseDeptW + baseCalendarW + baseGap * 2;
 
@@ -11791,7 +11822,7 @@ function scheduleTabletLandscapeInsetsUpdate(){if (tabletLandscapeInsetRafId) re
   const gap = Math.max(2, Math.round(baseGap * scale));
 
   let buildingW = Math.max(tabletLandscape ? 150 : (tabletLayout ? 210 : 170), Math.round(baseBuildingW * scale));
-  let deptW = Math.max(tabletLandscape ? 220 : (tabletLayout ? 340 : 220), Math.round(baseDeptW * scale));
+  let deptW = Math.max(tabletLandscape ? 220 : (tabletLayout ? 340 : 320), Math.round(baseDeptW * scale));
   const maxCalendarW = Math.max(tabletLandscape ? 170 : (tabletLayout ? 220 : 160), wardW - buildingW - deptW - gap * 2);
   let calendarW = Math.max(tabletLandscape ? 170 : (tabletLayout ? 240 : 160), Math.round(baseCalendarW * scale));
   calendarW = Math.min(calendarW, maxCalendarW);
