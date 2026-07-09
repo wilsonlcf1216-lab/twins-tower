@@ -1366,10 +1366,11 @@
   padding: 0;
   width: auto;
   max-width: calc(100% - 12px);
-  pointer-events: auto;
+  pointer-events: none;
   overflow: visible;
   transform: translateZ(0);
-  transform-origin: top right;}.top-search-tools{display: flex;
+  transform-origin: top right;}.top-search-floating > *,
+.top-search-floating > * *{pointer-events: auto;}.top-search-tools{display: flex;
   align-items: stretch;
   gap: 4px;
   height: var(--top-control-h);}.top-search-floating .top-panel{min-height: var(--top-control-h);
