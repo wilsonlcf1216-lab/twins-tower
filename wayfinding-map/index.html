@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Campus Wayfinding Prototype</title>
+  <title>3D Wayfinding Kiosk Prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,116 +11,125 @@
 </head>
 <body>
   <main class="app-shell">
-    <section class="hero">
+    <section class="hero-card">
       <div>
-        <p class="eyebrow">New Project / Wayfinding Prototype</p>
-        <h1>CSB / HKLM / EF to IPEB Wayfinding Map</h1>
+        <p class="eyebrow">3D Mall-Style Wayfinding</p>
+        <h1>4 棟 Building 3D 導航動畫</h1>
         <p class="hero-copy">
-          根據現有 GitHub prototype 內嘅樓層內容，建立一個獨立新 project。
-          呢個版本集中做 mall-style wayfinding：由 CSB、HKLM 或 EF 揀選樓層與空間，
-          顯示該層 floor plan、由空間行去 lift lobby、落到 2/F link bridge floor、過橋去 IPEB、
-          再搭 lift 去指定樓層，最後由 lift 行到目的區域。
+          呢個版本改成 kiosk 式 3D 導航主場景：同時顯示 `CSB`、`HKLM`、`EF` 同 `IPEB`，
+          用鏡頭跟路線方式展示由出發空間去 lift lobby、落去 `2/F`、經 `link bridge`
+          過去 `IPEB`，再上到目的樓層同區域。
         </p>
       </div>
       <div class="hero-note">
         <strong>Data Rule</strong>
-        <span>原有 `index.html` 只作資料來源，本 project 唔會改動原本 dataset。</span>
+        <span>仍然只讀取原有 `index.html` 嘅 dataset，唔會改動現有數據。</span>
       </div>
     </section>
 
-    <section class="controls card">
-      <div class="control-group">
-        <label for="sourceBuilding">出發 Building</label>
-        <select id="sourceBuilding"></select>
-      </div>
-      <div class="control-group">
-        <label for="sourceFloor">出發樓層</label>
-        <select id="sourceFloor"></select>
-      </div>
-      <div class="control-group">
-        <label for="sourceSpace">出發區域</label>
-        <select id="sourceSpace"></select>
-      </div>
-      <div class="control-group">
-        <label for="targetFloor">IPEB 目的樓層</label>
-        <select id="targetFloor"></select>
-      </div>
-      <div class="control-group">
-        <label for="targetSpace">IPEB 目的區域</label>
-        <select id="targetSpace"></select>
-      </div>
-    </section>
-
-    <section class="summary-grid">
-      <article class="card summary-card">
-        <p class="summary-label">Start</p>
-        <h2 id="summaryStart">-</h2>
-        <p id="summaryStartMeta" class="summary-meta">-</p>
-      </article>
-      <article class="card summary-card">
-        <p class="summary-label">Transfer</p>
-        <h2>2/F Link Bridge</h2>
-        <p class="summary-meta">由出發樓層去 lift lobby，落到 2/F，經 link bridge 入 IPEB。</p>
-      </article>
-      <article class="card summary-card">
-        <p class="summary-label">Destination</p>
-        <h2 id="summaryEnd">-</h2>
-        <p id="summaryEndMeta" class="summary-meta">-</p>
-      </article>
-    </section>
-
-    <section class="steps card">
-      <div class="section-heading">
-        <h2>Route Steps</h2>
-        <p>完整流程會跟住以下 5 個視圖同步更新。</p>
-      </div>
-      <ol id="routeSteps" class="route-steps"></ol>
-    </section>
-
-    <section class="visual-grid">
-      <article class="card panel-card">
-        <div class="section-heading">
-          <h2>1. 出發層 Floor Plan</h2>
-          <p>顯示所選 building/floor 及由目標空間行去 lift lobby。</p>
+    <section class="workspace-layout">
+      <aside class="sidebar card">
+        <div class="panel-head">
+          <p class="panel-kicker">Route Setup</p>
+          <h2>導航設定</h2>
         </div>
-        <div id="sourceFloorPlan" class="panel-canvas"></div>
-      </article>
 
-      <article class="card panel-card">
-        <div class="section-heading">
-          <h2>2. 出發 Building</h2>
-          <p>顯示完整 building，並突出由當前樓層去 2/F 嘅垂直移動。</p>
+        <div class="controls-grid">
+          <label class="control-group">
+            <span>出發 Building</span>
+            <select id="sourceBuilding"></select>
+          </label>
+          <label class="control-group">
+            <span>出發樓層</span>
+            <select id="sourceFloor"></select>
+          </label>
+          <label class="control-group">
+            <span>出發區域</span>
+            <select id="sourceSpace"></select>
+          </label>
+          <label class="control-group">
+            <span>IPEB 目的樓層</span>
+            <select id="targetFloor"></select>
+          </label>
+          <label class="control-group">
+            <span>IPEB 目的區域</span>
+            <select id="targetSpace"></select>
+          </label>
         </div>
-        <div id="sourceElevation" class="panel-canvas"></div>
-      </article>
 
-      <article class="card panel-card panel-wide">
-        <div class="section-heading">
-          <h2>3. 2/F Link Bridge</h2>
-          <p>顯示由出發 building 經 2/F link bridge 去 IPEB 嘅轉場。</p>
+        <div class="action-row">
+          <button id="replayRoute" type="button" class="action-btn primary">Replay Route</button>
+          <button id="toggleCamera" type="button" class="action-btn secondary">Camera: Follow</button>
         </div>
-        <div id="bridgePlan" class="panel-canvas"></div>
-      </article>
 
-      <article class="card panel-card">
-        <div class="section-heading">
-          <h2>4. IPEB Building</h2>
-          <p>顯示喺 IPEB 由 2/F 上到目的樓層。</p>
+        <section class="summary-stack">
+          <article class="summary-card">
+            <p class="summary-label">Start</p>
+            <h3 id="summaryStart">-</h3>
+            <p id="summaryStartMeta" class="summary-meta">-</p>
+          </article>
+          <article class="summary-card">
+            <p class="summary-label">Transfer</p>
+            <h3>2/F Link Bridge</h3>
+            <p class="summary-meta">由 source building 落到 `2/F`，經 bridge 進入 `IPEB`。</p>
+          </article>
+          <article class="summary-card">
+            <p class="summary-label">Destination</p>
+            <h3 id="summaryEnd">-</h3>
+            <p id="summaryEndMeta" class="summary-meta">-</p>
+          </article>
+        </section>
+
+        <section class="route-card">
+          <div class="panel-head compact">
+            <p class="panel-kicker">Animation Steps</p>
+            <h2>Route Storyboard</h2>
+          </div>
+          <ol id="routeSteps" class="route-steps"></ol>
+        </section>
+
+        <section class="status-card">
+          <div class="status-row">
+            <span>Scene Mode</span>
+            <strong id="sceneMode">Follow Camera</strong>
+          </div>
+          <div class="status-row">
+            <span>Animation Progress</span>
+            <strong id="routeProgress">0%</strong>
+          </div>
+          <div class="status-row">
+            <span>Data Status</span>
+            <strong id="dataStatus">Loading...</strong>
+          </div>
+        </section>
+      </aside>
+
+      <section class="scene-panel card">
+        <div class="scene-header">
+          <div>
+            <p class="panel-kicker">3D Kiosk View</p>
+            <h2 id="sceneTitle">4 棟 Building Overview</h2>
+            <p id="sceneSubtitle" class="scene-copy">Loading route...</p>
+          </div>
+          <div class="scene-legend">
+            <span class="legend-chip csb">CSB</span>
+            <span class="legend-chip hklm">HKLM</span>
+            <span class="legend-chip ef">EF</span>
+            <span class="legend-chip ipeb">IPEB</span>
+          </div>
         </div>
-        <div id="targetElevation" class="panel-canvas"></div>
-      </article>
 
-      <article class="card panel-card">
-        <div class="section-heading">
-          <h2>5. IPEB 目的層 Floor Plan</h2>
-          <p>顯示由 IPEB lift lobby 行去指定區域。</p>
+        <div class="scene-shell">
+          <div id="sceneViewport" class="scene-viewport">
+            <canvas id="sceneCanvas"></canvas>
+            <div id="buildingLabels" class="building-labels"></div>
+          </div>
         </div>
-        <div id="targetFloorPlan" class="panel-canvas"></div>
-      </article>
-    </section>
 
-    <section class="footer-note">
-      <p id="dataStatus">Loading source data...</p>
+        <div class="scene-footer">
+          <p>視圖會以發光路線顯示：出發區域 → lift lobby → `2/F` → `link bridge` → `IPEB lift` → 目的區域。</p>
+        </div>
+      </section>
     </section>
   </main>
 
