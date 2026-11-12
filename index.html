@@ -4389,13 +4389,7 @@ if (!window.mcbtc2030MenuSourceRows){window.mcbtc2030MenuSourceRows =[{"building
     "subDepartment": "",
     "tower": "right",
     "wing": "mcbtc2030",
-    "index": 1,
-    "exceptionalTitle": "PRIVATE WARD 搬遷記錄",
-    "exceptionalYear": "2030",
-    "exceptionalSourceMatch": "9E Private Maternity Ward",
-    "exceptionalSourceDisplay": "9E Private Ward",
-    "exceptionalSourceMeta": "9/F",
-    "exceptionalSourceBuilding": "EF"},{"building": "EF",
+    "index": 1},{"building": "EF",
     "floor": "4",
     "order": 2,
     "display": "5F Integrated Ward",
@@ -5211,12 +5205,15 @@ const rightTowerData ={"19":{"nwing":[{"name": "Plant",
         "multiline": true,
         "lines":["Shared",
           "Facilities"]}],
-    "sewing":[{"name": "PAED IP Ward",
-        "widthClass": "w-120"}],
-    "swwing":[{"name": "PAED SUR/ORT Ward",
+    "sewing":[{"name": "Private Ward (18/F)",
         "widthClass": "w-120",
         "multiline": true,
-        "lines":["PAED SUR/",
+        "lines":["Private Ward",
+          "(18/F)"]}],
+    "swwing":[{"name": "PAED IP/SUR/ORT Ward",
+        "widthClass": "w-120",
+        "multiline": true,
+        "lines":["PAED IP/SUR/",
           "ORT Ward"]}]},
   "17":{"nwing":[{"name": "SCBU",
         "widthClass": "w-129"},{"name": "NICU",
@@ -5233,8 +5230,11 @@ const rightTowerData ={"19":{"nwing":[{"name": "Plant",
         "widthClass": "w-129",
         "multiline": true,
         "lines":["Labour &",
-          "Delivery"]},{"name": "Integrated Birth",
-        "widthClass": "w-130"},{"name": "Shared Facilities",
+          "Delivery"]},{"name": "Private Unit (16/F)",
+        "widthClass": "w-130",
+        "multiline": true,
+        "lines":["Private Unit",
+          "(16/F)"]},{"name": "Shared Facilities",
         "widthClass": "w-60",
         "multiline": true,
         "lines":["Shared",
@@ -6034,7 +6034,7 @@ const linkedSpaces =[{"right":[{"floor": "19",
     "left":[{"building": 2,
         "floor": "11",
         "index": 0}]},{"right":[{"floor": "18",
-        "wing": "sewing",
+        "wing": "swwing",
         "index": 0}],
     "left":[{"building": 2,
         "floor": "11",
@@ -6438,7 +6438,17 @@ const linkedSpaces =[{"right":[{"floor": "19",
         "index": 7}],
     "left":[{"building": 0,
         "floor": "8",
-        "index": 3}]}];
+        "index": 3}]},{"right":[{"floor": "18",
+        "wing": "sewing",
+        "index": 0}],
+    "left":[{"building": 0,
+        "floor": "6",
+        "index": 0}]},{"right":[{"floor": "16",
+        "wing": "nwing",
+        "index": 1}],
+    "left":[{"building": 0,
+        "floor": "6",
+        "index": 0}]}];
 
 // 時間線連結數據
 const timelineLinks ={'ipeb-week1':{left:[{building: 0, floor: '6', index: 0, name: 'PRIVATE WARD'},{building: 0, floor: '5', index: 1, name: 'BURNS CENTRE'},{building: 0, floor: '5', index: 2, name: 'SKIN BANK'},{building: 0, floor: '4', index: 1, name: '4B INTEGRATED WARD (Eye / ENT Head & Neck / Dental)'}],
@@ -7860,15 +7870,15 @@ function createEmptyDeptCatalog(){return{clinical:{}, nonClinical:{}};}function 
 6	18/F	Plant Maint	Admin		N
 7	18/F	PAED DAY	PAED		C
 8	18/F	Shared Facilities	SURG		C
-9	18/F	PAED IP Ward	PAED		C
-10	18/F	PAED SUR/ ORT Ward	SURG		C
+9	18/F	Private Ward (18/F)	PAED		C
+10	18/F	PAED IP/SUR/ORT Ward	SURG		C
 11	17/F	SCBU	PAED		C
 12	17/F	NICU	PAED		C
 13	17/F	Shared Facilities	PAED		C
 14	17/F	PICU	PAED		C
 15	17/F	PAED ISOL Ward	PAED		C
 16	16/F	Labour & Delivery	O&G		C
-17	16/F	Integrated Birth	O&G		C
+17	16/F	Private Unit (16/F)	O&G		C
 18	16/F	Shared Facilities	O&G		C
 19	16/F	O&G Ward	O&G		C
 20	16/F	O&G Ward	O&G		C
@@ -8141,20 +8151,7 @@ function createEmptyDeptCatalog(){return{clinical:{}, nonClinical:{}};}function 
     insertMenuRow(out.mcbtc2030, row);});
 
   deptCatalogByTarget = out;
-  deptCatalog = deptCatalogByTarget[currentDeptTarget]|| createEmptyDeptCatalog();}const exceptionalCaseMigrations =[{"title": "PRIVATE WARD 搬遷記錄",
-    "from": "MCBTC 6/F Private Ward",
-    "triggers":[{"tower": "left",
-        "buildingIndex": 0,
-        "floor": "6",
-        "index": 0},{"tower": "right",
-        "wing": "mcbtc2030",
-        "floor": "6",
-        "index": 1}],
-    "moves":[{"year": "2027",
-        "label": "連結到",
-        "destinations":["9/F E Wing, Old Block"]},{"year": "2030",
-        "label": "對應",
-        "destinations":["MCBTC2030 6/F Private Ward"]}]},{"title": "BURNS CENTRE 搬遷記錄",
+  deptCatalog = deptCatalogByTarget[currentDeptTarget]|| createEmptyDeptCatalog();}const exceptionalCaseMigrations =[{"title": "BURNS CENTRE 搬遷記錄",
     "from": "MCBTC 5/F Burns Centre",
     "triggers":[{"tower": "left",
         "buildingIndex": 0,
@@ -8415,17 +8412,16 @@ function parseExceptionalDestination(dest){const text = String(dest || '').trim(
   if (year === '2030') return 'mcbtc2030';
   return 'ipeb';}function getExceptionalListEntryLabel(migration, move){const title = String(migration && migration.title || '').trim();
   const year = String(move && move.year || '').trim();
-  const special2027Titles = new Set(['PRIVATE WARD 搬遷記錄',
-    'BURNS CENTRE 搬遷記錄',
+  const special2027Titles = new Set(['BURNS CENTRE 搬遷記錄',
     'SKIN BANK 搬遷記錄',
     '4B INTEGRATED WARD 搬遷記錄',
     'DEPT OF A&IC, CUHK 搬遷記錄']);
-  if (title === 'SPIRITUAL 搬遷記錄' && year === '2027'){return '4F Spiritual (Block B,SQ North)';}if (special2027Titles.has(title) && year === '2027'){return String(migration && migration.from || '').trim();}if (title === 'PRIVATE WARD 搬遷記錄' && year === '2027'){return 'MCBTC 6/F Private Ward';}if (title === 'PRIVATE WARD 搬遷記錄' && year === '2030'){return '9/F E Wing, Old Block';}const destinations = Array.isArray(move && move.destinations) ? move.destinations.map((dest) => String(dest || '').trim()).filter(Boolean) :[];
+  if (title === 'SPIRITUAL 搬遷記錄' && year === '2027'){return '4F Spiritual (Block B,SQ North)';}if (special2027Titles.has(title) && year === '2027'){return String(migration && migration.from || '').trim();}const destinations = Array.isArray(move && move.destinations) ? move.destinations.map((dest) => String(dest || '').trim()).filter(Boolean) :[];
   if (year === '2030'){if (title === 'INTEGRATED SLEEP UNIT 搬遷記錄' || title === 'COMBINED HAEMATOLOGY DAY WARD AND CLINIC 搬遷記錄' || title === 'GENERAL HAEMATOLOGY WARD 搬遷記錄' || title === 'HAEMATOLOGY AND ONCOLOGY WARD 搬遷記錄'){return String(migration && migration.from || '').trim();}if (title === 'PSYCHI WARD (F) 搬遷記錄' || title === 'PSYCHI WARD (M) 搬遷記錄'){return 'SH Psychi Ward';}if (title === 'THE NETHERSOLE SCHOOL OF NURSING 搬遷記錄'){return 'Block B SQ, South 7/F The Nethersole School of Nursing';}if (title === 'MSSU (PSY) 搬遷記錄'){return 'Block B SQ, North 3/F MSSU (Psy)';}if (title === 'CLINICAL PSYCHOLOGY 搬遷記錄'){return 'Block B SQ, North 3/F Clinical Psychology';}if (title === 'EYE CENTRE 搬遷記錄'){return 'Eye Centre';}}if (special2027Titles.has(title) && year === '2030'){const source2027Move = (migration && migration.moves ||[]).find((item) => String(item && item.year || '').trim() === '2027');
     const source2027Destinations = Array.isArray(source2027Move && source2027Move.destinations)
       ? source2027Move.destinations.map((dest) => String(dest || '').trim()).filter(Boolean)
       :[];
-    if (title === 'DEPT OF A&IC, CUHK 搬遷記錄' && source2027Destinations.length > 0){return 'MCBTC2030 4/F A&IC Office';}if (title === 'PRIVATE WARD 搬遷記錄' && source2027Destinations.length > 0){return '9/F E Wing, Old Block';}if (title === 'SKIN BANK 搬遷記錄' && source2027Destinations.length > 0){return '1/F, F Wing, Old Block';}if (title === '4B INTEGRATED WARD 搬遷記錄' && source2027Destinations.length > 0){return 'EF 5/F 5E & 5F Integrated Ward';}if (source2027Destinations.length === 1) return source2027Destinations[0];
+    if (title === 'DEPT OF A&IC, CUHK 搬遷記錄' && source2027Destinations.length > 0){return 'MCBTC2030 4/F A&IC Office';}if (title === 'SKIN BANK 搬遷記錄' && source2027Destinations.length > 0){return '1/F, F Wing, Old Block';}if (title === '4B INTEGRATED WARD 搬遷記錄' && source2027Destinations.length > 0){return 'EF 5/F 5E & 5F Integrated Ward';}if (source2027Destinations.length === 1) return source2027Destinations[0];
     if (source2027Destinations.length > 1) return source2027Destinations.join(' / ');}if (destinations.length === 0){return String(migration && migration.from || '').trim() || title || 'Exceptional Case';}if (destinations.length === 1) return destinations[0];
   return destinations.join(' / ');}function buildExceptionalListEntries(){const entries =[];
   (exceptionalCaseMigrations ||[]).forEach((migration) =>{(migration.moves ||[]).forEach((move, moveIndex) =>{entries.push({migration,
@@ -8433,8 +8429,7 @@ function parseExceptionalDestination(dest){const text = String(dest || '').trim(
         groupKey: getExceptionalListGroupKey(migration, move),
         label: getExceptionalListEntryLabel(migration, move),
         subtitle: String(migration.from || '')});});});
-  return entries;}function isSpecialExceptionalLegacyTitle(title){return new Set(['PRIVATE WARD 搬遷記錄',
-    'BURNS CENTRE 搬遷記錄',
+  return entries;}function isSpecialExceptionalLegacyTitle(title){return new Set(['BURNS CENTRE 搬遷記錄',
     'SKIN BANK 搬遷記錄',
     '4B INTEGRATED WARD 搬遷記錄',
     'DEPT OF A&IC, CUHK 搬遷記錄']).has(String(title || '').trim());}function getExceptionalMoveDestinations(migration, move, activeYear){return Array.isArray(move && move.destinations) ? move.destinations :[];}function resolveExceptionalTriggerItem(trigger){if (!trigger) return null;
@@ -8457,10 +8452,7 @@ function parseExceptionalDestination(dest){const text = String(dest || '').trim(
   sourceDestinations.forEach((dest) =>{const resolved = resolveExceptionalDestination(dest);
     if (resolved.item) sourceItems.push(resolved.item);
     else if (resolved.raw) sourceNotes.push(resolved.raw);});
-  if (title === 'PRIVATE WARD 搬遷記錄'){sourceItems.forEach((item) =>{item.displayName = '9E Private Ward';
-      item.metaOverride = '9/F';
-      item.building = 'EF';});
-    return{items: sourceItems, notes: sourceNotes};}if (title === 'SKIN BANK 搬遷記錄'){sourceItems.forEach((item) =>{item.displayName = '1F ART';
+  if (title === 'SKIN BANK 搬遷記錄'){sourceItems.forEach((item) =>{item.displayName = '1F ART';
       item.metaOverride = '1/F';
       item.building = 'EF';});
     return{items: sourceItems, notes: sourceNotes};}if (title === '4B INTEGRATED WARD 搬遷記錄'){sourceItems.forEach((item, index) =>{if (index === 0){item.displayName = '5E & 5F Integrated Ward';
